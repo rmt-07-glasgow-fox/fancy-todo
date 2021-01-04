@@ -1,2 +1,2 @@
 # fancy-todo
-Membuat website untuk mencatat hal - hal menarik untuk dilakukan
+A simple todo apps, created using node.js, express, sequelize, postgres.
