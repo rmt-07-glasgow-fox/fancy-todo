@@ -2,6 +2,8 @@
 const {
   Model
 } = require('sequelize');
+const encryptPassword = require('../helpers/encryptAndDecrypt').encryptPassword
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -15,10 +17,33 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   User.init({
-    email: DataTypes.STRING,
-    password: DataTypes.STRING
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate:{
+        notEmpty: {
+          msg: 'Email field is required'
+        },
+        isEmail: {
+          msg: 'Please enter a valid email'
+        }
+      }
+    },
+    password: {
+      type: DataTypes.STRING,
+      validate:{
+        notEmpty: {
+          msg: 'Password field is required'
+        }
+      }
+    }
   }, {
     sequelize,
+    hooks:{
+      beforeCreate: (instance, options) => {
+        instance.password = encryptPassword(instance.password)
+      }
+    },
     modelName: 'User',
   });
   return User;
