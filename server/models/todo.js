@@ -17,7 +17,18 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     description: DataTypes.TEXT,
     status: DataTypes.BOOLEAN,
-    due_date: DataTypes.DATE
+    due_date: {
+      type: DataTypes.DATE,
+      validate: {
+        checkDueDate(value){
+          const dateInput = new Date(value).setHours(0,0,0,0);
+          const dateNow = new Date().setHours(0,0,0,0);
+          if (dateInput < dateNow) {
+            throw new Error('Bad Request. Validation Error, cannot input an older date than now');
+          }
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'Todo',
