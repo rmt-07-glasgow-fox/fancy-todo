@@ -1,6 +1,6 @@
 # My Todo List App Server
 My Todo List App is an application to manage your Todo List. This app has : 
-* RESTful endpoint for asset's CRUD operation
+* RESTful endpoint for todo's CRUD operation
 * JSON formatted response
 
 &nbsp;
