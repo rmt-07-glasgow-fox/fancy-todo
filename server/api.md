@@ -6,15 +6,25 @@ Fancy Todo is an web application to manage todo list. This app has :
 
 &nbsp;
 
+## List Available endpoints
+- `GET /todos`
+- `GET /todos/:id`
+- `POST /todos`
+- `PUT /todos/:id`
+- `PATCH /todos/:id`
+- `DELETE /todos/:id`
+
 ## RESTful endpoints
 
 ### GET /todos
 
-> Get all assets
+> Get all todos
 
 _Request Header_
 ```
-
+{
+  "Content-Type": "application/json"
+}
 ```
 
 _Request Body_
@@ -22,8 +32,8 @@ _Request Body_
 not needed
 ```
 
-_Response (200)_
-```json
+_Response (200 - Success)_
+```
 [
   {
     "id": 1,
@@ -53,39 +63,241 @@ _Response (500 - Internal Server Error)_
 }
 ```
 ---
-### POST /assets
+### POST /todos
 
-> Create new asset
+> Create new todos
 
 _Request Header_
 ```
 {
-  "access_token": "<your access token>"
+  "Content-Type": "application/json"
 }
 ```
 
 _Request Body_
 ```
 {
-  "name": "<name to get insert into>",
-  "description": "<description to get insert into>"
+  "title": "<title to get insert into>",
+  "description": "<description to get insert into>",
+  "status": <status to get insert into>
 }
 ```
 
 _Response (201 - Created)_
 ```
 {
-  "id": <given id by system>,
-  "name": "<posted name>",
-  "description": "<posted description>",
-  "createdAt": "2020-03-20T07:15:12.149Z",
-  "updatedAt": "2020-03-20T07:15:12.149Z",
+    "id": "<given by system>",
+    "title": "makan malam",
+    "description": "makan di luar",
+    "status": true,
+    "due_date": "2021-12-12T00:00:00.000Z"
 }
 ```
 
-_Response (400 - Bad Request)_
+_Response (500 - Internal Server Error)_
 ```
 {
-  "message": "Invalid requests"
+  "message": "Internal Server Error"
+}
+```
+
+### GET /todos/:id
+
+> Get todo by Id
+
+_Request Header_
+```
+{
+  "Content-Type": "application/json"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200 - Success)_
+```
+{
+  "id": 1,
+  "title": "<todo title>",
+  "description": "<todo description>",
+  "status": "<todo status>",
+  "due_date": "<todo due_date in Date format>",
+  "createdAt": "2021-01-04T16:08:02.900Z",
+  "updatedAt": "2021-01-04T16:08:02.900Z"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+  "message": "Internal Server Error"
+}
+```
+
+### GET /todos/:id
+
+> Get todo by Id
+
+_Request Header_
+```
+{
+  "Content-Type": "application/json"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200 - Success)_
+```
+{
+  "id": 1,
+  "title": "<todo title>",
+  "description": "<todo description>",
+  "status": "<todo status>",
+  "due_date": "<todo due_date in Date format>",
+  "createdAt": "2021-01-04T16:08:02.900Z",
+  "updatedAt": "2021-01-04T16:08:02.900Z"
+}
+```
+
+_Response (404 - Not Found)_
+```
+{
+    "message": "error not found"
+}
+```
+
+### PUT /todos/:id
+
+> Update the entire of one todo 
+
+_Request Header_
+```
+{
+  "Content-Type": "application/json"
+}
+```
+
+_Request Body_
+```
+{
+  
+  "title": "<title to get update into>",
+  "description": "<description to get update into>",
+  "status": "<status to get update into>",
+  "due_date": "<due_date to get update into>",
+}
+```
+
+_Response (200 - Success)_
+```
+{
+    "id": 1,
+    "title": "<edited title>",
+    "description": "<edited description>",
+    "status": "edited status",
+    "due_date": "edited due_date"
+}
+```
+
+_Response (404 - Not Found)_
+```
+{
+    "message": "error not found"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+  "message": "Internal Server Error"
+}
+```
+
+### PATCH /todos/:id
+
+> Update status of todo 
+
+_Request Header_
+```
+{
+  "Content-Type": "application/json"
+}
+```
+
+_Request Body_
+```
+{
+  "status": "<status to get update into>",
+}
+```
+
+_Response (200 - Success)_
+```
+{
+  "id": 1,
+  "title": "<todo title>",
+  "description": "<todo description>",
+  "status": "<todo status>",
+  "due_date": "<todo due_date in Date format>",
+  "createdAt": "2021-01-04T16:08:02.900Z",
+  "updatedAt": "2021-01-04T16:08:02.900Z"
+}
+```
+
+_Response (404 - Not Found)_
+```
+{
+    "message": "error not found"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+  "message": "Internal Server Error"
+}
+```
+
+### DELETE /todos/:id
+
+> Delete todo 
+
+_Request Header_
+```
+{
+  "Content-Type": "application/json"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200 - Success)_
+```
+{
+    "message": "todo success to delete"
+}
+```
+
+_Response (404 - Not Found)_
+```
+{
+    "message": "error not found"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+  "message": "Internal Server Error"
 }
 ```
