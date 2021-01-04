@@ -7,7 +7,9 @@ class Controller{
             res.status(200).json(data)
         })
         .catch(err => {
-            res.status(500)
+            res.status(500).json({
+                message : 'Internal Server Error'
+            })
         })
     }
 
@@ -48,7 +50,7 @@ class Controller{
             if(data){
                 res.status(200).json(data)
             } else {
-                res.status(404).json({message: 'Cannot find ID'})
+                res.status(404).json({message: 'error not found'})
             } 
         })
         .catch(err => {
