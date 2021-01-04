@@ -43,7 +43,7 @@ _Request (400)_
 _Request (500)_
 ```json
 {
-  "messege": "Error 500: Internal Server Error"
+  "ae": "Error 500: Internal Server Error"
 }
 ```
 
@@ -65,14 +65,12 @@ _Request (200)_
 ```json
 [
   {
-    "id": "<todo id>",
     "title": "<todo title>",
     "description": "<todo description>",
     "status": "<todo status>",
     "due_date": "<todo due_date>"
   },
   {
-    "id": "<todo id>",
     "title": "<todo title>",
     "description": "<todo description>",
     "status": "<todo status>",
@@ -85,7 +83,7 @@ _Request (200)_
 _Request (500)_
 ```json
 {
-  "messege": "Error 500: Internal Server Error"
+  "ae": "Error 500: Internal Server Error"
 }
 ```
 
@@ -106,7 +104,6 @@ not needed
 _Request (200)_
 ```json
 {
-  "id": "<todo id>",
   "title": "<todo title>",
   "description": "<todo description>",
   "status": "<todo status>",
@@ -166,7 +163,7 @@ _Request (404)_
 _Request (500)_
 ```json
 {
-  "messege": "Error 500: Internal Server Error"
+  "message": "Error 500: Internal Server Error"
 }
 ```
 
@@ -213,7 +210,7 @@ _Request (404)_
 _Request (500)_
 ```json
 {
-  "messege": "Error 500: Internal Server Error"
+  "ae": "Error 500: Internal Server Error"
 }
 ```
 
@@ -248,6 +245,6 @@ _Request (404)_
 _Request (500)_
 ```json
 {
-  "messege": "Error 500: Internal Server Error"
+  "ae": "Error 500: Internal Server Error"
 }
 ```
