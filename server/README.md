@@ -15,7 +15,7 @@ _Request Body_
 not needed
 ```
 
-_Response (200)_
+_Response (200 - OK)_
 ```
 [
   {
@@ -95,7 +95,7 @@ _Request Params_
 id = [integer]
 ```
 
-_Response (200)_
+_Response (200 - OK)_
 ```
   {
     "id": 1,
@@ -107,10 +107,10 @@ _Response (200)_
     "updatedAt": "2021-01-04T07:15:12.149Z",
   }
 ```
-_Response (404 - Bad Request)_
+_Response (404 - Not Found)_
 ```
 {
-  "message": "Due not found"
+  "message": "Data not found"
 }
 ```
 _Response (500 - Bad Request)_
@@ -138,7 +138,7 @@ _Request Body_
 }
 ```
 
-_Response (200 - Created)_
+_Response (200 - OK)_
 ```
   {
     "id": "1",
@@ -157,7 +157,7 @@ _Response (400 - Bad Request)_
   "message": "Due date not valid"
 }
 ```
-_Response (404 - Bad Request)_
+_Response (404 - Not Found)_
 ```
 {
   "message": "Data not found"
@@ -185,7 +185,7 @@ _Request Body_
 }
 ```
 
-_Response (200 - Created)_
+_Response (200 - OK)_
 ```
   {
     "id": "1",
@@ -204,7 +204,7 @@ _Response (400 - Bad Request)_
   "message": "Due date not valid"
 }
 ```
-_Response (404 - Bad Request)_
+_Response (404 - Not Found)_
 ```
 {
   "message": "Data not found"
@@ -230,14 +230,14 @@ _Request Body_
 not needed
 ```
 
-_Response (200 - Created)_
+_Response (200 - OK)_
 ```
   {
     "message": "Todo success to deleted"
   }
 ```
 
-_Response (404 - Bad Request)_
+_Response (404 - Not Found)_
 ```
 {
   "message": "Data not found"
