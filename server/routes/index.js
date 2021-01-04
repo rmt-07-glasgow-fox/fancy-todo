@@ -1,6 +1,8 @@
 const router = require('express').Router();
-const FancyController = require('../controllers/TodoController')
+const todoRouter = require('./todoRouter');
+const authRouter = require('./authRouter');
 
-router.get('/', FancyController.homepage)
+router.use(authRouter);
+router.use('/todos', todoRouter);
 
-module.exports = router;
+module.exports = router;    

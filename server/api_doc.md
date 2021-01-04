@@ -1,6 +1,12 @@
-**Title**
-----
-  <_Additional information about your API call. Try to use verbs that match both request type (fetching vs modifying) and plurality (one vs multiple)._>
+# Fancy Todo
+Fancy app is an application to organize your todo list. This app has:
+* RESTfull endpoint for todo's CRUD operation
+* JSON formatted endpoint
+
+&nbsp;
+
+## Available Endpoints List
+
 
 * **URL**
 
