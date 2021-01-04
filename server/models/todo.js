@@ -17,17 +17,28 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     description: DataTypes.STRING,
     status: DataTypes.STRING,
-    due_date: DataTypes.DATEONLY
-  }, {
+    due_date: {
+      type: DataTypes.DATEONLY,
+      validate: {
+        dateValidate(value) {
+          const todayDate = new Date().toISOString().slice(0, 10);
+
+          if (value <= todayDate) {
+            throw new Error('gak boleh masukin tanngal yg udah lewat hari ini')
+          }
+        }
+      }
+    }
+    }, {
     sequelize,
     modelName: 'Todo',
   });
 
   Todo.beforeCreate((instance, option) => {
 
-    const todayDate = new Date().toISOString().slice(0,10);
+    const todayDate = new Date().toISOString().slice(0, 10);
 
-    if(instance.due_date <= todayDate) {
+    if (instance.due_date <= todayDate) {
       throw new Error('gak boleh masukin tanngal yg udah lewat hari ini')
     }
   })

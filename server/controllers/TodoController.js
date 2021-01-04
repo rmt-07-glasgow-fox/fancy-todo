@@ -26,9 +26,9 @@ class TodoController {
       })
       .catch(err => {
         if (err) {
-          res.status(400).json(err.message)
+          res.status(400).json({ messages: err.message })
         }
-        res.status(500).json({ messages: 'internal server eror' })
+        res.status(500).json({ message: 'internal server eror' })
       })
   }
 
@@ -47,6 +47,46 @@ class TodoController {
         res.status(500).json({ message: 'internal server error' })
       })
   }
+
+  static updateTodoPut(req, res) {
+    const todoId = +req.params.id
+
+    const updateTodo = {
+      title: req.body.title,
+      description: req.body.description,
+      status: req.body.status,
+      due_date: req.body.due_date
+    }
+
+    Todo.update(updateTodo, {
+      where: {
+        id: todoId
+      },
+      returning: true
+    })
+      .then(data => {
+        res.status(200).json({ id: data[1][0].id, title: data[1][0].title, description: data[1][0].description, status: data[1][0].status, due_date: data[1][0].due_date })
+      })
+      .catch(err => {
+        if (err) {
+          res.status(400).json({ message: err.message })
+        }
+        res.status(500).json({ message: 'internal server error' })
+      })
+  }
+
+  // static updateTodoPatch(req, res) {
+  //   const todoId = +req.params.id
+
+  //   const updateTodo = {
+  //     title: req.body.title,
+  //     description: req.body.description,
+  //     status: req.body.status,
+  //     due_date
+  //   }
+
+  //   Todo.update()
+  // }
 
   static deleteTodo(req, res) {
     const todoId = +req.params.id
