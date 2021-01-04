@@ -28,6 +28,11 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           msg: 'Status required!!!'
+        },
+        validFormat (value) {
+          if (value != 'unfinished' && value != 'finished') {
+            throw new Error('Status must be finished or unfinished!!!');
+          }
         }
       }
     },
@@ -36,6 +41,14 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           msg: 'Due date required!!!'
+        },
+        isDate: {
+          msg: 'Invalid date!!!'
+        },
+        idPassed (value) {
+          if (Date.parse(value) < Date.now()) {
+            throw new Error('Date already passed!');
+          }
         }
       }
     }
