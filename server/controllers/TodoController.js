@@ -108,13 +108,35 @@ class Controller {
         let id = req.params.id;
         let status = req.body.status;
 
-        Todo.update({status}, {
-            where: {id},
-            returning: true,
-            plain: true  
-        })
-            .then(todo => {
-                
+        Todo.findByPk(id)
+            .then(success => {
+                if (success) {
+                    return Todo.update({status}, {
+                        where: { id },
+                        returning: true,
+                        plain: true,
+                    })
+                } else {
+                    throw new Error('idNotFound')
+                }
+            })
+            .then(updatedStatus => Todo.findOne({
+                where: { id: updatedStatus[1].id },
+                attributes: {
+                    exclude: ['createdAt', 'updatedAt']
+                }
+            }))
+            .then(updatedStatus => {
+                res.status(200).json(updatedStatus)
+            })
+            .catch(err => {
+                if (err.name === "SequelizeValidationError") {
+                    res.status(400).json({ message: 'validation error' })
+                } else if (err.message === "idNotFound") {
+                    res.status(404).json({ message: 'error not found' })
+                } else {
+                    res.status(500).json({ message: 'Internal server error' })
+                }
             })
     }
 
@@ -124,14 +146,13 @@ class Controller {
         Todo.destroy({where: {id}})
             .then(succes => {
                 if (succes) {
-                    res.status(200).json({message: 'Todo has been deleted'});
+                    res.status(200).json({message: 'todo success to delete'});
                 } else {
-                    res.status(404).json({message: 'Todo cannot be found'})
+                    res.status(404).json({message: 'error not found'})
                 }
             })
-            .catch()
             .catch(err => {
-                
+                res.status(500).json({message: 'internal server error'})
             })
     }
 }
