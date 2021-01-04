@@ -122,8 +122,16 @@ class Controller{
             res.status(200).json(updatedData)
         })
         .catch(err => {
-            if(err){
-                res.status(400).send(err)
+            if(err.errors){
+                let message = []
+                err.errors.forEach(el => {
+                    message.push(el.message)
+                })
+                res.status(400).json({
+                    Errors : message
+                })
+            } else {
+                res.status(500).json(err)
             }
         })
     }

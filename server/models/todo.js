@@ -16,7 +16,16 @@ module.exports = (sequelize, DataTypes) => {
   Todo.init({
     title: DataTypes.STRING,
     description: DataTypes.STRING,
-    status: DataTypes.BOOLEAN,
+    status: {
+      type: DataTypes.BOOLEAN,
+      validate : {
+        isBoolean(value){
+          if(typeof value !== 'boolean'){
+            throw new Error('Only can accept boolean')
+          }
+        }
+      }
+    },
     due_date: {
       type: DataTypes.DATE,
       validate : {

@@ -154,3 +154,114 @@ _Response (200)_
     "updatedAt": "2021-01-04T10:37:33.696Z"
 }
 ```
+
+_Response (400)_
+```
+{
+    "Errors": [
+        "Date have to be greater than today"
+    ]
+}
+```
+
+_Response (404)_
+```
+{
+    "message": "error not found"
+}
+```
+
+_Response (500)_
+```
+{
+    message: "Internal Server Error"
+}
+```
+
+### PATCH /todos/:id
+
+> For updating status of todo
+
+_Request Body_
+```
+{
+    "status" : <status of todo list to be updated to>
+}
+```
+
+_Request Params_
+```
+id=[integer]
+```
+
+_Response (200)_
+```
+{
+    "id": <id given by the system>,
+    "title": "<title based on id>",
+    "description": "<description based on id>",
+    "status": <updated status>,
+    "due_date": "<due_date based on id>",
+    "createdAt": "2021-01-04T06:43:29.956Z",
+    "updatedAt": "2021-01-04T10:52:59.686Z"
+}
+
+```
+
+_Response (400)_
+```
+{
+    "Errors": [
+        "Only can accept boolean"
+    ]
+}
+```
+
+_Reponses (404)_
+```
+{
+    "message": "error not found"
+}
+```
+_Response (500)_
+```
+{
+    message: "Internal Server Error"
+}
+```
+
+### DELETE /todos/:id
+
+> Delete a todo item based on id
+
+_Request Body_
+```
+not needed
+```
+
+_Request Params_
+```
+id=[integer]
+```
+
+_Response (200)_
+```
+{
+    "message": "todo success to delete"
+}
+```
+
+_Response (404)_
+```
+{
+    "message": "error not found"
+}
+```
+
+_Response (500)_
+```
+{
+    message: "Internal Server Error"
+}
+```
+
