@@ -21,10 +21,10 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     status: DataTypes.BOOLEAN,
     due_date: {
-      type: DataTypes.DATEONLY,
+      type: DataTypes.DATE,
       validate: {
         isAfter: {
-          args: new Date().toISOString(),
+          args: new Date().toString(),
           msg: "Input must be after today's date"
         },
         isDate: {

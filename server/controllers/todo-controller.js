@@ -11,6 +11,13 @@ class TodoController {
                 res.status(201).json(data)
             })
             .catch(err => {
+                if(err.errors) {
+                    err.errors.forEach(data => {
+                        if (data.message === "Input must be after today's date") {
+                            return res.status(400).json({message: data.message})
+                        }
+                    })
+                }
                 res.status(500).json(err)
             })
     }
@@ -57,6 +64,14 @@ class TodoController {
                 res.status(200).json(data)
             })
             .catch(err => {
+                console.log(err.errors)
+                if(err.errors) {
+                    err.errors.forEach(data => {
+                        if (data.message === "Input must be after today's date") {
+                            return res.status(400).json({message: data.message})
+                        }
+                    })
+                }
                 res.status(500).json({message: 'internal server error'})
             })
     }
@@ -77,6 +92,13 @@ class TodoController {
                 res.status(200).json(data)
             })
             .catch(err => {
+                if(err.errors) {
+                    err.errors.forEach(data => {
+                        if (data.message === "Input must be after today's date") {
+                            return res.status(400).json({message: data.message})
+                        }
+                    })
+                }
                 res.status(500).json({message: 'internal server error'})
             })
     }
@@ -89,7 +111,7 @@ class TodoController {
         }})
             .then(data => {
                 if(data === 0) {
-                    return res.status(404).json({message: 'not error not found'})
+                    return res.status(404).json({message: 'error not found'})
                 }
                 
                 res.status(200).json({message: 'todo success to delete'})
