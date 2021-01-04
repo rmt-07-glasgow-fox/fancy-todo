@@ -87,13 +87,13 @@ _Response (200)_
 {
   "status" : "success",
    "data": {
-    "id": 1,
-    "title": "<todos title>",
-    "description": "<todos description>",
-    "status": "<todos status>",
-    "due_date": "2020-03-20T07:15:12.149Z",
-    "createdAt": "2020-03-20T07:15:12.149Z",
-    "updatedAt": "2020-03-20T07:15:12.149Z",
+        "id": 1,
+        "title": "<todos title>",
+        "description": "<todos description>",
+        "status": "<todos status>",
+        "due_date": "2020-03-20T07:15:12.149Z",
+        "createdAt": "2020-03-20T07:15:12.149Z",
+        "updatedAt": "2020-03-20T07:15:12.149Z",
   }
 }
 ```
@@ -138,6 +138,8 @@ _Request Body_
 _Response (201 - Created)_
 ```json
 {
+"status" : "success",
+"data" : {
   "id": "<given id by system>",
   "title": "<posted title>",
   "description": "<posted description>",
@@ -146,6 +148,7 @@ _Response (201 - Created)_
   "createdAt": "2020-03-20T07:15:12.149Z",
   "updatedAt": "2020-03-20T07:15:12.149Z",
 }
+}
 ```
 
 _Response (400 - Bad Request)_
@@ -153,7 +156,11 @@ _Response (400 - Bad Request)_
 {
   "status" : "error",
   "message": [
-        "title is required"
+        "Start date at least start today.",
+        "title is required",
+        "description is required",
+        "status is required",
+        "due date is required"
     ]
 }
 ```
@@ -191,11 +198,8 @@ _Request Body_
 _Response (200 - Created)_
 ```json
 {
-  "title": "<updated title>",
-  "description": "<updated description>",
-  "status": "<updated status>",
-  "due_date": "<updated due_date>",
-  "updatedAt": "<updated updatedAt>",
+    "status" : "success",
+    "message" : "todo updated successfully"
 }
 ```
 
@@ -204,7 +208,11 @@ _Response (400 - Bad Request)_
 {
   "status" : "error",
   "message": [
-        "title is required"
+        "Start date at least start today.",
+        "title is required",
+        "description is required",
+        "status is required",
+        "due date is required"
     ]
 }
 ```
@@ -247,8 +255,8 @@ _Request Body_
 _Response (200 - Created)_
 ```json
 {
-  "status": "<updated status>",
-  "updatedAt": "<updated updatedAt>",
+  "status": "success",
+  "message": "todo updated successfully",
 }
 ```
 
@@ -257,7 +265,11 @@ _Response (400 - Bad Request)_
 {
   "status" : "error",
   "message": [
-        "title is required"
+        "Start date at least start today.",
+        "title is required",
+        "description is required",
+        "status is required",
+        "due date is required"
     ]
 }
 ```
@@ -291,17 +303,15 @@ _Request Header_
 ```
 
 _Request Body_
-```json
-{
-  "status": "<status to get insert into>",
-}
+```
+not needed
 ```
 
 _Response (200 - Created)_
 ```json
 {
-  "status": "<updated status>",
-  "updatedAt": "<updated updatedAt>",
+  "status": "success",
+  "message": "todo successfully deleted",
 }
 ```
 
