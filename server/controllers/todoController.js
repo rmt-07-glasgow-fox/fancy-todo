@@ -7,7 +7,7 @@ class todoController {
         res.status(201).json(dataTodo);
       })
       .catch(err => {
-        res.status(501).json({ message: 'Internal Server Error' });
+        res.status(500).json({ message: 'Internal Server Error' });
       });
   }
 }
