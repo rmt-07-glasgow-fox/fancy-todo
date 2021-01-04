@@ -2,6 +2,8 @@
 const {
   Model
 } = require('sequelize');
+const yesterday = require('../helpers/yesterday');
+
 module.exports = (sequelize, DataTypes) => {
   class Todo extends Model {
     /**
@@ -36,6 +38,10 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notNull: {
           msg: 'Please input date'
+        },
+        isAfter: {
+          args: yesterday(),
+          msg: 'Please input date greater than yesterday'
         }
       }
     }
