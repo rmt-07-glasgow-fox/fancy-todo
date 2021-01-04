@@ -4,6 +4,7 @@ class Controller{
     static getTodos(req, res){
         Todo.findAll()
         .then(data => {
+            data.map(el => el.due_date = new Date(el.due_date + "UTC"))
             res.status(200).json(data)
         })
         .catch(() => {
@@ -39,7 +40,10 @@ class Controller{
         const id = req.params.id
         Todo.findByPk(id)
         .then(data => {
-            if(data) res.status(200).json(data)
+            if(data){
+                data.due_date = new Date(data.due_date + "UTC")
+                res.status(200).json(data)
+            } 
             else res.status(404).json({message: "Data Not Found"})
             
         })
@@ -104,7 +108,7 @@ class Controller{
         const id = req.params.id
         Todo.destroy({where:{id}})
         .then(data => {
-            if(data) res.status(200).json({message: "Todo success to delete"})
+            if(data) res.status(200).json({message: "Todo success to deleted"})
             else res.status(404).json({message: "Data not found"})
         })
         .catch(() => {

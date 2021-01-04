@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isBoolean (value){
           if(typeof value !== "boolean"){
-            throw new Error('Status not valid value')
+            throw new Error('Status must filled by true/false')
           }
         }
       }

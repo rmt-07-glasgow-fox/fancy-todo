@@ -23,7 +23,7 @@ _Response (200)_
     "title": "Belajar HTML",
     "description": "Belajar HTML Dasar",
     "status": "false",
-    "due_date": "2021-01-05T07:15:12.149Z",
+    "due_date": "2021-01-05T00:00:00.149Z",
     "createdAt": "2021-01-04T07:15:12.149Z",
     "updatedAt": "2021-01-04T07:15:12.149Z",
   },
@@ -32,7 +32,7 @@ _Response (200)_
     "title": "Belajar CSS",
     "description": "Belajar CSS Dasar",
     "status": "false",
-    "due_date": "2021-01-05T07:15:12.149Z",
+    "due_date": "2021-01-05T00:00:00.149Z",
     "createdAt": "2021-01-04T07:15:12.149Z",
     "updatedAt": "2021-01-04T07:15:12.149Z",
   }
@@ -56,7 +56,7 @@ _Request Body_
   "title": "Belajar Javascript",
   "description": "Belajar Javascript Dasar",
   "status": "false",
-  "due_date": "2021-01-06T07:15:12.149Z",
+  "due_date": "01/20/2021",
 }
 ```
 
@@ -67,7 +67,7 @@ _Response (201 - Created)_
     "title": "Belajar Javascript",
     "description": "Belajar Javascript Dasar",
     "status": "false",
-    "due_date": "2021-01-06T07:15:12.149Z",
+    "due_date": "2021-01-20T00:00:00.149Z",
     "createdAt": "2021-01-04T07:15:12.149Z",
     "updatedAt": "2021-01-04T07:15:12.149Z",
   }
@@ -92,7 +92,7 @@ _Response (500 - Bad Request)_
 
 _Request Params_
 ```
-http://localhost:3000/todos/1
+id = [integer]
 ```
 
 _Response (200)_
@@ -102,12 +102,17 @@ _Response (200)_
     "title": "Belajar HTML",
     "description": "Belajar HTML Dasar",
     "status": "false",
-    "due_date": "2021-01-05T07:15:12.149Z",
+    "due_date": "2021-01-05T00:00:00.000Z",
     "createdAt": "2021-01-04T07:15:12.149Z",
     "updatedAt": "2021-01-04T07:15:12.149Z",
   }
 ```
-
+_Response (404 - Bad Request)_
+```
+{
+  "message": "Due not found"
+}
+```
 _Response (500 - Bad Request)_
 ```
 {
@@ -121,15 +126,15 @@ _Response (500 - Bad Request)_
 
 _Request Params_
 ```
-http://localhost:3000/todos/1
+id = [integer]
 ```
 _Request Body_
 ```
 {
-  "title": "Belajar Lanjutan",
+  "title": "Belajar HTML Lanjutan",
   "description": "Belajar HTML Lanjutan",
   "status": "false",
-  "due_date": "2021-01-25T07:15:12.149Z",
+  "due_date": ""01/25/2021"",
 }
 ```
 
@@ -140,7 +145,7 @@ _Response (200 - Created)_
     "title": "Belajar Lanjutan",
     "description": "Belajar HTML Lanjutan",
     "status": "false",
-    "due_date": "2021-01-25T07:15:12.149Z", 
+    "due_date": "2021-01-25T00:00:00.000Z", 
     "createdAt": "2021-01-04T07:15:12.149Z",
     "updatedAt": "2021-01-04T07:15:12.149Z",
   }
@@ -171,7 +176,7 @@ _Response (500 - Bad Request)_
 
 _Request Params_
 ```
-http://localhost:3000/todos/1
+id = [integer]
 ```
 _Request Body_
 ```
@@ -184,10 +189,10 @@ _Response (200 - Created)_
 ```
   {
     "id": "1",
-    "title": "Belajar Lanjutan",
+    "title": "Belajar HTML Lanjutan",
     "description": "Belajar HTML Lanjutan",
     "status": "true",
-    "due_date": "2021-01-25T07:15:12.149Z", 
+    "due_date": "2021-01-25T00:00:00.149Z",
     "createdAt": "2021-01-04T07:15:12.149Z",
     "updatedAt": "2021-01-04T07:15:12.149Z",
   }
@@ -214,11 +219,11 @@ _Response (500 - Bad Request)_
 ---
 ### DELETE http://localhost:3000/todos/:id
 
-> Edit todo value
+> Delete todo value
 
 _Request Params_
 ```
-http://localhost:3000/todos/1
+id = [integer]
 ```
 _Request Body_
 ```
