@@ -2,9 +2,9 @@
   "name": "fancy-todo",
   "version": "1.0.0",
   "description": "Todos App",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "app.js"
+    "test": "echo \"Error:no test specified\" && exit 1"
   },
   "author": "M Abdul Hakim S",
   "license": "ISC",
