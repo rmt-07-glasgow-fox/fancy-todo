@@ -46,12 +46,15 @@ class TodoController {
     const {title, description, status, due_date} = req.body;
     Todo.findByPk(id)
       .then(todo => {
-        if(!todo) return res.status(404).json({message: 'error not found'});         
-        todo.title = title;
-        todo.description = description;
-        todo.status = status;
-        todo.due_date = due_date;
-        return todo.save();
+        if(todo) {
+          todo.title = title;
+          todo.description = description;
+          todo.status = status;
+          todo.due_date = due_date;
+          return todo.save();
+        } else {
+          res.status(404).json({message: 'error not found'}); 
+        }         
       })
       .then(todo => {
         res.status(200).json(todo);
@@ -70,17 +73,17 @@ class TodoController {
     const {status} = req.body;
     Todo.findByPk(id)
       .then(todo => {
-        if(!todo) {
-          return res.status(404).json({message: 'error not found'});      
-        }   
-        todo.status = status;
-        return todo.save();
+        if(todo) {
+          todo.status = status;
+          return todo.save();  
+        } else {
+          res.status(404).json({message: 'error not found'});
+        }       
       })
       .then(todo => {
         res.status(200).json(todo);
       })
       .catch(err => {
-        console.log(err);
         if(err.message === 'Validation error: Validation isAfter on due_date failed') {
           return res.status(400).json({message: 'Due date cannot be before today.'});
         }

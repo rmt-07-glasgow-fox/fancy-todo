@@ -1,16 +1,8 @@
-const TodoController = require('../controllers/todoController');
-
 const router = require('express').Router();
+const todosRouter = require('./todosRouter.js');
+const authRouter = require('./auth.js');
 
-router.post('/todos', TodoController.createTodo);
-router.get('/todos', TodoController.getAllTodo);
-router.get('/todos/:id', TodoController.getTodoById);
-router.put('/todos/:id', TodoController.updateTodo);
-router.patch('/todos/:id', TodoController.updateStatTodo);
-router.delete('/todos/:id', TodoController.deleteTodo);
-
-
-
-
+router.use(authRouter);
+router.use('/todos', todosRouter);
 
 module.exports = router;
