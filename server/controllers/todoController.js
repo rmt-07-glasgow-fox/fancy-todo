@@ -17,9 +17,27 @@ class Controller {
       })
   }
 
-  static showAllTodo (req, res) {}
+  static showAllTodo (req, res) {
+    Todo.findAll()
+      .then(response => {
+        res.status(200).json(response)
+      })
+      .catch(err => {
+        res.status(500).json(err)
+      })
+  }
 
-  static showTodoByID (req, res) {}
+  static showTodoByID (req, res) {
+    const id = +req.params.id
+
+    Todo.findByPk(id)
+      .then(response => {
+        res.status(200).json(response)
+      })
+      .catch(err => {
+        res.status(500).json(err)
+      })
+  }
 
   static editTodo (req, res) {}
 
