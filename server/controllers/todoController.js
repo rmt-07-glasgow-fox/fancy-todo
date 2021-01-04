@@ -1,6 +1,6 @@
 const { Todo } = require('../models')
 
-class Controller {
+class ControllerTodo {
   static addTodo (req, res) {
     const input = {
       title: req.body.title,
@@ -10,10 +10,16 @@ class Controller {
     }
     Todo.create(input)
       .then(response => {
-        res.status(201).json(response)
+        if (response) {
+          res.status(201).json(response)
+        } else {
+          res.status(400).json({
+            message: 'Validation Error'
+          })
+        }
       })
       .catch(err => {
-        res.status(500).json(err)
+        res.status(500).json(err.message)
       })
   }
 
@@ -23,7 +29,7 @@ class Controller {
         res.status(200).json(response)
       })
       .catch(err => {
-        res.status(500).json(err)
+        res.status(500).json(err.message)
       })
   }
 
@@ -32,18 +38,64 @@ class Controller {
 
     Todo.findByPk(id)
       .then(response => {
-        res.status(200).json(response)
+        if (response) {
+          res.status(200).json(response)
+        } else {
+          res.status(404).json({
+            message: 'Data Not Found'
+          })
+        }
       })
       .catch(err => {
-        res.status(500).json(err)
+        res.status(500).json(err.message)
       })
   }
 
-  static editTodo (req, res) {}
+  static editTodo (req, res) {
+    const id = +req.params.id;
 
-  static doneTodo (req, res) {}
+    const input = {
+      title: req.body.title,
+      description: req.body.description,
+      due_date: req.body.due_date
+    }
+
+    Todo.update(input, {
+      where: { id }
+    })
+      .then(response => {
+        if (response) {
+          res.status(200).json({
+            message: 'Data has been updated successfully'
+          })
+        } else {
+          res.status(400).json({
+            message: 'Validation errors'
+          })
+        }
+      })
+      .catch(err => {
+        res.status(500).json(err.message)
+      })
+  }
+
+  static doneTodo (req, res) {
+    const id = +req.params.id
+
+    Todo.findOne({
+      where: { id }
+    })
+      .then(response => {
+        response.status = true
+
+        res.status(200).json(response)
+      })
+      .catch(err => {
+        res.status(500).json(err.message)
+      })
+  }
 
   static deleteTodo (req, res) {}
 }
 
-module.exports = Controller;
+module.exports = ControllerTodo;
