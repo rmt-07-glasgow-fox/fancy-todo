@@ -77,4 +77,17 @@ exports.updateStatus = async (req, res) => {
   }
 };
 
-exports.destroy = (req, res) => {};
+exports.destroy = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const isFound = await Todo.findOne({ where: { id: id } });
+    if (!isFound) return res.status(404).json({ message: 'error not found' });
+    else {
+      const todo = await Todo.destroy({ where: { id: id } });
+      return res.status(200).json({ message: 'todo success to delete' });
+    }
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+};
