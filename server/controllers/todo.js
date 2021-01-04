@@ -5,7 +5,7 @@ exports.list = async (req, res) => {
     const todos = await Todo.findAll();
     return res.status(200).json(todos);
   } catch (error) {
-    return res.status(400).json(error);
+    return res.status(500).json(error);
   }
 };
 
@@ -25,7 +25,17 @@ exports.create = async (req, res) => {
   }
 };
 
-exports.detail = (req, res) => {};
+exports.detail = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const todo = await Todo.findOne({ where: { id: id } });
+    if (!todo) return res.status(404).json({ message: 'error not found' });
+    return res.status(200).json(todo);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+};
 
 exports.update = (req, res) => {};
 
