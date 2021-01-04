@@ -2,7 +2,7 @@ const { Todo } = require('../models')
 
 class Controller {
 
-    static createTodo(req,res,next) {
+    static createTodo(req,res) {
         const obj = {
             title: req.body.title,
             description: req.body.description,
@@ -25,7 +25,7 @@ class Controller {
         })
     }
 
-    static listTodo(req,res,next){
+    static listTodo(req,res){
         Todo.findAll()
         .then(data => {
             res.status(200).json(data)
@@ -35,7 +35,7 @@ class Controller {
         })
     }
 
-    static findTodoById(req,res,next){
+    static findTodoById(req,res){
         Todo.findOne({where: {id: req.params.id}})
         .then(data => {
             if (data){
@@ -55,7 +55,7 @@ class Controller {
         })
     }
 
-    static updateTodo(req,res,next){
+    static updateTodo(req,res){
         Todo.update({
             title: req.body.title,
             description: req.body.description,
@@ -87,7 +87,7 @@ class Controller {
         })
     }
 
-    static updateStatusTodo(req,res,next){
+    static updateStatusTodo(req,res){
         Todo.update({
             status: req.body.status,
         },{where: {id: req.params.id}})
@@ -112,7 +112,7 @@ class Controller {
         })
     }
 
-    static deleteTodo(req,res,next){
+    static deleteTodo(req,res){
         Todo.destroy({where: {id: req.params.id}})
         .then( data => {
             if (data){
