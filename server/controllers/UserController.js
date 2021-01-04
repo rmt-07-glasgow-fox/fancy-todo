@@ -1,5 +1,6 @@
 const {User} = require('../models')
 const comparePassword = require('../helpers/comparePassword')
+const generateToken = require('../helpers/jwt')
 
 
 class UserController {
@@ -40,8 +41,15 @@ class UserController {
                 const match = comparePassword(password, user.password)
 
                 if (match) {
-                    res.status(200).json({
-                        message: "OK from login page"
+                    const payload = {
+                        id: user.id,
+                        email: user.email
+                    }
+
+                    const accessToken = generateToken(payload)
+
+                    return res.status(200).json({
+                        accessToken
                     })
                 }
                 else {
