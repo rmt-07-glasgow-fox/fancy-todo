@@ -82,20 +82,50 @@ class ControllerTodo {
   static doneTodo (req, res) {
     const id = +req.params.id
 
-    Todo.findOne({
+    const input = {
+      status: true
+    }
+
+    Todo.update(input, {
       where: { id }
     })
       .then(response => {
-        response.status = true
-
-        res.status(200).json(response)
+        if (response) {
+          res.status(200).json({
+            message: 'Data has been updated successfully'
+          })
+        } else {
+          res.status(400).json({
+            message: 'Validation errors'
+          })
+        }
       })
       .catch(err => {
         res.status(500).json(err.message)
       })
   }
 
-  static deleteTodo (req, res) {}
+  static deleteTodo (req, res) {
+    const id = +req.params.id
+
+    Todo.destroy({
+      where: { id }
+    })
+      .then(response => {
+        if (response) {
+          res.status(200).json({
+            message: 'Todo success to delete'
+          })
+        } else {
+          res.status(404).json({
+            message: 'Error not found'
+          })
+        }
+      })
+      .catch(err => {
+        res.status(500).json(err.message)
+      })
+  }
 }
 
 module.exports = ControllerTodo;
