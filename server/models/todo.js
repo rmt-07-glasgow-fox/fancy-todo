@@ -17,7 +17,18 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     description: DataTypes.STRING,
     status: DataTypes.BOOLEAN,
-    due_date: DataTypes.DATE
+    due_date: {
+      type: DataTypes.DATE,
+      validate: {
+        isAfter() {
+          let now = new Date()
+          let due_date = this.due_date
+          if (due_date < now) {
+            throw new Error('due date must be greater or equal today')
+          }
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'Todo',

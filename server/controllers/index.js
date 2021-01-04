@@ -20,9 +20,25 @@ class Controller {
         }
         Todo.create(input)
         .then(data => {
-            res.status(201).json(data)
+            let {id, title, description, status, due_date} = data
+            const options = { 
+                month: '2-digit', 
+                day: '2-digit',
+                year: 'numeric', 
+            };
+            let output = {
+                id,
+                title,
+                description,
+                status,
+                due_date: due_date.toLocaleString("en-ID", options)
+            }
+            res.status(201).json(output)
         })
         .catch(err => {
+            if (err.errors[0].message === "due date must be greater or equal today") {
+                return res.status(400).json({message: "due date must be greater or equal today"})
+            }
             res.status(500).json({message: "internal server error"})
         })
     }
@@ -34,11 +50,11 @@ class Controller {
             if (data) {
                 res.status(200).json(data)
             } else {
-                res.status(404).json({message: "error not found"})
+                throw {message: "error not found"}
             }
         })
         .catch(err => {
-            res.status(500).json({message: "internal server error"})
+            res.status(404).json(err)
         })
     }
 
@@ -56,12 +72,22 @@ class Controller {
         })
         .then(data => {
             if (data[0] === 0) {
-                res.status(404).json(`error not found`)                
+                res.status(404).json({message: `error not found`})                
             } else {
+                const options = { 
+                    month: '2-digit', 
+                    day: '2-digit',
+                    year: 'numeric', 
+                };
+                data[1][0].dataValues.due_date = data[1][0].dataValues.due_date.toLocaleString("en-ID", options)
+                console.log(data[1]);
                 res.status(200).json(data[1])
             }
         })
         .catch(err => {
+            if (err.errors[0].message === "due date must be greater or equal today") {
+                return res.status(400).json({message: "due date must be greater or equal today"})
+            }
             res.status(500).json({message: "internal server error"})
         })
     }
@@ -75,13 +101,36 @@ class Controller {
         })
         .then(data => {
             if (data[0] === 0) {
-                res.status(404).json(`error not found`)
+                res.status(404).json({message: `error not found`})
             } else{
-                res.status(200).json(data[1])
+                const options = { 
+                    month: '2-digit', 
+                    day: '2-digit',
+                    year: 'numeric', 
+                };
+                data[1][0].dataValues.due_date = data[1][0].dataValues.due_date.toLocaleString("en-ID", options)
+                res.status(200).json(data[1][0])
             }
         })
         .catch(err => {
-            res.status(500).json(`internal server error`)
+            if (err.errors[0].message === "due date must be greater or equal today") {
+                return res.status(400).json({message: "due date must be greater or equal today"})
+            }
+            res.status(500).json({message: `internal server error`})
+        })
+    }
+
+    static delete(req, res) {
+        let { id } = req.params
+        Todo.destroy({where: {id}})
+        .then(data => {
+            if (data === 0) {
+                return res.status(404).json({message: "error not found"})
+            }
+            res.status(200).json({message: `todo success to delete`})
+        })
+        .catch(err => {
+            res.status(500).json({message: "internal server error"})
         })
     }
 }

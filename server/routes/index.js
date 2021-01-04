@@ -13,6 +13,8 @@ router.get('/todos/:id', todoController.showOne);
 
 router.put('/todos/:id', todoController.edit);
 
-router.patch('/todos/:id', todoController.editStatus)
+router.patch('/todos/:id', todoController.editStatus);
+
+router.delete('/todos/:id', todoController.delete);
 
 module.exports = router

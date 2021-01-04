@@ -39,7 +39,7 @@ _Response (201)_
 _Response (400)_
 ```
 {
-    "message": "validation error"
+    "message": "due date must be greater or equal today"
 }
 ```
 
@@ -108,11 +108,16 @@ _Request Header_
 }
 ```
 
-_Request Body_
+_Request Params_
 ```
 {
     "id": <todo id>
 }
+```
+
+_Request Body_
+```
+not needed
 ```
 
 _Response (200)_
@@ -146,6 +151,13 @@ _Request Header_
 }
 ```
 
+_Request Params_
+```
+{
+    "id": <todo id>
+}
+```
+
 _Request Body_
 ```
 {
@@ -172,7 +184,7 @@ _Response (200)_
 _Response (400)_
 ```
 {
-    "message": "validation error"
+    "message": "due date must be greater or equal today"
 }
 ```
 
@@ -201,6 +213,13 @@ _Request Header_
 }
 ```
 
+_Request Params_
+```
+{
+    "id": <todo id>
+}
+```
+
 _Request Body_
 ```
 {
@@ -224,7 +243,7 @@ _Response (200)_
 _Response (400)_
 ```
 {
-    "message": "validation error"
+    "message": "due date must be greater or equal today"
 }
 ```
 
@@ -251,11 +270,16 @@ _Request Header_
 }
 ```
 
-_Request Body_
+_Request Params_
 ```
 {
     "id": <todo id>
 }
+```
+
+_Request Body_
+```
+not needed
 ```
 
 _Response (200)_
