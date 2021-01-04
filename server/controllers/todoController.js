@@ -28,7 +28,7 @@ class todoController {
           return res.status(400).json({ message: err.errors[0].message });
         }
         // Handle error from server
-        return res.status(500).json({ message: err });
+        return res.status(500).json({ message: 'Internal Server Error' });
       })
   }
 
@@ -72,7 +72,7 @@ class todoController {
           return res.status(400).json({ message: err.errors[0].message });
         }
         // Handle error from server
-        return res.status(500).json({ message: err });
+        return res.status(500).json({ message: 'Internal Server Error' });
       });
   }
 }
