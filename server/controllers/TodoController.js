@@ -20,14 +20,29 @@ class TodoController {
     }
 
     Todo.create(todoObj)
-      .then(dataTodo => {
-        res.status(201).json({ id: dataTodo.id, title: dataTodo.title, description: dataTodo.description, status: dataTodo.status, due_date: dataTodo.due_date })
+      .then(data => {
+        res.status(201).json({ id: data.id, title: data.title, description: data.description, status: data.status, due_date: data.due_date })
       })
       .catch(err => {
         if (err) {
           res.status(400).json(err.message)
         }
         res.status(500).json({ messages: 'internal server eror' })
+      })
+  }
+
+  static deleteTodo(req, res) {
+    const todoId = +req.params.id
+    Todo.destroy({ where: { id: todoId } })
+      .then(data => {
+        if (data === 1) {
+          res.status(200).json({ message: 'todo success to delete' })
+        } else {
+          res.status(404).json({ message: 'Todo not found' })
+        }
+      })
+      .catch(err => {
+        res.status(500).json({ message: 'internal server error' })
       })
   }
 }
