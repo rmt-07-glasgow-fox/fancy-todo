@@ -59,8 +59,9 @@ class todoController {
       where: { id }
     })
       .then(dataTodo => {
-        if (!dataTodo || dataTodo[0] === 0) {
-          // Handle error from null
+        console.log(dataTodo);
+        if (!dataTodo || dataTodo[1].length === 0) {
+          // Handle error from null and / [ 0, [] ]
           return res.status(404).json({ message: 'Error, data not found' });
         }
         // Get data Object
@@ -71,7 +72,33 @@ class todoController {
           // Handle error from validation
           return res.status(400).json({ message: err.errors[0].message });
         }
-        // Handle error from server
+        // Handle error from server or [ 0 ]
+        return res.status(500).json({ message: 'Internal Server Error' });
+      });
+  }
+
+  static patchTodoHandler(req, res) {
+    const id = req.params.id;
+    const status = req.body.status;
+    Todo.update({ status }, {
+      returning: true,
+      where: { id }
+    })
+      .then(dataTodo => {
+        // console.log(dataTodo);
+        if (!dataTodo || dataTodo[1].length === 0) {
+          // Handle error from null or [ 0, [] ]
+          return res.status(404).json({ message: 'Error, data not found' });
+        }
+        // Get data Object
+        return res.status(200).json(dataTodo[1][0]);
+      })
+      .catch(err => {
+        if (err.errors) {
+          // Handle error from validation
+          return res.status(400).json({ message: err.errors[0].message });
+        }
+        // Handle error from server or [ 0 ]
         return res.status(500).json({ message: 'Internal Server Error' });
       });
   }
