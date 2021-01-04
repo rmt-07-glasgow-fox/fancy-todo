@@ -1,7 +1,6 @@
 const router = require('express').Router()
 const Controller = require('../controllers/controller')
 
-router.get('/', Controller.index)
 router.post('/todos', Controller.createToDo)
 router.get('/todos', Controller.showToDos)
 router.get('/todos/:id', Controller.showToDoById)
