@@ -3,10 +3,9 @@ const app = express()
 const port = 3000
 const router = require("./routes")
 
-app.use("/", router)
+app.use(express.urlencoded({ extended: true }))
 
-//bodyparser urlencoded
-app.use(express.urlencoded({ extended: false }))
+app.use(router)
 
 app.listen(port, () => {
   console.log(`app listening to port ${port}`);
