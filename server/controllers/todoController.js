@@ -102,6 +102,23 @@ class todoController {
         return res.status(500).json({ message: 'Internal Server Error' });
       });
   }
+
+  static deleteTodoHandler(req, res) {
+    const id = req.params.id;
+    Todo.destroy({ where: { id } })
+      .then(dataTodo => {
+        console.log(dataTodo);
+        if (!dataTodo) {
+          // Handle error from null or [ 0, [] ]
+          return res.status(404).json({ message: 'Error, data not found' });
+        }
+        return res.status(200).json({ message: 'Todo Success to delete' });
+      })
+      .catch(err => {
+        // Handle error from server or [ 0 ]
+        return res.status(500).json({ message: 'Internal Server Error' });
+      });
+  }
 }
 
 module.exports = todoController;
