@@ -74,9 +74,11 @@ class TodoController {
         where: { id },
       }
     )
-      .then((updated) => {
-        if (updated[0] === 1) {
-          return res.status(200).json(updated);
+      .then((result) => {
+        if (result[0] === 1) {
+          return Todo.findByPk(id).then((updated) => {
+            return res.status(200).json(updated);
+          });
         }
         return res.status(404).json({ message: "Todo not found" });
       })
@@ -92,11 +94,45 @@ class TodoController {
     const id = +req.params.id;
     const { status } = req.body;
 
-    
+    Todo.update(
+      {
+        status,
+      },
+      {
+        where: { id },
+      }
+    )
+      .then((result) => {
+        if (result[0] === 1) {
+          return Todo.findByPk(id).then((updated) => {
+            return res.status(200).json(updated);
+          });
+        }
+        return res.status(404).json({ message: "Todo not found" });
+      })
+      .catch((err) => {
+        if (err.name === "SequelizeValidationError") {
+          return res.status(400).json(err.errors);
+        }
+        return res.status(500).json(err);
+      });
   }
 
   static deleteTodo(req, res) {
-    res.send("ini list todo");
+    const id = +req.params.id;
+
+    Todo.destroy({
+      where: { id },
+    })
+    .then(result => {
+      if(result === 1) {
+        return res.status(200).json({message: "Todo is successfully deleted"})
+      }
+      return res.status(404).json({ message: "Todo not found" });
+    })
+    .catch((err) => {
+      return res.status(500).json(err);
+    });
   }
 }
 
