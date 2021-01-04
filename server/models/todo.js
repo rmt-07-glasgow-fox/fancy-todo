@@ -44,9 +44,9 @@ module.exports = (sequelize, DataTypes) => {
     due_date: {
       type: DataTypes.DATE,
       validate: {
-        isBefore: {
-          args: Date.now(),
-          msg: 'Input date must up to date!'
+        isAfter: {
+          args: `${new Date()}`,
+          msg: 'Date is not uptodate!'
         },
         notEmpty: {
           args: true,
