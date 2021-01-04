@@ -15,10 +15,10 @@ class TodoController {
       res.status(201).json(out)
     })
     .catch(err => {
-      if (err.message == "Date must be greater than today") {
-        res.status(400).json({message: "due date must be today or after today"})
+      if (err.name === "SequelizeValidationError") {
+        res.status(400).json({message: "Date must be greater than today"})
       } else {
-        res.status(500).json({message: err})
+        res.status(500).json({message: "server error"})
       }
     })
   }
