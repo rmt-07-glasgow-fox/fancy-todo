@@ -6,57 +6,260 @@ Fancy app is an application to organize your todo list. This app has:
 &nbsp;
 
 ## Available Endpoints List
+- `GET /todos`
+- `POST /todos`
+- `GET /todos/:id`
+- `PUT /todos/:id`
+- `PATCH /todos/:id`
+- `DELETE /todos/:id`
 
+### GET /todos
 
-* **URL**
+> Get all todo list
 
-  <_The URL Structure (path only, no root url)_>
+_Request Header_
+```json
+{
+  "Content-Type": "application/json"
+}
+```
 
-* **Method:**
-  
-  <_The request type_>
+_Request Body_
+```
+not needed
+```
 
-  `GET` | `POST` | `DELETE` | `PUT`
-  
-*  **URL Params**
+_Response (200)_
+```json
+[
+  {
+    "id": 1,
+    "title": "<todo title>",
+    "description": "<todo description>",
+    "status": "<todo status>",
+    "due_date": "<todo due_date>",
+    "createdAt": "2020-03-20T07:15:12.149Z",
+    "updatedAt": "2020-03-20T07:15:12.149Z",
+  },
+  {
+    "id": 2,
+    "title": "<todo title>",
+    "description": "<todo description>",
+    "status": "<todo status>",
+    "due_date": "<todo due_date>",
+    "createdAt": "2020-03-20T07:15:12.149Z",
+    "updatedAt": "2020-03-20T07:15:12.149Z",
+  }
+]
+```
 
-   <_If URL params exist, specify them in accordance with name mentioned in URL section. Separate into optional and required. Document data constraints._> 
+_Response (500 - Server errors)_
+```
+{
+  "message": "internal server error"
+}
+```
+---
+### POST /todos
 
-   **Required:**
- 
-   `id=[integer]`
+> Create new todo
 
-   **Optional:**
- 
-   `photo_id=[alphanumeric]`
+_Request Header_
+```json
+{
+  "Content-Type": "application/json"
+}
+```
 
-* **Data Params**
+_Request Body_
+```json
+{
+    "title": "<todo title>",
+    "description": "<todo description>",
+    "due_date": "<todo due_date>",
+}
+```
 
-  <_If making a post request, what should the body payload look like? URL Params rules apply here too._>
+_Response (201 - Created)_
+```json
+{
+  "id": <given id by system>,
+  "title": "<todo title>",
+  "description": "<todo description>",
+  "status": false,
+  "due_date": "<todo due_date>",
+  "createdAt": "2020-03-20T07:15:12.149Z",
+  "updatedAt": "2020-03-20T07:15:12.149Z",
+}
+```
 
-* **Success Response:**
-  
-  <_What should the status code be on success and is there any returned data? This is useful when people need to to know what their callbacks should expect!_>
+_Response (400 - Validation error)_
+```json
+{
+  "message": "validation error"
+}
+```
+_Response (500 - Server errors)_
+```
+{
+  "message": "internal server error"
+}
+```
+---
+### GET /todos/:id
+> Get todo by id
 
-  * **Code:** 200 <br />
-    **Content:** `{ id : 12 }`
- 
-* **Error Response:**
+_Request Header_
+```json
+{
+  "Content-Type": "application/json"
+}
+```
 
-  <_Most endpoints will have many ways they can fail. From unauthorized access, to wrongful parameters etc. All of those should be liste d here. It might seem repetitive, but it helps prevent assumptions from being made where they should be._>
+_Request Body_
+```
+not needed
+```
 
-  * **Code:** 401 UNAUTHORIZED <br />
-    **Content:** `{ error : "Log in" }`
+_Response (200)_
+```json
+{
+  "id": "<todo id>",
+  "title": "<todo title>",
+  "description": "<todo description>",
+  "status": "<todo status>",
+  "due_date": "<todo due_date>"
+}
+```
 
-  OR
+_Response (404 - Id not found)_
+```json
+{
+  "message": "error not found"
+}
+```
+---
+### PUT /todos/:id
+> Edit todo by id
 
-  * **Code:** 422 UNPROCESSABLE ENTRY <br />
-    **Content:** `{ error : "Email Invalid" }`
+_Request Header_
+```json
+{
+  "Content-type": "application/json"
+}
+```
 
-* **Sample Call:**
+_Request Body_
+```json
+{
+  "title": "<todo title>",
+  "description": "<todo description>",
+  "status": "<todo status>",
+  "due_date": "<todo due date>"
+}
+```
+_Response (200 - Updated Todo)_
+```json
+{
+  "id": "<todo id>",
+  "title": "<todo title>",
+  "description": "<todo description>",
+  "status": "<todo status>",
+  "due_date": "<todo due date>"
+}
+```
+_Response (400 - Validation error)_
+```json
+{
+  "message": "validation error"
+}
+```
+_Response (404 - Id not found)_
+```json
+{
+  "message": "error not found"
+}
+```
+_Response (500 - Server error)_
+```json
+{
+  "message": "internal server error"
+}
+```
+---
+### PATCH /todos/:id
+> Update todo status by id
 
-  <_Just a sample call to your endpoint in a runnable format ($.ajax call or a curl request) - this makes life easier and more predictable._> 
+_Request Header_
+```json
+{
+  "Content-Type": "application/json"
+}
+```
+_Request Body_
+```json
+{
+  "status": "<todo status>"
+}
+```
+_Response (200 - Updated Todo Status)_
+```json
+{
+  "id": "<todo id>",
+  "title": "<todo title>",
+  "description": "<todo description>",
+  "status": "<todo status>",
+  "due_date": "<todo due date>"
+}
+```
+_Response (400 - Validation error)_
+```json
+{
+  "message": "validation error"
+}
+```
+_Response (404 - Id not found)_
+```json
+{
+  "message": "error not found"
+}
+```
+_Response (500 - Server error)_
+```json
+{
+  "message": "internal server error"
+}
+```
+---
+### DELETE /todos/:id
+> Delete todo by id
 
-* **Notes:**
+_Request Header_
+```json
+{
+  "Content-Type": "application/json"
+}
+```
 
-  <_This is where all uncertainties, commentary, discussion etc. can go. I recommend timestamping and identifying oneself when leaving comments here._> 
+_Request Body_
+```
+not needed
+```
+_Response (200)_
+```json
+{
+  "message": "todo succes to delete"
+}
+```
+_Response (404 - Id not found)_
+```json
+{
+  "message": "error not found"
+}
+```
+_Response (500 - Server errors)_
+```json
+{
+  "message": "internal server error"
+}
+```
