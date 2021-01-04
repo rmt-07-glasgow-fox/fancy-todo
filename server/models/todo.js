@@ -17,7 +17,17 @@ module.exports = (sequelize, DataTypes) => {
   Todo.init({
     title: DataTypes.STRING,
     description: DataTypes.STRING,
-    status: DataTypes.BOOLEAN,
+    status: {
+      type: DataTypes.BOOLEAN,
+      // validate: {
+      //   isBoolean(value) {
+      //     console.log(typeof value);
+      //     if(value.toLowerCase() !== "true" || value.toLowerCase() !== "true"){
+      //       throw new Error("Status must either be true or false")
+      //     }
+      //   }
+      // }
+    },
     due_date: {
       type: DataTypes.DATE,
       validate: {
