@@ -21,17 +21,22 @@ class TodoController {
             status
         })
             .then(todo => {
+                console.log(todo)
                 res.status(201).json(todo)
             })
             .catch(err => {
+                const errorMessages = []
+
                 err.errors.forEach(error => {
                     if (error.type === 'Validation error') {
-                        res.status(400).json({message: error.message})
+                        errorMessages.push({message: error.message})
                     }
                     else {
-                        res.status(500).json({message: "Internal server error."})
+                        return res.status(500).json({message: "Internal server error."})
                     }
                 })
+
+                return res.status(400).json(errorMessages)
             })
     }
 
@@ -77,6 +82,53 @@ class TodoController {
                 else {
                     res.status(404).json({message: "Error: todo not found."})
                 }
+            })
+    }
+
+    static patchUpdateTodos(req, res) {
+        const {status} = req.body
+        Todo.findByPk(+req.params.id)
+            .then(currentTodo => {
+                return currentTodo.update({
+                    status
+                })
+            })
+            .then(updatedTodo => {
+                res.status(200).json(updatedTodo)
+            })
+            .catch(err => {
+                if (err.errors) {
+                    err.errors.forEach(error => {
+                        if (error.type === 'Validation error') {
+                            res.status(400).json({message: error.message})
+                        }
+                        else {
+                            res.status(500).json({message: "Internal server error."})
+                        }
+                    })
+                }
+                else {
+                    res.status(404).json({message: "Error: todo not found."})
+                }
+            })
+    }
+
+    static deleteTodos(req, res) {
+        Todo.destroy({
+            where: {
+                id: +req.params.id
+            }
+        })
+            .then(result => {
+                if (result === 1) {
+                    res.status(200).json({message: "Todo successfully deleted."})
+                }
+                else {
+                    res.status(404).json({message: "Error: todo not found."})
+                }
+            })
+            .catch(err => {
+                res.status(500).json({message: "Internal server error."})
             })
     }
 }
