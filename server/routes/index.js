@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const Controller = require('../controllers/todoController.js');
+const authRouter = require('./auth.js');
+
+router.use('/', authRouter);
 
 router.get('/todos', Controller.getAllTodoHandler);
 router.get('/todos/:id', Controller.getOneTodoHandler);
