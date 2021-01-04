@@ -30,6 +30,20 @@ class todosController {
             return res.status(500).json('Server Error');
         }
     }
+
+    static async getTodoById (req, res) {
+        try {
+            let data = await Todo.findByPk(req.params.id);
+
+            if (!data) {
+                return res.status(404).json(`Cannot found data with id ${req.params.id}`);
+            }
+
+            return res.status(200).json(data);
+        } catch (err) {
+            return res.status(500).json('Serever Error');
+        }
+    }
 }
 
 module.exports = todosController;
