@@ -8,15 +8,13 @@ Fancy Todo is an web application to manage todo list. This app has :
 
 ## RESTful endpoints
 
-### GET /assets
+### GET /todos
 
 > Get all assets
 
 _Request Header_
 ```
-{
-  "access_token": "<your access token>"
-}
+
 ```
 
 _Request Body_
@@ -25,29 +23,33 @@ not needed
 ```
 
 _Response (200)_
-```
+```json
 [
   {
     "id": 1,
-    "name": "<asset name>",
-    "description": "<asset description>",
-    "createdAt": "2020-03-20T07:15:12.149Z",
-    "updatedAt": "2020-03-20T07:15:12.149Z",
+    "title": "<todo title>",
+    "description": "<todo description>",
+    "status": "<todo status>",
+    "due_date": "<todo due_date in Date format>",
+    "createdAt": "2021-01-04T16:08:02.900Z",
+    "updatedAt": "2021-01-04T16:08:02.900Z"
   },
   {
-    "id": 2,
-    "name": "<asset name>",
-    "description": "<asset description>",
-    "createdAt": "2020-03-20T07:15:12.149Z",
-    "updatedAt": "2020-03-20T07:15:12.149Z",
+    "id": 1,
+    "title": "<todo title>",
+    "description": "<todo description>",
+    "status": "<todo status>",
+    "due_date": "<todo due_date in Date format>",
+    "createdAt": "2021-01-04T16:08:02.900Z",
+    "updatedAt": "2021-01-04T16:08:02.900Z"
   }
 ]
 ```
 
-_Response (400 - Bad Request)_
+_Response (500 - Internal Server Error)_
 ```
 {
-  "message": "Invalid request"
+  "message": "Internal Server Error"
 }
 ```
 ---
