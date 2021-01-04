@@ -12,15 +12,43 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
+
+    getDateToday() {
+      return (new Date()).toJSON().slice(0, -14)
+    }
   };
   Todo.init({
-    title: DataTypes.STRING,
+    title: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Title is empty'
+        }
+      }
+    },
     description: DataTypes.STRING,
-    status: DataTypes.BOOLEAN,
-    due_date: DataTypes.DATE
+    status: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
+    due_date: {
+      type: DataTypes.DATE,
+      validate: {
+        isBefore: {
+          args: `${Todo.getDateToday()}`,
+          msg: `Minimal tanggal harus hari ini ${Todo.getDateToday()}`
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'Todo',
+    hooks: {
+      beforeCreate: (instance, options) => {
+        instance.status = false
+      }
+    }
   });
   return Todo;
 };
