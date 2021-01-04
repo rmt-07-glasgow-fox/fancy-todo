@@ -17,7 +17,15 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     description: DataTypes.STRING,
     status: DataTypes.BOOLEAN,
-    due_date: DataTypes.DATE
+    due_date: {
+      type: DataTypes.DATE,
+      validate : {
+        isAfter : {
+          args : [new Date().toISOString().substring(0,10)],
+          msg : 'Date have to be greater than today'
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'Todo',
