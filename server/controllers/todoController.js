@@ -76,24 +76,28 @@ class TodoController {
   }
 
   static modifyTask (req, res) {
-    // let id = req.params.id
-    // let status= req.body.status
+    let id = req.params.id
+    let status = req.body.status
   
-    // Todo.findByPk(id)
-    // .then(data => {
-    //   if (data == 0) {
-    //     res.status(404).json({message: "data not found"})
-    //   } else {
-    //     res.status(200).json( {...{id: id}, ...input})
-    //   }
-    // })
-    // .catch(err => {
-    //   if (err.name === "SequelizeValidationError") {
-    //     res.status(400).json({message: "Date must be greater than today"})
-    //   } else {
-    //     res.status(500).json({message: "server error"})
-    //   }
-    // })
+    Todo.findByPk(id)
+    .then(data => {
+      if (!data) {
+        return res.status(404).json({message: "data not found"})
+      } else {
+        data.status = status
+        return data.save()
+      }
+    })
+    .then(data2 => {
+      return res.status(200).json(data2)
+    })
+    .catch(err => {
+      if (err.name === "SequelizeValidationError") {
+        res.status(400).json({message: "Date must be greater than today"})
+      } else {
+        res.status(500).json({message: err.message})
+      }
+    })
   }
 
   static deleteTask (req, res) {
