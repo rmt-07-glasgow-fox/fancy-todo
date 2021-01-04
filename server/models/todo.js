@@ -47,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         idPassed (value) {
           if (Date.parse(value) < Date.now()) {
-            throw new Error('Date already passed!');
+            throw new Error('Date already passed!!!');
           }
         }
       }
