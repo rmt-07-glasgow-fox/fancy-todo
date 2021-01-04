@@ -1,19 +1,26 @@
 const { Todo } = require('../models');
 
 class todosController {
-    static async getTodos (req, res) {
+    static async getTodos (req, res, next) {
         try {
             let data = await Todo.findAll({ attributes: { exclude: ['createdAt', 'updatedAt'] } });
 
             return res.status(200).json(data);
         } catch (err) {
-            return res.status(500).json('Server Error');
+            return next({ code: 500 });
         }
     }
 
-    static async postTodos (req, res) {
+    static async postTodos (req, res, next) {
         try {
-            let data = await Todo.create(req.body);
+            let data = {
+                title: req.body.title,
+                description: req.body.description,
+                status: req.body.status,
+                dueDate: req.body.dueDate
+            };
+
+            data = await Todo.create(data);
 
             data = {
                 id: data.id,
@@ -26,25 +33,19 @@ class todosController {
             return res.status(201).json(data);
         } catch (err) {
             if (err.errors) {
-                let msg = [];
-
-                await err.errors.forEach(e => {
-                    msg.push(e.message);
-                });
-
-                return res.status(404).json({ name: 'Validation Error', msg: msg });
+                return next({ code: 400, name: 'Validation Error', msg: err });
             }
 
-            return res.status(500).json('Server Error');
+            return next({ code: 500 });
         }
     }
 
-    static async getTodoById (req, res) {
+    static async getTodoById (req, res, next) {
         try {
             let data = await Todo.findByPk(req.params.id);
 
             if (!data) {
-                return res.status(404).json({ msg: `Cannot found data with id ${req.params.id}` });
+                return next({ code: 404, msg: `Cannot found data with id ${req.params.id}` });
             }
 
             data = {
@@ -57,11 +58,11 @@ class todosController {
 
             return res.status(200).json(data);
         } catch (err) {
-            return res.status(500).json('Server Error');
+            return next({ code: 500 });
         }
     }
 
-    static async putTodo (req, res) {
+    static async putTodo (req, res, next) {
         try {
             let data = await Todo.update({
                 title: req.body.title,
@@ -73,7 +74,7 @@ class todosController {
             });
 
             if (!data[0]) {
-                return res.status(404).json({ msg: `Data with id ${req.params.id} not found` });
+                return next({ code: 404, msg: `Data with id ${req.params.id} not found` });
             }
 
             data = await Todo.findByPk(req.params.id);
@@ -89,20 +90,14 @@ class todosController {
             return res.status(200).json(data);
         } catch (err) {
             if (err.errors) {
-                let msg = [];
-
-                await err.errors.forEach(e => {
-                    msg.push(e.message);
-                });
-
-                return res.status(400).json({ name: 'Validation Error', msg: msg });
+                return next({ code: 400, name: 'Validation Error', msg: err });
             }
 
-            return res.status(500).json('Server Error');
+            return next({ code: 500 });
         }
     }
 
-    static async patchTodo (req, res) {
+    static async patchTodo (req, res, next) {
         try {
             let data = await Todo.update({
                 status: req.body.status
@@ -113,7 +108,7 @@ class todosController {
             });
 
             if (!data[0]) {
-                return res.status(404).json({ msg: `Data with id ${req.params.id} not found` });
+                return next({ code: 404, msg: `Data with id ${req.params.id} not found` });
             }
 
             data = await Todo.findByPk(req.params.id);
@@ -129,30 +124,24 @@ class todosController {
             return res.status(200).json(data);
         } catch (err) {
             if (err.errors) {
-                let msg = [];
-
-                await err.errors.forEach(e => {
-                    msg.push(e.message);
-                });
-
-                return res.status(400).json({ name: 'Validation Error', msg: msg });
+                return next({ code: 400, name: 'Validation Error', msg: err });
             }
 
-            return res.status(500).json('Server Error');
+            return next({ code: 500 });
         }
     }
 
-    static async deleteTodo (req, res) {
+    static async deleteTodo (req, res, next) {
         try {
             let data = await Todo.destroy({ where: { id: req.params.id } });
 
             if (!data) {
-                return res.status(404).json({ msg: `Data with id ${req.params.id} not found` });
+                return next({ code: 404, msg: `Data with id ${req.params.id} not found` });
             }
 
             return res.status(200).json('Todo success to delete');
         } catch (err) {
-            return res.status(500).json('Server Error');
+            return next({ code: 500 });
         }
     }
 }
