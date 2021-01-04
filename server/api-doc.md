@@ -1,0 +1,347 @@
+# fancy-todo
+
+
+**SHOW ALL TODOS USER**
+----
+  <_SHOW TODOS User _>
+
+* **URL**
+
+  `/todos`
+
+* **Method:**
+
+  `GET`
+  
+*  **URL Params**
+
+    Required: 
+
+    `none`
+
+* **Data Params**
+
+  `none`
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ```json
+    [
+      {
+        "id": 9,
+        "title": "manjat pohon toge",
+        "description": "manjat pohon sekolah",
+        "status": "belum selesai",
+        "due_date": "2020-12-28T17:00:00.000Z",
+        "createdAt": "2020-11-25T16:01:28.995Z",
+        "updatedAt": "2020-11-25T16:01:28.996Z"
+      }
+    ]
+    ```
+ 
+* **Error Response:**
+
+  * **Code:** 500 <br />
+    **Content:** 
+    ```json
+        {
+            "message": "internal server error"
+        }
+    ```
+
+
+**SHOW TODOS USER BY ID**
+----
+  <_SHOW TODOS User by id _>
+
+* **URL**
+
+  `/todos/:id`
+
+* **Method:**
+
+  `GET`
+  
+*  **URL Params**
+
+    Required: 
+
+    `id =[integer]`
+
+* **Data Params**
+
+  `none`
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ```json
+      {
+        "id": 9,
+        "title": "manjat pohon toge",
+        "description": "manjat pohon sekolah",
+        "status": "belum selesai",
+        "due_date": "2020-12-28T17:00:00.000Z",
+        "createdAt": "2020-11-25T16:01:28.995Z",
+        "updatedAt": "2020-11-25T16:01:28.996Z",
+      }
+    ```
+ 
+* **Error Response:**
+
+  * **Code:** 500 <br />
+    **Content:** 
+    ```json
+        {
+            "message": "internal server error"
+        }
+    ```
+
+  OR
+
+  * **Code:** 404  <br />
+    **Content:** 
+    ```json
+        {
+            "message": "todo not found"
+        }
+    ```
+
+**DELETE TODOS USER**
+----
+  <_DELETE TODOS User _>
+
+* **URL**
+
+  `/todos/:id`
+
+* **Method:**
+
+  `DELETE`
+  
+*  **URL Params**
+
+    Required: 
+
+    `id =[integer]`
+
+* **Data Params**
+
+  `none`
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ```json
+      {
+        "message": "todo success to delete"
+      }
+    ```
+ 
+* **Error Response:**
+
+  * **Code:** 500 <br />
+    **Content:** 
+    ```json
+        {
+            "message": "internal server error"
+        }
+    ```
+
+
+  * **Code:** 404  <br />
+    **Content:** 
+    ```json
+        {
+            "message": "todo not found!"
+        }
+    ```
+
+**UPDATE TODOS STATUS**
+----
+  <_UPDATE TODOS STATUS _>
+
+* **URL**
+
+  `/todos/:id`
+
+* **Method:**
+
+  `PATCH`
+  
+*  **URL Params**
+
+    Required: 
+
+    `id =[integer]`
+
+* **Data Params**
+
+  `status =[string]`
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ```json
+      {
+        "id": 9,
+        "title": "manjat pohon toge",
+        "description": "manjat pohon sekolah",
+        "status": "selesai",
+        "due_date": "2020-12-28T17:00:00.000Z",
+        "createdAt": "2020-11-25T16:01:28.995Z",
+        "updatedAt": "2020-11-25T16:01:28.996Z"
+      }
+    ```
+ 
+* **Error Response:**
+
+  * **Code:** 500 <br />
+    **Content:** 
+    ```json
+        {
+            "message": "internal server error"
+        }
+    ```
+
+
+  * **Code:** 404  <br />
+    **Content:** 
+    ```json
+        {
+            "message": "todo not found!"
+        }
+    ```
+
+**UPDATE TODOS**
+----
+  <_UPDATE TODOS _>
+
+* **URL**
+
+  `/todos/:id`
+
+* **Method:**
+
+  `PUT`
+  
+*  **URL Params**
+
+    Required: 
+
+    `id =[integer]`
+
+* **Data Params**
+
+  `title=[string] description=[string] status =[string] due_date=[string]`
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ```json
+      {
+        "id": 2,
+        "title": "manjat pohon toge",
+        "description": "manjat pohon sekolah",
+        "status": "selesai",
+        "due_date": "2020-12-28T17:00:00.000Z",
+        "createdAt": "2020-11-25T16:01:28.995Z",
+        "updatedAt": "2020-11-25T16:01:28.996Z"
+      }
+    ```
+ 
+* **Error Response:**
+
+  * **Code:** 500 <br />
+    **Content:** 
+    ```json
+        {
+            "message": "internal server error"
+        }
+    ```
+
+
+  * **Code:** 404  <br />
+    **Content:** 
+    ```json
+        {
+            "message": "todo not found!"
+        }
+    ```
+
+  * **Code:** 400  <br />
+    **Content:** 
+    ```json
+        {
+            "message": "date must be greater than now"
+        }
+    ```
+
+
+**CREATE TODOS**
+----
+  <_CREATE TODOS _>
+
+* **URL**
+
+  `/todos/:id`
+
+* **Method:**
+
+  `POST`
+  
+*  **URL Params**
+
+    Required: 
+
+    `none`
+
+* **Data Params**
+
+  `title=[string] description=[string] status =[string] due_date=[string]`
+
+* **Success Response:**
+
+  * **Code:** 201 <br />
+    **Content:** 
+    ```json
+      {
+        "id": 9,
+        "title": "manjat pohon toge",
+        "description": "manjat pohon sekolah",
+        "status": "selesai",
+        "due_date": "2020-12-28T17:00:00.000Z",
+        "createdAt": "2020-11-25T16:01:28.995Z",
+        "updatedAt": "2020-11-25T16:01:28.996Z",
+      }
+    ```
+ 
+* **Error Response:**
+
+  * **Code:** 500 <br />
+    **Content:** 
+    ```json
+        {
+            "message": "internal server error"
+        }
+    ```
+
+  * **Code:** 400  <br />
+    **Content:** 
+    ```json
+        {
+            "message": [
+              "date must be greater than now",
+              "title cannot be empty",
+              "date cannot be empty",
+              "description cannot be empty",
+              "staus cannot be empty"
+              ]
+        }
+    ```
