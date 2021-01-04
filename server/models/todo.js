@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         notEmpty: {
-          msg: 'Email required!'
+          msg: 'Title required!'
         }
       }
     },
@@ -38,6 +38,13 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           msg: 'Due Date required!'
+        },
+        dateIsNewer (date) {
+          let inputDate = new Date (date)
+          let currenDate = new Date ()
+          if (inputDate < currenDate) {
+            throw new Error ('Due Date need to be newer than current date')
+          }
         }
       }
     }

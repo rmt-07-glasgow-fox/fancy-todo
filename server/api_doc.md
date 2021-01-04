@@ -29,12 +29,12 @@ _Response (200)_
     "id": "<given id by system>",
     "title": "<to do title>",
     "description": "<to do description>",
-    "status": "<true or false>",
+    "status": true,
     "due_date": "2020-03-20T07:15:12.149Z",
   },
   {
     "id": "<given id by system>",
-    "title": "<true or false>",
+    "title": "<to do title>",
     "description": "<to do description>",
     "status": false,
     "due_date": "2020-03-20T07:15:12.149Z",
@@ -76,7 +76,7 @@ _Response (201 - Created)_
   "id": "<given id by system>",
   "title": "<to do title>",
   "description": "<to do description>",
-  "status": "2020-03-20T07:15:12.149Z",
+  "status": "<to do status>",
   "due_date": "2020-03-20T07:15:12.149Z",
 }
 ```
