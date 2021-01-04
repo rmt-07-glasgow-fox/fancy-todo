@@ -39,16 +39,17 @@ class TodoController {
     .then(data => {
       if (data) {
         res.status(201).json(data)
-      } else if (data) {
-        res.status(400).json({message: "due date must be today or after today"})
       } else if (!data) {
         res.status(404).json({message: "data not found"})
       }
     })
     .catch(err => {
-      res.status(500).json({message: "server error"})
+      if (err.name === "SequelizeValidationError") {
+        res.status(400).json({message: "Date must be greater than today"})
+      } else {
+        res.status(500).json({message: "server error"})
+      }
     })
-
   }
 
   static updateTask (req, res) {
