@@ -61,12 +61,39 @@ class todosController {
             res.status(200).json({message: "data updated!"})
         })
         .catch(err => {
-            res.status(500).json(err)
+            res.status(500)
         })
     }
 
     static changeStatus(req, res) {
-        
+        const status = req.body.status
+
+        Todo.update({status: status}, {
+            where: {
+                id: req.params.id
+            }
+        })
+        .then(data => {
+            console.log(data)
+            res.status(200).json({message: "status updated!"})
+        })
+        .catch(err => {
+            res.status(500)
+        })
+    }
+
+    static deleteTodo(req, res) {
+        Todo.destroy({
+            where: {
+                id: req.params.id
+            }
+        })
+        .then(data => {
+            res.status(200).json({message: "todo success to delete"})
+        })
+        .catch(err => {
+            res.status(500)
+        })
     }
 
 }

@@ -1,12 +1,9 @@
 const router = require("express").Router()
-const todosController = require("../controllers/todosController.js")
+const todosRouter = require("../routes/todosRouter")
+const authRouter = require("./authRouter.js")
 
-
-router.post('/todos', todosController.createTodo)
-router.get('/todos', todosController.getTodo)
-router.get('/todos/:id', todosController.getTodoById)
-router.put('/todos/:id', todosController.editTodo)
-router.patch('/todos/:id', todosController.changeStatus)
+router.use('/todos', todosRouter)
+router.use(authRouter)
 
 
 module.exports = router
