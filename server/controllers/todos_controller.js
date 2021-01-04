@@ -23,19 +23,6 @@ class TodosController {
         return res.status(500).json({msg: 'Internal server error!'})
       }
     }
-
-    // Todo.create(todoObj)
-    // .then((todo) => {
-    //   return res.status(201).json({
-    //     msg: 'Successfuly create new To Do!',
-    //     todo
-    //   })
-    // })
-    // .catch((error) => {
-    //   return res.status(400).json({
-    //     msg: 'Invalid create new To Do'
-    //   })
-    // })
   }
 
   static async index(req, res) {
@@ -48,14 +35,6 @@ class TodosController {
     } catch (error) {
       return res.status(500).json({msg: 'Cannot retrieve data!'})
     }
-
-    // Todo.findAll()
-    // .then((todos) => {
-    //   res.status(200).json(todos)
-    // })
-    // .catch((error) => {
-    //   res.status(400).json(error)
-    // })
   }
 
   static async show(req, res) {
@@ -69,14 +48,6 @@ class TodosController {
     } catch (error) {
       return res.status(400).json({msg: 'Data not found!'})
     }
-
-    // Todo.findByPk({where: {id: +req.params.id}})
-    // .then((todo) => {
-    //   res.status(200).json(todo)
-    // })
-    // .catch((error) => {
-    //   res.status(400).json(error)
-    // })
   }
 
   static async updatePut(req, res) {
@@ -106,13 +77,6 @@ class TodosController {
       }
     }
 
-    // Todo.update({where: {id: +req.params.id}})
-    // .then((todo) => {
-    //   res.status(200).json(todo)
-    // })
-    // .catch((error) => {
-    //   res.status(400).json(error)
-    // })
   }
 
   static async updatePatch(req, res) {
@@ -138,15 +102,6 @@ class TodosController {
       }
     }
 
-    // Todo.update({where: {id: +req.params.id}})
-    // .then((todo) => {
-    //   // console.log('SUSKES');
-    //   res.status(200).json(todo)
-    // })
-    // .catch((error) => {
-    //   // console.log('GAGAL');
-    //   res.status(400).json(erorr)
-    // })
   }
 
   static async destroy(req, res) {
@@ -162,15 +117,6 @@ class TodosController {
       return res.status(500).json({msg: 'Internal server error'})
     }
 
-    // Todo.destroy({where: {id: +req.params.id}})
-    // .then((todo) => {
-    //   res.status(200).json(todo, {
-    //     msg: `Todo list ${todo.title} has been deleted!`
-    //   })
-    // })
-    // .catch((error) => {
-    //   res.status(500).json(json)
-    // })
   }
 
 }
