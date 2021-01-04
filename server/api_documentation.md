@@ -195,7 +195,7 @@ _Request Body_
 }
 ```
 
-_Response (200 - Created)_
+_Response (200)_
 ```json
 {
     "status" : "success",
@@ -252,7 +252,7 @@ _Request Body_
 }
 ```
 
-_Response (200 - Created)_
+_Response (200)_
 ```json
 {
   "status": "success",
@@ -307,7 +307,7 @@ _Request Body_
 not needed
 ```
 
-_Response (200 - Created)_
+_Response (200)_
 ```json
 {
   "status": "success",
