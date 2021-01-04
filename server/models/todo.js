@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
 
-    getDateToday() {
+    static getDateToday() {
       return (new Date()).toJSON().slice(0, -14)
     }
   };
@@ -35,9 +35,17 @@ module.exports = (sequelize, DataTypes) => {
     due_date: {
       type: DataTypes.DATE,
       validate: {
-        isBefore: {
+        isAfter: {
           args: `${Todo.getDateToday()}`,
           msg: `Minimal tanggal harus hari ini ${Todo.getDateToday()}`
+        },
+        notEmpty: {
+          args: true,
+          msg: 'due_date is empty'
+        },
+        isDate: {
+          args: true,
+          msg: 'input due_date harus datatype date'
         }
       }
     }

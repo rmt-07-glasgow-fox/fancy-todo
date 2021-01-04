@@ -1,5 +1,4 @@
 // let dateNow = (new Date()).toJSON().slice(0, -14)
-
 // console.log(dateNow)
 
 function date() {
@@ -7,3 +6,5 @@ function date() {
 }
 
 console.log(date())
+
+console.log(new Date())
