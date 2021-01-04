@@ -58,6 +58,23 @@ exports.update = async (req, res) => {
   }
 };
 
-exports.updateStatus = (req, res) => {};
+exports.updateStatus = async (req, res) => {
+  const id = req.params.id;
+  const status = req.body.status;
+
+  try {
+    const isFound = await Todo.findOne({ where: { id: id } });
+    if (!isFound) return res.status(404).json({ message: 'error not found' });
+    else {
+      const todo = await Todo.update(
+        { status: status },
+        { where: { id: id }, returning: true }
+      );
+      return res.status(200).json(todo[1][0]);
+    }
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+};
 
 exports.destroy = (req, res) => {};
