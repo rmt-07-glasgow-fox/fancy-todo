@@ -1,7 +1,5 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Todo extends Model {
     /**
@@ -12,15 +10,42 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
-  };
-  Todo.init({
-    title: DataTypes.STRING,
-    description: DataTypes.STRING,
-    status: DataTypes.STRING,
-    due_date: DataTypes.DATE
-  }, {
-    sequelize,
-    modelName: 'Todo',
-  });
+  }
+  Todo.init(
+    {
+      title: {
+        type: DataTypes.STRING,
+        validate: {
+          notEmpty: { args: true, msg: 'Title is required' },
+        },
+      },
+      description: {
+        type: DataTypes.STRING,
+        validate: {
+          notEmpty: { args: true, msg: 'Description is required' },
+        },
+      },
+      status: {
+        type: DataTypes.STRING,
+        validate: {
+          notEmpty: { args: true, msg: 'status is required' },
+        },
+      },
+      due_date: {
+        type: DataTypes.DATE,
+        validate: {
+          notEmpty: { args: true, msg: 'Date is required' },
+          isAfter: {
+            args: new Date().toString(),
+            msg: 'Due date is grater than today',
+          },
+        },
+      },
+    },
+    {
+      sequelize,
+      modelName: 'Todo',
+    }
+  );
   return Todo;
 };
