@@ -1,3 +1,4 @@
+const { RSA_NO_PADDING, ESRCH } = require('constants')
 const { Todo } = require('../models')
 
 class TodoController {
@@ -28,6 +29,22 @@ class TodoController {
           res.status(400).json(err.message)
         }
         res.status(500).json({ messages: 'internal server eror' })
+      })
+  }
+
+  static getTodoById(req, res) {
+    const todoId = +req.params.id
+
+    Todo.findByPk(todoId)
+      .then(data => {
+        if (data) {
+          res.status(200).json(data)
+        } else {
+          res.status(404).json({ message: 'Todo not found' })
+        }
+      })
+      .catch(err => {
+        res.status(500).json({ message: 'internal server error' })
       })
   }
 
