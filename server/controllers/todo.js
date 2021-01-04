@@ -1,6 +1,13 @@
 const { Todo } = require('../models');
 
-exports.list = (req, res) => {};
+exports.list = async (req, res) => {
+  try {
+    const todos = await Todo.findAll();
+    return res.status(200).json(todos);
+  } catch (error) {
+    return res.status(400).json(error);
+  }
+};
 
 exports.create = async (req, res) => {
   const body = {
@@ -12,7 +19,7 @@ exports.create = async (req, res) => {
 
   try {
     const todo = await Todo.create(body);
-    return res.status(200).json(todo);
+    return res.status(201).json(todo);
   } catch (error) {
     return res.status(400).json(error);
   }
