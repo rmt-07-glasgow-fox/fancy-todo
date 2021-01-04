@@ -1,0 +1,25 @@
+{
+  "name": "fancy-todo",
+  "version": "1.0.0",
+  "description": "Membuat website untuk mencatat hal - hal menarik untuk dilakukan",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "NODE_ENV=development nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aldyco/fancy-todo.git"
+  },
+  "author": "Aldyco",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aldyco/fancy-todo/issues"
+  },
+  "homepage": "https://github.com/aldyco/fancy-todo#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "pg": "^8.5.1",
+    "sequelize": "^6.3.5"
+  }
+}
