@@ -37,7 +37,26 @@ exports.detail = async (req, res) => {
   }
 };
 
-exports.update = (req, res) => {};
+exports.update = async (req, res) => {
+  const id = req.params.id;
+  const body = {
+    title: req.body.title,
+    description: req.body.description,
+    status: req.body.status,
+    due_date: req.body.due_date,
+  };
+
+  try {
+    const isFound = await Todo.findOne({ where: { id: id } });
+    if (!isFound) return res.status(404).json({ message: 'error not found' });
+    else {
+      const todo = await Todo.update(body, { where: { id: id } });
+      return res.status(200).json(isFound);
+    }
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+};
 
 exports.updateStatus = (req, res) => {};
 
