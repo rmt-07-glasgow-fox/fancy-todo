@@ -8,10 +8,7 @@ class UserController {
       const {email, password} = req.body;
       const newUser = {email, password};
       const createdUser = await User.create(newUser);
-      const response = {
-        id: createdUser.id,
-        email: createdUser.email
-      };
+      const response = { message: 'Success create user' };
       res.status(201).json(response)
     } catch (err) {
       res.status(400).json(err);
