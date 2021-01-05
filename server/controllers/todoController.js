@@ -4,7 +4,6 @@ class TodoController{
     static getTodos(req, res){
         Todo.findAll()
         .then(data => {
-            // data.map(el => el.due_date = new Date(el.due_date + "UTC"))
             res.status(200).json(data)
         })
         .catch(() => {
@@ -13,11 +12,13 @@ class TodoController{
     }
 
     static addTodo(req, res){
+        // console.log(req.userData);
         const value = {
             title: req.body.title,
             description: req.body.description,
             status: req.body.status,
-            due_date: req.body.due_date
+            due_date: req.body.due_date,
+            UserId: req.userData.id
         }
         Todo.create(value)
         .then(data => {

@@ -1,5 +1,5 @@
 const { User } = require('../models')
-const { unhashPassword } = require('../helpers')
+const { unhashPassword, generateToken } = require('../helpers')
 
 class UserController{
     static handleRegister(req, res){
@@ -15,10 +15,10 @@ class UserController{
                 username: data.username,
                 email: data.email
             }
-            // res.status(200).json(result)
-            res.status(200).json({message: "Register Success"})
+            res.status(201).json(result)
         })
         .catch(err => {
+            // console.log(err);
             if (err.name === "SequelizeValidationError"){
                 let errMsg = []
                 err.errors.forEach(error => {
@@ -38,10 +38,13 @@ class UserController{
             where: {email}
         })
         .then(data => {
-            // console.log(data);
             if (data && unhashPassword(password, data.password)){
-                // res.status(200).json(data)
-                res.status(200).json({message: "Login Success"})
+                let acces_token = generateToken({
+                    id: data.id,
+                    username: data.username,
+                    email: data.email
+                })
+                res.status(200).json({acces_token})
             } else {
                 res.status(404).json({message: "Invalid Email/Password"})
             }
