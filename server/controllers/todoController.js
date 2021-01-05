@@ -1,6 +1,6 @@
 const {Todo} = require('../models')
 
-class Controller{
+class TodoController{
     static getTodos(req, res){
         Todo.findAll()
         .then(data => {
@@ -31,6 +31,7 @@ class Controller{
                 });
                 res.status(400).json(errMsg)
             } else {
+                // res.send(err)
                 res.status(500).json({message: "Internal Server Error"})
             }
         })
@@ -73,7 +74,11 @@ class Controller{
         .catch(err => {
             console.log(err);
             if(err.name === "SequelizeValidationError"){
-                res.status(400).json({message: "Due date not valid"})
+                let errMsg = []
+                err.errors.forEach(error => {
+                    errMsg.push(error.message)
+                });
+                res.status(400).json(errMsg)
             } else {
                 res.status(500).json({message: "Internal Server Error"})
             }
@@ -117,4 +122,4 @@ class Controller{
     }
 }
 
-module.exports = Controller
+module.exports = TodoController

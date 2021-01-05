@@ -14,7 +14,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Todo.init({
-    title: DataTypes.STRING,
+    title: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: "Title must be filled"
+        }
+      }
+    },
     description: DataTypes.TEXT,
     status: {
       type: DataTypes.BOOLEAN,
@@ -29,11 +36,9 @@ module.exports = (sequelize, DataTypes) => {
     due_date: {
       type: DataTypes.DATE,
       validate: {
-        chechDate(value) {
-          let result = new Date(value).getTime() - new Date().getTime()
-          if (result < 0) {
-            throw new Error('Due date not valid')
-          }
+        isAfter: {
+          args: String(new Date()),
+          msg: "Due date not valid"
         }
       }
     }
