@@ -4,7 +4,8 @@ const { generateToken } = require('../helpers/jwt.js');
 
 class userController {
   static registerHandler(req, res) {
-    const { email, password } = req.body;
+    const email = req.body.email || null;
+    const password = req.body.password || null;
     User.create({ email, password })
       .then(dataUser => {
         const returnDataUser = {
@@ -15,7 +16,7 @@ class userController {
       })
       .catch(err => {
         if (err.message) {
-          return res.status(500).json({ message: err.message });
+          return res.status(500).json({ message: err });
         }
         return res.status(400).json(err);
       });
