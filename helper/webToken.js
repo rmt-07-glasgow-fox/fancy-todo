@@ -6,4 +6,9 @@ function generateToken(payload) {
     return token
 }
 
-module.exports = generateToken
+function decodeToken(token) {
+    const decoded = jwt.verify(token, SECRET_KEY);
+    return decoded
+}
+
+module.exports = {generateToken, decodeToken}

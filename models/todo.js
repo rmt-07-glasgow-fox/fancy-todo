@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Todo.belongsTo(models.User)
     }
   };
   Todo.init({
@@ -45,7 +46,16 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Can not select a date less than current date'
         }
       }
-    }
+    },
+    UserId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate:{
+        notEmpty: {
+          msg: 'UserId empty'
+        }
+      }
+    },
   }, {
     sequelize,
     modelName: 'Todo',

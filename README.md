@@ -8,6 +8,10 @@ Membuat website untuk mencatat hal - hal menarik untuk dilakuka
 
 >Creat new todo
 
+_Request Header_
+```
+"<access token>"
+```
 _Request Params_
 ```
 not needed
@@ -46,6 +50,10 @@ _Response (500 - Internal Server Error)_
 
 >Get all todo
 
+_Request Header_
+```
+"<access token>"
+```
 _Request Params_
 ```
 not needed
@@ -86,6 +94,10 @@ _Response (500 - Internal Server Error)_
 
 >Get specific todo
 
+_Request Header_
+```
+"<access token>"
+```
 _Request Params_
 ```
 <id as parameter to get specific todo>
@@ -119,6 +131,10 @@ _Response (500 - Internal Server Error)_
 
 >Update/Replace todo
 
+_Request Header_
+```
+"<access token>"
+```
 _Request Params_
 ```
 <id as parameter to Update/Replace todo>
@@ -161,6 +177,10 @@ _Response (500 - Internal Server Error)_
 
 >Update/Modify todo
 
+_Request Header_
+```
+"<access token>"
+```
 _Request Params_
 ```
 <id as parameter to Update/Replace todo>
@@ -200,6 +220,10 @@ _Response (500 - Internal Server Error)_
 
 >Delete todo
 
+_Request Header_
+```
+"<access token>"
+```
 _Request Params_
 ```
 <id as parameter to delete todo>
@@ -221,9 +245,80 @@ _Response (500 - Internal Server Error)_
 {<errors message>}
 ```
 ---
+### POST /signUp
 
+>Delete todo
 
+_Request Header_
+```
+not needed
+```
+_Request Params_
+```
+not needed
+```
+_Request Body_
+```
+{
+    "email": "<title as parameter>",
+    "password": "<description as parameter>"
+}
+```
+_Response (200 - Created)_
+```
+{
+    "id": "<given id by system>",
+    "email": "<posted email>",
+    "password": "<posted password>"
+    "createdAt": "<given createdAt by system>",
+    "updatedAt": "<given updatedAt by system>"
+}
+```
+_Response (400 - Bad Request)_
+```
+[<validation error message>]
+```
+_Response (500 - Internal Server Error)_
+```
+{<errors message>}
+```
+---
 
+### POST /signIn
 
+>Delete todo
 
-
+_Request Header_
+```
+not needed
+```
+_Request Params_
+```
+not needed
+```
+_Request Body_
+```
+{
+    "email": "<title to get insert into>",
+    "password": "<description to get insert into>"
+}
+```
+_Response (201 - Created)_
+```
+{
+    "id": "<user id>",
+    "email": "<user email>",
+    "password": "<user password>"
+    "createdAt": "<user createdAt>",
+    "updatedAt": "<user updatedAt>"
+}
+```
+_Response (404 - Not Found)_
+```
+{"message error not found"}
+```
+_Response (500 - Internal Server Error)_
+```
+{<errors message>}
+```
+---
