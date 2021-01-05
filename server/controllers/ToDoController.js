@@ -1,9 +1,13 @@
-const {Todo} = require ('../models/index')
+const { Todo } = require ('../models/index')
 
 class ToDoController {
   static async getTodos (req, res) {
       try {
-        let data = await Todo.findAll()
+        let data = await Todo.findAll({
+          where: {
+            user_id: req.user
+          }
+        })
         res.status(200).json(data)
       } catch {
         res.status(500).json({message: 'internal server error'})
@@ -33,7 +37,8 @@ class ToDoController {
           title: req.body.title,
           description: req.body.description,
           status: req.body.status,
-          due_date: req.body.due_date
+          due_date: req.body.due_date,
+          user_id: req.user
         }
         let data = await Todo.create (obj)
         res.status(201).json(data)
@@ -117,13 +122,15 @@ class ToDoController {
 
   static async deleteTodos (req, res) {
       try {
+        console.log (req.user, 'req user')
         let data = await Todo.destroy ({
           where: {
-            id: +req.params.id
+            id: +req.params.id,
+            user_id: req.user
           }
         })
         if (data === 1) {
-          res.status(201).json({message: 'todo success to delete'})
+          res.status(200).json({message: 'todo success to delete'})
         } else {
           res.status(404).json({message: 'error not found'})
         }

@@ -15,10 +15,17 @@ module.exports = {
         type: Sequelize.STRING
       },
       status: {
-        type: Sequelize.STRING
+        type: Sequelize.BOOLEAN
       },
       due_date: {
-        type: Sequelize.DATE
+        type: Sequelize.STRING
+      },
+      user_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: {tableName: "Users"},
+          key: "id"
+        }
       },
       createdAt: {
         allowNull: false,

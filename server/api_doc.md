@@ -48,6 +48,60 @@ _Response (400 - Bad Request)_
   "message": "Invalid request"
 }
 ```
+_Response (500 - Internal Server Error)_
+```json
+{
+  "message": "internal server error"
+}
+```
+---
+### GET /todos/:id
+
+> Get specified todo list
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Request Params_
+```json
+{
+  "id": "<To do id>"
+}
+```
+
+_Response (200)_
+```json
+[
+  {
+    "id": "<given id by system>",
+    "title": "<to do title>",
+    "description": "<to do description>",
+    "status": true,
+    "due_date": "2020-03-20T07:15:12.149Z",
+  }
+```
+
+_Response (400 - Bad Request)_
+```json
+{
+  "message": "Invalid request"
+}
+```
+_Response (500 - Internal Server Error)_
+```json
+{
+  "message": "internal server error"
+}
+```
 ---
 ### POST /todos
 
@@ -65,8 +119,8 @@ _Request Body_
 {
   "title": "<title to get insert into>",
   "description": "<description to get insert into>",
+  "status": "<status to get insert into>",
   "due_date": "<due_date to get insert into>",
-  "status": "<status to get insert into>"
 }
 ```
 
@@ -85,5 +139,166 @@ _Response (400 - Bad Request)_
 ```json
 {
   "message": "Invalid requests"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "message": "internal server error"
+}
+```
+---
+### PUT /todos/:id
+
+> Edit specified to do
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```json
+{
+  "title": "<title to get insert into>",
+  "description": "<description to get insert into>",
+  "status": "<status to get insert into>",
+  "due_date": "<due_date to get insert into>",
+}
+```
+
+_Request Params_
+```json
+{
+  "id": "<To do id>"
+}
+```
+
+_Response (200 - OK)_
+```json
+{
+  "id": "<given id by system>",
+  "title": "<to do title>",
+  "description": "<to do description>",
+  "status": "<to do status>",
+  "due_date": "2020-03-20T07:15:12.149Z",
+}
+```
+
+_Response (404 - Not Found)_
+```json
+{
+  "message": "Invalid requests"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "message": "internal server error"
+}
+```
+---
+### PATCH /todos/:id
+
+> Edit one attributes of specified to do
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```json
+{
+  "title": "<title to get insert into>",
+  "description": "<description to get insert into>",
+  "status": "<status to get insert into>",
+  "due_date": "<due_date to get insert into>",
+}
+```
+
+_Request Params_
+```json
+{
+  "id": "<To do id>"
+}
+```
+
+_Response (200 - OK)_
+```json
+{
+  "id": "<given id by system>",
+  "title": "<to do title>",
+  "description": "<to do description>",
+  "status": "<to do status>",
+  "due_date": "2020-03-20T07:15:12.149Z",
+}
+```
+
+_Response (404 - Not Found )_
+```json
+{
+  "message": "Invalid requests"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "message": "internal server error"
+}
+```
+
+### PATCH /todos/:id
+
+> Edit one attributes of specified to do
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+  not needed
+```
+
+_Request Params_
+```json
+{
+  "id": "<To do id>"
+}
+```
+
+_Response (200 - OK)_
+```json
+{
+  "id": "<given id by system>",
+  "title": "<to do title>",
+  "description": "<to do description>",
+  "status": "<to do status>",
+  "due_date": "2020-03-20T07:15:12.149Z",
+}
+```
+
+_Response (404 - Not Found)_
+```json
+{
+  "message": "error not found"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "message": "internal server error"
 }
 ```
