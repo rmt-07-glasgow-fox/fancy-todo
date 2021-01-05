@@ -1,5 +1,5 @@
 const { checkToken } = require('../helpers/jwt')
-const { User } = require('../models')
+const { User, Todo } = require('../models')
 
 const authenticate = ((req, res, next) => {
   try {
@@ -24,6 +24,24 @@ const authenticate = ((req, res, next) => {
   }
 })
 
+const authorize = ((req, res, next) => {
+  const todoId = +req.params.id
+
+  Todo.findOne({
+    where: { id: todoId }
+  })
+    .then(data => {
+      if (!data || data.UserId !== req.user.id) {
+        res.status(401).json({ message: 'Unauthorized' })
+      } else {
+        next()
+      }
+    })
+    .catch(err => {
+      res.status(500).json({ message: err.message })
+    })
+})
+
 module.exports = {
-  authenticate
+  authenticate, authorize
 }
