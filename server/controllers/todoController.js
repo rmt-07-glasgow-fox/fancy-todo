@@ -6,7 +6,8 @@ class ControllerTodo {
       title: req.body.title,
       description: req.body.description,
       status: req.body.status || false,
-      due_date: req.body.due_date
+      due_date: req.body.due_date,
+      user_id: req.user.id
     }
     Todo.create(input)
       .then(response => {

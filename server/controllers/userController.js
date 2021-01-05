@@ -44,11 +44,11 @@ class ControllerUser {
         if (match) {
           const payload = {
             id: user.id,
-            email: user.password
+            email: user.email
           }
-          const accessToken = generateToken(payload)
+          const access_token = generateToken(payload)
           res.status(200).json({
-            accessToken
+            access_token
           })
         } else {
           res.status(401).json({
