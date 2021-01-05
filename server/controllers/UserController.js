@@ -47,6 +47,7 @@ class UserController {
                 res.status(401).json({message: 'invalid email / password'})
             }
         } catch (err) {
+            console.log(err);
             res.status(400).json(err)
         }
     }
