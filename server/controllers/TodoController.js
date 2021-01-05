@@ -6,7 +6,6 @@ class TodoController {
         let user_id = req.user.id;
 
         Todo.findAll({
-            where: {user_id},
             order: [['id', 'ASC']],
             attributes: {
                 exclude: ['createdAt','updatedAt']
