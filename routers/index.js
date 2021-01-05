@@ -1,6 +1,10 @@
 var express = require('express')
 var router = express.Router()
 
+const todosRouter = require('../routers/todosRouter')
+
+const { authentication, authorization} = require('../middlewares/middleware')
+
 const todosController = require('../controllers/todosController')
 const usersController = require('../controllers/usersController')
 
@@ -11,14 +15,10 @@ router.get('/', function (req, res) {
 })
 
 // define the route
-router.post('/todos', todosController.createTodos)
-router.get('/todos', todosController.showTodos)
-router.get('/todos/:id', todosController.showTodosById)
-router.put('/todos/:id', todosController.putTodosById)
-router.patch('/todos/:id', todosController.patchTodosById)
-router.delete('/todos/:id', todosController.deleteTodosById)
-
 router.post('/register', usersController.register)
 router.post('/login', usersController.login)
+
+// todos router
+router.use('/todos', authentication, todosRouter)
 
 module.exports = router

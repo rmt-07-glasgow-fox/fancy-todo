@@ -27,8 +27,8 @@ class usersController {
         return res.status(400).json("Invalid email")
       }
       //find the email and compare its password
-      let authenticate = comparePassword(password, data.password)
-      if (authenticate) {
+      let isPassValid = comparePassword(password, data.password)
+      if (isPassValid) {
         //initialize payload
         let payload = {id:data.id, email:data.email}
         //request access token
