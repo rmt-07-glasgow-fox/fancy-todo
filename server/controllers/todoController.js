@@ -17,7 +17,8 @@ class TodoController {
       title,
       description,
       status,
-      due_date
+      due_date,
+      UserId: req.user.id
     })
       .then(data => {
         const response = {
@@ -25,7 +26,8 @@ class TodoController {
           title: data.title,
           description: data.description,
           status: data.status,
-          due_date: data.due_date
+          due_date: data.due_date,
+          UserId: data.UserId
         }
         return res.status(201).json(response)
       })
