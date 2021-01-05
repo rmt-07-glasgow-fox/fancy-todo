@@ -26,7 +26,7 @@ class UserController {
             }else{
                 if(compare(data.password,result.password)){
                     let payload = {
-                        id: data.id,
+                        id: result.id,
                         email: data.email
                     }
                     let access_token = generateToken(payload)
