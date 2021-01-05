@@ -39,10 +39,11 @@ module.exports = (sequelize, DataTypes) => {
         notNull: {
           msg: 'Please input date'
         },
-        isAfter: {
-          args: yesterday(),
-          msg: 'Please input date greater than yesterday'
-        }
+        isYesterday(val) {
+          if (val <= new Date(yesterday())) {
+            throw {message: 'Please input date greater than yesterday'}
+          }
+        } 
       }
     }
   }, {

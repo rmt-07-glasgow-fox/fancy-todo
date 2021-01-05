@@ -3,14 +3,14 @@
 1. POST /todos
 
     * Request header
-    > ```
+    > ```json
     > { 
     >    "Content-Type": "application/json"  
     > }
     >```
 
     * Request body
-    > ```
+    > ```json
     > {
     >   "title": "Tidur",
     >   "description": "tidur early jam 10",
@@ -19,7 +19,7 @@
     > ```
 
     * Success Response
-    > ```
+    > ```json
     > {
     >   "id": 1,
     >   "title": "Tidur",
@@ -36,7 +36,7 @@
 
         1. Server error
         
-        > ```
+        > ```json
         > { 
         >    "message": "internal server error"  
         > }
@@ -45,14 +45,14 @@
 2. GET /todos
 
     * Request header
-    > ```
+    > ```json
     > { 
     >    "Content-Type": "application/json"  
     > }
     >```
 
     * Success Response
-    > ```
+    > ```json
     >[
     >    {
     >        "id": 1,
@@ -77,14 +77,14 @@
 
         1. Validation error
 
-        > ```
+        > ```json
         > { 
         >    "message": "Please input date greater than yesterday"  
         > }
         >```
 
         2. Server error
-        > ```
+        > ```json
         > { 
         >    "message": "internal server error" 
         > }
@@ -93,20 +93,20 @@
 3.  GET /todos/:id
 
     * Request header
-    > ```
+    > ```json
     > { 
     >    "Content-Type": "application/json"  
     > }
     >```
 
     * Request Params
-    > ```
+    > ```json
     > {
     >   "id": 1
     > }
 
     * Success Response
-    > ```
+    > ```json
     > {
     >   "id": 1,
     >   "title": "Tidur",
@@ -122,7 +122,7 @@
     * Error Response
 
         1. Not found error
-        > ```
+        > ```json
         > { 
         >    "message": "error not found" 
         > }
@@ -131,20 +131,20 @@
 4. PUT /todos/:id
 
     * Request header
-    > ```
+    > ```json
     > { 
     >    "Content-Type": "application/json"  
     > }
     >```
 
     * Request Params
-    > ```
+    > ```json
     > {
     >   "id": 1
     > }
 
     * Request Body
-    > ```
+    > ```json
     > {
     >   "title": "Tidur",
     >   "description": "tidur early jam 10",
@@ -154,7 +154,7 @@
 
 
     * Success Response
-    > ```
+    > ```json
     > {
     >   "id": 1,
     >   "title": "Tidur",
@@ -170,21 +170,21 @@
     * Error Response
 
         1. Not found error
-        > ```
+        > ```json
         > { 
         >    "message": "error not found" 
         > }
         >```
 
         2. Validation error
-        > ```
+        > ```json
         > { 
         >    "message": "Please input date greater than yesterday"
         > }
         >```
 
         3. Server error
-        > ```
+        > ```json
         > { 
         >    "message": "internal server error" 
         > }
@@ -193,20 +193,20 @@
 5. PATCH /todos/:id
 
     * Request header
-    > ```
+    > ```json
     > { 
     >    "Content-Type": "application/json"  
     > }
     >```
 
     * Request Params
-    > ```
+    > ```json
     > {
     >   "id": 1
     > }
 
     * Request Body
-    > ```
+    > ```json
     > {
     >   "status": true 
     > } 
@@ -214,7 +214,7 @@
 
 
     * Success Response
-    > ```
+    > ```json
     > {
     >   "id": 1,
     >   "title": "Tidur",
@@ -230,21 +230,21 @@
     * Error Response
 
         1. Not found error
-        > ```
+        > ```json
         > { 
         >    "message": "error not found" 
         > }
         >```
 
         2. Validation error
-        > ```
+        > ```json
         > { 
         >    "message": "Please input date greater than yesterday"
         > }
         >```
 
         3. Server error
-        > ```
+        > ```json
         > { 
         >    "message": "internal server error" 
         > }
@@ -253,20 +253,20 @@
 6. DELETE /todos/:id
 
     * Request header
-    > ```
+    > ```json
     > { 
     >    "Content-Type": "application/json"  
     > }
     >```
 
     * Request Params
-    > ```
+    > ```json
     > {
     >   "id": 1
     > }
 
     * Success Response
-    > ```
+    > ```json
     > {
     >   "message": "todo success to delete"
     > }
@@ -275,14 +275,14 @@
     * Error Response
 
         1. Not found error
-        > ```
+        > ```json
         > { 
         >    "message": "error not found" 
         > }
         >```
 
         2. Server error
-        > ```
+        > ```json
         > { 
         >    "message": "internal server error" 
         > }

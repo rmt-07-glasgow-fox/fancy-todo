@@ -7,8 +7,9 @@ class TodoController {
         .catch(err => res.status(500).json({message: 'internal server error'}));
     }
     static todosPost = (req, res) => {
-        const {title, description, due_date } = req.body;
-        Todo.create({title, description, due_date})
+        const UserId = req.user.id;
+        const {title, description, due_date} = req.body;
+        Todo.create({title, description, due_date, UserId})
         .then(output => res.status(200).json(output))
         .catch(err => {
             if (err.name === 'SequelizeValidationError') {
@@ -50,7 +51,6 @@ class TodoController {
     static todoPatch = (req, res) => {
         Todo.update({status: req.body.status}, {where: {id: req.params.id}, returning: true})
         .then(output => {
-            console.log(output)
             if (output[0] === 1) {
                 res.status(200).json(output[1][0]);
             } else {
