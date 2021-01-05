@@ -7,14 +7,11 @@ const app = express()
 const PORT = 3000
 const router = require('./routes')
 
-// body parser
-// raw
 app.use(express.json())
-
-// urlencoded
 app.use(express.urlencoded({extended: true}))
 
 app.use(router)
+// errorHandlers below!
 
 app.listen(PORT, () => {
     console.log(`Example app listening at http://localhost:${PORT}`)

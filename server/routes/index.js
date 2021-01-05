@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const todoRouter = require('./todoRouter')
 const authRouter = require('./auth')
-const isLoggedIn = require('../middlewares/authentication')
+const authenticate = require('../middlewares/auth')
 
 // declaring end-points
 router.get('/', (req, res) => {
@@ -10,6 +10,6 @@ router.get('/', (req, res) => {
 
 router.use(authRouter)
 
-router.use('/todos', isLoggedIn, todoRouter)
+router.use('/todos', authenticate, todoRouter)
 
 module.exports = router 

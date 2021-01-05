@@ -1,6 +1,6 @@
 const {User} = require('../models')
 const comparePassword = require('../helpers/comparePassword')
-const generateToken = require('../helpers/jwt')
+const {generateToken} = require('../helpers/jwt')
 
 
 class UserController {

@@ -6,4 +6,16 @@ const generateToken = (payload) => {
     return token
 }
 
-module.exports = generateToken
+const checkToken = async (token) => {
+    try {
+        return decoded = jwt.verify(token, SECRET_CODE)
+    }
+    catch (err) {
+        throw new Error("Not Authorised.")
+    }
+}
+
+
+module.exports = {
+    generateToken, checkToken
+}

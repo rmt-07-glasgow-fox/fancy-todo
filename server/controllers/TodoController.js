@@ -34,7 +34,6 @@ class TodoController {
                         return res.status(500).json({message: "Internal server error."})
                     }
                 })
-
                 return res.status(400).json(errorMessages)
             })
     }
