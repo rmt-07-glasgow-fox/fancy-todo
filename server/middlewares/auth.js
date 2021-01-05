@@ -37,17 +37,18 @@ const authorize = (req, res, next) => {
         }
     })
         .then(todo => {
-            if (!todo || todo.UserId !== req.user.id) {
-                res.status(401).json({
-                    message: "not authorised."
-                })
+            if (!todo) {
+                next({ name: "ResourceNotFound" })
+            }
+            else if (todo.UserId !== req.user.id) {
+                next({ name: "AuthorisationError" })
             }
             else {
                 next()
             }
         })
         .catch(err => {
-            res.status(500).json({ message: err.message })
+            next(err)
         })
 }
 
