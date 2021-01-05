@@ -5,24 +5,20 @@ const authenticate = async (req, res, next) => {
     try {
         let decoded = checkToken(req.headers.access_token);
         let output = await User.findOne({where: {email: decoded.email}})
-        if (output) {
-            req.user = ({id: output.id});
-            next();
-        } else {
-            res.status(401).json({message: 'Please login first'})
-        }
-    } catch(err) {res.status(400).json({message: err} )}
+        req.user = ({id: output.id});
+        next();
+    } catch(err) {res.status(400).json({message: 'Please login first'} )}
 }
 
 const authorize = async (req, res, next) => {
     try {
         let output = await Todo.findOne({where: {id: req.params.id}})
-        if (output && output.UserId === req.user.id) {
+        if (output.UserId === req.user.id) {
             next();
         } else {
             res.status(401).json({message: 'Unauthorized'})
         }
-    } catch(err) {res.status(500).json({message: err})}
+    } catch(err) {res.status(404).json({message: 'Not Found'})}
 }
 
 module.exports = {authenticate, authorize}

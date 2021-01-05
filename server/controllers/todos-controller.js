@@ -5,7 +5,7 @@ class TodoController {
     static todosGet = (req, res, next) => {
         Todo.findAll({attributes:  {exclude: ['createdAt', 'updatedAt']}, order: [['id', 'ASC']]})
         .then(output => res.status(200).json(output))
-        .catch(err => err ? next(err) : next(new Error('InternalServerError')));
+        .catch(err => err ? next(err) : next({name: 'InternalServerError'}));
     }
 
     static todosPost = (req, res, next) => {
@@ -13,7 +13,7 @@ class TodoController {
         const {title, description, due_date} = req.body;
         Todo.create({title, description, due_date, UserId})
         .then(output => res.status(200).json(output))
-        .catch(err => err ? next(err) : next(new Error('InternalServerError')));
+        .catch(err => err ? next(err) : next({name: 'InternalServerError'}));
     
     }
     static todoGet = (req, res, next) => {
@@ -22,10 +22,10 @@ class TodoController {
             if (output) {
                 res.status(200).json(output);
             } else {
-                throw new Error('NotFound');
+                throw({name: 'NotFound'})
             }
         })
-        .catch(err => err ? next(err) : next(new Error('InternalServerError')));
+        .catch(err => err ? next(err) : next({name: 'InternalServerError'}));
     }
 
     static todoPut = (req, res, next) => {
@@ -35,10 +35,10 @@ class TodoController {
             if (output[0] === 1) {
                 res.status(200).json(output[1][0]);
             } else {
-                throw new Error('NotFound');
+                throw({name: 'NotFound'})
             }
         })
-        .catch(err => err ? next(err) : next(new Error('InternalServerError')));
+        .catch(err => err ? next(err) : next({name: 'InternalServerError'}));
     }
 
     static todoPatch = (req, res, next) => {
@@ -47,10 +47,10 @@ class TodoController {
             if (output[0] === 1) {
                 res.status(200).json(output[1][0]);
             } else {
-                throw new Error('NotFound');
+                throw({name: 'NotFound'})
             }
         })
-        .catch(err => err ? next(err) : next(new Error('InternalServerError')));
+        .catch(err => err ? next(err) : next({name: 'InternalServerError'}));
     }
     
     static todoDelete = (req, res, next) => {
@@ -59,10 +59,10 @@ class TodoController {
             if (output === 1) {
                 res.status(200).json({message: 'todo success to delete'});
             } else {
-                throw new Error('NotFound');
+                throw({name: 'NotFound'})
             }
         })
-        .catch(err => err ? next(err) : next(new Error('InternalServerError')));
+        .catch(err => err ? next(err) : next({name: 'InternalServerError'}));
     }
 }
 

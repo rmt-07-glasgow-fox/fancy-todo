@@ -8,7 +8,7 @@ class UserController {
         const { email, name, password } = req.body;
         User.create({email, name, password })
         .then(output => res.status(201).json({id: output.id, email: output.email}))
-        .catch(err => err ? next(err) : next(new Error('InternalServerError')));
+        .catch(err => err ? next(err) : next({name:'InternalServerError'}));
     }
     
     static loginPost = (req, res, next) => {
@@ -24,13 +24,19 @@ class UserController {
                     })
                     res.status(200).json({access_token})
                 } else {
-                    throw new Error('InvalidInput');
+                    throw {name:'InvalidInput'}
                 }
             } else {
-                throw new Error('InvalidInput');
+                throw {name:'InvalidInput'}
             }
         })
-        .catch(err => err ? next(err) : next(new Error('InternalServerError')));
+        .catch(err => {
+            if (err) {
+                next(err)
+            } else {
+                next({name:'InternalServerError'})
+            }
+        })
     }
 }
 
