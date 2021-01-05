@@ -6,6 +6,7 @@ const app = express()
 const port = 3000
 const rout = require('./routs')
 const errorHandler = require('./middleware/errorsHandler')
+const bodyParser = require('body-parser')
 
 app.use(express.urlencoded({extended:true}))
 app.use(rout)
