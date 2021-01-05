@@ -5,6 +5,7 @@ const { generateToken } = require("../helpers/jwt");
 class UserController {
   static register(req, res) {
     const { username, fullName, email, password } = req.body;
+    
     User.create({
       username, fullName, email, password
     })
@@ -25,13 +26,14 @@ class UserController {
 
   static login(req, res) {
     const { email, password } = req.body;
+
     User.findOne({ where: { email }})
     .then(result => {
       if (!result) {
         return res.status(401).json({message: "Email / password is not valid"})
       }
       const truePassword = checkPassword(password, result.password);
-      console.log(truePassword);
+      // console.log(truePassword);
       if (!truePassword){
         return res.status(401).json({message: "Email / password is not valid"})
       }

@@ -13,6 +13,7 @@ class TodoController {
       description,
       status,
       due_date,
+      UserId: req.user.id
     };
 
     Todo.create(newTodo)
