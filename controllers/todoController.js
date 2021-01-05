@@ -1,18 +1,16 @@
 const { Todo } = require('../models')
 
 class TodoController {
-  static getTodo(req, res) {
+  static getTodo(req, res, next) {
     Todo.findAll({})
     .then(data=> {
       res.status(200).json(data)
     })
     .catch(err => {
-      res.status(500).json({
-        msg: 'Error'
-      })
+      next({ code: 500 })
     })
   }
-  static postTodo(req, res) {
+  static postTodo(req, res, next) {
     let param = {
       title: req.body.title,
       description: req.body.description,
@@ -32,15 +30,11 @@ class TodoController {
       res.status(201).json(out)
     })
     .catch(err => {
-      if (err.name === "SequelizeValidationError") res.status(400).json({
-        msg: err.message
-      })
-      else res.status(500).json({
-        msg: err.message
-      })
+      if (err.name) next ({ code: 400, msg: err.message})
+      else next({ code: 500 })
     })
   }
-  static getTodoById(req, res) {
+  static getTodoById(req, res, next) {
     Todo.findOne({
       where: {
         id: req.params.id
@@ -48,17 +42,13 @@ class TodoController {
     })
     .then(data=> {
       if (data) res.status(200).json(data)
-      else res.status(404).json({
-        msg: 'Data Not Found'
-      })
+      else next({ code: 404 })
     })
     .catch(err => {
-      res.status(500).json({
-        msg: 'Error'
-      })
+      next({ code: 500 })
     })
   }
-  static putTodo(req, res) {
+  static putTodo(req, res, next) {
     let param = {
       title: req.body.title,
       description: req.body.description,
@@ -72,9 +62,7 @@ class TodoController {
       returning: true
     })
     .then(data => {
-      if(data[0] === 0) return res.status(404).json({
-        msg: 'Data Not Found'
-      })
+      if(data[0] === 0) return next({ code: 404 })
       let out = {
         title: data[1][0].title,
         description: data[1][0].description,
@@ -84,15 +72,11 @@ class TodoController {
       res.status(200).json(out)
     })
     .catch(err => {
-      if (err.name === "SequelizeValidationError") res.status(400).json({
-        msg: err.message
-      })
-      else res.status(500).json({
-        msg: err.message
-      })
+      if (err.name) next ({ code: 400, msg: err.message})
+      else next({ code: 500 })
     })
   }
-  static patchTodo(req, res) {
+  static patchTodo(req, res, next) {
     let param = {
       status: req.body.status
     }
@@ -103,9 +87,7 @@ class TodoController {
       returning: true
     })
     .then(data => {
-      if(data[0] === 0) return res.status(404).json({
-        msg: 'Data Not Found'
-      })
+      if(data[0] === 0) return next({ code: 404 })
       let out = {
         title: data[1][0].title,
         description: data[1][0].description,
@@ -115,15 +97,11 @@ class TodoController {
       res.status(200).json(out)
     })
     .catch(err => {
-      if (err.name === "SequelizeValidationError") res.status(400).json({
-        msg: err.message
-      })
-      else res.status(500).json({
-        msg: err.message
-      })
+      if (err.name) next ({ code: 400, msg: err.message})
+      else next({ code: 500 })
     })
   }
-  static deleteTodo(req, res) {
+  static deleteTodo(req, res, next) {
     Todo.destroy({
       where: {
         id: req.params.id
@@ -131,17 +109,13 @@ class TodoController {
       returning: true
     })
     .then(data=> {
-      if(data === 0) return res.status(404).json({
-        msg: 'Data Not Found'
-      })
+      if(data === 0) return next({ code: 404 })
       else res.status(200).json({
         message: 'todo success to delete'
       })
     })
     .catch(err => {
-      res.status(500).json({
-        msg: 'Error'
-      })
+      next({ code: 500 })
     })
   }
 }

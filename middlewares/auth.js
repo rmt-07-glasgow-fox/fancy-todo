@@ -5,7 +5,7 @@ async function authenticate (req, res, next) {
   try {
     let verify = verifyToken(req.headers.access_token)
     let find = await User.findOne({ where: { email: verify.email}})
-    if(!find) res.status(401).json({ message: 'Please Login First' })
+    if(!find) next({ code: 401, origin: 'authenticate'})
     else {
       req.User = {
         id: find.id,
@@ -23,15 +23,13 @@ async function authenticate (req, res, next) {
 async function authorize (req, res, next) {
   try {
     let find = await Todo.findOne({ where: { id: req.params.id}})
-    if(!find) res.status(404).json({ message: 'Data Not Found' })
+    if(!find) next({ code: 404 })
     else {
       if (find.UserId === req.User.id) next()
-      else res.status(401).json({ message: 'UnAuthorize Data' })
+      else next({ code: 401})
     }
   } catch (err) {
-    res.status(500).json({
-      message: err.message
-    })
+    next({ code: 500})
   }
 }
 module.exports = {

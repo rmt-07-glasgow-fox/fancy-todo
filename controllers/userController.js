@@ -2,7 +2,7 @@ const {User} = require('../models');
 const {comparePassword} = require('../helpers/bcrypt');
 const {generateToken} = require('../helpers/jwt')
 class Controller {
-  static register (req, res) {
+  static register (req, res, next) {
     const params = {
       email: req.body.email,
       password: req.body.password
@@ -16,10 +16,10 @@ class Controller {
         res.status(201).json(out)
       })
       .catch(err => {
-        res.status(400).json(err.message)
+        next ({ code: 400, msg: err.message})
       })
   }
-  static login (req, res) {
+  static login (req, res, next) {
     let { email, password } = req.body
     User.findOne({
       where: {
@@ -27,9 +27,7 @@ class Controller {
       }
     })
     .then(user => {
-      if(!user) return res.status(401).json({
-        msg: "Invalid Email / Password"
-      })
+      if(!user) return next({ code: 401, origin: 'user'})
 
       if(comparePassword(password,user.password)) {
         let payload = {
@@ -40,12 +38,10 @@ class Controller {
         res.status(200).json({access_token: token})
         
       }
-      else res.status(401).json("Invalid Email / Password")
+      else next({ code: 401, origin: 'user'})
     })
     .catch(err => {
-      res.status(500).json({
-        msg: "Error"
-      })
+      next({ code: 500})
     })
   }
 }
