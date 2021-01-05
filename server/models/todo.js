@@ -19,14 +19,14 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     status: {
       type: DataTypes.BOOLEAN,
-      // validate: {
-      //   isBoolean(value) {
-      //     console.log(typeof value);
-      //     if(value.toLowerCase() !== "true" || value.toLowerCase() !== "true"){
-      //       throw new Error("Status must either be true or false")
-      //     }
-      //   }
-      // }
+      validate: {
+        isBoolean(value) {
+          console.log(typeof value);
+          if(typeof value !== "boolean"){
+            throw new Error("Status must either be true or false")
+          }
+        }
+      }
     },
     due_date: {
       type: DataTypes.DATE,

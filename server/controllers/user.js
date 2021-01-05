@@ -5,7 +5,7 @@ const { generateToken } = require("../helpers/jwt");
 class UserController {
   static register(req, res) {
     const { username, fullName, email, password } = req.body;
-    
+
     User.create({
       username, fullName, email, password
     })
@@ -48,7 +48,10 @@ class UserController {
       return res.status(200).json({ access_token })
     })
     .catch(err => {
-      return res.status(400).json(err);
+      if (err.name === "SequelizeValidationError" || err.name === "SequelizeUniqueConstraintError") {
+        return res.status(400).json(err.errors);
+      }
+      return res.status(500).json(err);
     })
   }
 }

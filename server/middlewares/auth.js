@@ -4,8 +4,7 @@ const { User, Todo } = require("../models");
 async function authenticate(req, res, next) {
   try {
     let decoded = checkToken(req.headers.access_token);
-    // console.log(decoded);
-    
+
     let currentUser = await User.findOne({
       where: {
         id: decoded.id,
@@ -30,14 +29,19 @@ async function authorize(req, res, next) {
     let dataTodo = await Todo.findOne({
       where: { id: req.params.id },
     });
-
-    if (dataTodo.UserId === req.user.id) {
+    if (!dataTodo) {
+      next({
+        name: "NotFound",
+      });
+    } else if (dataTodo.UserId === req.user.id) {
       next();
     } else {
-      res.status(401).json({ message: "You are unauthorized" });
+      next({
+        name: "Unauthorized",
+      });
     }
   } catch (err) {
-    res.status(500).json(err.message);
+    next(err);
   }
 }
 

@@ -5,7 +5,7 @@ class TodoController {
     res.send("Welcome to Fancy ToDo");
   }
 
-  static addTodo(req, res) {
+  static addTodo(req, res, next) {
     let { title, description, status, due_date } = req.body;
 
     let newTodo = {
@@ -13,7 +13,7 @@ class TodoController {
       description,
       status,
       due_date,
-      UserId: req.user.id
+      UserId: req.user.id,
     };
 
     Todo.create(newTodo)
@@ -21,46 +21,37 @@ class TodoController {
         return res.status(201).json(added);
       })
       .catch((err) => {
-        if (err.name === "SequelizeValidationError") {
-          return res.status(400).json(err.errors);
-        }
-        return res.status(500).json({
-          message: "Internal Server Error",
-        });
+        next(err);
       });
   }
 
-  static listTodo(req, res) {
+  static listTodo(req, res, next) {
     Todo.findAll()
       .then((todoList) => {
         return res.status(200).json(todoList);
       })
       .catch((err) => {
-        return res.status(500).json({
-          message: "Internal Server Error",
-        });
+        next(err);
       });
   }
 
-  static detailTodo(req, res) {
+  static detailTodo(req, res, next) {
     const id = +req.params.id;
     Todo.findByPk(id)
       .then((todoData) => {
         if (todoData) {
           return res.status(200).json(todoData);
         }
-        return res.status(404).json({
-          message: "Todo not found",
+        next({
+          name: "NotFound",
         });
       })
       .catch((err) => {
-        return res.status(500).json({
-          message: "Internal Server Error",
-        });
+        next(err);
       });
   }
 
-  static updateTodo(req, res) {
+  static updateTodo(req, res, next) {
     const id = +req.params.id;
     const { title, description, status, due_date } = req.body;
 
@@ -73,27 +64,24 @@ class TodoController {
       },
       {
         where: { id },
+        returning: true,
       }
     )
       .then((result) => {
-        if (result[0] === 1) {
-          return Todo.findByPk(id).then((updated) => {
-            return res.status(200).json(updated);
+        if (result) {
+          return res.status(200).json(result[1]);
+        } else {
+          next({
+            name: "NotFound",
           });
         }
-        return res.status(404).json({ message: "Todo not found" });
       })
       .catch((err) => {
-        if (err.name === "SequelizeValidationError") {
-          return res.status(400).json(err.errors);
-        }
-        return res.status(500).json({
-          message: "Internal Server Error",
-        });
+        next(err);
       });
   }
 
-  static changeStatusTodo(req, res) {
+  static changeStatusTodo(req, res, next) {
     const id = +req.params.id;
     const { status } = req.body;
 
@@ -103,43 +91,43 @@ class TodoController {
       },
       {
         where: { id },
+        returning: true,
       }
     )
       .then((result) => {
-        if (result[0] === 1) {
-          return Todo.findByPk(id).then((updated) => {
-            return res.status(200).json(updated);
+        if (result) {
+          return res.status(200).json(result[1]);
+        } else {
+          next({
+            name: "NotFound",
           });
         }
-        return res.status(404).json({ message: "Todo not found" });
       })
       .catch((err) => {
-        if (err.name === "SequelizeValidationError") {
-          return res.status(400).json(err.errors);
-        }
-        return res.status(500).json({
-          message: "Internal Server Error",
-        });
+        next(err);
       });
   }
 
-  static deleteTodo(req, res) {
+  static deleteTodo(req, res, next) {
     const id = +req.params.id;
 
     Todo.destroy({
       where: { id },
     })
-    .then(result => {
-      if(result === 1) {
-        return res.status(200).json({message: "Todo is successfully deleted"})
-      }
-      return res.status(404).json({ message: "Todo not found" });
-    })
-    .catch((err) => {
-      return res.status(500).json({
-        message: "Internal Server Error",
+      .then((result) => {
+        if (result === 1) {
+          return res.status(200).json({
+            message: "Todo is successfully deleted",
+          });
+        } else {
+          next({
+            name: "NotFound",
+          });
+        }
+      })
+      .catch((err) => {
+        next(err);
       });
-    });
   }
 }
 
