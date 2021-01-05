@@ -5,6 +5,7 @@ class ControllerTodo {
     static createTodo(req,res) {
         const obj = {
             title: req.body.title,
+            UserId: req.loggedInUser.id,
             description: req.body.description,
             status: req.body.status,
             due_date: req.body.due_date,
@@ -17,7 +18,8 @@ class ControllerTodo {
                 title: data.title,
                 description: data.description,
                 status: data.status,
-                due_date: data.due_date
+                due_date: data.due_date,
+                UserId: data.UserId
             })
         })
         .catch(error => {
