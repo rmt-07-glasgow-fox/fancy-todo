@@ -23,7 +23,7 @@ _Request Body_
 }
 ```
 
-_Request (201)_
+_Response (201)_
 ```json
 {
   "title": "<todo title>",
@@ -33,17 +33,17 @@ _Request (201)_
 }
 ```
 
-_Request (400)_
+_Response (400)_
 ```json
 {
   "message": "Error 400: Bad Request"
 }
 ```
 
-_Request (500)_
+_Response (500)_
 ```json
 {
-  "ae": "Error 500: Internal Server Error"
+  "message": "Error 500: Internal Server Error"
 }
 ```
 
@@ -61,7 +61,7 @@ _Request Body_
 not needed
 ```
 
-_Request (200)_
+_Response (200)_
 ```json
 [
   {
@@ -80,10 +80,10 @@ _Request (200)_
 ]
 ```
 
-_Request (500)_
+_Response (500)_
 ```json
 {
-  "ae": "Error 500: Internal Server Error"
+  "message": "Error 500: Internal Server Error"
 }
 ```
 
@@ -101,7 +101,7 @@ _Request Body_
 not needed
 ```
 
-_Request (200)_
+_Response (200)_
 ```json
 {
   "title": "<todo title>",
@@ -111,7 +111,7 @@ _Request (200)_
 }
 ```
 
-_Request (404)_
+_Response (404)_
 ```json
 {
   "message": "Error 404: ToDo List not found"
@@ -135,8 +135,9 @@ _Request Body_
   "status": "<todo status>",
   "due_date": "<todo due_date>"
 }
+```
 
-_Request (200)_
+_Response (200)_
 ```json
 {
   "title": "<[new] todo title>",
@@ -146,21 +147,21 @@ _Request (200)_
 }
 ```
 
-_Request (400)_
+_Response (400)_
 ```json
 {
   "message": "Error 400: Bad Request"
 }
 ```
 
-_Request (404)_
+_Response (404)_
 ```json
 {
   "message": "Error 404: ToDo List not found"
 }
 ```
 
-_Request (500)_
+_Response (500)_
 ```json
 {
   "message": "Error 500: Internal Server Error"
@@ -183,7 +184,7 @@ _Request Body_
 }
 ```
 
-_Request (200)_
+_Response (200)_
 ```json
 {
   "title": "<todo title>",
@@ -193,24 +194,24 @@ _Request (200)_
 }
 ```
 
-_Request (400)_
+_Response (400)_
 ```json
 {
   "message": "Error 400: Bad Request"
 }
 ```
 
-_Request (404)_
+_Response (404)_
 ```json
 {
   "message": "Error 404: ToDo List not found"
 }
 ```
 
-_Request (500)_
+_Response (500)_
 ```json
 {
-  "ae": "Error 500: Internal Server Error"
+  "message": "Error 500: Internal Server Error"
 }
 ```
 
@@ -228,23 +229,23 @@ _Request Body_
 not needed
 ```
 
-_Request (200)_
+_Response (200)_
 ```json
 {
   "message": "ToDo success to delete"
 }
 ```
 
-_Request (404)_
+_Response (404)_
 ```json
 {
   "message": "Error 404: ToDo List not found"
 }
 ```
 
-_Request (500)_
+_Response (500)_
 ```json
 {
-  "ae": "Error 500: Internal Server Error"
+  "message": "Error 500: Internal Server Error"
 }
 ```
