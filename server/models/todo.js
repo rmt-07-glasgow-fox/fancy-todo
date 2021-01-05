@@ -32,6 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     due_date: {
       type: DataTypes.DATEONLY,
       validate: {
+        notEmpty: true,
         isAfterDate(value) {
           let choosenDate = new Date(moment(`${value} 23:59:59`).format());
           let currentDate = new Date();
@@ -41,11 +42,11 @@ module.exports = (sequelize, DataTypes) => {
           }
         }
       }
-    },
+    },  
     user_id: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'Todo',
+    modelName: 'Todo'
   });
   return Todo;
 };

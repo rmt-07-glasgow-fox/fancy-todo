@@ -1,13 +1,14 @@
 const { User } = require('../models');
 const { comparePassword } = require('../helpers/bcrypt');
 const { generateToken } = require('../helpers/jwt')
+const { MyError } = require('../helpers/myError')
 
 class UserController {
     static register(req, res) {
         
     }
 
-    static login(req, res) {
+    static login(req, res, next) {
         let { email, password } = req.body;
 
         User.findOne({where: { email }})
@@ -15,7 +16,7 @@ class UserController {
                 let isLogin = !user ? false : comparePassword(password, user.password);
 
                 if (!isLogin) {
-                    throw new Error('InvalidEmailPassord')
+                    throw new MyError('Invalid email / password', 'InvalidEmailPassword')
                 }
 
                 res.status(200).json({
@@ -25,16 +26,10 @@ class UserController {
                     })
                 })
             })
-            .catch(err => {
-                if (err.message == "InvalidEmailPassord") {
-                    res.status(401).json({message: 'Invalid email / password'})
-                } else {
-                    res.status(500).json({message: "Internal server error"})
-                }
-            })
+            .catch(err => next(err))
     }
 
-    static addNewUser(req, res) {
+    static addNewUser(req, res, next) {
         let newUser = {
             email: req.body.email,
             password: req.body.password
@@ -49,16 +44,10 @@ class UserController {
                 id: newUser.id,
                 email: newUser.email,
             })})
-            .catch(err => { 
-                if (err.name === "SequelizeValidationError" || err.name === "SequelizeUniqueConstraintError") {
-                    res.status(400).json({message: "Validation error"})
-                } else {
-                    res.status(500).json({ message: 'Internal server error'})
-                }
-            })
+            .catch(err => next(err))
     }
   
-    static getUsers(req, res) {
+    static getUsers(req, res, next) {
         User.findAll({
             attributes: {
                 exclude: ['createdAt','updatedAt']
@@ -67,9 +56,7 @@ class UserController {
             .then(users => {
                 res.status(200).json(users)
             })
-            .catch(err => {
-                res.status(500).json({message: 'Internal server error'})
-            })
+            .catch(err => next(err))
     }
 }
 

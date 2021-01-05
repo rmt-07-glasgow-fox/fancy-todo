@@ -8,8 +8,9 @@ router.get('/', (req,res) => {
 })
 
 // endpoint
-router.use(authenticate);
+// router.use(authenticate);
 router.use('/', authRouter);
+router.use(authenticate)
 router.use('/todos', todoRouter); 
 
-module.exports = router;    
+module.exports = router; authenticate
