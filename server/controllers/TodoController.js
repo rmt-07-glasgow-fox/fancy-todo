@@ -13,12 +13,14 @@ class TodoController {
 
     static postTodos(req, res) {
         const {title, description, due_date, status} = req.body
+        const UserId = req.user.id
 
         Todo.create({
             title,
             description,
             due_date,
-            status
+            status,
+            UserId
         })
             .then(todo => {
                 res.status(201).json(todo)

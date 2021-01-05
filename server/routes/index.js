@@ -1,14 +1,14 @@
 const router = require('express').Router()
+const UserController = require('../controllers/UserController')
 const todoRouter = require('./todoRouter')
-const authRouter = require('./auth')
-const authenticate = require('../middlewares/auth')
+const {authenticate} = require('../middlewares/auth')
 
-// declaring end-points
 router.get('/', (req, res) => {
     res.send('This is the homepage todos app!')
 })
 
-router.use(authRouter)
+router.post("/register", UserController.register)
+router.post("/login", UserController.login)
 
 router.use('/todos', authenticate, todoRouter)
 
