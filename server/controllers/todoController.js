@@ -1,33 +1,30 @@
 const { Todo } = require('../models/index.js');
 
 class TodoController {
-  static async postTodo(req, res) {
+  static async postTodo(req, res, next) {
     try {
       const input = {
         title: req.body.title,
         description: req.body.description,
         status: req.body.status,
-        due_date:req.body.due_date,
+        due_date: req.body.due_date,
         UserId: req.user.id
       }
       const todo = await Todo.create(input);
 
       return res.status(201).json(todo);
     } catch (err) {
-      if (err.name === 'SequelizeValidationError') {
-        return res.status(400).json({ message: `Error 400: ${err.errors[0].message}` });
-      };
-      return res.status(500).json({ message: `Error 500: ${err.errors[0].message}` });
+      next(err);
     };
   };
 
-  static async getTodo(req, res) {
+  static async getTodo(req, res, next) {
     try {
-      const todo = await Todo.findAll({order:[['due_date', 'ASC']]});
+      const todo = await Todo.findAll({ order: [['due_date', 'ASC']] });
 
       return res.status(200).json(todo);
     } catch (err) {
-      return res.status(500).json(`Error 500: ${err.errors[0].message}`)
+      next(err);
     };
   };
 
@@ -37,11 +34,11 @@ class TodoController {
       const todo = await Todo.findByPk(inputID);
 
       if (!todo) {
-        throw { message: `Error 404: ToDo List not found` }
+        throw { name: `NotFound` };
       }
       return res.status(200).json(todo);
     } catch (err) {
-      return res.status(404).json(err);
+      next(err)
     };
   };
 
@@ -53,14 +50,11 @@ class TodoController {
       const todo = await Todo.findByPk(inputID, { todoUpdate })
 
       if (!todo) {
-        return res.status(404).json({ message: 'ToDo List not found.' });
+        throw { name: `NotFound` };
       }
       return res.status(200).json(todo);
     } catch (err) {
-      if (err.name === 'SequelizeValidationError') {
-        return res.status(400).json({ message: `Error 400: ${err.errors[0].message}` });
-      };
-      return res.status(500).json({ message: `Error 500: ${err.errors[0].message}` });
+      next(err);
     };
   };
 
@@ -72,14 +66,11 @@ class TodoController {
       const todo = await Todo.findByPk(inputID, { todoUpdate })
 
       if (!todo) {
-        return res.status(404).json({ message: 'ToDo List not found.' });
+        throw { name: `NotFound` };
       }
       return res.status(200).json(todo);
     } catch (err) {
-      if (err.name === 'SequelizeValidationError') {
-        return res.status(400).json({ message: `Error 400: ${err.errors[0].message}` });
-      };
-      return res.status(500).json({ message: `Error 500: ${err.errors[0].message}` });
+      next(err);
     };
   };
 
@@ -90,11 +81,11 @@ class TodoController {
       await Todo.destroy({ where: { id: inputID } });
 
       if (!todo) {
-        return res.status(404).json({ message: 'ToDo List not found.' });
+        throw { name: `NotFound` };
       }
       return res.status(200).json({ message: "ToDo success to delete" });
     } catch (err) {
-      return res.status(500).json(err);
+      next(err);
     }
   };
 };
