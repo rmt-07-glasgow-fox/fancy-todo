@@ -5,7 +5,7 @@ module.exports = {
         let salt = bcrypt.genSaltSync(10);
         return bcrypt.hashSync(userPassword, salt);
     },
-    compare: (userPassword, userHashPassword) => {
+    comparePassword: (userPassword, userHashPassword) => {
         return bcrypt.compareSync(userPassword, userHashPassword)
     }
 }

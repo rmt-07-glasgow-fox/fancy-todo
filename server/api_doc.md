@@ -79,6 +79,7 @@ _Request Body_
 _Response (201 - Created)_
 ```json
 {
+  "id": "<todo id>",
   "title": "<todo title>",
   "description": "<todo description>",
   "status": "<todo status>",
@@ -153,6 +154,7 @@ _Request Body_
 _Response (200 - Updated Todo)_
 ```json
 {
+  "id": "<todo id>",
   "title": "<todo title>",
   "description": "<todo description>",
   "status": "<todo status>",
@@ -196,6 +198,7 @@ _Request Body_
 _Response (200 - Updated Todo Status)_
 ```json
 {
+  "id": "<todo id>",
   "title": "<todo title>",
   "description": "<todo description>",
   "status": "<todo status>",

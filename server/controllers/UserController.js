@@ -1,4 +1,6 @@
 const { User } = require('../models');
+const { comparePassword } = require('../helpers/bcrypt');
+const { generateToken } = require('../helpers/jwt')
 
 class UserController {
     static register(req, res) {
@@ -6,7 +8,30 @@ class UserController {
     }
 
     static login(req, res) {
+        let { email, password } = req.body;
 
+        User.findOne({where: { email }})
+            .then(user => {
+                let isLogin = !user ? false : comparePassword(password, user.password);
+
+                if (!isLogin) {
+                    throw new Error('InvalidEmailPassord')
+                }
+
+                res.status(200).json({
+                    access_token: generateToken({
+                        id: user.id,
+                        email: user.email
+                    })
+                })
+            })
+            .catch(err => {
+                if (err.message == "InvalidEmailPassord") {
+                    res.status(401).json({message: 'Invalid email / password'})
+                } else {
+                    res.status(500).json({message: "Internal server error"})
+                }
+            })
     }
 
     static addNewUser(req, res) {
@@ -21,8 +46,8 @@ class UserController {
             }
         })
             .then(newUser => {res.status(201).json({
+                id: newUser.id,
                 email: newUser.email,
-                password: newUser.password
             })})
             .catch(err => { 
                 if (err.name === "SequelizeValidationError" || err.name === "SequelizeUniqueConstraintError") {

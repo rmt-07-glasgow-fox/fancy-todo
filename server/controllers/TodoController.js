@@ -22,6 +22,7 @@ class TodoController {
 
         Todo.create(newTodo)
             .then(todo => res.status(201).json({
+                id: todo.id,
                 title: todo.title,
                 description: todo.description,
                 status: todo.status,
@@ -73,6 +74,7 @@ class TodoController {
                     throw new Error ('IdNotFound')
                 } else {
                     res.status(200).json({
+                        id: updatedTodo.id,
                         title: updatedTodo.title,
                         description: updatedTodo.description,
                         status: updatedTodo.status,
@@ -109,6 +111,7 @@ class TodoController {
                     throw new Error('IdNotFound')
                 } else {
                     res.status(200).json({
+                        id: updatedTodo.id,
                         title: updatedTodo.title,
                         description: updatedTodo.description,
                         status: updatedTodo.status,

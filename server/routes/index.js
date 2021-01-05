@@ -1,13 +1,15 @@
 const router = require('express').Router();
 const authRouter = require('./authRouter');
 const todoRouter = require('./todoRouter');
+const { authenticate } = require('../middlewares/auth');
 
 router.get('/', (req,res) => {
     res.send('Hello World')
 })
 
 // endpoint
-router.use('/', authRouter)
-router.use('/todos', todoRouter)  
+router.use(authenticate);
+router.use('/', authRouter);
+router.use('/todos', todoRouter); 
 
 module.exports = router;    
