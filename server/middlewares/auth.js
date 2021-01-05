@@ -11,10 +11,10 @@ const authenticate = async (req,res,next) => {
             req.user = user
             next()
         } else {
-            res.status(401).json({message: 'You need to login first'})
+            next({name: "errorAuthentication"})
         }
     } catch(err) {
-        res.status(400).json({message: err.message})
+        next(err)
     }
 }
 
@@ -22,14 +22,17 @@ const authorize = async (req,res,next) => {
     const { id } = req.params
     try{
         let todo = await Todo.findOne({where:{id}})
-
-        if(!todo || todo.UserId != req.user.id){
-            res.status(401).json({ message: 'you dont have access' })
+        if(!todo){
+            next({ name: "errorNotFound" })
         }else{
-            next()
+            if(todo.UserId != req.user.id){
+                next({ name: "errorAuthorization" })
+            }else{
+                next()
+            }
         }
     }catch(err){
-        res.status(500).json({ message: err.message })
+        next(err)
     }
 }
 
