@@ -9,18 +9,12 @@ class Controller {
                 res.status(201).json(newTodo)
             })
             .catch(err => {
-                // let errors = (err.errors) && err.errors.map((error) => error.message);
-                // let errMsg = {}
-                // errors.forEach((el, i) => {
-                //     !errMsg[`message${i}`] && (errMsg[`message${i}`] = '')
-                //     errMsg[`message${i}`] = el
-                // });
                 err.errors ?
                 res.status(400).json({
-                    message: err.errors[0].message
+                    message: err.message.replace('Validation error: ','').replace('\nValidation error: ','\n')
                 }) :
                 res.status(500).json({
-                    message: err.parent.routine
+                    message: err.message //'Internal Server Error'
                 })
             })
     }
@@ -30,7 +24,7 @@ class Controller {
             .findAll()
             .then(todoList => res.status(200).json(todoList))
             .catch(err => res.status(500).json({
-                message: err.parent.routine
+                message: 'Internal Server Error'
             }))
     }
 
@@ -44,7 +38,7 @@ class Controller {
                 })
             })
             .catch(err => res.status(500).json({
-                message: err.parent.routine
+                message: 'Internal Server Error'
             }))
     }
 
@@ -61,11 +55,11 @@ class Controller {
             .catch(err => {
                 err.errors ?
                 res.status(400).json({
-                    message: err.errors[0].message
+                    message: err.message
                 }) :
                 err.parent ?
                 res.status(500).json({
-                    message: err.parent.routine
+                    message: err.message //'Internal Server Error'
                 }) :
                 res.status(404).json({
                     message: 'Data Not Found'
@@ -86,11 +80,11 @@ class Controller {
             .catch(err => {
                 err.errors ?
                 res.status(400).json({
-                    message: err.errors[0].message
+                    message: err.message
                 }) :
                 err.parent ?
                 res.status(500).json({
-                    message: err.parent.routine
+                    message: err.message //'Internal Server Error'
                 }) :
                 res.status(404).json({
                     message: 'Data Not Found'
@@ -101,18 +95,20 @@ class Controller {
     static delete(req, res) {
         Todo
             .destroy({
-                where : {id: +req.params.id}
+                where : {id: +req.params.id},
+                returning: true,
             })
-            .then(data => res.status(200).json({
-                message: 'Todo success to be deleted!'
-            }))
-            .catch(err => {
-                err.parent ?
-                res.status(500).json({
-                    message: err.parent.routine
+            .then(data => {
+                data ? res.status(200).json({
+                    message: 'Todo success to be deleted!'
                 }) :
                 res.status(404).json({
                     message: 'Data Not Found'
+                })
+            })
+            .catch(err => {
+                res.status(500).json({
+                    message: 'Internal Server Error'
                 })
             })
     }
