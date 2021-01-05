@@ -10,8 +10,14 @@ class TodosController{
         })
     }
     static saveTodos(req, res) {
-        let {title, description, status, due_date, UserId} = req.body
-        Todo.create({title, description, status, due_date, UserId})
+        const bodyObj = {
+            title : req.body.title,
+            description : req.body.description,
+            status : req.body.status,
+            due_date : req.body.due_date,
+            UserId: req.user.id
+        }
+        Todo.create(bodyObj)
         .then(data => {
             return res.status(201).json(data);
         })
@@ -41,8 +47,14 @@ class TodosController{
     }
     static updateTodos (req, res) {
         let id = +req.params.id
-        let {title, description, status, due_date, UserId} = req.body
-        Todo.update({title, description, status, due_date, UserId}, { where : {id} })
+        const bodyObj = {
+            title : req.body.title,
+            description : req.body.description,
+            status : req.body.status,
+            due_date : req.body.due_date,
+            UserId: req.user.id
+        }
+        Todo.update(bodyObj, { where : {id} })
         .then(data => {
             if (data === 0){
                 return res.status(404).json({message: 'Error Not Found'});
