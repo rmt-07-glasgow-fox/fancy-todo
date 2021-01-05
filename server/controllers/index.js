@@ -1,3 +1,4 @@
 module.exports = {
-  TodoController : require('./todoController')
+  TodoController : require('./todoController'),
+  UserController : require('./userController')
 }
