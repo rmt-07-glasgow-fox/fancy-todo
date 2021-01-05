@@ -62,21 +62,28 @@ class ControllerTodo {
     }
 
     Todo.update(input, {
-      where: { id }
+      where: { id },
+      returning: true
     })
       .then(response => {
-        if (response) {
-          res.status(200).json({
-            message: 'Data has been updated successfully'
-          })
+        console.log(response, 'ini then')
+        if (response[0] > 0) {
+          res.status(200).json(response[1])
         } else {
-          res.status(400).json({
-            message: 'Validation errors'
+          res.status(404).json({
+            message: 'Error not found'
           })
         }
       })
       .catch(err => {
-        res.status(500).json(err.message)
+        console.log(err, 'ini catch')
+        if (err.errors.length) {
+          res.status(400).json({
+            message: 'Validation error'
+          })
+        } else {
+          res.status(500).json(err.message)
+        }
       })
   }
 
