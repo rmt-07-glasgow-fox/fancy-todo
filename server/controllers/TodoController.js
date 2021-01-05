@@ -53,7 +53,7 @@ class TodoController {
                 if (todo) res.status(200).json(todo)
                 else throw new Error('Error not found')
             })
-            .catch(err => res.status(500).json({message: err.message}))
+            .catch(err => res.status(404).json({message: err.message}))
     }
 
     static editTodo(req, res) {
@@ -90,7 +90,7 @@ class TodoController {
                 } else if (err.message === "IdNotFound") {
                     res.status(404).json({message: 'Error not found'})
                 } else {
-                    res.status(500).json({message: 'internal server error'})
+                    res.status(500).json({message: 'Internal server error'})
                 }
             }) 
     }   
@@ -126,7 +126,7 @@ class TodoController {
                 } else if (err.message === "IdNotFound") {
                     res.status(404).json({ message: 'Error not found' })
                 } else {
-                    res.status(500).json({ message: 'internal server error' })
+                    res.status(500).json({ message: 'Internal server error' })
                 }
             }) 
     }
