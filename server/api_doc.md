@@ -9,11 +9,11 @@ My FancyTodo App is an application to manage your life. This app has :
 
 ## List Available endPoints
 
-- `GET /todo`
-- `POST /todo`
-- `PUT /todo/:id`
-- `PATCH /todo/:id`
-- `DELETE /todo/:id`
+- `GET /todos`
+- `POST /todos`
+- `PUT /todos/:id`
+- `PATCH /todos/:id`
+- `DELETE /todos/:id`
 
 ## RESTful endpoints
 
@@ -102,8 +102,8 @@ _Response (201 - Created)_
   "description": "<posted description>",
   "status":"<posted status>
   "due_date":"<posted due_date>
-  "createdAt": "2020-03-20T07:15:12.149Z",
-  "updatedAt": "2020-03-20T07:15:12.149Z",
+  "createdAt": <time stamp>",
+  "updatedAt": "<time stamp",
 }
 ```
 

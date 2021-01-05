@@ -28,22 +28,23 @@ class UserController {
                  res.status(401).json({
                     message: "invalid email/password"
                 })
-            }
-            const match = comparePassword (password, user.password)
-            if(match) {
-                const payload = {
-                    id : user.id,
-                    email: user.email,
-                    username: user.username
-                }
-                const access_token = generateToken(payload)
-                res.status(200).json({access_token})
             } else {
-                res.status(401).json({
-                    message: "invalid email/password"
-                })
+                const match = comparePassword (password, user.password)
+                if(match) {
+                    const payload = {
+                        id : user.id,
+                        email: user.email,
+                        username: user.username
+                    }
+                    const access_token = generateToken(payload)
+                    res.status(200).json({access_token})
+                } else {
+                    res.status(401).json({
+                        message: "invalid email/password"
+                    })
+                }
+                // res.status(200).json(user)
             }
-            res.status(200).json(user)
         }catch (err) { 
             res.status(401).json(err)
         }
