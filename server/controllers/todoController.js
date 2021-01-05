@@ -1,8 +1,11 @@
 const { Todo } = require('../models');
+const { checkToken } = require('../helpers/jwt.js');
 
 class todoController {
   static getAllTodoHandler(req, res) {
-    Todo.findAll()
+    const userToken = req.headers.access_token;
+    const decoded = checkToken(userToken);
+    Todo.findAll({ where: { UserId: decoded.id } })
       .then(dataTodo => {
         res.status(201).json(dataTodo);
       })
@@ -12,8 +15,11 @@ class todoController {
   }
 
   static postTodoHandler(req, res) {
+    const userToken = req.headers.access_token;
+    const decoded = checkToken(userToken);
     const dataInputTodo = {
-      title: req.body.title,
+      UserId: decoded.id,
+      title: req.body.title || null,
       description: req.body.description,
       status: false,
       due_date: req.body.due_date
