@@ -6,8 +6,8 @@ class TodoController{
         .then(data => {
             res.status(200).json(data)
         })
-        .catch(() => {
-            next({status: 500})
+        .catch(err => {
+            next(err)
         })
     }
 
@@ -30,7 +30,7 @@ class TodoController{
                     errors: err.errors
                 })
             } else {
-                next({status: 500})
+                next(err)
             }
         })
     }
@@ -45,8 +45,8 @@ class TodoController{
                 next({status: 404})
             }           
         })
-        .catch(() => {
-            next({status: 500})
+        .catch(err => {
+            next(err)
         })
     }
 
@@ -77,7 +77,7 @@ class TodoController{
                     errors: err.errors
                 })
             } else {
-                next({status: 500})
+                next(err)
             }
         })
     }
@@ -105,7 +105,7 @@ class TodoController{
                     errors: err.errors
                 })
             } else {
-                next({status: 500})
+                next(err)
             }
         })
     }
@@ -117,8 +117,8 @@ class TodoController{
             if(data) res.status(200).json({message: "Todo success to deleted"})
             else next({status: 404})
         })
-        .catch(() => {
-            next({status: 500})
+        .catch(err => {
+            next(err)
         })
     }
 }

@@ -4,7 +4,7 @@ const { checkToken } = require('../helpers')
 function authenticate(req, res, next){
     try {
         let decode = checkToken(req.headers.access_token)
-        console.log(decode);
+        // console.log(decode);
         User.findOne({
             where: {
                 email: decode.email
@@ -24,7 +24,7 @@ function authenticate(req, res, next){
             }
         })
         .catch(err => {
-            next({status: 500})
+            next(err)
         })
     } catch (err) {
         next({status: 400})

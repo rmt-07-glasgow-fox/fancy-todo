@@ -24,7 +24,7 @@ class UserController{
                     errors: err.errors
                 })
             } else {
-                next({status: 500})
+                next(err)
             }
         })
     }
@@ -59,8 +59,8 @@ class UserController{
                 })
             }
         })
-        .catch(() => {
-            next({status: 500})
+        .catch(err => {
+            next(err)
         })
     }
 }
