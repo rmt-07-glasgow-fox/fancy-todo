@@ -109,7 +109,10 @@ class TodosController {
       let todo = await Todo.findByPk(+req.params.id)
       if (todo) {
         await todo.destroy()
-        return res.status(200).json({msg: `${todo.title} list has been deleted!`})
+        return res.status(200).json({
+          msg: `${todo.title} list has been deleted!`,
+          todo
+        })
       } else {
         return res.status(404).json({msg: 'Data not found!'})
       }
