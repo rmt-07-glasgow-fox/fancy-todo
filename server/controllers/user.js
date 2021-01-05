@@ -1,8 +1,9 @@
 const { User } = require("../models")
 const { comparePassword } = require("../helpers/bcrypt")
 const { generateToken } = require("../helpers/jwt")
+const axios = require('axios')
 
-class ControllerAuth {
+class ControllerUser {
     static async signup(req, res){
         try {
             const {email, password} = req.body
@@ -46,6 +47,17 @@ class ControllerAuth {
             return res.status(401).json(err)
         }
     }
+
+    static weather(req, res){
+        let urlWeather = "https://api.openweathermap.org/data/2.5/weather?id=1643084&appid=49ecf64121971fb566f9f10613213c13"
+        axios.get(urlWeather)
+        .then((response) => {
+            res.status(200).json(response.data)
+        })
+        .catch((error) => {
+            res.status(400).json({message:"Weather Are Unavailable"})
+        })
+    }
 }
 
-module.exports = ControllerAuth
+module.exports = ControllerUser
