@@ -126,7 +126,6 @@ class ToDoController {
         let data = await Todo.destroy ({
           where: {
             id: +req.params.id,
-            user_id: req.user
           }
         })
         if (data === 1) {

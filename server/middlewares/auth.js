@@ -28,17 +28,17 @@ async function authorize (req, res, next) {
   try {
     let data = await Todo.findOne ({
       where: {
-        id: req.params.id
+        id: +req.params.id
       }
     })
-    console.log (data)
+    // console.log (data)
     if (data.user_id === +req.user) {
       next ()
     } else {
       res.status(401).json({ message: 'Not authorized'})
     }
   } catch (err) {
-    res.status(500).json({ message: err.message})
+    res.status(500).json({ message: 'Internal Server Error'})
   }
 }
 
