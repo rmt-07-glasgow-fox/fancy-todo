@@ -3,6 +3,7 @@ const { Todo } = require('../models')
 class Controller {
     static showAll(req, res) {
         Todo.findAll({
+            where: {UserId: req.user.id},
             order: [['createdAt', 'ASC']]
         })
         .then(data => {
@@ -18,11 +19,12 @@ class Controller {
             title: req.body.title,
             description: req.body.description,
             status: req.body.status,
-            due_date: req.body.due_date
+            due_date: req.body.due_date,
+            UserId: req.user.id
         }
         Todo.create(input)
         .then(data => {
-            let {id, title, description, status, due_date} = data
+            let {id, title, description, status, due_date, UserId} = data
             const options = { 
                 month: '2-digit', 
                 day: '2-digit',
@@ -33,13 +35,18 @@ class Controller {
                 title,
                 description,
                 status,
-                due_date: due_date.toLocaleString("en-ID", options)
+                due_date: due_date.toLocaleString("en-ID", options),
+                UserId
             }
             res.status(201).json(output)
         })
         .catch(err => {
-            if (err.errors[0].message === "due date must be greater or equal today") {
-                return res.status(400).json({message: "due date must be greater or equal today"})
+            let message = []
+            err.errors.forEach(el => {
+                message.push(el.message)
+            });
+            if (message.length) {
+                return res.status(400).json({message})
             }
             res.status(500).json({message: "internal server error"})
         })
@@ -47,7 +54,11 @@ class Controller {
 
     static showOne(req, res) {
         let id = req.params.id
-        Todo.findByPk(id)
+        Todo.findOne({
+            where: {
+                id,
+                UserId: req.user.id
+            }})
         .then(data => {
             if (data) {
                 res.status(200).json(data)
