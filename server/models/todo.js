@@ -30,7 +30,8 @@ module.exports = (sequelize, DataTypes) => {
           msg: "Due Date must be in format yyyy-mm-dd"
         }
       }
-    }
+    },
+    UserId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Todo',

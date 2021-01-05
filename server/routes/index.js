@@ -6,6 +6,6 @@ router.get('/', (req, res) => {
     res.status(200).json({message: 'masuk index'})
 })
 router.use('/todo', todoRouter)
-router.use('/user', userRouter)
+router.use(userRouter)
 
 module.exports = router
