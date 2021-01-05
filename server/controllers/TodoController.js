@@ -35,7 +35,7 @@ class TodoController {
   static getTodoById(req, res) {
     const todoId = +req.params.id
 
-    Todo.findByPk(todoId)
+    Todo.findByPk(todoId, { attributes: { exclude: ['createdAt', 'updatedAt'] } })
       .then(data => {
         if (data) {
           res.status(200).json(data)
@@ -65,7 +65,11 @@ class TodoController {
       returning: true
     })
       .then(data => {
-        res.status(200).json({ id: data[1][0].id, title: data[1][0].title, description: data[1][0].description, status: data[1][0].status, due_date: data[1][0].due_date })
+        if(data[0] === 0) {
+          res.status(404).json({ message: 'Todo not found' })
+        } else {
+          res.status(200).json({ id: data[1][0].id, title: data[1][0].title, description: data[1][0].description, status: data[1][0].status, due_date: data[1][0].due_date })
+        }
       })
       .catch(err => {
         if (err) {
