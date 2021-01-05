@@ -34,6 +34,9 @@ module.exports = (sequelize, DataTypes) => {
           msg: "password at least 6 characters"
         }
       }
+    },
+    location: {
+      type: DataTypes.STRING
     }
   }, {
     sequelize,

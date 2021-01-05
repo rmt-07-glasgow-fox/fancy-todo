@@ -1,4 +1,5 @@
 const { Todo } = require ('../models/index')
+const { getWeather } = require ('../helper/axios')
 
 class ToDoController {
   static async getTodos (req, res, next) {
@@ -8,7 +9,9 @@ class ToDoController {
             user_id: req.user
           }
         })
-        res.status(200).json(data)
+
+        let weather = await getWeather ()
+        res.status(200).json({data, weather})
       } catch (err) {
         next (err)
       }

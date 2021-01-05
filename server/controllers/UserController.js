@@ -7,7 +7,9 @@ class UserController {
     try {
       const {email, password} = req.body
       let data = await User.create ({
-        email, password
+        email, 
+        password,
+        location: 'Jakarta'
       })
       const response = {
         id: data.id,
