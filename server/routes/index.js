@@ -5,7 +5,7 @@ const { authenticate } = require('../middlewares/auth');
 
 router.get('/', (req, res) => {
     res.status(200).json({
-        msg: 'welcome'
+        message: 'welcome'
     })
 });
 router.use(users);

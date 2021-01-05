@@ -3,13 +3,15 @@ const { User } = require('../models');
 const { generateToken } = require('../helpers/jwt');
 
 class UserController {
-    static registerPost = (req, res) => {
+
+    static registerPost = (req, res, next) => {
         const { email, name, password } = req.body;
         User.create({email, name, password })
         .then(output => res.status(201).json({id: output.id, email: output.email}))
-        .catch(err => res.status(400).json(err));
+        .catch(err => err ? next(err) : next(new Error('InternalServerError')));
     }
-    static loginPost = (req, res) => {
+    
+    static loginPost = (req, res, next) => {
         const { email, password } = req.body;
         User.findOne({where: {email}})
         .then(output => {
@@ -22,13 +24,13 @@ class UserController {
                     })
                     res.status(200).json({access_token})
                 } else {
-                    throw {message: 'Invalid email/password'}
+                    throw new Error('InvalidInput');
                 }
             } else {
-                throw {message: 'Invalid email/password'}
+                throw new Error('InvalidInput');
             }
         })
-        .catch(err => res.status(400).json(err));
+        .catch(err => err ? next(err) : next(new Error('InternalServerError')));
     }
 }
 
