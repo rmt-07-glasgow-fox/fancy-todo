@@ -1,19 +1,25 @@
 # Fancy Todo App
 Fancy Todo App is an application to make a list of every fancy todo of your daily activities. This app has : 
-* RESTful endpoint for asset's CRUD operation
+* RESTful endpoint for todo's CRUD operation
 * JSON formatted response
 
 &nbsp;
 
 ## List of available endpoints
-- `GET /todo`
-- `POST /todo`
+- `GET /todos`
+- `POST /todos`
+- `PUT /todos/:id`
+- `PATCH /todos/:id`
+- `DELETE /todos/:id`
+- `GET /register`
+- `POST /register`
+- `DELETE /register/:id`
+- `POST /login`
 
 ## RESTful endpoints
+### GET /todos
 
-### GET /assets
-
-> Get all assets
+> Get all todo
 
 _Request Header_
 ```json
@@ -32,31 +38,35 @@ _Response (200)_
 [
   {
     "id": 1,
-    "name": "<asset name>",
-    "description": "<asset description>",
+    "title": "<todo name>",
+    "description": "<todo description>",
+    "status": "<todo status>",
+    "due_date": "<due date>",
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
   },
   {
     "id": 2,
-    "name": "<asset name>",
-    "description": "<asset description>",
+    "title": "<todo name>",
+    "description": "<todo description>",
+    "status": "<todo status>",
+    "due_date": "<due date>",
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
   }
 ]
 ```
 
-_Response (400 - Bad Request)_
+_Response (500 - Internal Server Error)_
 ```json
 {
-  "message": "Invalid request"
+  "message": "Internal server error"
 }
 ```
 ---
-### POST /assets
+### POST /todos
 
-> Create new asset
+> Create new todo
 
 _Request Header_
 ```json
@@ -68,8 +78,10 @@ _Request Header_
 _Request Body_
 ```json
 {
-  "name": "<name to get insert into>",
-  "description": "<description to get insert into>"
+  "title": "<name to get insert into>",
+  "description": "<description to get insert into>",
+  "status": "<status to get insert into>",
+  "due_date": "<due date to get insert into>"
 }
 ```
 
@@ -79,8 +91,10 @@ _Response (201 - Created)_
   "id": <given id by system>,
   "name": "<posted name>",
   "description": "<posted description>",
-  "createdAt": "2020-03-20T07:15:12.149Z",
-  "updatedAt": "2020-03-20T07:15:12.149Z",
+  "status": "<posted status>",
+  "due_date": "<posted due_date>",
+  // "createdAt": "2020-03-20T07:15:12.149Z",
+  // "updatedAt": "2020-03-20T07:15:12.149Z",
 }
 ```
 
@@ -88,5 +102,204 @@ _Response (400 - Bad Request)_
 ```json
 {
   "message": "Invalid requests"
+}
+```
+---
+### PUT /todos/:id
+
+> Update todo with the id inputed
+
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```json
+{
+  "id": "<id todo want to be deleted>"
+}
+```
+
+_Response (201)_
+```json
+{
+  "id": <given id by system>,
+  "name": "<posted name>",
+  "description": "<posted description>",
+  "status": "<posted status>",
+  "due_date": "<posted due_date>",
+  // "createdAt": "2020-03-20T07:15:12.149Z",
+  // "updatedAt": "2020-03-20T07:15:12.149Z",
+}
+```
+
+_Response (404 - Not Found)_
+```json
+{
+  "message": "Todo not found"
+}
+```
+
+_Response (400 - Bad Request)_
+```json
+{
+  "message": "Invalid requests"
+}
+```
+---
+### PATCH /todos/:id
+
+> Update todo with the id inputed
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```json
+{
+  "id": "<id todo want to be deleted>"
+}
+```
+
+_Response (201)_
+```json
+{
+  "id": <given id by system>,
+  "name": "<posted name>",
+  "description": "<posted description>",
+  "status": "<posted status>",
+  "due_date": "<posted due_date>",
+  // "createdAt": "2020-03-20T07:15:12.149Z",
+  // "updatedAt": "2020-03-20T07:15:12.149Z",
+}
+```
+
+_Response (404 - Not Found)_
+```json
+{
+  "message": "Todo not found"
+}
+```
+
+_Response (400 - Bad Request)_
+```json
+{
+  "message": "Invalid requests"
+}
+```
+---
+### DELETE /todos/:id
+
+> Delete todo with the id inputed
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```json
+{
+  "id": "<id todo want to be deleted>"
+}
+```
+
+_Response (200)_
+```json
+{
+  "message": "Todo has been deleted"
+}
+```
+
+_Response (404 - Not Found)_
+```json
+{
+  "message": "Todo not found"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "message": "Internal server error"
+}
+```
+---
+### POST /register
+
+> Create new user
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```json
+{
+  "email": "<email to get insert into>",
+  "password": "<password to get insert into>"
+}
+```
+
+_Response (201)_
+```json
+{
+  "id": <given id by system>,
+  "email": "<posted email>",
+  // "createdAt": "2020-03-20T07:15:12.149Z",
+  // "updatedAt": "2020-03-20T07:15:12.149Z",
+}
+```
+
+_Response (400 - Bad Request)_
+```json
+{
+  "message": "<err>"
+}
+```
+---
+### POST /login
+
+> Compare data login database with request
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```json
+{
+  "email": "<email to get compare>",
+  "password": "<password to get compare>"
+}
+```
+
+_Response (200)_
+```json
+{
+  "acces_token": "<your acces token>"
+}
+```
+
+_Response (401 - Unauthorized)_
+```json
+{
+  "message": "Invalid email/ password"
 }
 ```
