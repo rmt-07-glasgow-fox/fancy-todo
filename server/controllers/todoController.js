@@ -3,8 +3,14 @@ const { Todo } = require('../models/index.js');
 class TodoController {
   static async postTodo(req, res) {
     try {
-      const { title, description, status, due_date } = req.body;
-      const todo = await Todo.create({ title, description, status, due_date });
+      const input = {
+        title: req.body.title,
+        description: req.body.description,
+        status: req.body.status,
+        due_date:req.body.due_date,
+        UserId: req.user.id
+      }
+      const todo = await Todo.create(input);
 
       return res.status(201).json(todo);
     } catch (err) {

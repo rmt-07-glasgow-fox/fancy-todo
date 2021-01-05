@@ -3,6 +3,7 @@ const { hashPass } = require('../helpers/bcrypt.js');
 const {
   Model
 } = require('sequelize');
+const TodoController = require('../controllers/todoController.js');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -12,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User.hasMany(models.Todo, { foreignKey: 'UserId' });
     }
   };
   User.init({
@@ -50,14 +52,14 @@ module.exports = (sequelize, DataTypes) => {
           args: [5, 16],
           msg: "Password length must be between 5 and 16 characters"
         },
-        is:{
+        is: {
           args: ["^[a-zA-Z0-9\s]+$", 'i'],
           msg: "Whitespace is not allowed"
         }
       }
     }
   }, {
-    hooks:{
+    hooks: {
       beforeCreate: (instance, options) => {
         instance.password = hashPass(instance.password);
       }
