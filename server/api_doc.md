@@ -158,7 +158,7 @@ _Response (500 - Internal Server Error)_
 ```
 
 ---
-### PUT /todos/:id
+### PATCH /todos/:id
 
 > Update todo using PATCH
 
