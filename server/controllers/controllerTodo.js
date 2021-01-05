@@ -29,12 +29,12 @@ class ControllerTodo {
     }
 
     static listTodo(req,res,next){
-        Todo.findAll()
+        Todo.findAll({where: {UserId: req.loggedInUser.id}})
         .then(data => {
             res.status(200).json(data)
         })
         .catch(error => {
-            res.status(500).json({ message: 'internal server error' })
+            next(error)
         })
     }
 

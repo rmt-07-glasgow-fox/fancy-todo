@@ -1,7 +1,6 @@
 const { User } = require('../models')
 const { compare } = require('../helper/bcrypt')
 const { generateToken } = require('../helper/jwt')
-const { noExtendLeft } = require('sequelize/types/lib/operators')
 
 
 class ControllerUser {
@@ -36,13 +35,13 @@ class ControllerUser {
                     res.status(200).json({ access_token })
                 } else {
                     throw {
-                        status: 404,
+                        status: 400,
                         message: "wrong email/password"
                     }
                 } 
             } else {
                 throw {
-                    status: 404,
+                    status: 400,
                     message: "wrong email/password"
                 }
             }

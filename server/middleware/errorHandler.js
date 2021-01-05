@@ -1,6 +1,5 @@
 module.exports = (err, req, res, next) => {
     if(err.status){
-        console.log('masuk status')
         res.status(err.status).json({
             message: err.message
         })
@@ -11,7 +10,6 @@ module.exports = (err, req, res, next) => {
         }
         res.status(400).json({message: dataError})
     } else {
-        console.log(err,'<<<<<<<<<<<<,')
         res.status(500).json({message: 'internal server error'})
     }
 }

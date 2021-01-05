@@ -19,8 +19,14 @@
     `none`
 
 * **Body**
-
-  `firstName=[string] lastname=[string] email=[string] password=[string]`
+    ```json
+        {
+          "id": 3,
+          "firstname": "ted ",
+          "lastname": "george",
+          "email": "tedgeorge@gmail.com"
+        }
+    ```
 
 * **Success Response:**
 
@@ -78,8 +84,16 @@
     `none`
 
 * **Body**
-
-  `email=[string] password=[string]`
+    ```json
+        {
+          "data": {
+              "id": 3,
+              "firstname": "ted ",
+              "lastname": "george",
+              "email": "tedgeorge@gmail.com"
+            }
+        }
+    ```
 
 * **Success Response:**
 
@@ -335,8 +349,11 @@
     `id =[integer]`
 
 * **Data Params**
-
-  `status =[string]`
+    ```json
+      {
+        "status": "selesai"
+      }
+    ```
 
 * **Success Response:**
 
@@ -409,9 +426,19 @@
 
     `id =[integer]`
 
-* **Data Params**
-
-  `title=[string] description=[string] status =[string] due_date=[string]`
+* **Body**
+    ```json
+      {
+        "id": 2,
+        "title": "manjat pohon toge",
+        "description": "manjat pohon sekolah",
+        "status": "selesai",
+        "due_date": "2020-12-28T17:00:00.000Z",
+        "createdAt": "2020-11-25T16:01:28.995Z",
+        "updatedAt": "2020-11-25T16:01:28.996Z",
+        "UserId": 2
+      }
+    ```
 
 * **Success Response:**
 
@@ -493,8 +520,18 @@
     `none`
 
 * **Body**
-
-  `title=[string] description=[string] status =[string] due_date=[string]`
+    ```json
+      {
+        "id": 9,
+        "title": "manjat pohon toge",
+        "description": "manjat pohon sekolah",
+        "status": "selesai",
+        "due_date": "2020-12-28T17:00:00.000Z",
+        "createdAt": "2020-11-25T16:01:28.995Z",
+        "updatedAt": "2020-11-25T16:01:28.996Z",
+        "UserId": 2
+      }
+    ```
 
 * **Success Response:**
 

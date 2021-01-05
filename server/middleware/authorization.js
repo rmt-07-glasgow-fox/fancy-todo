@@ -14,8 +14,8 @@ module.exports = (req,res,next) => {
                 }
             } else {
                 throw {
-                    status: 401,
-                    message: "you are not authorize with this todo"
+                    status: 404,
+                    message: "todo not found"
                 }
             }
         })
