@@ -16,7 +16,7 @@ class TodoController {
         let newTodo = {
             title: req.body.title,
             description: req.body.description,
-            status: req.body.status,
+            status: "new todo",
             due_date: req.body.due_date
         }
 
