@@ -26,7 +26,8 @@ module.exports = (sequelize, DataTypes) => {
           args: true,
           msg: 'Invalid email Format'
         }
-      }
+      },
+      unique: true,
     },
     password: {
       type: DataTypes.STRING,

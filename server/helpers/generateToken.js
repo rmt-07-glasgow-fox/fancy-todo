@@ -6,4 +6,8 @@ const generateToken = (payload) => {
     return token
 }
 
-module.exports = {generateToken}
+const cekToken = (token) => {
+    return jwt.verify(token, SECRET_KEY)
+}
+
+module.exports = {generateToken, cekToken}

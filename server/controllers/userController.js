@@ -34,8 +34,8 @@ class UsersController{
                     name: user.name,
                     email: user.email
                 }
-                const token = generateToken(payload)
-                return res.status(200).json({token});
+                const access_token = generateToken(payload)
+                return res.status(200).json({access_token});
             }else {
                 return res.status(401).json({message: "Invalid Email / Password"})
             }
