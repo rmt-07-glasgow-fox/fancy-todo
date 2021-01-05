@@ -1,4 +1,3 @@
-const { response } = require('express');
 const { verifyToken } = require('../helpers/jwt');
 const { User, Todo } = require('../models')
 
