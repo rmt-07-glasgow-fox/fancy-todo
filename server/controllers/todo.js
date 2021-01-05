@@ -2,7 +2,8 @@ const { Todo } = require('../models');
 
 exports.list = async (req, res) => {
   try {
-    const todos = await Todo.findAll();
+    const userId = req.user.id;
+    const todos = await Todo.findAll({ where: { UserId: userId } });
     return res.status(200).json(todos);
   } catch (error) {
     return res.status(500).json(error);
@@ -15,6 +16,7 @@ exports.create = async (req, res) => {
     description: req.body.description,
     status: req.body.status,
     due_date: req.body.due_date,
+    UserId: req.user.id,
   };
 
   try {
@@ -27,9 +29,10 @@ exports.create = async (req, res) => {
 
 exports.detail = async (req, res) => {
   const id = req.params.id;
+  const userId = req.user.id;
 
   try {
-    const todo = await Todo.findOne({ where: { id: id } });
+    const todo = await Todo.findOne({ where: { id: id, UserId: userId } });
     if (!todo) return res.status(404).json({ message: 'error not found' });
     return res.status(200).json(todo);
   } catch (error) {
@@ -39,6 +42,7 @@ exports.detail = async (req, res) => {
 
 exports.update = async (req, res) => {
   const id = req.params.id;
+  const userId = req.user.id;
   const body = {
     title: req.body.title,
     description: req.body.description,
@@ -47,7 +51,7 @@ exports.update = async (req, res) => {
   };
 
   try {
-    const isFound = await Todo.findOne({ where: { id: id } });
+    const isFound = await Todo.findOne({ where: { id: id, UserId: userId } });
     if (!isFound) return res.status(404).json({ message: 'error not found' });
     else {
       const todo = await Todo.update(body, { where: { id: id } });
@@ -60,10 +64,11 @@ exports.update = async (req, res) => {
 
 exports.updateStatus = async (req, res) => {
   const id = req.params.id;
+  const userId = req.user.id;
   const status = req.body.status;
 
   try {
-    const isFound = await Todo.findOne({ where: { id: id } });
+    const isFound = await Todo.findOne({ where: { id: id, UserId: userId } });
     if (!isFound) return res.status(404).json({ message: 'error not found' });
     else {
       const todo = await Todo.update(
@@ -79,9 +84,10 @@ exports.updateStatus = async (req, res) => {
 
 exports.destroy = async (req, res) => {
   const id = req.params.id;
+  const userId = req.user.id;
 
   try {
-    const isFound = await Todo.findOne({ where: { id: id } });
+    const isFound = await Todo.findOne({ where: { id: id, UserId: userId } });
     if (!isFound) return res.status(404).json({ message: 'error not found' });
     else {
       const todo = await Todo.destroy({ where: { id: id } });
