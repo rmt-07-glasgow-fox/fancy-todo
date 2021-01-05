@@ -24,7 +24,8 @@ module.exports = (sequelize, DataTypes) => {
             throw new Error('Only can accept boolean')
           }
         }
-      }
+      },
+      unique : true
     },
     due_date: {
       type: DataTypes.DATE,
