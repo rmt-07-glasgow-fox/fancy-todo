@@ -32,8 +32,8 @@ class userController {
         const matchPassword = comparePassword(password, dataUser.password);
         if (matchPassword) {
           const payload = {
-            id: user.id,
-            email: user.email
+            id: dataUser.id,
+            email: dataUser.email
           }
           const access_token = generateToken(payload);
           return res.status(200).json({ access_token });
