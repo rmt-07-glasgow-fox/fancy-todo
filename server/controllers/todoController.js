@@ -7,6 +7,7 @@ class todoController{
             res.status(200).json(data)
         })
         .catch(err => {
+            console.log(err)
             res.status(500).json({
                 message : 'Internal Server Error'
             })
@@ -18,7 +19,8 @@ class todoController{
             title : req.body.title,
             description : req.body.description,
             status : req.body.status,
-            due_date : req.body.due_date
+            due_date : req.body.due_date,
+            userId : req.user.id
         }
         Todo.create(todo)
         .then(data => {
