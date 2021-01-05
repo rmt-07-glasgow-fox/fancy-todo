@@ -1,7 +1,7 @@
 const { Todo } = require('../models')
 
 class Controller {
-    static create(req, res) {
+    static create(req, res, next) {
         const { title, description, status, due_date } = req.body
         const UserId = req.userData.id
         Todo
@@ -10,41 +10,27 @@ class Controller {
                 const { id, title, description, status, due_date, UserId } = newTodo
                 res.status(201).json({ id, title, description, status, due_date, UserId })
             })
-            .catch(err => {
-                err.errors ?
-                res.status(400).json({
-                    message: err.message //.replace('Validation error: ','').replace('\nValidation error: ','\n')
-                }) :
-                res.status(500).json({
-                    message: 'Internal Server Error' //err.message
-                })
-            })
+            .catch(err => next(err))
     }
 
-    static findAll(req, res) {
+    static findAll(req, res, next) {
         Todo
             .findAll()
             .then(todoList => res.status(200).json(todoList))
-            .catch(err => res.status(500).json({
-                message: 'Internal Server Error'
-            }))
+            .catch(err => next(err))
     }
 
-    static findByPk(req, res) {
+    static findByPk(req, res, next) {
         Todo
             .findByPk(+req.params.id)
             .then(todo => {
                 todo ? res.status(200).json(todo) :
-                res.status(404).json({
-                    message: "Data Not Found"
-                })
+                next({ name: "NotFoundError" })
             })
-            .catch(err => res.status(500).json({
-                message: 'Internal Server Error'
-            }))
+            .catch(err => next(err))
     }
 
-    static update(req, res) {
+    static update(req, res, next) {
         const { title, description, status, due_date } = req.body
         Todo
             .update({ title, description, status, due_date },
@@ -57,22 +43,10 @@ class Controller {
                 const { id, title, description, status, due_date } = todoEdited[1].dataValues
                 res.status(200).json({ id, title, description, status, due_date })
             })
-            .catch(err => {
-                err.errors ?
-                res.status(400).json({
-                    message: err.message
-                }) :
-                err.parent ?
-                res.status(500).json({
-                    message: 'Internal Server Error' //err.message
-                }) :
-                res.status(404).json({
-                    message: 'Data Not Found'
-                })
-            })
+            .catch(err => next(err))
     }
 
-    static updateStatus(req, res) {
+    static updateStatus(req, res, next) {
         const { status } = req.body
         Todo
             .update({ status },
@@ -85,22 +59,10 @@ class Controller {
                 const { id, status } = todoUpdated[1].dataValues
                 res.status(200).json({ id, status })
             })
-            .catch(err => {
-                err.errors ?
-                res.status(400).json({
-                    message: err.message
-                }) :
-                err.parent ?
-                res.status(500).json({
-                    message: 'Internal Server Error' //err.message
-                }) :
-                res.status(404).json({
-                    message: 'Data Not Found'
-                })
-            })
+            .catch(err => next(err))
     }
 
-    static delete(req, res) {
+    static delete(req, res, next) {
         Todo
             .destroy({
                 where : {id: +req.params.id},
@@ -110,15 +72,9 @@ class Controller {
                 data ? res.status(200).json({
                     message: 'Todo success to be deleted!'
                 }) :
-                res.status(404).json({
-                    message: 'Data Not Found'
-                })
+                next({name: 'NotFoundError'})
             })
-            .catch(err => {
-                res.status(500).json({
-                    message: 'Internal Server Error'
-                })
-            })
+            .catch(err => next(err))
     }
 }
 

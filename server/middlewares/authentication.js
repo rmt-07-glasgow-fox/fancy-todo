@@ -10,15 +10,15 @@ const authentication = (req, res, next) => {
             User
                 .findByPk(req.userData.id)
                 .then(data => {
-                    !data && res.status(404).json({message: 'User Not Found!'})
+                    !data && next({name: 'CustomError', statusCode: 404, message: 'User Not Found!'})
                     next()
                 })
-                .catch(err => res.status(500).json({message: err.message}))
+                .catch(err => next(err))
         }else {
-            res.status(401).json({message : 'You are Unathorized'})
+            next({name: 'UnauthorizedError'})
         }
     } catch (err) {
-        res.status(500).json({message: err.message})
+        next(err)
     }
 }
 

@@ -7,13 +7,13 @@ const authorization = (req, res, next) => {
         Todo
             .findByPk(+id)
             .then(data => {
-                !data ? res.status(404).json({message: 'Data Not Found!'}) :
-                userId !== data.UserId ? res.status(403).json({message: 'You dont have access'}) :
+                !data ? next({name: 'NotFoundError'}) :
+                userId !== data.UserId ? next({name: 'ForbiddenError'}) :
                 next()
             })
-            .catch(err => res.status(500).json({message: err.message}))
+            .catch(err => next(err))
     } catch (err) {
-        res.status(500).json({message: err.message})
+        next(err)
     }
 }
 

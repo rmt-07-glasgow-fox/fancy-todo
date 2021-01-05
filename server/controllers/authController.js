@@ -3,7 +3,7 @@ const { generateToken } = require('../helpers/jwt')
 const { User } = require('../models')
 
 class Controller {
-    static register(req, res) {
+    static register(req, res, next) {
         const { email, password } = req.body
         User
             .create({email, password})
@@ -11,10 +11,10 @@ class Controller {
                 const { id, email } = newUser
                 res.status(201).json({id, email})
             })
-            .catch(err => res.status(400).json(err))
+            .catch(err => next(err))
     }
 
-    static login(req, res) {
+    static login(req, res, next) {
         const { email, password } = req.body
         User
             .findOne({
@@ -26,10 +26,10 @@ class Controller {
                     const access_token = generateToken({ id, email })
                     res.status(200).json({access_token})
                 }else {
-                    res.status(400).json({message: 'Email or password wrong!'})
+                    next({name: 'CustomError', statusCode: 400, message: 'Email or password wrong!'})
                 }
             })
-            .catch(err => res.status(400).json({message: 'Email or password wrong!'}))
+            .catch(err => next({name: 'CustomError', statusCode: 400, message: 'Email or password wrong!'}))
     }
 }
 
