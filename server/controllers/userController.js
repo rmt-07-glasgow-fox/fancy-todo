@@ -1,7 +1,6 @@
 const { User } = require('../models');
 const { comparePassword } = require('../helpers/bcrypt.js');
 const { generateToken } = require('../helpers/jwt.js');
-const user = require('../models/user');
 
 class userController {
   static registerHandler(req, res) {
