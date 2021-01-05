@@ -3,7 +3,9 @@ const { Todo } = require('../models');
 class TodoController {
     static async getAll(req, res) {
         try {
-            const data = await Todo.findAll()
+            const data = await Todo.findAll({
+                attributes: { exclude: ['createdAt', 'updatedAt'] }
+            })
             return res.status(200).json({
                 status: 'success',
                 data
@@ -18,7 +20,9 @@ class TodoController {
 
     static async get(req, res) {
         try {
-            const data = await Todo.findByPk(+req.params.id);
+            const data = await Todo.findByPk(+req.params.id, {
+                attributes: { exclude: ['createdAt', 'updatedAt'] }
+            });
 
             if (!data) {
                 return res.status(404).json({
@@ -78,7 +82,9 @@ class TodoController {
         const input = { title, description, status, due_date };
 
         try {
-            const data = await Todo.findByPk(id);
+            const data = await Todo.findByPk(id, {
+                attributes: { exclude: ['createdAt', 'updatedAt'] }
+            });
             if (!data) {
                 return res.status(404).json({
                     status: 'error',
@@ -90,7 +96,8 @@ class TodoController {
 
             return res.status(200).json({
                 status: 'success',
-                message: 'todo updated successfully'
+                message: 'todo updated successfully',
+                data
             })
         } catch (err) {
             if (err.name = "SequelizeValidationError") {
@@ -119,7 +126,9 @@ class TodoController {
         const input = { status };
 
         try {
-            const data = await Todo.findByPk(id)
+            const data = await Todo.findByPk(id, {
+                attributes: { exclude: ['createdAt', 'updatedAt'] }
+            })
 
             if (!data) {
                 return res.status(404).json({
@@ -132,7 +141,8 @@ class TodoController {
 
             return res.status(200).json({
                 status: 'success',
-                message: 'todo updated successfully'
+                message: 'todo updated successfully',
+                data
             })
         } catch (err) {
             if (err.name = "SequelizeValidationError") {
