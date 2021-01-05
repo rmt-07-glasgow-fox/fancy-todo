@@ -7,4 +7,8 @@ function getToken (data) {
     return token;
 }
 
-module.exports = { getToken };
+function cekToken (token) {
+    return jwt.verify(token, SECRET_KEY);
+}
+
+module.exports = { getToken, cekToken };

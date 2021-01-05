@@ -1,8 +1,10 @@
 const { Todo } = require('../models');
+const { cekToken } = require('../helpers/jwt');
 
 class todosController {
     static async getTodos (req, res, next) {
         try {
+            console.log('Haloooo');
             let data = await Todo.findAll({ attributes: { exclude: ['createdAt', 'updatedAt'] } });
 
             return res.status(200).json(data);
@@ -13,11 +15,14 @@ class todosController {
 
     static async postTodos (req, res, next) {
         try {
-            let data = {
+            let data = cekToken(req.headers.token);
+            
+            data = {
                 title: req.body.title,
                 description: req.body.description,
                 status: req.body.status,
-                dueDate: req.body.dueDate
+                dueDate: req.body.dueDate,
+                userId: data.id
             };
 
             data = await Todo.create(data);
@@ -53,7 +58,8 @@ class todosController {
                 title: data.title,
                 description: data.description,
                 status: data.status,
-                dueDate: data.dueDate
+                dueDate: data.dueDate,
+                userId: data.userId
             };
 
             return res.status(200).json(data);
