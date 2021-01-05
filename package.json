@@ -4,7 +4,10 @@
   "description": "Membuat website untuk mencatat hal - hal menarik untuk dilakukan",
   "main": "app.js",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "nodemon": "^2.0.6",
     "pg": "^8.5.1",
     "sequelize": "^6.3.5",
@@ -12,7 +15,9 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "dev": "NODE_ENV=development nodemon app.js"
   },
   "repository": {
     "type": "git",

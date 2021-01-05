@@ -11,13 +11,15 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Todo.belongsTo(models.User)
     }
   };
   Todo.init({
     title: DataTypes.STRING,
     description: DataTypes.STRING,
     status: DataTypes.BOOLEAN,
-    due_date: DataTypes.DATEONLY
+    due_date: DataTypes.DATEONLY,
+    UserId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Todo',
