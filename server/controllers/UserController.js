@@ -4,10 +4,6 @@ const { generateToken } = require('../helpers/jwt')
 const { MyError } = require('../helpers/myError')
 
 class UserController {
-    static register(req, res) {
-        
-    }
-
     static login(req, res, next) {
         let { email, password } = req.body;
 
