@@ -1,5 +1,5 @@
 const { checkToken } = require('../helpers/jwt.js');
-const { User } = require('../models');
+const { User,Todo } = require('../models');
 
 function authenticate(req, res, next) {
   try {
@@ -17,7 +17,6 @@ function authenticate(req, res, next) {
         }
       })
       .catch(err => {
-        console.log(err);
         res.status(500).json({ error: err.name, message: err.message });
       });
   } catch (err) {
@@ -26,10 +25,20 @@ function authenticate(req, res, next) {
 }
 
 function authorize(req, res, next) {
-  console.log(req.user, 'REQ USERRRRRRRRRRRRRRRRRRR');
-  const id = req.params.id
-  // todo.findOne({ where: { id } })
-
+  const id = req.params.id;
+  const idUser = req.user.id;
+  Todo.findOne({ where: { id } })
+    .then(dataTodo => {
+      if (!dataTodo || dataTodo.UserId !== idUser) {
+        res.status(401).json({ message: 'Cannot get access' });
+      }else{
+        next();
+      }
+    })
+    .catch(err => {
+      // "message": "Cannot read property 'UserId' of null"
+      res.status(500).json({ error: err.name, message: err.message });
+    });
 }
 
 module.exports = { authenticate, authorize };
