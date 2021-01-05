@@ -114,9 +114,9 @@ class TodoController {
             .catch(err => next(err)) 
     }
 
-    static deleteTodo(req, res) {
+    static deleteTodo(req, res, next) {
         let id = req.params.id;
-        let deletedTodo = '';
+        let deletedTodo = {};
 
         Todo.findOne({
             where: {id},
