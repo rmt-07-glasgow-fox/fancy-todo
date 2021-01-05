@@ -3,11 +3,12 @@ const { Todo } = require('../models')
 class Controller {
     static create(req, res) {
         const { title, description, status, due_date } = req.body
+        const UserId = req.userData.id
         Todo
-            .create({ title, description, status, due_date })
+            .create({ title, description, status, due_date, UserId })
             .then(newTodo => {
-                const { id, title, description, status, due_date } = newTodo
-                res.status(201).json({ id, title, description, status, due_date })
+                const { id, title, description, status, due_date, UserId } = newTodo
+                res.status(201).json({ id, title, description, status, due_date, UserId })
             })
             .catch(err => {
                 err.errors ?

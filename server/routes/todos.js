@@ -1,11 +1,12 @@
 const route = require('express').Router()
 const Controller = require('../controllers/todoController')
+const authorization = require('../middlewares/authorization')
 
 route.post('/', Controller.create)
 route.get('/', Controller.findAll)
-route.get('/:id', Controller.findByPk)
-route.put('/:id', Controller.update)
-route.patch('/:id', Controller.updateStatus)
-route.delete('/:id', Controller.delete)
+route.get('/:id', authorization, Controller.findByPk)
+route.put('/:id', authorization, Controller.update)
+route.patch('/:id', authorization, Controller.updateStatus)
+route.delete('/:id', authorization, Controller.delete)
 
 module.exports = route

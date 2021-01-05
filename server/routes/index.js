@@ -1,9 +1,12 @@
 const route = require('express').Router()
 const Controller = require('../controllers/homeController')
 const todos = require('./todos')
+const auth = require('./auth')
+const authentication = require('../middlewares/authentication')
 
 route.get('/', Controller.home)
-
+route.use('/', auth)
+route.use(authentication)
 route.use('/todos', todos)
 
 module.exports = route

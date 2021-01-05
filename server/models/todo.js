@@ -11,35 +11,43 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Todo.belongsTo(models.User)
     }
   };
   Todo.init({
-    title: DataTypes.STRING,
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     description: DataTypes.STRING,
     status: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false,
-      validate: {
-        notEmpty: {
-          args: true,
-          msg: 'Cannot be empty!'
-        },
-        // isBoolean(value) {
-        //   throw (typeof value !== 'boolean') && new Error('Only accept boolean!')
-        // }
-      }
+      allowNull: false
     },
     due_date: {
       type: DataTypes.DATE,
+      allowNull: false,
       validate: {
         isAfter: {
           args: new Date().toISOString().slice(0, 10),
           msg: 'Only insert due date today and after!'
         }
       }
-    }
+    },
+    UserId: DataTypes.INTEGER
   }, {
+    hooks: {
+      beforeCreate(todo, options) {
+        todo.status === '' && (todo.status = false)
+      }
+    },
+    validate: {
+      isEmpty() {
+        if (this.title === '' || this.status === '' && !this.createdAt || this.due_date === '') {
+          throw new Error('Data cannot be empty!');
+        }
+      }
+    },
     sequelize,
     modelName: 'Todo',
   });
