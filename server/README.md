@@ -63,10 +63,19 @@ _Response (200)_
 ]
 ```
 
-_Response (501 - Internal Server Error)_
-```json
+_Response(401- Unauthorized)_
+```
 {
-  "message": "Internal Server Error"
+    "Error": "Invalid Authentication",
+    "message": "The requested page needs a username and a password."
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+    "Error": "Error from Server",
+    "message": "Internal server error"
 }
 ```
 ---
@@ -96,6 +105,7 @@ _Response (201 - Created)_
 ```
 {
   "id": <given id by system>,
+  "UserId": <given UserId by token user id>,
   "title": "<posted title>",
   "description": "<posted description>",
   "status": "<posted status>"
@@ -106,14 +116,29 @@ _Response (201 - Created)_
 ```
 
 <!-- TODO: NEED TO BE FIXED -->
-_Response (400 - Bad Request)_
+_Response(400- bad request)_
 ```
 {
-  "message": "Invalid requests"
+    "Error": "Validation error",
+    "message": "Title cannot empty,Cannot input an older date than now"
 }
 ```
+
 _Response(401- Unauthorized)_
-_Response (500)_
+```
+{
+    "Error": "Invalid Authentication",
+    "message": "The requested page needs a username and a password."
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+    "Error": "Error from Server",
+    "message": "Internal server error"
+}
+```
 
 ---
 
@@ -136,39 +161,51 @@ none
 _Response (200)_
 ```
 {
-    "todo": {
-        "id": 6,
-        "title": "nyapu",
-        "description": "nyapu kamar",
-        "status": false,
-        "due_date": "2020-01-01"
-      
-    }
+    "id": 1,
+    "UserId": 6,
+    "title": "Testing Title 6",
+    "description": "Description title 6",
+    "status": false,
+    "due_date": "2021-06-09T00:00:00.000Z",
+    "createdAt": "2021-01-05T15:09:12.438Z",
+    "updatedAt": "2021-01-05T15:09:12.438Z"
 }
 ```
 
 _Response(401- Unauthorized)_
 ```
-
+{
+    "Error": "Invalid Authentication",
+    "message": "The requested page needs a username and a password."
+}
 ```
 
 _Response(403- Forbidden)_
 ```
-
+{
+    "Error": "Forbidden access",
+    "message": "You are not authorized to access the file"
+}
 ```
 
 _Response(404 - not found)_
 ```
-
+{
+    "Error": "Invalid Id",
+    "message": "Data not found"
+}
 ```
 
-_Response (500)_
+_Response (500 - Internal Server Error)_
 ```
-
+{
+    "Error": "Error from Server",
+    "message": "Internal server error"
+}
 ```
 ---
 
-### POST /todos/:id
+### PUT /todos/:id
 
 > Update todos list by ID
 
@@ -193,27 +230,135 @@ _Request Body_
 _Response(200)_
 ```
 {
-    "todo": [
-        1
-    ]
+    "id": 1,
+    "UserId": 6,
+    "title": "Test Title 13a",
+    "description": "Description data PUT 13a",
+    "status": true,
+    "due_date": "2021-01-10T00:00:00.000Z",
+    "createdAt": "2021-01-05T15:09:12.438Z",
+    "updatedAt": "2021-01-05T23:03:43.044Z"
 }
 ```
 
 _Response(401- Unauthorized)_
 ```
-
+{
+    "Error": "Invalid Authentication",
+    "message": "Invalid email / password"
+}
 ```
 
 _Response(403- Forbidden)_
 ```
-
+{
+    "Error": "Forbidden access",
+    "message": "You are not authorized to access the file"
+}
 ```
 
 _Response(404 - not found)_
 ```
+{
+    "Error": "Invalid Id",
+    "message": "Data not found"
+}
 
 ```
+
+_Response(400- bad request)_
+```
+{
+    "Error": "Validation error",
+    "message": "Title cannot empty,Cannot input an older date than now"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+    "Error": "Error from Server",
+    "message": "Internal server error"
+}
+```
 ---
+
+
+### PATCH /todos/:id
+
+> Update todos list by ID
+
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+{
+  "status": "<status to get updated later on>"
+}
+```
+
+<!-- TODO: NEED TO BE FIXED -->
+_Response(200)_
+```
+{
+    "id": 1,
+    "UserId": 6,
+    "title": "Test Title 13a",
+    "description": "Description data PUT 13a",
+    "status": true,
+    "due_date": "2021-01-10T00:00:00.000Z",
+    "createdAt": "2021-01-05T15:09:12.438Z",
+    "updatedAt": "2021-01-05T23:03:43.044Z"
+}
+```
+
+_Response(401- Unauthorized)_
+```
+{
+    "Error": "Invalid Authentication",
+    "message": "Invalid email / password"
+}
+```
+
+_Response(403- Forbidden)_
+```
+{
+    "Error": "Forbidden access",
+    "message": "You are not authorized to access the file"
+}
+```
+
+_Response(404 - not found)_
+```
+{
+    "Error": "Invalid Id",
+    "message": "Data not found"
+}
+
+```
+
+_Response(400- bad request)_
+```
+{
+    "Error": "Validation error",
+    "message": "Status cannot empty"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+    "Error": "Error from Server",
+    "message": "Internal server error"
+}
+```
+---
+
 
 ### DELETE /todos/:id
 
@@ -237,35 +382,45 @@ _Response(200)_
 
 _Response(401- Unauthorized)_
 ```
-
+{
+    "Error": "Invalid Authentication",
+    "message": "Invalid email / password"
+}
 ```
 
 _Response(403- Forbidden)_
 ```
-
+{
+    "Error": "Forbidden access",
+    "message": "You are not authorized to access the file"
+}
 ```
 
 _Response(404 - not found)_
 ```
+{
+    "Error": "Invalid Id",
+    "message": "Data not found"
+}
 
 ```
 
-_Response(404 - not found)_
+_Response (500 - Internal Server Error)_
 ```
-
-```
-_Response (500)_
-```
-
+{
+    "Error": "Error from Server",
+    "message": "Internal server error"
+}
 ```
 ---
 
 ### POST /register
+
 >Create User
 
 _Request Header_
 ```
-not needed
+none
 ```
 
 _Request Body_
@@ -287,13 +442,19 @@ _Response(201)_
 <!-- TODO: NEED TO BE FIXED -->
 _Response(400- bad request)_
 ```
-
+{
+    "Error": "Bad request",
+    "message": "Invalid email / password"
+}
 ```
 
 
 _Response (500)_
 ```
-
+{
+    "Error": "Error from Server",
+    "message": "Internal server error"
+}
 ```
 
 ### POST/login
