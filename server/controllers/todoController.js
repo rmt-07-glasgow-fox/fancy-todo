@@ -5,7 +5,7 @@ class ControllerTodo {
     const input = {
       title: req.body.title,
       description: req.body.description,
-      status: req.body.status,
+      status: req.body.status || false,
       due_date: req.body.due_date
     }
     Todo.create(input)
@@ -18,7 +18,9 @@ class ControllerTodo {
             message: 'Validation error'
           })
         } else {
-          res.status(500).json(err.message)
+          res.status(500).json({
+            message: 'Internal Server Error'
+          })
         }
       })
   }
@@ -66,7 +68,6 @@ class ControllerTodo {
       returning: true
     })
       .then(response => {
-        console.log(response, 'ini then')
         if (response[0] > 0) {
           res.status(200).json(response[1])
         } else {
@@ -76,13 +77,14 @@ class ControllerTodo {
         }
       })
       .catch(err => {
-        console.log(err, 'ini catch')
         if (err.errors.length) {
           res.status(400).json({
             message: 'Validation error'
           })
         } else {
-          res.status(500).json(err.message)
+          res.status(500).json({
+            message: 'Internal Server Error'
+          })
         }
       })
   }
