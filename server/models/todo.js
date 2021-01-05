@@ -18,18 +18,14 @@ module.exports = (sequelize, DataTypes) => {
     title: {
       type: DataTypes.STRING,
       validate: {
-        notEmpty: {
-          msg: 'Validation Error'
-        }
+        notEmpty: true
       }
     },
     description: DataTypes.STRING,
     status: {
       type: DataTypes.STRING,
       validate: {
-        notEmpty: {
-          msg: 'Validation Error'
-        }
+        notEmpty: true
       }
     },
     due_date: {
