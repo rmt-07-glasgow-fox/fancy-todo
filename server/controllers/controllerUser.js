@@ -1,11 +1,12 @@
 const { User } = require('../models')
 const { compare } = require('../helper/bcrypt')
 const { generateToken } = require('../helper/jwt')
+const { noExtendLeft } = require('sequelize/types/lib/operators')
 
 
 class ControllerUser {
 
-    static register(req,res){
+    static register(req,res,next){
         const obj = {
             firstname: req.body.firstname,
             lastname: req.body.lastname,
@@ -14,7 +15,6 @@ class ControllerUser {
         }
         User.create(obj)
         .then(data => {
-            console.log('masuk register')
             res.status(201).json({
                 id: data.id,
                 firstname: data.firstname,
@@ -23,13 +23,11 @@ class ControllerUser {
             })
         })
         .catch(error => {
-            console.log(error)
-            console.log('masuk error register')
-            res.status(500).json({ message: "internal server error" })
+            next(error)
         })
     }
 
-    static login(req,res){
+    static login(req,res,next){
         User.findOne({where: {email: req.body.email}})
         .then(data => {
             if (data){
@@ -37,14 +35,20 @@ class ControllerUser {
                     const access_token = generateToken({id: data.id, email:data.email})
                     res.status(200).json({ access_token })
                 } else {
-                    res.status(404).json({ message: "wrong email/password" })
+                    throw {
+                        status: 404,
+                        message: "wrong email/password"
+                    }
                 } 
             } else {
-                res.status(404).json({ message: "wrong email/password" })
+                throw {
+                    status: 404,
+                    message: "wrong email/password"
+                }
             }
         })
         .catch(error => {
-            res.status(500).json({ message: "internal server error" })
+            next(error)
         })
     }
 }
