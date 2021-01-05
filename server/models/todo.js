@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Todo.hasMany(models.User, { foreignKey: 'user_id' })
     }
   };
   Todo.init({
@@ -48,6 +49,15 @@ module.exports = (sequelize, DataTypes) => {
         isIn: {
           args: [[true, false]],
           msg: 'Require typedata boolean'
+        }
+      }
+    },
+    user_id: {
+      type: DataTypes.INTEGER,
+      validate: {
+        notNull: {
+          args: true,
+          msg: 'Require user id'
         }
       }
     }
