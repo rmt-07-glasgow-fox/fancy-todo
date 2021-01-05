@@ -2,7 +2,9 @@ const { Todo } = require('../models')
 
 class Controller {
     static showAll(req, res) {
-        Todo.findAll()
+        Todo.findAll({
+            order: [['createdAt', 'ASC']]
+        })
         .then(data => {
             res.status(200).json(data);
         })
