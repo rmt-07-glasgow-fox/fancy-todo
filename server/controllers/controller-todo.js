@@ -3,7 +3,7 @@ const { Todo } = require('../models')
 class Controller {
     static showAllTodos(req, res) {
         Todo.findAll({
-            attributes: { exclude: ['createdAt', 'updatedAt'] }
+            attributes: { exclude: ['createdAt', 'updatedAt', 'user_id'] }
         })
             .then(data => {
                 res.status(200).json(data)
@@ -19,6 +19,7 @@ class Controller {
             description: req.body.description,
             status: req.body.status,
             due_date: req.body.due_date,
+            user_id: 1,
             createdAt: new Date(),
             updatedAt: new Date()
         }
@@ -75,6 +76,7 @@ class Controller {
                     description: req.body.description,
                     status: req.body.status,
                     due_date: req.body.due_date,
+                    user_id: 1,
                     createdAt: new Date(),
                     updatedAt: new Date()
                 }
@@ -116,6 +118,7 @@ class Controller {
                     description: data.description,
                     status: req.body.status,
                     due_date: data.due_date,
+                    user_id: 1,
                     createdAt: new Date(),
                     updatedAt: new Date()
                 }
