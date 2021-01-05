@@ -5,14 +5,23 @@
 
 ```
 Server URL : http://localhost:3000
-
-POST /todos
-GET /todos
-GET /todos/:id
-PUT /todos/:id
-PATCH /todos/:id
-DELETE /todos/:id
 ```
+
+### Todo
+| Method | Route      | Description              |
+| ------ | ---------- | ------------------------ |
+| POST   | /todos     | Add new todo             |
+| GET    | /todos     | Get all todo             |
+| GET    | /todos/:id | Get todo by id           |
+| PUT    | /todos/:id | Update todo by id        |
+| PATCH  | /todos/:id | Update status todo by id |
+| DELETE | /todos/:id | Delete todo by id        |
+
+### User
+| Method | Route     | Description  |
+| ------ | --------- | ------------ |
+| POST   | /register | Add new user |
+| POST   | /login    | Login user   |
 
 ---
 ### GET /todos 
