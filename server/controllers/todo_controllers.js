@@ -1,6 +1,6 @@
 const {Todo} = require('../models')
 
-class Controller {
+class TodoController {
     static findTodos(req, res) {
         Todo.findAll({
             attributes: {
@@ -103,4 +103,4 @@ class Controller {
 
 }
 
-module.exports = {Controller}
+module.exports = {TodoController}
