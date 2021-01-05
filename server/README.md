@@ -14,7 +14,7 @@
 * **Success Response:**
 
   * **Code:** 200 <br />
-    **Content:** `[
+    **Content:** ```javascript[
         {
           "id": 1,
           "title": "Get some milks",
@@ -24,7 +24,7 @@
           "createdAt": "2021-01-04T07:58:36.134Z",
           "updatedAt": "2021-01-04T07:58:36.134Z"
         },
-      ]`
+      ]```
  
 * **Error Response:**
 
