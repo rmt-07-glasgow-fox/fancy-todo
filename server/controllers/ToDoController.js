@@ -1,7 +1,7 @@
 const { Todo } = require ('../models/index')
 
 class ToDoController {
-  static async getTodos (req, res) {
+  static async getTodos (req, res, next) {
       try {
         let data = await Todo.findAll({
           where: {
@@ -9,12 +9,12 @@ class ToDoController {
           }
         })
         res.status(200).json(data)
-      } catch {
-        res.status(500).json({message: 'internal server error'})
+      } catch (err) {
+        next (err)
       }
   }
 
-  static async getOneTodos (req, res) {
+  static async getOneTodos (req, res, next) {
     try {
       let data = await Todo.findOne ({
         where: {
@@ -24,14 +24,14 @@ class ToDoController {
       if (data !== null) {
         res.status(200).json(data)
       } else {
-        res.status(404).json({message: 'error not found'})
+        throw new Error ('error not found')
       }
-    } catch {
-      res.status(500).json({message: 'internal server error'})
+    } catch (err) {
+      next(err)
     }
   }
   
-  static async createTodos (req, res) {
+  static async createTodos (req, res, next) {
       try {
         let obj = {
           title: req.body.title,
@@ -47,14 +47,14 @@ class ToDoController {
           let errors = err.errors.map (e => {
             return e.message
           })
-          res.status(400).json({errors})
+          next ({name: 'Error Input', message: errors})
         } else {
-          res.status(500).json({message: 'internal server error'})
+          next (err)
         }
       } 
   }
 
-  static async editTodos (req, res) {
+  static async editTodos (req, res, next) {
       try {
         let obj = {
           title: req.body.title,
@@ -82,14 +82,14 @@ class ToDoController {
           let errors = err.errors.map (e => {
             return e.message
           })
-          res.status(400).json({errors})
+          next ({name: 'Error Input', message: errors})
         } else {
-          res.status(500).json({message: 'internal server error'})
+          next (err)
         }
       }
   }
 
-  static async patchTodos (req, res) {
+  static async patchTodos (req, res, next) {
       try {
         let obj = {
           status: req.body.status
@@ -113,16 +113,16 @@ class ToDoController {
           let errors = err.errors.map (e => {
             return e.message
           })
-          res.status(400).json({errors})
+          next ({name: 'Error Input', message: errors})
         } else {
-          res.status(500).json({message: 'internal server error'})
+          next (err)
         }
       }
   }
 
-  static async deleteTodos (req, res) {
+  static async deleteTodos (req, res, next) {
       try {
-        console.log (req.user, 'req user')
+        // console.log (req.user, 'req user')
         let data = await Todo.destroy ({
           where: {
             id: +req.params.id,
@@ -133,8 +133,8 @@ class ToDoController {
         } else {
           res.status(404).json({message: 'error not found'})
         }
-      } catch {
-        res.status(500).json({message: 'internal server error'})
+      } catch (err) {
+        next (err)
       }
   }
 }

@@ -38,7 +38,7 @@ async function authorize (req, res, next) {
       res.status(401).json({ message: 'Not authorized'})
     }
   } catch (err) {
-    res.status(500).json({ message: 'Internal Server Error'})
+    next (err)
   }
 }
 

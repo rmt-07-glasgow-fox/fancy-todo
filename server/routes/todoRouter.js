@@ -4,7 +4,7 @@ const { authorize } = require ('../middlewares/auth')
 
 
 router.get ('/', ToDoController.getTodos)
-router.get ('/:id', ToDoController.getOneTodos)
+router.get ('/:id', authorize, ToDoController.getOneTodos)
 
 router.post ('/', ToDoController.createTodos)
 
