@@ -1,9 +1,10 @@
 const { User } = require('../models');
 const { comparePassword } = require('../helpers/bcrypt.js');
 const { generateToken } = require('../helpers/jwt.js');
+const axios = require('axios');
 
 class UserController {
-  static async register(req, res) {
+  static async register(req, res, next) {
     try {
       const {email, password} = req.body;
       const newUser = {email, password};
@@ -11,7 +12,7 @@ class UserController {
       const response = { message: 'Success create user' };
       res.status(201).json(response)
     } catch (err) {
-      res.status(400).json(err);
+      next(err);
     }
   }
 
@@ -37,9 +38,14 @@ class UserController {
       const payload = {
         id: user.id,
         email: user.email
-      }        
+      } 
+      const getQuote = await axios.get('http://api.quotable.io/random?tags=famous-quotes');     
+      const quote = {
+        content: getQuote.data.content,
+        author: getQuote.data.author
+      }
       const access_token = generateToken(payload);
-      return res.status(200).json({access_token})
+      return res.status(200).json({access_token, quote})
     }
 
     catch(err) {
