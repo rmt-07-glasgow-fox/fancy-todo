@@ -7,7 +7,7 @@ class TodoController {
 
     static async todoAdd(req, res) {
         try {
-            console.log('>>> req.user : ', req.user)
+            // console.log('>>> req.user : ', req.user)
             let { title, description, status, due_date } = req.body
             let newTodo = {
                 title: title,

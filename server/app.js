@@ -11,7 +11,8 @@ const { authenticate } = require('./middlewares/auth')
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
-const { todoRouter, userRouter } = require('./routers')
+const { todoRouter, userRouter, publicAPIRouter } = require('./routers')
+app.use('', publicAPIRouter)
 app.use('', userRouter)
 app.use('', authenticate, todoRouter)
 
