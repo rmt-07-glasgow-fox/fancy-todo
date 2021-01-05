@@ -6,6 +6,11 @@ function getToken (payload) {
     return token
 }
 
+function checkToken (token) {
+    return jwt.verify (token, SECRET_KEY)
+}
+
 module.exports = {
-    getToken
+    getToken,
+    checkToken
 }

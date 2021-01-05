@@ -1,10 +1,12 @@
-// if (process.env.)
-require("dotenv").config()
+if (process.env.NODE_ENV === "development") {
+    require("dotenv").config()
+}
 const express = require ("express")
 const router = require("./routes")
 const { errorHandler } = require ("./middlewares/errorHandler")
 const app = express ()
 const port = 5000
+
 
 app.use (express.urlencoded ({extended: true}))
 

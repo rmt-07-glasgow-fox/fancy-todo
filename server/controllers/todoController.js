@@ -5,7 +5,11 @@ class TodoController {
 
     static list (req, res, next) {
 
-        Todo.findAll ()
+        const idLoggedIn = req.user.id
+        Todo.findAll ({ where: {
+                UserId : idLoggedIn
+            }
+        })
         .then(result => {
             return res.status (200).json (result)
         })
@@ -18,9 +22,10 @@ class TodoController {
     static linkAddTodo (req, res, next) {
 
         const { title, description, status, due_date } = req.body
+        const UserId = req.user.id
 
         Todo.create ({
-            title, description, status, due_date
+            title, description, status, due_date, UserId
         })
         .then (result => {
             return res.status (201).json(result)
@@ -108,7 +113,7 @@ class TodoController {
 
     }
 
-    static removeTodo (req, res) {
+    static removeTodo (req, res, next) {
         
         const id = +req.params.id
 
