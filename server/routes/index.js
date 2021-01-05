@@ -9,5 +9,6 @@ router.get('/', (req, res) => {
 router.get('/todos', TodoController.getTodo)
 router.post('/todos', TodoController.addTodo)
 router.delete('/todos/:id', TodoController.deleteTodo)
+router.put('/todo/:id', TodoController.editTodo)
 
 module.exports = router

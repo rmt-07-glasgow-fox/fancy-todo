@@ -1,4 +1,4 @@
-const { Todo } = require('../models')
+const { User,Todo } = require('../models')
 
 class TodoController{
     static getTodo(req,res){
@@ -39,6 +39,19 @@ class TodoController{
             res.status(500).json({message: 'server error'})
         })
     }
+    // static editTodo(req,res){
+    //     Todo.update({
+    //         where:{
+    //             id:req.params.id
+    //         }
+    //     })
+    //     .then(data => {
+    //         res.status(200).json(data)
+    //     })
+    //     .catch(err => {
+    //         res.status(405).json({message: 'Wrong data update'})
+    //     })
+    // }
 }
 
 module.exports = TodoController
