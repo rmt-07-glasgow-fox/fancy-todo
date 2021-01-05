@@ -6,15 +6,16 @@ class Controller {
         Todo
             .create({ title, description, status, due_date })
             .then(newTodo => {
-                res.status(201).json(newTodo)
+                const { id, title, description, status, due_date } = newTodo
+                res.status(201).json({ id, title, description, status, due_date })
             })
             .catch(err => {
                 err.errors ?
                 res.status(400).json({
-                    message: err.message.replace('Validation error: ','').replace('\nValidation error: ','\n')
+                    message: err.message //.replace('Validation error: ','').replace('\nValidation error: ','\n')
                 }) :
                 res.status(500).json({
-                    message: err.message //'Internal Server Error'
+                    message: 'Internal Server Error' //err.message
                 })
             })
     }
@@ -51,7 +52,10 @@ class Controller {
                     returning: true,
                     plain:true
                 })
-            .then(todoEdited => res.status(200).json(todoEdited[1].dataValues))
+            .then(todoEdited => {
+                const { id, title, description, status, due_date } = todoEdited[1].dataValues
+                res.status(200).json({ id, title, description, status, due_date })
+            })
             .catch(err => {
                 err.errors ?
                 res.status(400).json({
@@ -59,7 +63,7 @@ class Controller {
                 }) :
                 err.parent ?
                 res.status(500).json({
-                    message: err.message //'Internal Server Error'
+                    message: 'Internal Server Error' //err.message
                 }) :
                 res.status(404).json({
                     message: 'Data Not Found'
@@ -76,7 +80,10 @@ class Controller {
                     returning: true,
                     plain:true
                 })
-            .then(todoUpdated => res.status(200).json(todoUpdated))
+            .then(todoUpdated => {
+                const { id, status } = todoUpdated[1].dataValues
+                res.status(200).json({ id, status })
+            })
             .catch(err => {
                 err.errors ?
                 res.status(400).json({
@@ -84,7 +91,7 @@ class Controller {
                 }) :
                 err.parent ?
                 res.status(500).json({
-                    message: err.message //'Internal Server Error'
+                    message: 'Internal Server Error' //err.message
                 }) :
                 res.status(404).json({
                     message: 'Data Not Found'
