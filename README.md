@@ -43,13 +43,6 @@ _Response (200)_
 ]
 ```
 
-_Response (500 - Bad Request)_
-```
-{
-  "message": "Error undescribable"
-}
-```
-
 ---
 ### POST /todos
 ---
@@ -79,21 +72,16 @@ _Response (201 - Created)_
 _Response(400- bad request)_
 ```
 {
-    "message" : ["Name required",
-    "Description required",
-    "Status required",
-    "Due date required",
-    "Status has to be true or false"]
+    "message" : [
+        "Name required",
+        "Description required",
+        "Status required",
+        "Due date required",
+        "Status has to be true or false"
+    ]
 }
 ```
 
-_Response (500)_
-```
-{
-  "Error": UNKNOWN_ERROR,
-  "message": "Error undescribable"
-}
-```
 ---
 ### GET /todos/:id
 ---
@@ -117,40 +105,17 @@ _Response (200)_
 }
 ```
 
-_Response(401- Unauthorized)_
-```
-{
-    "Error" :  "USER_NOT_AUTHENTICATED"
-    "message": "Invalid User"
-}
-```
-
 _Response(404 - not found)_
 ```
 {
-  "Error": "INVALID_ID",
   "message": "Data_not_found"
 }
 ```
 
-_Response (500)_
-```
-{
-  "Error": "UNKNOWN_ERROR",
-  "message": "Error undescribable"
-}
-```
 ---
-### POST /todos/:id 
+### PUT /todos/:id 
 ---
 >Update todos list by ID
-
-_Request Header_
-```
-{
-  access_token: token
-}
-```
 
 _Request Body_
 ```
@@ -171,14 +136,6 @@ _Response(200)_
 }
 ```
 
-_Response(401- Unauthorized)_
-```
-{
-    "Error" :  "USER_NOT_AUTHENTICATED"
-    "message": "Invalid User"
-}
-```
-
 _Response(404 - not found)_
 ```
 {
@@ -195,13 +152,42 @@ _Response(400- bad request)_
 }
 ```
 
-_Response (500)_
+---
+### PATCH /todos/:id 
+---
+>Update todos status by ID
+
+_Request Body_
 ```
 {
-  "Error": "UNKNOWN_ERROR",
-  "message": "Error undescribable"
+ "status": Boolean
 }
 ```
+
+_Response(200)_
+```
+{
+    "message": "Update status berhasil"
+}
+```
+
+_Response(404 - not found)_
+```
+{
+  "message": "Data_not_found"
+}
+```
+
+_Response(400- bad request)_
+```
+{
+    "Error" :  "VALIDATION_ERROR"
+    "message": "message" : [
+        "Status has to be true or false"
+    ]
+}
+```
+
 ---
 ### DELETE /todos/:id 
 ---
