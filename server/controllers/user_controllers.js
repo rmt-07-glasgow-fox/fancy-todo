@@ -46,7 +46,6 @@ class UserController {
             } else {
                 return res.status(401).json({message: 'Invalid Email / Password'})
             }
-            return res.status(200).json(user)
         } catch (err) {
 
         }
