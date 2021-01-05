@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Todo.belongsTo(models.User)
     }
   };
   Todo.init({
@@ -50,12 +51,16 @@ module.exports = (sequelize, DataTypes) => {
           args: true,
           msg: 'due date not valid date'
         },
-        isAfter: {
-          args: new Date().toDateString(),
-          msg: 'due date must be after today'
+        cekDueDate: value => {
+          const inputDate = new Date(value)
+          const now = new Date()
+          if(inputDate <= now){
+            throw new Error('due date must be after today')
+          }
         }
       }
     },
+    UserId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Todo',

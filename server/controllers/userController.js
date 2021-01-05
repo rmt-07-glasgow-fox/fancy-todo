@@ -5,7 +5,10 @@ const { User } = require('../models')
 class userController {
     static register(req,res){
         const { email, password } = req.body
-        User.create({email,password})
+        User.create({
+            email : email || '',
+            password : password || ''
+        })
         .then(user => {
             res.status(201).json({
                 id:user.id,
@@ -24,11 +27,11 @@ class userController {
     static login(req,res){
         const { email, password } = req.body
         User.findOne({
-            where:{email}
+            where:{email : email || ''}
         })
         .then(user => {
             if(user){
-                const match = comparePassword(password, user.password)
+                const match = comparePassword(password ? password : '', user.password)
                 if(match){
                     const payload = {
                         id:user.id,

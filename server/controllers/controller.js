@@ -4,10 +4,11 @@ class Controller {
 
     static create(req,res){
         const input = {
-            title: req.body.title,
-            description: req.body.description,
-            status: req.body.status,
-            due_date: req.body.due_date,
+            title: req.body.title || '',
+            description: req.body.description || '',
+            status: req.body.status || '',
+            due_date: req.body.due_date || '',
+            UserId: req.user.id
         }
         Todo.create(input)
         .then(data => {
@@ -23,7 +24,10 @@ class Controller {
     }
 
     static showList(req,res){
-        Todo.findAll()
+        const { id } = req.user
+        Todo.findAll({
+            where : {UserId: id}
+        })
         .then(data => {
             res.status(200).json(data)
         })
@@ -45,10 +49,11 @@ class Controller {
 
     static edit(req,res){
         const input = {
-            title: req.body.title,
-            description: req.body.description,
-            status: req.body.status,
-            due_date: req.body.due_date,
+            title: req.body.title || '',
+            description: req.body.description || '',
+            status: req.body.status || '',
+            due_date: req.body.due_date || '',
+            UserId: req.user.id
         }
         Todo.update(input,{
             where:{id:req.params.id},
