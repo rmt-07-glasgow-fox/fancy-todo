@@ -17,7 +17,7 @@ class TodoController {
 
   static async getTodo(req, res) {
     try {
-      const todo = await Todo.findAll();
+      const todo = await Todo.findAll({order:[['due_date', 'ASC']]});
 
       return res.status(200).json(todo);
     } catch (err) {
