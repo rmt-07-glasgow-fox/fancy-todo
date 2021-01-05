@@ -14,8 +14,14 @@ class ControllerTodo {
       })
       .catch(err => {
         if (err.errors.length) {
+          const outputErr = []
+
+          err.errors.forEach(errors => {
+            outputErr.push(errors.message)
+          })
+
           res.status(400).json({
-            message: 'Validation error'
+            message: outputErr.join(', ')
           })
         } else {
           res.status(500).json({
@@ -78,8 +84,14 @@ class ControllerTodo {
       })
       .catch(err => {
         if (err.errors.length) {
+          const outputErr = []
+
+          err.errors.forEach(errors => {
+            outputErr.push(errors.message)
+          })
+
           res.status(400).json({
-            message: 'Validation error'
+            message: outputErr.join(', ')
           })
         } else {
           res.status(500).json({
@@ -97,21 +109,30 @@ class ControllerTodo {
     }
 
     Todo.update(input, {
-      where: { id }
+      where: { id },
+      returning: true
     })
       .then(response => {
-        if (response) {
-          res.status(200).json({
-            message: 'Data has been updated successfully'
-          })
-        } else {
-          res.status(400).json({
-            message: 'Validation errors'
-          })
-        }
+        res.status(200).json({
+          message: 'Data has been updated successfully'
+        })
       })
       .catch(err => {
-        res.status(500).json(err.message)
+        if (err.errors.length) {
+          const outputErr = []
+
+          err.errors.forEach(errors => {
+            outputErr.push(errors.message)
+          })
+
+          res.status(400).json({
+            message: outputErr.join(', ')
+          })
+        } else {
+          res.status(500).json({
+            message: 'Internal Server Error'
+          })
+        }
       })
   }
 

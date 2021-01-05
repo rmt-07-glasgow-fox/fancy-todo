@@ -33,7 +33,7 @@ _Response (201 - Created)_
 _Response (400 - Bad Request)_
 ```json
 {
-  "message": "Validation error"
+  "message": "<error message by system generated>"
 }
 ```
 
@@ -147,7 +147,7 @@ _Response (404 - Not Found)_
 _Response (400 - Bad Request)_
 ```json
 {
-  "message": "Validation error"
+  "message": "<error message by system generated>"
 }
 ```
 
@@ -179,7 +179,7 @@ _Response (200 - OK)_
 _Response (400 - Bad Request)_
 ```json
 {
-  "message": "Validation errors"
+  "message": "<error message by system generated>"
 }
 ```
 
