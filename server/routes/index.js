@@ -7,6 +7,7 @@ routes.get('/', (req, res) => {
 })
 
 routes.use(authRouter)
+
 routes.use('/todos', todoRouter)
 
 module.exports = routes
