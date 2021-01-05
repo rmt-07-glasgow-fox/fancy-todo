@@ -3,22 +3,18 @@ const { Todo } = require('../models')
 class TodoController {
     static postTodoHandler(req, res) {
         let { title, description, status, due_date } = req.body
-        console.log(req.body)
 
-        // console.log(req.body)
         Todo.create(req.body)
             .then(data => {
                 res.status(201).json(data)
             })
             .catch(err => {
                 if(err.errors) {
-                    err.errors.forEach(data => {
-                        if (data.message === "Input must be after today's date") {
-                            return res.status(400).json({message: data.message})
-                        }
+                    err.errors.forEach(data => {                        
+                        return res.status(400).json({message: data.message})    
                     })
                 }
-                res.status(500).json(err)
+                res.status(500).json({message: "Internal server error"})
             })
     }
 
@@ -66,10 +62,8 @@ class TodoController {
             .catch(err => {
                 console.log(err.errors)
                 if(err.errors) {
-                    err.errors.forEach(data => {
-                        if (data.message === "Input must be after today's date") {
-                            return res.status(400).json({message: data.message})
-                        }
+                    err.errors.forEach(data => {                        
+                        return res.status(400).json({message: data.message})    
                     })
                 }
                 res.status(500).json({message: 'internal server error'})
@@ -93,10 +87,8 @@ class TodoController {
             })
             .catch(err => {
                 if(err.errors) {
-                    err.errors.forEach(data => {
-                        if (data.message === "Input must be after today's date") {
-                            return res.status(400).json({message: data.message})
-                        }
+                    err.errors.forEach(data => {                        
+                        return res.status(400).json({message: data.message})    
                     })
                 }
                 res.status(500).json({message: 'internal server error'})
