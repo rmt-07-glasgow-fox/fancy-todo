@@ -1,16 +1,17 @@
 const { checkToken } = require('../helpers/jwt')
-const { User } = require('../models')
+const { Todo, User } = require('../models')
 
-function authentication(req, res, next) {
+async function authentication(req, res, next) {
     try {
         let decoded = checkToken(req.headers.access_token)
-        console.log(decoded)
-        let find = User.findOne({where: { email: decoded.email}})
+        // console.log(decoded)
+        let find = await User.findOne({where: { email: decoded.email}})
         // res.send(find)
         if(!find) {
             res.status(401).json({message: "Please login first"})
         } else {
             req.user = find
+            // console.log(find)
             next()
         }
     }
@@ -20,6 +21,27 @@ function authentication(req, res, next) {
     // next()
 }
 
+function authorization(req, res, next) {
+
+    Todo.findOne({where: {
+        id: req.params.id
+    }})
+        .then(data => {
+            console.log(data)
+            if(!data || data.UserId !== req.user.id) {
+                res.status(401).json({message: "No Authorization"})
+            } else {
+                next()
+            }
+        })
+        .catch(err => {
+            res.status(500).json({message: "Internal Server Error"})
+        })
+    
+
+}
+
 module.exports = {
-    authentication
+    authentication,
+    authorization
 }

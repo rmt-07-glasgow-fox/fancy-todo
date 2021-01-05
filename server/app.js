@@ -3,6 +3,7 @@ const express = require('express')
 const app = express()
 const port = 3000
 const router = require('./routes')
+const error = require('./middlewares/error')
 
 app.use(express.urlencoded({ extended:true }))
 
@@ -11,6 +12,8 @@ app.get('/', (req, res) => {
 })
 
 app.use(router)
+
+app.use(error)
 
 app.listen(port, ()=> {
     console.log(`App ini berjalan di port ${port}`)

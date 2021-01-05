@@ -1,50 +1,54 @@
 const { Todo } = require('../models')
 
 class TodoController {
-    static postTodoHandler(req, res) {
-        let { title, description, status, due_date } = req.body
+    static postTodoHandler(req, res, next) {
+        // console.log(req.user)
 
-        Todo.create(req.body)
+        let obj = {
+            title: req.body.title,
+            description: req.body.description,
+            status: req.body.status,
+            due_date: req.body.due_date,
+            UserId : req.user.id
+        }
+        // console.log(obj)
+        Todo.create(obj)
             .then(data => {
                 res.status(201).json(data)
             })
             .catch(err => {
-                if(err.errors) {
-                    err.errors.forEach(data => {                        
-                        return res.status(400).json({message: data.message})    
-                    })
-                }
-                res.status(500).json({message: "Internal server error"})
+                next(err)
             })
     }
 
-    static getTodoHandler(req, res) {
+    static getTodoHandler(req, res, next) {
         
         Todo.findAll()
             .then(data => {
                 res.status(200).json(data)
             })
             .catch(err => {
-                res.status(500).json({message: 'internal server error'})
+                next(err)
             })
     }   
 
-    static getTodoIdHandler(req, res) {
+    static getTodoIdHandler(req, res, next) {
         let id = req.params.id
 
         Todo.findByPk(id)
             .then(data => {
-                if(data === null) {
-                    return res.status(404).json({message: 'error not found'})
+                if(data) {
+                    res.status(200).json(data)
+                } else {
+                    next({name: "notFound"})                
                 }
-                res.status(200).json(data)
             })
             .catch(err => {
-                res.status(500).json({message: 'internal server error'})
+                next(err)
             })
     }
 
-    static putTodoIdHandler(req, res) {
+    static putTodoIdHandler(req, res, next) {
         let id = req.params.id
         let { title, description, status, due_date } = req.body
 
@@ -55,22 +59,17 @@ class TodoController {
         })
             .then(data => {
                 if(data[0] === 0) {
-                    return res.status(404).json({message: 'error not found'})
+                    next({name: "notFound"})
+                } else {
+                    res.status(200).json(data)
                 }
-                res.status(200).json(data)
             })
             .catch(err => {
-                console.log(err.errors)
-                if(err.errors) {
-                    err.errors.forEach(data => {                        
-                        return res.status(400).json({message: data.message})    
-                    })
-                }
-                res.status(500).json({message: 'internal server error'})
+                next(err)
             })
     }
 
-    static patchTodoIdHandler(req, res) {
+    static patchTodoIdHandler(req, res, next) {
         let id = req.params.id
         let { status } = req.body
 
@@ -81,21 +80,17 @@ class TodoController {
         })
             .then(data => {
                 if(data[0] === 0) {
-                    return res.status(404).json({message: 'error not found'})
+                    next({name: "notFound"})
+                } else {
+                    res.status(200).json(data)
                 }
-                res.status(200).json(data)
             })
             .catch(err => {
-                if(err.errors) {
-                    err.errors.forEach(data => {                        
-                        return res.status(400).json({message: data.message})    
-                    })
-                }
-                res.status(500).json({message: 'internal server error'})
+                next(err)
             })
     }
 
-    static deleteTodoHandler(req, res) {
+    static deleteTodoHandler(req, res, next) {
         let id = req.params.id
 
         Todo.destroy({where: {
@@ -103,13 +98,13 @@ class TodoController {
         }})
             .then(data => {
                 if(data === 0) {
-                    return res.status(404).json({message: 'error not found'})
+                    next({name: "notFound"})
+                } else {
+                    res.status(200).json({message: 'todo success to delete'})
                 }
-                
-                res.status(200).json({message: 'todo success to delete'})
             })
             .catch(err =>{
-                res.statu(500).json({message: 'internal server error'})
+                next(err)
             })
     }
 }
