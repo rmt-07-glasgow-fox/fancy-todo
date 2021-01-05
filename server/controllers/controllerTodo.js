@@ -10,7 +10,7 @@ class ControllerTodo {
             status: req.body.status,
             due_date: req.body.due_date,
             createdAt: new Date(),
-            updatedAt: new Date(),
+            updatedAt: new Date()
         }
         Todo.create(obj)
         .then( data => {
