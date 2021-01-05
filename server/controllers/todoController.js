@@ -23,6 +23,7 @@ class TodoController{
             res.status(201).json(data)
         })
         .catch(err => {
+            console.log(err);
             res.status(500).json({message: 'server error'})
         })
     }
@@ -39,19 +40,22 @@ class TodoController{
             res.status(500).json({message: 'server error'})
         })
     }
-    // static editTodo(req,res){
-    //     Todo.update({
-    //         where:{
-    //             id:req.params.id
-    //         }
-    //     })
-    //     .then(data => {
-    //         res.status(200).json(data)
-    //     })
-    //     .catch(err => {
-    //         res.status(405).json({message: 'Wrong data update'})
-    //     })
-    // }
+    static editTodo(req,res){
+        const newTodo = {
+            name: req.body.name,
+            type: req.body.type,
+            description: req.body.description,
+            date: req.body.date,
+            time: req.body.time
+        }
+        Todo.update(newTodo)
+        .then(data => {
+            res.status(200).json(data)
+        })
+        .catch(err => {
+            res.status(405).json({message: 'Wrong data update'})
+        })
+    }
 }
 
 module.exports = TodoController

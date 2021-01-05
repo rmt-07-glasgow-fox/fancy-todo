@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const newDate = require('../helper/date');
 module.exports = (sequelize, DataTypes) => {
   class Todo extends Model {
     /**
@@ -41,8 +42,9 @@ module.exports = (sequelize, DataTypes) => {
     date: {
       type: DataTypes.DATEONLY,
       validate:{
-        notEmpty:{
-          msg: 'Name must be filled'
+        isAfter:{
+          args: newDate(),
+          msg: 'date must today or tomorow'
         }
       }
     },
