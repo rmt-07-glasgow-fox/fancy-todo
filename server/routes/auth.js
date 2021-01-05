@@ -1,7 +1,10 @@
 const router = require("express").Router()
-const controllerAuth = require("../controllers/auth.js")
+const controllerUser = require("../controllers/user.js")
 
-router.use('/', controllerAuth.register)
-router.use('/login', controllerAuth.login)
+router.get('/', (req, res) => {
+    res.send("Halo")
+})
+router.post('/signup', controllerUser.signup)
+router.post('/signin', controllerUser.signin)
 
 module.exports = router

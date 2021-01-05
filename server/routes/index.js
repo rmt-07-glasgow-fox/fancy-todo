@@ -1,9 +1,12 @@
 const router = require("express").Router()
 const auth = require('./auth.js')
-const schedule = require('./schedule.js')
+const todo = require('./todo.js')
+const { authenticate } = require('../middlewares/auth')
 
 router.use(auth)
 
-router.use('/todos', schedule)
+router.use(authenticate)
+
+router.use('/todos', todo)
 
 module.exports = router

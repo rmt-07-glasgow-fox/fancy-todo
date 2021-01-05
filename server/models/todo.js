@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Schedule extends Model {
+  class Todo extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,9 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Todo.belongsTo(models.User, {foreignKey:"user_id"})
     }
   };
-  Schedule.init({
+  Todo.init({
     title: {
       type: DataTypes.STRING,
       validate: {
@@ -31,10 +32,16 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     status: DataTypes.BOOLEAN,
-    due_date: DataTypes.DATE
+    due_date: {
+      type: DataTypes.DATE,
+      validate: {
+        isAfter: `${new Date()}`
+      }
+    },
+    user_id: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'Schedule',
+    modelName: 'Todo',
   });
-  return Schedule;
+  return Todo;
 };
