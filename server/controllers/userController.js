@@ -1,4 +1,6 @@
 const { User } = require('../models')
+const { compared } = require('../helpers/bcrypt')
+const { generateToken } = require('../helpers/jwt')
 
 class UserController {
     static async register(req, res, next) {
@@ -7,10 +9,10 @@ class UserController {
                 email: req.body.email,
                 password: req.body.password
             }
-            const userData = await User.create(userData)
+            const userCreate = await User.create(newUser)
             res.status(201).json({
-                id: userData.id,
-                email: userData.email
+                id: userCreate.id,
+                email: userCreate.email
             })
         }
         catch(error) {
@@ -18,8 +20,45 @@ class UserController {
         }
     }
 
-    static login(req, res) {
+    static async login(req, res, next) {
+        try {
+            const data = {
+                email: req.body.email,
+                password: req.body.password
+            }
+            const userLogin = await User.findOne({
+                where: {
+                    email: data.email
+                }
+            })
+            if(!userLogin) {
+                throw {
+                    status: 401,
+                    message: 'Invalid email/password'
+                }
+            }
+            else {
+                const compare = compared(data.password, userLogin.password)
+                if(!compare) {
+                    throw {
+                        status: 401,
+                        message: 'Invalid email/password'
+                    }
+                }
+                else {
+                    const token = {
+                        id: userLogin.id,
+                        email: userLogin.email
+                    }
+                    const access_token = generateToken(token)
+                    res.status(200).json({ access_token })
+                }
+            }
 
+        }
+        catch(error) {
+            next(error)
+        }
     }
 }
 
