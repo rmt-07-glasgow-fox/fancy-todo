@@ -7,13 +7,9 @@ const router = require('./routes/index')
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
+// routes
 app.use(router)
-// app.get('/', (req, res) => {
-//   res.status(200).json({
-//     msg: 'masuk di app.get'
-//   })
-// })
 
-app.listen(PORT, ()=>{
+app.listen(PORT, () => {
   console.log('this app running on port:', PORT);
 })
