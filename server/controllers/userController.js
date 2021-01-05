@@ -5,7 +5,7 @@ const { getToken } = require ("../helpers/jwt")
 
 class UserController {
 
-    static register (req, res) {
+    static register (req, res, next) {
 
         const { email, password } = req.body
 
@@ -18,11 +18,11 @@ class UserController {
             return res.status (201).json (output)
         })
         .catch (err => {
-            return res.status (400).json (err.errors[0].message)
+            next (err)
         })
     }
 
-    static login (req, res) {
+    static login (req, res, next) {
 
         const { email, password } = req.body
 
@@ -33,7 +33,7 @@ class UserController {
         })
         .then (result => {
             if (!result) {
-                return res.status (401).json ({ message: "Invalid Email / Password" })
+                next ({ name: "Unauthorized", message: "Invalid Email / Password" })
             }
 
             const isMatch = checkPassword (password, result.password)
@@ -51,13 +51,12 @@ class UserController {
                 })
 
             } else {
-                return res.status (401).json ({ message: "Invalid Email / Password" })
+                next ({ name: "Unauthorized", message: "Invalid Email / Password" })
             }
-
             
         })
         .catch (err => {
-            return res.status (400).json (err.errors[0].message)
+            next (err)
         })
         
     }

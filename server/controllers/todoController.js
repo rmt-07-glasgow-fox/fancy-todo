@@ -1,20 +1,21 @@
+
 const { Todo } = require ("../models")
 
 class TodoController {
 
-    static list (req, res) {
+    static list (req, res, next) {
 
         Todo.findAll ()
         .then(result => {
             return res.status (200).json (result)
         })
         .catch (err => {
-            return res.status (500).json ({ message: "internal server error" })
+            next ({ name: "InternalError" })
         })
         
     }
 
-    static linkAddTodo (req, res) {
+    static linkAddTodo (req, res, next) {
 
         const { title, description, status, due_date } = req.body
 
@@ -25,16 +26,16 @@ class TodoController {
             return res.status (201).json(result)
         })
         .catch (err => {
-            if (err.name === "SequelizeValidationError") {
-                return res.status (400).json (err.errors[0].message)
+            if (err.name) {
+                next (err)
             } else {
-                return res.status (500).json ({ message: "internal server error" })
+                next ({ name: "InternalError" })
             }
         })
         
     }
 
-    static showDataTodo (req, res) {
+    static showDataTodo (req, res, next) {
         
         const id = +req.params.id
 
@@ -43,11 +44,11 @@ class TodoController {
             return res.status (200).json (result)
         })
         .catch (err => {
-            return res.status (500).json ({ message: "internal server error" })
+            next ({ name: "InternalError" })
         })
     }
 
-    static replaceTodo (req, res) {
+    static replaceTodo (req, res, next) {
 
         const id = req.params.id
         const { title, description, status, due_date } = req.body
@@ -61,25 +62,23 @@ class TodoController {
             if (result[0] === 1) {
                 return Todo.findByPk (id)
             } else {
-                return res.status (404).json ({
-                    message: "Error Not Found"
-                })
+               next ({ name: "ResourceNotFound" })
             }
         })
         .then (result => {
             return res.status (200).json (result)
         })
         .catch (err => {
-            if (err.name === "SequelizeValidationError") {
-                res.status (400).json (err.errors[0].message)
+            if (err.name) {
+                next (err)
             } else {
-                res.status (500).json ({ message: "internal server error" })
+                next ({ name: "InternalError" })
             }
         })
         
     }
 
-    static modifyTodo (req, res) {
+    static modifyTodo (req, res, next) {
         const id = +req.params.id
         const status = req.body.status
 
@@ -92,19 +91,17 @@ class TodoController {
             if (result[0] === 1) {
                 return Todo.findByPk (id)
             } else {
-                return res.status (404).json ({
-                    message: "Error Not Found"
-                })
+               next ({ name: "ResourceNotFound" })
             }
         })
         .then (result => {
             return res.status (200).json (result)
         })
         .catch (err => {
-            if (err.name === "SequelizeValidationError") {
-                res.status (400).json (err.errors[0].message)
+            if (err.name) {
+                next (err)
             } else {
-                res.status (500).json ({ message: "internal server error" })
+                next ({ name: "InternalError" })
             }
         })
 
@@ -126,13 +123,11 @@ class TodoController {
                     message: "Todo Success to delete"
                 })
             } else {
-                res.status (404).json ({
-                    message: "Error Not Found"
-                })
+               next ({ name: "ResourceNotFound" })
             }
         })
         .catch (err => {
-            return res.status (500).json ({ message: "internal server error" })
+            next ({ name: "InternalError" })
         })
 
     }
