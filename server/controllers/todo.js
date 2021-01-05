@@ -1,4 +1,3 @@
-const { noExtendLeft } = require('sequelize/types/lib/operators')
 const Todo = require('../models')
 
 class ToDoController{
