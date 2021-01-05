@@ -1,6 +1,6 @@
 'use strict';
 const {
-  Model
+  Model, ValidationError
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Todo extends Model {
@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Todo.belongsTo(models.User)
     }
   };
   Todo.init({
@@ -38,7 +39,15 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: {
           args: true,
           msg: "Status can't be blank!"
-        }
+        },
+        isBoolean: true
+        // isBoolean(val) {
+        //   let isBoolean = ((val == 'true' && val == 'false') || (val == 'TRUE' && val == 'FALSE'))
+        //   if (!isBoolean) {
+        //     console.log(this, "Dang");
+        //     throw new Error('Data must boolean')
+        //   }
+        // }
       }
     },
     due_date: {
@@ -53,7 +62,8 @@ module.exports = (sequelize, DataTypes) => {
           msg: "Date can't be blank!"
         }
       }
-    }
+    },
+    UserId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Todo',

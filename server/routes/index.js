@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
   res.send('Welcome to my fancy todo app')
 })
 
-router.use('/todos', todosRouter)
 router.use(authRouter)
+router.use('/todos', todosRouter)
 
 module.exports = {router}

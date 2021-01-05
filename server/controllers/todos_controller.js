@@ -7,14 +7,13 @@ class TodosController {
       title: title,
       description: description,
       status: status,
-      due_date: due_date
+      due_date: due_date,
+      UserId: req.currentUser.id
     }
 
     try {
       let todo = await Todo.create(todoObj)
-      return res.status(201).json({
-        msg: `Successfuly create new ${todo.title} todo list`
-      })
+      return res.status(201).json(todo)
     } catch(error) {
       if (error) {
         let msg = error.errors.map((err) => err.message)
@@ -28,10 +27,7 @@ class TodosController {
   static async index(req, res) {
     try {
       let todos = await Todo.findAll()
-      return res.status(200).json({
-        msg: 'List of Todos',
-        todos
-      })
+      return res.status(200).json(todos)
     } catch (error) {
       return res.status(500).json({msg: 'Cannot retrieve data!'})
     }
@@ -46,7 +42,7 @@ class TodosController {
         return res.status(404).json({msg: 'Not found!'})
       }
     } catch (error) {
-      return res.status(400).json({msg: 'Data not found!'})
+      return res.status(500).json({msg: 'Data not found!'})
     }
   }
 
@@ -87,9 +83,7 @@ class TodosController {
 
       if (todo) {
         await todo.update({status}, {where: {id: todo.id}})
-        return res.status(200).json({
-          msg: `${todo.title} list berubah menjadi ${todo.status}`
-        })
+        return res.status(200).json(todo)
       } else {
         return res.status(404).json({msg: 'Data not found'})
       }

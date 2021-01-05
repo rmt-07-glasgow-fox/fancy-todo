@@ -9,7 +9,7 @@ class UserController {
 
     try {
       let user = await User.create({email, password})
-      // console.log("SUKSES", user);
+      
       let userInstance = {
         id: user.id,
         email: user.email
@@ -17,8 +17,12 @@ class UserController {
 
       return res.status(201).json(userInstance)
     } catch(error) {
-      // console.log("ERROR", error);
-      return res.status(400).json(error)
+      if (error) {
+        let msg = error.errors.map((err) => err.message)
+        return res.status(400).json(msg)
+      } else {
+        return res.status(500).json('Internal server error')
+      }
     }
   }
 
@@ -44,7 +48,7 @@ class UserController {
       if (isMatch) {
         const payload = {
           id: user.id,
-          email: user.mail
+          email: user.email
         }
 
         const access_token = generateToken(payload)
@@ -57,7 +61,7 @@ class UserController {
         throw {msg: 'Invalid email / password'}
       }
 
-      return res.status(200).json(user)
+      // return res.status(200).json(user)
     } catch(error) {
       return res.status(401).json(error)
     }
