@@ -2,8 +2,9 @@ const {User} = require('../models')
 const {compare} = require('../helpers/bcrypt')
 const {generateToken} = require('../helpers/jwt')
 
+
 class Controller {
-    static register (req, res){
+    static register (req, res, next){
         let obj = {
             email: req.body.email,
             fullName: req.body.fullName,
@@ -18,11 +19,11 @@ class Controller {
             return res.status(201).json(response)
         })
         .catch(err =>{
-            return res.status(400).json(err)
+            next(err)
         })
     }
 
-    static login(req, res){
+    static login(req, res, next){
         let obj = {
             email: req.body.email,
             password: req.body.password
@@ -30,7 +31,7 @@ class Controller {
         User.findOne({where: {email: obj.email}})
         .then(data =>{
             if(!data){
-                return res.status(401).json({msg:`invalid email/password`})
+                next({name: 'accessDenied'})
             } else {
 
                 let match = compare(obj.password, data.password)
@@ -46,15 +47,13 @@ class Controller {
                         accessToken: accessToken
                     })
                 }else {
-                    return res.status(401).json({
-                        msg: `invalid email/password`
-                    })
+                    next({name: 'accessDenied'})
                 }
             }
         })
         .catch(err =>{
-            console.log(err)
-            return res.status(400).json(err)
+            //console.log(err)
+            next(err)
         })
     }
 }

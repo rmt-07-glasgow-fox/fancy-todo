@@ -1,16 +1,18 @@
 
 const {Todo} = require('../models/index')
+const axios = require('axios')
+
 
 class Controller{
     static home(req, res){
         res.send(`Hello Welcome`)
     }
 
-    static postTodo(req, res){
+    static postTodo(req, res, next){
         let obj = {
             title: req.body.title,
             description: req.body.description,
-            status: false,
+            status: req.body.status,
             due_date: req.body.due_date,
             userId: req.user.id
         }
@@ -19,116 +21,93 @@ class Controller{
             return res.status(201).json(data)
         })
         .catch(err =>{
-            if(err.name === 'SequelizeValidationError'){
-                return res.status(400).json({
-                    msg: `should using date from today or after today`
-                })
-            }
-            return res.status(500).json({
-                msg: `error from the server`
+            next(err)
+        })
+    }
+
+    static todoShow(req, res, next){
+        let temp
+
+        let weatherApi = `http://api.openweathermap.org/data/2.5/weather?q=Jakarta,id&APPID=${process.env.Weather_API}`
+        axios.get(weatherApi)
+        .then(response =>{
+            temp = response.data
+            return Todo.findAll()
+        })
+        .then(data =>{
+            return res.status(200).json({
+                todos: data, weather: temp
             })
         })
-    }
-
-    static todoShow(req, res){
-        Todo.findAll()
-        .then(data =>{
-            return res.status(200).json(data)
-        })
         .catch(err =>{
-            return res.status(500).json(err)
+            next(err)
         })
     }
 
-    static todoById(req, res){
+    static todoById(req, res, next){
         let id = req.params.id
-        Todo.findByPk(id)
+        let temp 
+        let weather = process.env.Weather_API
+        let weatherApi = `http://api.openweathermap.org/data/2.5/weather?q=Jakarta,id&APPID=${weather}`
+        axios.get(weatherApi)
+        .then(response =>{
+            //console.log(data)
+            temp = response.data
+           return Todo.findByPk(id)
+        })
         .then(data =>{
-            if(!data){
-                return res.status(404).json({
-                    msg: `error not found`
-                })
-            }
-            return res.status(200).json(data)
+            return res.status(200).json({
+                todos: data, weather:temp
+            })
         })
         .catch(err =>{
-            return res.status(500).json(err)
+            //console.log(err)
+            next(err)
         })
     }
 
-    static updateTodo(req, res){
+    static updateTodo(req, res, next){
         let id = req. params.id
         let obj = {
             title: req.body.title,
             description: req.body.description,
-            status: false,
+            status: req.body.status,
             due_date: req.body.due_date
         }
-        Todo.update(obj, {where: {id}})
-        .then(data=>{
-            return Todo.findByPk(id)
-        })
+        //console.log(obj)
+        Todo.update(obj, {where: {id}, returning: true, plain:true})
         .then(data =>{
-            if(!data){
-                return res.status(404).json({
-                    msg: `error not found`
-                })
-            }
-            return res.status(200).json(data)
+            //console.log(data)
+            return res.status(200).json(data[1])
         })
         .catch(err =>{
-            if(err.name === 'SequelizeValidationError'){
-                return res.status(400).json({
-                    msg: `should using date from today or after today`
-                })
-            }
-            return res.status(500).json({
-                msg: `error from the server`
-            })
+            next(err)
         })
     }
 
-    static editSpecify(req, res){
+    static editSpecify(req, res, next){
         let id = req.params.id
         let obj = {
             status: req.body.status
         }
-        Todo.update(obj, {where: {id}})
+        Todo.update(obj, {where: {id}, returning: true, plain:true})
         .then(data =>{
-            return Todo.findByPk(id)
-        })
-        .then(data =>{
-            if(!data){
-                return res.status(404).json({
-                    msg: `error not found`
-                })
-            }
-            return res.status(200).json(data)
+            return res.status(200).json(data[1])
         })
         .catch(err =>{
-            if(err.name === 'SequelizeValidationError'){
-                return res.status(400).json({
-                    msg: `should using date from today or after today`
-                })
-            }
-            return res.status(500).json({
-                msg: `error from the server`
-            })
+            next(err)
         })
     }
 
-    static deleteTodo(req, res){
+    static deleteTodo(req, res, next){
         let id = req.params.id
 
         Todo.destroy({where: {id}})
         .then(data =>{
-            if(!data){
-                return res.status(404).json({msg: `error not found`})
-            }
             return res.status(200).json({msg: `todo success to delete`})
         })
         .catch(err =>{
-            return res.status(500).json(err)
+            next(err)
         })
     }
 }

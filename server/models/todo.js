@@ -38,6 +38,11 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty:{
           msg: `status can't empty`
+        },
+        isBoolean: function(value){
+          if(typeof value !== 'boolean'){
+            throw new Error (`Status must be a Boolean`)
+          }
         }
       }
     },

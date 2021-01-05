@@ -10,7 +10,7 @@ function authentication(req, res, next){
         .then(data =>{
             //console.log(data)
             if(!data){
-                return res.status(401).json({message: `please login first`})
+                next({name: 'accessDenied'})
             }else {
                 req.user = {
                     id: data.id,
@@ -20,25 +20,31 @@ function authentication(req, res, next){
             }
         })
         .catch(err =>{
-            return res.status(500).json({message: err.message})
+            next(err)
         })
     }catch(err){
-        console.log(err)
-        return res.status(400).json({message: err.message})
+        //console.log(err)
+        next(err)
     }
 }
 
 function authorization(req, res, next){
     Todo.findOne({where:{id: req.params.id}})
     .then(data =>{
-        if(!data || data.userId !== req.user.id){
-            return res.status(401).json({message: `you dont have any access`})
+        //console.log('---then')
+        if(!data){
+            next({name: 'resourceNotFound'})
+        }else if(data.userId !== req.user.id){
+            //.log('---if')
+            //res.status(401).json({message: 'no access'})
+            next({name: 'accessDenied'})
         }else {
             next()
         }
     })
     .catch(err =>{
-        return res.status(500).json(err)
+        console.log('----catch')
+        next(err)
     })
 }
 
