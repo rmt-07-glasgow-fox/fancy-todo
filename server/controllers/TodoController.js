@@ -20,11 +20,7 @@ class TodoController {
             due_date: req.body.due_date
         }
 
-        Todo.create(newTodo, {
-            attributes: {
-                exclude: ['createdAt','updatedAt']
-            }
-        })
+        Todo.create(newTodo)
             .then(todo => res.status(201).json({
                 title: todo.title,
                 description: todo.description,
@@ -39,12 +35,12 @@ class TodoController {
                 }
             })
     }
-
+   
     static getTodo(req, res) {
         let id = req.params.id;
 
         Todo.findOne({
-            where: {id},
+            where: {id}, 
             attributes: {
                 exclude: ['createdAt','updatedAt'],
             }
