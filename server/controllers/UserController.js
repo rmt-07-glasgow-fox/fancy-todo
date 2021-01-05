@@ -4,7 +4,10 @@ const generateToken = require('../helpers/jwtHelper').generateToken
 
 class UserController {
   static userRegister(req, res){
-    User.create(req.body)
+    User.create({
+      email: req.body.email || '',
+      password: req.body.password || ''
+    })
       .then(data => {
         res.status(201).json({
           id: data.id,
@@ -27,7 +30,7 @@ class UserController {
   static userLogin(req, res){
     User.findOne({
       where:{
-        email: req.body.email
+        email: req.body.email || ''
       }
     })
       .then(data => {
