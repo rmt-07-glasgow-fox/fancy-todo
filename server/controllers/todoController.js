@@ -11,7 +11,7 @@ class TodoController {
                 data
             })
         } catch (err) {
-            next(err)
+            return next(err)
         }
     }
 
@@ -22,7 +22,7 @@ class TodoController {
             });
 
             if (!data) {
-                next({ name: 'notFound' })
+                return next({ name: 'notFound' })
             }
 
             return res.status(200).json({
@@ -30,7 +30,7 @@ class TodoController {
                 data
             })
         } catch (err) {
-            next(err)
+            return next(err)
         }
     }
 
@@ -46,7 +46,7 @@ class TodoController {
             })
 
         } catch (err) {
-            next(err)
+            return next(err)
         }
     }
 
@@ -58,8 +58,9 @@ class TodoController {
             const data = await Todo.findByPk(id, {
                 attributes: { exclude: ['createdAt', 'updatedAt'] }
             });
+
             if (!data) {
-                next({ name: 'notFound' })
+                return next({ name: 'notFound' })
             }
 
             await Todo.update(input, { where: { id } })
@@ -70,7 +71,7 @@ class TodoController {
                 data
             })
         } catch (err) {
-            next(err)
+            return next(err)
         }
     }
 
@@ -84,7 +85,7 @@ class TodoController {
             })
 
             if (!data) {
-                next({ name: 'notFound' })
+                return next({ name: 'notFound' })
             }
 
             await Todo.update(input, { where: { id } })
@@ -95,7 +96,7 @@ class TodoController {
                 data
             })
         } catch (err) {
-            next(err)
+            return next(err)
         }
     }
 
@@ -104,7 +105,7 @@ class TodoController {
             const data = await Todo.findByPk(+req.params.id);
 
             if (!data) {
-                next({ name: 'notFound' })
+                return next({ name: 'notFound' })
             }
 
             data.destroy();
@@ -115,7 +116,7 @@ class TodoController {
             })
 
         } catch (err) {
-            next(err)
+            return next(err)
         }
     }
 }

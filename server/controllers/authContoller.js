@@ -5,18 +5,19 @@ const generateToken = require('../helpers/jwt');
 
 class AuthController {
     static async login(req, res, next) {
+        const { email, password } = req.body;
+
         try {
-            const { email, password } = req.body;
             const user = await User.findOne({ where: { email: email } });
 
             if (!user) {
-                next({ name: "authValidate" })
+                return next({ name: "authValidate" })
             }
 
             const checkPassword = comparePassword(password, user.password);
 
             if (!checkPassword) {
-                next({ name: "authValidate" })
+                return next({ name: "authValidate" })
             }
 
             const payload = {
@@ -39,9 +40,10 @@ class AuthController {
     }
 
     static async register(req, res, next) {
+        const { email, password } = req.body;
+        const input = { email, password };
+
         try {
-            const { email, password } = req.body;
-            const input = { email, password };
             const data = await User.create(input);
 
             return res.status(201).json({
@@ -49,8 +51,9 @@ class AuthController {
                 data
             })
         } catch (err) {
-            next(err)
+            return next(err)
         }
+
     }
 }
 

@@ -15,7 +15,7 @@ const isLogin = async(req, res, next) => {
         return next();
 
     } catch (err) {
-        next(err)
+        return next(err)
     }
 
 }

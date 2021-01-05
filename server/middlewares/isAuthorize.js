@@ -1,7 +1,6 @@
 const { Todo } = require('../models');
 
 const isAuthorize = async(req, res, next) => {
-
     try {
         const todo = await Todo.findByPk(req.params.id);
 
@@ -11,7 +10,7 @@ const isAuthorize = async(req, res, next) => {
 
         return next();
     } catch (err) {
-        next(err)
+        return next(err)
     }
 }
 
