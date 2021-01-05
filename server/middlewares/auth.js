@@ -1,5 +1,5 @@
-const {checkToken} = require('../helpers/jwt')
-const {User, Todo} = require('../models')
+const { checkToken } = require('../helpers/jwt')
+const { User, Todo } = require('../models')
 
 const authenticate = async (req, res, next) => {
     try {
@@ -31,7 +31,6 @@ const authenticate = async (req, res, next) => {
 
 const authorize = (req, res, next) => {
 
-    console.log(req.params)
     Todo.findOne({
         where: {
             id: +req.params.id
@@ -48,7 +47,7 @@ const authorize = (req, res, next) => {
             }
         })
         .catch(err => {
-            res.status(500).json({message: err.message})
+            res.status(500).json({ message: err.message })
         })
 }
 

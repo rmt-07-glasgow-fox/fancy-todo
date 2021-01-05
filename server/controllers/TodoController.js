@@ -1,4 +1,4 @@
-const {Todo} = require('../models')
+const { Todo } = require('../models')
 
 class TodoController {
     static getTodos(req, res) {
@@ -7,12 +7,14 @@ class TodoController {
                 res.status(200).json(todos)
             })
             .catch(err => {
-                res.status(500).json({message: "Internal server error."})
+                res.status(500).json({
+                    message: "Internal server error."
+                })
             })
     }
 
     static postTodos(req, res) {
-        const {title, description, due_date, status} = req.body
+        const { title, description, due_date, status } = req.body
         const UserId = req.user.id
 
         Todo.create({
@@ -26,17 +28,14 @@ class TodoController {
                 res.status(201).json(todo)
             })
             .catch(err => {
-                const errorMessages = []
-
-                err.errors.forEach(error => {
-                    if (error.type === 'Validation error') {
-                        errorMessages.push({message: error.message})
-                    }
-                    else {
-                        return res.status(500).json({message: "Internal server error."})
-                    }
-                })
-                return res.status(400).json(errorMessages)
+                if (err.name === 'SequelizeValidationError') {
+                    return res.status(400).json({ message: err.message })
+                }
+                else {
+                    return res.status(500).json({
+                        message: "Internal server error."
+                    })
+                }
             })
     }
 
@@ -45,17 +44,17 @@ class TodoController {
         Todo.findByPk(id)
             .then(currentTodo => {
                 if (!currentTodo) {
-                    return res.status(404).json({message: "Error: todo not found."})
+                    return res.status(404).json({ message: "Error: todo not found." })
                 }
                 res.status(200).json(currentTodo)
             })
             .catch(err => {
-                res.status(500).json({message: "Internal server error."})
+                res.status(500).json({ message: "Internal server error." })
             })
     }
 
     static putUpdateTodos(req, res) {
-        const {title, description, status, due_date} = req.body
+        const { title, description, status, due_date } = req.body
         Todo.findByPk(+req.params.id)
             .then(currentTodo => {
                 return currentTodo.update({
@@ -69,24 +68,22 @@ class TodoController {
                 res.status(200).json(updatedTodo)
             })
             .catch(err => {
-                if (err.errors) {
-                    err.errors.forEach(error => {
-                        if (error.type === 'Validation error') {
-                            res.status(400).json({message: error.message})
-                        }
-                        else {
-                            res.status(500).json({message: "Internal server error."})
-                        }
-                    })
+                if (err) {
+                    if (err.name === 'SequelizeValidationError') {
+                        res.status(400).json({ message: err.message })
+                    }
+                    else {
+                        res.status(500).json({ message: "Internal server error." })
+                    }
                 }
                 else {
-                    res.status(404).json({message: "Error: todo not found."})
+                    res.status(404).json({ message: "Error: todo not found." })
                 }
             })
     }
 
     static patchUpdateTodos(req, res) {
-        const {status} = req.body
+        const { status } = req.body
         Todo.findByPk(+req.params.id)
             .then(currentTodo => {
                 return currentTodo.update({
@@ -100,15 +97,15 @@ class TodoController {
                 if (err.errors) {
                     err.errors.forEach(error => {
                         if (error.type === 'Validation error') {
-                            res.status(400).json({message: error.message})
+                            res.status(400).json({ message: error.message })
                         }
                         else {
-                            res.status(500).json({message: "Internal server error."})
+                            res.status(500).json({ message: "Internal server error." })
                         }
                     })
                 }
                 else {
-                    res.status(404).json({message: "Error: todo not found."})
+                    res.status(404).json({ message: "Error: todo not found." })
                 }
             })
     }
@@ -121,14 +118,14 @@ class TodoController {
         })
             .then(result => {
                 if (result === 1) {
-                    res.status(200).json({message: "Todo successfully deleted."})
+                    res.status(200).json({ message: "Todo successfully deleted." })
                 }
                 else {
-                    res.status(404).json({message: "Error: todo not found."})
+                    res.status(404).json({ message: "Error: todo not found." })
                 }
             })
             .catch(err => {
-                res.status(500).json({message: "Internal server error."})
+                res.status(500).json({ message: "Internal server error." })
             })
     }
 }

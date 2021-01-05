@@ -1,11 +1,11 @@
-const {User} = require('../models')
+const { User } = require('../models')
 const comparePassword = require('../helpers/comparePassword')
-const {generateToken} = require('../helpers/jwt')
+const { generateToken } = require('../helpers/jwt')
 
 
 class UserController {
     static register(req, res) {
-        const {email, password} = req.body
+        const { email, password } = req.body
 
         User.create({
             email,
@@ -24,7 +24,7 @@ class UserController {
     }
 
     static login(req, res) {
-        const {email, password} = req.body
+        const { email, password } = req.body
 
         User.findOne({
             where: {
