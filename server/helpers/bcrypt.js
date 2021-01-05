@@ -7,4 +7,9 @@ function hashPassword(password){
     return hash
 }
 
-module.exports = hashPassword
+function checkPassword(password, hashedPassword){
+    return bcrypt.compareSync(password, hashedPassword)
+}
+module.exports = {
+    hashPassword, checkPassword
+}
