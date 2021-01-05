@@ -4,7 +4,8 @@ class TodoController{
     static async getTodo(req, res){
         try{
             const result = await Todo.findAll()
-            return res.status(200).json(result)
+
+            return res.status(201).json(result)
         }
         catch(err){
             return res.status(500).json(err)
@@ -21,7 +22,7 @@ class TodoController{
             }
             
             const result = await Todo.create(opt)
-
+            
             return res.status(201).json(result)
         }
         catch(err){
@@ -33,14 +34,14 @@ class TodoController{
         try{
             const id = +req.params.id
 
-            const result = await Todo.findAll({
+            const result = await Todo.findOne({
                 where: { id }
             })
 
-            res.status(200).json(result)
+            return res.status(200).json(result)
         }
         catch{
-            res.status(404).json({message: 'server error'})
+            return res.status(404).json({message: 'server error'})
         }
     }
 
@@ -61,10 +62,10 @@ class TodoController{
                 returning: true
             })
 
-            res.status(200).json(result)
+            return res.status(200).json(result)
         }
         catch(err){
-            res.status(500).json(err)
+            return res.status(500).json(err)
         }
     }
 
@@ -82,10 +83,10 @@ class TodoController{
                 returning: true
             })
 
-            res.status(200).json(result)
+            return res.status(200).json(result)
         }
         catch(err){
-            res.status(500).json(err)
+            return res.status(500).json(err)
         }
     }
 
@@ -93,16 +94,20 @@ class TodoController{
         try{
             const id = +req.params.id
 
-            await Todo.destroy({
+            const result = await Todo.destroy({
                 where: {
                     id
                 }
             })
 
-            res.status(200).json({message: 'todo success to delete'})
+            if(!result){
+                return res.status(404).json({message: 'error not found'})
+            }
+
+            return res.status(200).json({message: 'todo success to delete'})
         }
         catch(err){
-            res.status(500).json(err)
+            return res.status(500).json(err)
         }
         
     }
