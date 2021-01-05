@@ -19,6 +19,7 @@ const errorHandler = (err, req, res, next) => {
         })
         break;
       default:
+        res.status(500).json(err)
         if(err.data.name === "SequelizeConnectionError"){
           res.status(500).json({
             message: 'Internal server error',
@@ -28,6 +29,10 @@ const errorHandler = (err, req, res, next) => {
           res.status(500).json({
             message: 'Internal server error',
             data: err.data
+          })
+        }else{
+          res.status(500).json({
+            message: 'Internal server error'
           })
         }
         break;

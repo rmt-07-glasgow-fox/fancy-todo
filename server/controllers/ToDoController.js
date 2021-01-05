@@ -1,4 +1,5 @@
 const { ToDo } = require('../models')
+const axios = require('axios')
 
 class ToDoController {
   static getAllTasks(req, res, next){
@@ -166,6 +167,26 @@ class ToDoController {
           data: err
         })
       })
+  }
+  static getNews(req, res, next){
+    axios.get(`https://newsapi.org/v2/top-headlines?country=id&apiKey=${process.env.NEWSAPI_API_KEY}`)
+      .then((el) => {
+        res.status(200).json(el.data)
+      })
+      .catch(err => next({
+        status: 500,
+        data: err
+      }))
+  }
+  static getCurrentWeather(req, res, next){
+    axios.get(`https://api.openweathermap.org/data/2.5/weather?q=bandung&appid=${process.env.OPENWEATHER_API_KEY}`)
+      .then((el) => {
+        res.status(200).json(el.data)
+      })
+      .catch(err => next({
+        status: 500,
+        data: err
+      }))
   }
 }
 
