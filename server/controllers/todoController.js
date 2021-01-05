@@ -7,14 +7,24 @@ class TodoController {
 
     static async todoAdd(req, res) {
         try {
-            let body = req.body
-            let data = await Todo.create(body)
+            console.log('>>> req.user : ', req.user)
+            let { title, description, status, due_date } = req.body
+            let newTodo = {
+                title: title,
+                status: status,
+                description: description,
+                due_date: due_date,
+                UserId: req.user.id
+            }
+            let data = await Todo.create(newTodo)
+
             let response = {
                 id: data.id,
                 status: data.status,
                 title: data.title,
                 description: data.description,
-                due_date: data.due_date
+                due_date: data.due_date,
+                UserId: data.UserId
             }
 
             return res.status(201).json(response)
@@ -26,13 +36,15 @@ class TodoController {
                 return res.status(400).json(errorMessage)
             }
 
-            return res.status(500).send(err)
+            return res.status(500).json(err)
         }
     }
 
     static async todoList(req, res) {
         try {
+            // console.log(req.user)
             let data = await Todo.findAll({
+                where: { UserId: req.user.id },
                 order: [['id', 'ASC']],
                 attributes: {
                     // include: ['id', 'title', 'description', 'status', 'due_date'],
@@ -43,15 +55,17 @@ class TodoController {
             // console.log(data)
             return res.status(200).json(data)
         } catch (err) {
-            return res.status(500).send(err)
+            return res.status(500).json(err)
         }
     }
 
     static async todoById(req, res) {
         try {
             let id = +req.params.id
+            // console.log(req.user)
 
             let data = await Todo.findByPk(id, {
+                where: { UserId: req.user.id },
                 attributes: {
                     // include: ['id', 'title', 'description', 'status', 'due_date'],
                     exclude: ['createdAt', 'updatedAt']
@@ -59,10 +73,11 @@ class TodoController {
             })
 
             // console.log('data : ', data)
-            data ? res.status(200).send(data) : res.status(404).json('error not found')
+            if (data) return res.status(200).json(data)
+            if (!data) return res.status(404).json('error not found')
 
         } catch (err) {
-            return res.status(500).send(err)
+            return res.status(500).json(err)
         }
     }
 
@@ -97,7 +112,7 @@ class TodoController {
                 return res.status(400).json(errorMessage)
             }
 
-            return res.status(500).send(err)
+            return res.status(500).json(err)
         }
     }
 
@@ -126,7 +141,7 @@ class TodoController {
                 return res.status(400).json(errorMessage)
             }
 
-            return res.status(500).send(err)
+            return res.status(500).json(err)
         }
     }
 
@@ -140,7 +155,7 @@ class TodoController {
             if (!deleted) return res.status(404).json('error not found')
 
         } catch (err) {
-            return res.status(500).send(err)
+            return res.status(500).json(err)
         }
     }
 }

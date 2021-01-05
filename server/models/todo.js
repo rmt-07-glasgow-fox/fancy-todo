@@ -11,10 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Todo.belongsTo(models.User)
     }
 
-    static getDateToday() {
+    static getDateYesterday() {
       return (new Date(new Date().setDate(new Date().getDate() - 1))).toJSON().slice(0, -14)
+    }
+    static getDateToday() {
+      return (new Date()).toJSON().slice(0, -14)
     }
   };
   Todo.init({
@@ -36,8 +40,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATEONLY,
       validate: {
         isAfter: {
-          args: `${Todo.getDateToday()}`,
-          msg: `due_date should one day after today, ${Todo.getDateToday()}`
+          args: `${Todo.getDateYesterday()}`,
+          msg: `due_date minimum is today, ${Todo.getDateToday()}`
         },
         notEmpty: {
           args: true,
@@ -46,6 +50,19 @@ module.exports = (sequelize, DataTypes) => {
         isDate: {
           args: true,
           msg: 'Invalid due_date format'
+        }
+      }
+    },
+    UserId: {
+      type: DataTypes.INTEGER,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'UserId is empty'
+        },
+        isInt: {
+          args: true,
+          msg: 'UserId should be Integer'
         }
       }
     }

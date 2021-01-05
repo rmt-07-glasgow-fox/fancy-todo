@@ -47,13 +47,13 @@ class UserController {
                     email: user.email
                 }
 
-                const accessToken = generateToken(payload)
-                return res.status(200).json({ accessToken })
+                const access_token = generateToken(payload)
+                return res.status(200).json({ access_token })
             }
 
         } catch (err) {
             let errorMessage = err.errors ? err.errors.map(error => error.message) : err
-            res.status(400).json({ message: errorMessage })
+            return res.status(400).json({ message: errorMessage })
         }
     }
 }
