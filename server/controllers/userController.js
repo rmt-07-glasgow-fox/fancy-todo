@@ -18,25 +18,12 @@ class userController {
             })
         })
         .catch(err => {
-            // if(err.errors){
-                // let message = []
-                // err.errors.forEach(el => {
-                //     message.push(el.message)
-                // })
-                // res.status(400).json({
-                //     Errors : message
-                // })
-            // } else {
-            //     res.status(500).json({message: 'Internal Server Error'})
-            // }
             next(err)
         })
     }
 
-    static login(req, res){
-        let url = ""
+    static login(req, res, next){
         const { email, password } = req.body
-        let loginUser = ''
         User.findOne({
             where : {
                 email : email
@@ -45,8 +32,12 @@ class userController {
         .then(user => {
             if(user){
                 if(checkPassword(password, user.password)){
-                    loginUser = user
-                    return axios.get(url)
+                    const payload = {
+                        id : user.id,
+                        email : user.email
+                    }
+                    const access_token = createToken(payload)
+                    res.status(200).json({access_token})
                 } else {
                     res.status(400).json({message : 'Incorect Email / Password'})
                 }
@@ -54,17 +45,8 @@ class userController {
                 res.status(400).json({message : 'Incorect Email / Password'})
             }   
         })
-        .then(weather => {
-            console.log(weather.data)
-            const payload = {
-                id : loginUser.id,
-                email : loginUser.email
-            }
-            const access_token = createToken(payload)
-            res.status(200).json({access_token})
-        })
         .catch(err => {
-            res.status(500).json({message : 'Internal Server Error'})
+            next(err)
         })
     }
 }

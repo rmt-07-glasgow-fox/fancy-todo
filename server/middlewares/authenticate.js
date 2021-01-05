@@ -18,10 +18,10 @@ function authenticate(req, res, next){
             }
         })
         .catch(err => {
-            res.status(500).json({message : 'Internal Server Error'})
+            next(err)
         })
     } catch (err) {
-        res.status(400).json({message : err.message})
+        next(err)
     }
 }
 
@@ -33,15 +33,15 @@ function authorization(req, res, next){
     })
     .then(todo => {
         if(todo === null){
-            res.status(404).json({messsage: 'Error not found'})
+            next({name : "Not found"})
         } else if(todo.userId === req.user.id){
             next()
         } else {
-            res.status(401).json({message: 'Do not have access'})
+            next({name : 'Do not have access'})
         }
     })
     .catch(err => {
-        res.status(500).json({message: 'Internal Server Error'})
+        next(err)
     })
 }
 
