@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isAfter: {
           args: String(new Date()),
-          msg: "Due date not valid"
+          msg: "Cannot enter a date that has passed"
         }
       }
     }

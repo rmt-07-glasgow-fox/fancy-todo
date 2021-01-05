@@ -76,7 +76,11 @@ _Response (201 - Created)_
 _Response (400 - Bad Request)_
 ```
 {
-  "message": "Due date not valid"
+    "message": [
+        "Status must filled by true/false",
+        "Title must be filled",
+        "Cannot enter a date that has passed"
+    ]
 }
 ```
 _Response (500 - Bad Request)_
@@ -154,7 +158,11 @@ _Response (200 - OK)_
 _Response (400 - Bad Request)_
 ```
 {
-  "message": "Due date not valid"
+    "message": [
+        "Status must filled by true/false",
+        "Title must be filled",
+        "Cannot enter a date that has passed"
+    ]
 }
 ```
 _Response (404 - Not Found)_
@@ -201,7 +209,7 @@ _Response (200 - OK)_
 _Response (400 - Bad Request)_
 ```
 {
-  "message": "Due date not valid"
+  "message": "Status must filled by true/false"
 }
 ```
 _Response (404 - Not Found)_

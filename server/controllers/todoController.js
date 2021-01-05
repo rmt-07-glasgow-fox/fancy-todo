@@ -4,7 +4,7 @@ class TodoController{
     static getTodos(req, res){
         Todo.findAll()
         .then(data => {
-            data.map(el => el.due_date = new Date(el.due_date + "UTC"))
+            // data.map(el => el.due_date = new Date(el.due_date + "UTC"))
             res.status(200).json(data)
         })
         .catch(() => {
@@ -29,9 +29,8 @@ class TodoController{
                 err.errors.forEach(error => {
                     errMsg.push(error.message)
                 });
-                res.status(400).json(errMsg)
+                res.status(400).json({message: errMsg})
             } else {
-                // res.send(err)
                 res.status(500).json({message: "Internal Server Error"})
             }
         })
@@ -42,7 +41,6 @@ class TodoController{
         Todo.findByPk(id)
         .then(data => {
             if(data){
-                data.due_date = new Date(data.due_date + "UTC")
                 res.status(200).json(data)
             } 
             else res.status(404).json({message: "Data Not Found"})
@@ -61,15 +59,16 @@ class TodoController{
             status: req.body.status,
             due_date: req.body.due_date
         }
-        Todo.update(value,{where:{id}})
-        .then(data => {
-            if(data[0]){
-                return Todo.findByPk(id)
-            } 
-            else res.status(404).json({message: "Data Not Found"})
+        Todo.update(value,{
+            where: { id },
+            returning: true
         })
         .then(data => {
-            res.status(200).json(data)
+            if(data[0]){
+                let result = data[1][0].dataValues
+                res.status(200).json(result)
+            } 
+            else res.status(404).json({message: "Data Not Found"})
         })
         .catch(err => {
             console.log(err);
@@ -78,7 +77,7 @@ class TodoController{
                 err.errors.forEach(error => {
                     errMsg.push(error.message)
                 });
-                res.status(400).json(errMsg)
+                res.status(400).json({message: errMsg})
             } else {
                 res.status(500).json({message: "Internal Server Error"})
             }
@@ -90,15 +89,16 @@ class TodoController{
         const value = {
             status: req.body.status
         }
-        Todo.update(value, {where:{id}})
-        .then(data => {
-            if(data[0]){
-                return Todo.findByPk(id)
-            } 
-            else res.status(404).json({message: "Data Not Found"})
+        Todo.update(value, {
+            where: { id },
+            returning: true
         })
         .then(data => {
-            res.status(200).json(data)
+            if(data[0]){
+                let result = data[1][0].dataValues
+                res.status(200).json(result)
+            } 
+            else res.status(404).json({message: "Data Not Found"})
         })
         .catch(err => {
             if (err.name === "SequelizeValidationError"){
