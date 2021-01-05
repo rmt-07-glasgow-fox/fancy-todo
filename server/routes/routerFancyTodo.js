@@ -1,13 +1,10 @@
 const router = require('express').Router()
 const todoController = require('../controller/todoController')
-const register = require('./routerRegister')
 
 router.get('/welcome', (req, res)=> {
     res.send('Hello World')
 })
 
-
-router.use(register)
 router.get('/todos', todoController.getAllTodo)
 router.post('/todos', todoController.createTodo)
 router.get('/todos/:id', todoController.findOne)
