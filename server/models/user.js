@@ -24,11 +24,22 @@ module.exports = (sequelize, DataTypes) => {
         },
         isEmail: {
           msg: 'Invalid email!!!'
+        },
+        isUnique: function (value, next) {
+          User.findAll({
+            where: {
+              email: value
+            }
+          })
+            .then((data) => {
+              if (data[0].id) {
+                next(Error('Email already in use!!!'));
+              }
+            })
+            .catch((err) => {
+              throw err;
+            });
         }
-      },
-      unique: {
-        args: true,
-        msg: 'Email already in use!!!'
       }
     },
     password: {

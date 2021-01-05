@@ -6,7 +6,6 @@ function errorHandler (err, req, res, next) {
             err.msg.errors.forEach(e => {
                 msg.push(e.message);
             });
-
             return res.status(400).json({ name: err.name, msg: msg });
         case 404:
             return res.status(404).json({ msg: err.msg });
