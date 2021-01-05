@@ -2,7 +2,7 @@ const { User } = require('../models')
 const { unhashPassword, generateToken } = require('../helpers')
 
 class UserController{
-    static handleRegister(req, res){
+    static handleRegister(req, res, next){
         let value = {
             username: req.body.username,
             email: req.body.email,
@@ -18,39 +18,49 @@ class UserController{
             res.status(201).json(result)
         })
         .catch(err => {
-            // console.log(err);
-            if (err.name === "SequelizeValidationError"){
-                let errMsg = []
-                err.errors.forEach(error => {
-                    errMsg.push(error.message)
-                });
-                res.status(400).json(errMsg)
+            if (err.name === "SequelizeValidationError" || err.name === "SequelizeUniqueConstraintError"){
+                next({
+                    status: 400,
+                    errors: err.errors
+                })
             } else {
-                res.status(500).json({message: "Internal Server Error"})
+                next({status: 500})
             }
         })
     }
 
-    static handleLogin(req, res){
+    static handleLogin(req, res, next){
         const email = req.body.email
         const password = req.body.password
         User.findOne({
             where: {email}
         })
         .then(data => {
-            if (data && unhashPassword(password, data.password)){
-                let acces_token = generateToken({
-                    id: data.id,
-                    username: data.username,
-                    email: data.email
-                })
-                res.status(200).json({acces_token})
+            if (data){
+                if (unhashPassword(password, data.password)){
+                    let access_token = generateToken({
+                        id: data.id,
+                        username: data.username,
+                        email: data.email
+                    })
+                    res.status(200).json({access_token})
+                } else{
+                    next({
+                        status: 400,
+                        errors: [
+                            { message: "Invalid Email/Password" }
+                        ]
+                    })
+                }
             } else {
-                res.status(404).json({message: "Invalid Email/Password"})
+                next({
+                    status: 401,
+                    message: "Email not found, please register first"
+                })
             }
         })
         .catch(() => {
-            res.status(500).json({message: "Internal Server Error"})
+            next({status: 500})
         })
     }
 }

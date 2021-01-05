@@ -1,18 +1,17 @@
 const {Todo} = require('../models')
 
 class TodoController{
-    static getTodos(req, res){
+    static getTodos(req, res, next){
         Todo.findAll()
         .then(data => {
             res.status(200).json(data)
         })
         .catch(() => {
-            res.status(500).json({message: "Internal Server Error"})
+            next({status: 500})
         })
     }
 
-    static addTodo(req, res){
-        // console.log(req.userData);
+    static addTodo(req, res, next){
         const value = {
             title: req.body.title,
             description: req.body.description,
@@ -26,33 +25,32 @@ class TodoController{
         })
         .catch(err => {
             if(err.name === "SequelizeValidationError"){
-                let errMsg = []
-                err.errors.forEach(error => {
-                    errMsg.push(error.message)
-                });
-                res.status(400).json({message: errMsg})
+                next({
+                    status: 400,
+                    errors: err.errors
+                })
             } else {
-                res.status(500).json({message: "Internal Server Error"})
+                next({status: 500})
             }
         })
     }
 
-    static getTodoId(req, res){
+    static getTodoId(req, res, next){
         const id = req.params.id
         Todo.findByPk(id)
         .then(data => {
             if(data){
                 res.status(200).json(data)
-            } 
-            else res.status(404).json({message: "Data Not Found"})
-            
+            } else {
+                next({status: 404})
+            }           
         })
         .catch(() => {
-            res.status(500).json({message: "Internal Server Error"})
+            next({status: 500})
         })
     }
 
-    static putTodo(req, res){
+    static putTodo(req, res, next){
         const id = req.params.id
         const value = {
             title: req.body.title,
@@ -69,23 +67,22 @@ class TodoController{
                 let result = data[1][0].dataValues
                 res.status(200).json(result)
             } 
-            else res.status(404).json({message: "Data Not Found"})
+            else next({status: 404})
         })
         .catch(err => {
             console.log(err);
             if(err.name === "SequelizeValidationError"){
-                let errMsg = []
-                err.errors.forEach(error => {
-                    errMsg.push(error.message)
-                });
-                res.status(400).json({message: errMsg})
+                next({
+                    status: 400,
+                    errors: err.errors
+                })
             } else {
-                res.status(500).json({message: "Internal Server Error"})
+                next({status: 500})
             }
         })
     }
 
-    static patchTodo(req, res){
+    static patchTodo(req, res, next){
         const id = req.params.id
         const value = {
             status: req.body.status
@@ -99,26 +96,29 @@ class TodoController{
                 let result = data[1][0].dataValues
                 res.status(200).json(result)
             } 
-            else res.status(404).json({message: "Data Not Found"})
+            else next({status: 404})
         })
         .catch(err => {
             if (err.name === "SequelizeValidationError"){
-                res.status(400).json({message: err.errors[0].message})
+                next({
+                    status: 400,
+                    errors: err.errors
+                })
             } else {
-                res.status(500).json({message: "Internal Server Error"})
+                next({status: 500})
             }
         })
     }
 
-    static deleteTodo(req, res){
+    static deleteTodo(req, res, next){
         const id = req.params.id
         Todo.destroy({where:{id}})
         .then(data => {
             if(data) res.status(200).json({message: "Todo success to deleted"})
-            else res.status(404).json({message: "Data not found"})
+            else next({status: 404})
         })
         .catch(() => {
-            res.status(500).json({message: "Internal Server Error"})
+            next({status: 500})
         })
     }
 }
