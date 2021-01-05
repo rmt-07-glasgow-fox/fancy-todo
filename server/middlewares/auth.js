@@ -3,6 +3,7 @@ const { User, Todo } = require("../models");
 
 async function authenticate(req, res, next) {
   try {
+    // decode access_token dan ambil datanya
     let decoded = checkToken(req.headers.access_token);
 
     let currentUser = await User.findOne({
@@ -13,14 +14,16 @@ async function authenticate(req, res, next) {
       },
     });
 
-    if (!currentUser) {
-      return res.status(401).json({ message: "Please login" });
+    //if user from decoded data doesn't exist in database
+    if (!currentUser) { 
+      return next({
+        name: "UnregisteredUser"
+      })
     }
-
     req.user = currentUser;
     next();
   } catch (err) {
-    res.status(500).json(err.message);
+    next(err)
   }
 }
 

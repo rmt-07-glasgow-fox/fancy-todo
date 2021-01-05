@@ -4,6 +4,25 @@ function errorHandler(err, req, res, next) {
       let alert = err.errors.map( error => error.message);
       return res.status(400).json(alert);
 
+    case "SequelizeUniqueConstraintError":
+      let errorMsg = err.errors.map( error => error.message);
+      return res.status(400).json(errorMsg);
+
+    case "InvalidEmail":
+      return res.status(401).json({
+        message: "Email is invalid"
+      })
+
+    case "InvalidPassword":
+      return res.status(401).json({
+        message: "Wrong password. Please try again"
+      })
+
+    case "UnregisteredUser":
+      return res.status(401).json({
+        message: "Please login"
+      })
+
     case "NotFound":
       return res.status(404).json({
         message: "Looking for something?"

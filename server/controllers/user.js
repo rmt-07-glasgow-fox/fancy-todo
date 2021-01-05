@@ -3,56 +3,57 @@ const { checkPassword } = require("../helpers/bcrypt");
 const { generateToken } = require("../helpers/jwt");
 
 class UserController {
-  static register(req, res) {
+  static register(req, res, next) {
     const { username, fullName, email, password } = req.body;
 
     User.create({
-      username, fullName, email, password
+      username,
+      fullName,
+      email,
+      password,
     })
-    .then(result => {
-      return res.status(201).json({
-        id: result.id,
-        username: result.username,
-        email: result.email
+      .then((result) => {
+        return res.status(201).json({
+          id: result.id,
+          username: result.username,
+          email: result.email,
+        });
       })
-    })
-    .catch(err => {
-      if (err.name === "SequelizeValidationError" || err.name === "SequelizeUniqueConstraintError") {
-        return res.status(400).json(err.errors);
-      }
-      return res.status(500).json(err);
-    })
+      .catch((err) => {
+        next(err);
+      });
   }
 
-  static login(req, res) {
+  static login(req, res, next) {
     const { email, password } = req.body;
 
-    User.findOne({ where: { email }})
-    .then(result => {
-      if (!result) {
-        return res.status(401).json({message: "Email / password is not valid"})
-      }
-      const truePassword = checkPassword(password, result.password);
-      // console.log(truePassword);
-      if (!truePassword){
-        return res.status(401).json({message: "Email / password is not valid"})
-      }
-      // password benar, maka create token
-      const payload = {
-        id: result.id,
-        username: result.username,
-        email: result.email
-      }
+    User.findOne({ where: { email } })
+      .then((result) => {
+        if (!result) {
+          return next({
+            name: "InvalidEmail",
+          });
+        }
+        const truePassword = checkPassword(password, result.password);
+        if (!truePassword) {
+          return next({
+            name: "InvalidPassword",
+          });
+        }
+        // password benar, maka create token
+        const payload = {
+          id: result.id,
+          username: result.username,
+          email: result.email,
+        };
 
-      const access_token = generateToken(payload)
-      return res.status(200).json({ access_token })
-    })
-    .catch(err => {
-      if (err.name === "SequelizeValidationError" || err.name === "SequelizeUniqueConstraintError") {
-        return res.status(400).json(err.errors);
-      }
-      return res.status(500).json(err);
-    })
+        const access_token = generateToken(payload);
+        req.headers.access_token = access_token;
+        return res.status(200).json({ access_token });
+      })
+      .catch((err) => {
+        next(err)
+      });
   }
 }
 
