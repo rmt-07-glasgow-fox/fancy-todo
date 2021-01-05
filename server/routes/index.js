@@ -1,8 +1,14 @@
 const router = require('express').Router()
-const TodoController = require('../controllers/todoController.js')
+const todosRouter = require('./todos.js')
+const authRouter = require('./auth.js')
 
-router.get('/todos', TodoController.getTodo)
-router.post('/todos', TodoController.createTodo)
-router.delete('/todos/:id', TodoController.removeTodo)
+router.use('/todos', todosRouter)
+router.use(authRouter)
+
+router.get('/', (req, res) => {
+    return res.status(200).json({
+        msg: "Welcome"
+    })
+} )
 
 module.exports = router

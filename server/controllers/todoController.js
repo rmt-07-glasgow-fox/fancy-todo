@@ -8,10 +8,10 @@ module.exports = class TodoController {
             }
         })
         .then( data => {
-            res.status(200).json(data)
+            return res.status(200).json(data)
         } )
         .catch( err => {
-            res.status(500).json({ message: 'Internal server error' })
+            return res.status(500).json({ message: 'Internal server error' })
         } )
     }
 
@@ -24,10 +24,16 @@ module.exports = class TodoController {
         }
         Todo.create(newData)
         .then( data => {
-            res.status(201).json({ title: data.title, description: data.description, status: data.status, due_date: data.due_date })
+            const response = {
+                title: data.title,
+                description: data.description,
+                status: data.status,
+                due_date: data.due_date
+            }
+            return res.status(201).json(response)
         } )
         .catch( err => {
-            res.status(500).json({ message: 'Internal server error' })
+            return res.status(400).json(err)
         } )
     }
 
@@ -38,10 +44,14 @@ module.exports = class TodoController {
             }
         } )
         .then( data => {
-            res.status(200).json({ message: 'Todo has been deleted' })
+            if (data === 1) {
+                return res.status(200).json({ message: 'Todo has been deleted' })
+            } else {
+                return res.status(404).json({ message: 'Todo not found' })
+            }
         } )
         .catch( err => {
-            res.status(500).json({ message: 'Internal server error' })
+            return res.status(500).json({ message: 'Internal server error' })
         } )
     }
 }

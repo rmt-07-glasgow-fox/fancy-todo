@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "keywords": [
     "express",
@@ -15,7 +16,10 @@
   "author": "RamadanFauzi",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "pg": "^8.5.1",
     "sequelize": "^6.3.5"
   },
