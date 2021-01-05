@@ -302,7 +302,7 @@
 
     `none`
 
-* **Data Params**
+* **Body**
 
   `title=[string] description=[string] status =[string] due_date=[string]`
 

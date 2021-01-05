@@ -1,6 +1,6 @@
 const { Todo } = require('../models')
 
-class Controller {
+class ControllerTodo {
 
     static createTodo(req,res) {
         const obj = {
@@ -127,4 +127,4 @@ class Controller {
     }
 }
 
-module.exports = Controller
+module.exports = ControllerTodo
