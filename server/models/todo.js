@@ -26,13 +26,21 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     description: DataTypes.TEXT,
-    status: DataTypes.BOOLEAN,
+    status: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Status cannot empty'
+        }
+      }
+    },
     due_date: {
       type: DataTypes.DATE,
       validate: {
         isAfter: {
           args: new Date().toISOString().split('T')[0], // e.g: "2021-01-05"
-          msg: 'Validation Error, cannot input an older date than now'
+          msg: 'Cannot input an older date than now'
         }
         // Custom Validation for input the same date
         // checkDueDate(value){
