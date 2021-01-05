@@ -1,35 +1,33 @@
 const {Todo} = require("../models")
 
 class todoController {
-    static createTodo(req,res) {
+    static createTodo(req,res, next) {
         const {title, description, status, due_date} = req.body
-        let data = {title, description, status, due_date }
+        let UserId = req.user.id
+        let data = {title, description, status, due_date, UserId}
         Todo.create(data)
         .then(todo => {
-            console.log("then")
             return res.status(201).json(todo)})
         .catch(err => {
-            if (err.name === 'SequelizeValidationError') {
-                return res.status(400).json({message: "Due date must be later than today"})
-            } 
-            return res.status(500).json({message: "internal server error"})})
+            next(err)
+        })
     }
 
-    static showTodos(req, res) {
-        Todo.findAll()
+    static showTodos(req, res, next) {
+        Todo.findAll(+req.params.id)
         .then(todos => res.status(200).json(todos))
-        .catch(err => res.status(500).json({message: "internal server error"}))
+        .catch(err => next(err))
     }
 
-    static showTodo(req, res) {
+    static showTodo(req, res, next) {
         Todo.findByPk(+req.params.id)
         .then(todo => {
             if (todo) {
                 res.status(200).json(todo) 
             } else {
-                res.status(404).json({message: "not found"})
+                next({name: "notFound"})
             }})
-        .catch(err => res.status(500).json({message: "internal server error"}))
+        .catch(err => next(err))
     }
 
     static updateTodo(req, res) {
@@ -41,13 +39,11 @@ class todoController {
                 if (todo) {
                     res.status(200).json(todo) 
                 } else {
-                    res.status(404).json({message: "not found"})
+                    next({name: "notFound"})
                 }})
         .catch(err => {
-            if (err.name === 'SequelizeValidationError') {
-                return res.status(400).json({message: "Due date must be later than today"})
-            } 
-            return res.status(500).json({message: "internal server error"})})
+            next(err)
+        })
     }
 
     static updateStatusTodo (req, res) {
@@ -61,10 +57,11 @@ class todoController {
             if (todo) {
                 res.status(200).json(todo) 
             } else {
-                res.status(404).json({message: "not found"})
+                next({name: "notFound"})
             }})
         .catch(err => {
-            return res.status(500).json({message: "internal server error"})})
+            next(err)
+        })
     }
 
     static deleteTodo(req, res) {
@@ -73,9 +70,9 @@ class todoController {
             if (todo) {
                 res.status(200).json({message: "todo success to delete"}) 
             } else {
-                res.status(404).json({message: "not found"})
+                next({name: "notFound"})
             }})
-        .catch(err => res.status(500).json({message: "internal server error"}))
+        .catch(err => next(err))
     }
 }
 
