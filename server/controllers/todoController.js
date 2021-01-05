@@ -30,13 +30,19 @@ class TodoController {
         return res.status(201).json(response)
       })
       .catch(err => {
-        return res.status(500).json({message: 'internal server error'})
+        if (err.name === 'SequelizeValidationError') {
+          const errors = err.errors.map(el => {
+            return el.message
+          })
+          return res.status(404).json(errors)
+        }
+        res.send(err)
+        // return res.status(500).json({message: 'internal server error'})
       })
   }
 
   static getTodoById(req, res) {
     const id = +req.params.id
-    console.log(id);
     Todo.findByPk(id)
       .then(data => {
         if (!data) {
@@ -80,16 +86,12 @@ class TodoController {
     Todo.update({
       status
     },
-    {where: { id }})
-      .then(data => {
-        return Todo.findByPk(id)
-      })
+    {where: { id }, returning: true})
       .then(output => {
-        console.log(output);
-      if (output === null) {
+      if (!output[1].length) {
         return res.status(404).json({message: 'error not found'})
       }
-      return res.status(200).json(output)
+      return res.status(200).json(output[1][0])
     })
     .catch(err => {
       return res.status(500).json(err)
