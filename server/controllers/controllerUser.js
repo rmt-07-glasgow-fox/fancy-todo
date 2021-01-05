@@ -15,6 +15,7 @@ class ControllerUser {
         User.create(obj)
         .then(data => {
             res.status(201).json({
+                id: data.id,
                 firstname: data.firstname,
                 lastname: data.lastname,
                 email: data.email

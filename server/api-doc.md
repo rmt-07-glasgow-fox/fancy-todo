@@ -1,5 +1,124 @@
 # fancy-todo
 
+**REGISTER USER**
+----
+  <_Register User _>
+
+* **URL**
+
+  `/register`
+
+* **Method:**
+
+  `POST`
+  
+*  **URL Params**
+
+    Required: 
+
+    `none`
+
+* **Body**
+
+  `firstName=[string] lastname=[string] email=[string] password=[string]`
+
+* **Success Response:**
+
+  * **Code:** 201 <br />
+    **Content:** 
+    ```json
+        {
+          "data": {
+              "id": 3,
+              "firstname": "ted ",
+              "lastname": "george",
+              "email": "tedgeorge@gmail.com"
+            }
+        }
+    ```
+ 
+* **Error Response:**
+
+  * **Code:** 400 <br />
+    **Content:** 
+    ```json
+        {
+            "message": [
+                "firstname cannot be empty",
+                "lastname cannot be empty"
+            ]
+        }
+    ```
+
+  * **Code:** 500 <br />
+    **Content:** 
+    ```json
+        { 
+            "message" : "internal server error" 
+        }
+    ```
+
+
+**LOGIN USER**
+----
+  <_LOGIN User _>
+
+* **URL**
+
+  `/login`
+
+* **Method:**
+
+  `POST`
+  
+*  **URL Params**
+
+    Required: 
+
+    `none`
+
+* **Body**
+
+  `email=[string] password=[string]`
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ```json
+        {
+          "access_token":"asdadasdwdasaedasda"
+        }
+    ```
+ 
+* **Error Response:**
+
+  * **Code:** 400 <br />
+    **Content:** 
+    ```json
+        {
+            "message": [
+                "firstname cannot be empty",
+                "lastname cannot be empty"
+            ]
+        }
+    ```
+
+  * **Code:** 404 <br />
+    **Content:** 
+    ```json
+        {
+            "message": "wrong email/password"
+        }
+    ```
+
+  * **Code:** 500 <br />
+    **Content:** 
+    ```json
+        { 
+            "message" : "internal server error" 
+        }
+    ```
 
 **SHOW ALL TODOS USER**
 ----
@@ -36,7 +155,8 @@
         "status": "belum selesai",
         "due_date": "2020-12-28T17:00:00.000Z",
         "createdAt": "2020-11-25T16:01:28.995Z",
-        "updatedAt": "2020-11-25T16:01:28.996Z"
+        "updatedAt": "2020-11-25T16:01:28.996Z",
+        "UserId": 2
       }
     ]
     ```
@@ -87,6 +207,7 @@
         "due_date": "2020-12-28T17:00:00.000Z",
         "createdAt": "2020-11-25T16:01:28.995Z",
         "updatedAt": "2020-11-25T16:01:28.996Z",
+        "UserId": 2
       }
     ```
  
@@ -195,7 +316,8 @@
         "status": "selesai",
         "due_date": "2020-12-28T17:00:00.000Z",
         "createdAt": "2020-11-25T16:01:28.995Z",
-        "updatedAt": "2020-11-25T16:01:28.996Z"
+        "updatedAt": "2020-11-25T16:01:28.996Z",
+        "UserId": 2
       }
     ```
  
@@ -252,7 +374,8 @@
         "status": "selesai",
         "due_date": "2020-12-28T17:00:00.000Z",
         "createdAt": "2020-11-25T16:01:28.995Z",
-        "updatedAt": "2020-11-25T16:01:28.996Z"
+        "updatedAt": "2020-11-25T16:01:28.996Z",
+        "UserId": 2
       }
     ```
  
@@ -319,6 +442,7 @@
         "due_date": "2020-12-28T17:00:00.000Z",
         "createdAt": "2020-11-25T16:01:28.995Z",
         "updatedAt": "2020-11-25T16:01:28.996Z",
+        "UserId": 2
       }
     ```
  
