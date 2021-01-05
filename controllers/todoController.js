@@ -79,7 +79,7 @@ class TodoController {
         status: data[1][0].status,
         due_date: data[1][0].due_date
       }
-      res.status(201).json(out)
+      res.status(200).json(out)
     })
     .catch(err => {
       if (err.name === "SequelizeValidationError") res.status(400).json({
@@ -110,7 +110,7 @@ class TodoController {
         status: data[1][0].status,
         due_date: data[1][0].due_date
       }
-      res.status(201).json(out)
+      res.status(200).json(out)
     })
     .catch(err => {
       if (err.name === "SequelizeValidationError") res.status(400).json({
