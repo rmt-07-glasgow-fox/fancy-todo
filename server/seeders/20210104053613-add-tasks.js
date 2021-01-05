@@ -9,7 +9,8 @@ module.exports = {
         status: false,
         due_date: new Date(),
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
+        UserId: 1
       },
       {
         title: 'Buy cat food',
@@ -17,7 +18,8 @@ module.exports = {
         status: false,
         due_date: new Date(),
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
+        UserId: 1
       },
       {
         title: 'Get Groceries',
@@ -25,7 +27,8 @@ module.exports = {
         status: false,
         due_date: new Date(),
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
+        UserId: 1
       },
     ])
   },
