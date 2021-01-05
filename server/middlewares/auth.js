@@ -4,7 +4,6 @@ const verifyToken = require('../helpers/jwtHelper').verifyToken
 const authentication = async (req, res, next) => {
   try {
     if(req.headers.access_token){
-      // console.log(req.headers.access_token)
       let decryptedToken = verifyToken(req.headers.access_token)
       let user = await User.findOne({
         where: {
@@ -15,23 +14,24 @@ const authentication = async (req, res, next) => {
         req.userData = user
         next()
       } else {
-          res.status(401).json({
-            message: "Unauthorized. Please try fill in the correct login details."
-          })
+        next({
+          status: 401
+        })
       }
     }else{
-      res.status(401).json({
-        message: "Unauthorized. Please try fill in the correct login details."
+      next({
+        status: 401
       })
     }
   } catch (err) {
-    res.status(400).json({
-      message: err.message
+    next({
+      status: 500,
+      data: err
     })
   }
 }
 
-const authorize = async (req,res,next) => {
+const authorize = async (req, res, next) => {
   let id = req.params.id
   try {
     let task = await ToDo.findOne({
@@ -40,8 +40,8 @@ const authorize = async (req,res,next) => {
       }
     })
     if(!task || task.UserId !== req.userData.id){
-      res.status(401).json({
-        message: "Unauthorized. Please try fill in the correct login details."
+      next({
+        status: 401
       })
     }else{
       next()

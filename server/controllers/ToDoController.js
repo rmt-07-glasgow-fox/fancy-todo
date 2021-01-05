@@ -1,8 +1,7 @@
 const { ToDo } = require('../models')
 
 class ToDoController {
-  static getAllTasks(req, res){
-    // console.log(req.userData.id)
+  static getAllTasks(req, res, next){
     ToDo.findAll({
       where:{
         UserId: req.userData.id
@@ -20,10 +19,13 @@ class ToDoController {
         res.status(200).json(data)
       })
       .catch(err => {
-        res.status(500).json(err)
+        next({
+          status: 500,
+          data: err
+        })
       })
   }
-  static handleAddTask(req, res){
+  static handleAddTask(req, res, next){
     ToDo.create({
       title: req.body.title || '',
       description: req.body.description || '',
@@ -40,29 +42,36 @@ class ToDoController {
           err.errors.forEach(error => {
             errors.push(error.message)
           })
-          res.status(400).json({
-            errors
+          next({
+            status: 400,
+            data: errors
           })
         }
-        res.status(500).json(err)
+        next({
+          status: 500,
+          data: err
+        })
       })
   }
-  static getTaskById(req, res){
+  static getTaskById(req, res, next){
     ToDo.findByPk(req.params.id)
       .then(data => {
         if(data){
           res.status(200).json(data)
         }else{
-          res.status(404).json({
-            message: 'data not found'
+          next({
+            status: 404
           })
         }
       })
       .catch(err => {
-        res.status(500).json(err)
+        next({
+          status: 500,
+          data: err
+        })
       })
   }
-  static handleEditData(req, res){
+  static handleEditData(req, res, next){
     ToDo.update(req.body, {
       where:{
         id: req.params.id
@@ -72,8 +81,8 @@ class ToDoController {
         if(data[0] === 1){
           res.status(200).json(req.body)
         }else{
-          res.status(404).json({
-            message: 'data not found'
+          next({
+            status: 404
           })
         }
       })
@@ -83,14 +92,18 @@ class ToDoController {
           err.errors.forEach(error => {
             errors.push(error.message)
           })
-          res.status(400).json({
-            errors
+          next({
+            status: 400,
+            data: errors
           })
         }
-        res.status(500).json(err)
+        next({
+          status: 500,
+          data: err
+        })
       })
   }
-  static handlePatch(req, res){
+  static handlePatch(req, res, next){
     ToDo.update(
       {
         status: req.body.status
@@ -108,8 +121,8 @@ class ToDoController {
             data: data[1][0]
           })
         }else{
-          res.status(404).json({
-            message: 'data not found'
+          next({
+            status: 404
           })
         }
       })
@@ -119,14 +132,18 @@ class ToDoController {
           err.errors.forEach(error => {
             errors.push(error.message)
           })
-          res.status(400).json({
-            errors
+          next({
+            status: 400,
+            data: errors
           })
         }
-        res.status(500).json(err)
+        next({
+          status: 500,
+          data: err
+        })
       })
   }
-  static handleDelete(req, res){
+  static handleDelete(req, res, next){
     ToDo.destroy({
       where:{
         id: req.params.id
@@ -138,13 +155,16 @@ class ToDoController {
             message: 'todo success to delete'
           })
         }else{
-          res.status(404).json({
-            message: 'data not found'
+          next({
+            status: 404
           })
         }
       })
       .catch(err => {
-        res.status(500).json(err)
+        next({
+          status: 500,
+          data: err
+        })
       })
   }
 }

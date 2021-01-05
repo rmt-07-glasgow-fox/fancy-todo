@@ -3,7 +3,7 @@ const decryptPassword = require('../helpers/encryptAndDecrypt').decryptPassword
 const generateToken = require('../helpers/jwtHelper').generateToken
 
 class UserController {
-  static userRegister(req, res){
+  static userRegister(req, res, next){
     User.create({
       email: req.body.email || '',
       password: req.body.password || ''
@@ -20,14 +20,18 @@ class UserController {
           err.errors.forEach(error => {
             errors.push(error.message)
           })
-          res.status(400).json({
-            errors
+          next({
+            status: 400,
+            data: errors
           })
         }
-        res.status(500).json(err)
+        next({
+          status: 500,
+          data: err
+        })
       })
   }
-  static userLogin(req, res){
+  static userLogin(req, res, next){
     User.findOne({
       where:{
         email: req.body.email || ''
@@ -35,8 +39,8 @@ class UserController {
     })
       .then(data => {
         if(!data){
-          res.status(404).json({
-            message: 'Login failed. Invalid email or password'
+          next({
+            status: 401
           })
         }else{
           let decryptedPassword = decryptPassword(req.body.password, data.password)
@@ -49,14 +53,17 @@ class UserController {
               jwtToken
             })
           }else{
-            res.status(404).json({
-              message: 'Login failed. Invalid email or password'
+            next({
+              status: 401
             })
           }
         }
       })
       .catch(err => {
-        res.status(500).json(err)
+        next({
+          status: 500,
+          data: err
+        })
       })
   }
 }
