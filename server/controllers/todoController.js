@@ -9,6 +9,7 @@ class TodoController {
       description: req.body.description,
       status: req.body.status,
       due_date: req.body.due_date,
+      userId: req.user.id
     }
     Todo.create(input)
     .then(data => {
@@ -24,7 +25,9 @@ class TodoController {
   }
 
   static getAllTask (req, res) {
-    Todo.findAll()
+    Todo.findAll({
+      order: [["id", "ASC"]]
+    })
     .then(data => {
       res.status(200).json(data)
     })

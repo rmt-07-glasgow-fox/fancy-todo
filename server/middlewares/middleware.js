@@ -1,8 +1,10 @@
+const TodoController = require("../controllers/todoController")
 const {
   cekToken
 } = require("../helpers/jwt")
 const {
-  User
+  User,
+  Todo
 } = require("../models")
 
 
@@ -18,6 +20,7 @@ const authentication = (req, res, next) => {
       if (!data) {
         res.status(401).json({message: "please login first"})
       } else {
+        req.user = data
         next()
       }
     })
@@ -30,8 +33,24 @@ const authentication = (req, res, next) => {
   }
 }
 const authorization = (req, res, next) => {
-
+  let id = req.params.id
+  Todo.findByPk(id)
+  .then(data => {
+    if (data.userId == req.user.id) {
+      next()
+    } else {
+      res.status(401).json( {
+        message: "unauthorized"
+      })
+    } 
+  })
+  .catch(err => {
+    res.status(500).json({
+      message: err.message
+    })
+  })
 }
+
 
 
 module.exports = {
