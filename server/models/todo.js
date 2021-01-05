@@ -11,34 +11,81 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Todo.belongsTo(models.User)
     }
   };
+
   Todo.init({
-    title: DataTypes.STRING,
-    description: DataTypes.STRING,
+    title: {
+      type : DataTypes.STRING,
+      allowNull : false,
+      validate : {
+        notNull : {
+          msg : `The title can't be null`
+        },
+        notEmpty : {
+          msg : `The title must be filled`
+        }
+      } 
+    },
+    description: {
+      type : DataTypes.STRING,
+      allowNull : false,
+      validate : {
+        notNull : {
+          msg : `The description can't be null`
+        },
+        notEmpty : {
+          msg : `The description must be filled`
+        }
+      } 
+    },
     status: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      validate: {
-        notNull:true,
-        notEmpty:true,
-        isIn: [['true', 'false']]
-      }
+      type : DataTypes.BOOLEAN,
+      allowNull : false,
+      validate : {
+        notNull : {
+          msg : `The status can't be null`
+        },
+        isIn : {
+          args : [[true,false]],
+          msg : `the status must be boolean`
+        }
+      } 
     },
     due_date: {
-      type:DataTypes.DATE,
-      validate: {
-        isDate: true,
-        isAfter: new Date().toISOString().split('T')[0]
+      type : DataTypes.DATE,
+      allowNull : false,
+      validate : {
+        isTheDay(value){
+          if(new Date(value) < new Date()){
+            throw new Error(`Date must be greater than today`)
+          }
+        },
+        notNull : {
+          msg : `The date can't be null`
+        },
+        notEmpty : {
+          msg : `The date must be filled`
+        }
       }
-    }
+    },
+    UserId: DataTypes.INTEGER
   }, {
+    hooks : {
+      beforeCreate : (inst, opt) =>{
+        inst.status = false
+      },
+      beforeUpdate : (inst, opt) => {
+        if (inst.status === 'false') {
+          inst.status = false
+        } else {
+          inst.status = true
+        }
+      }
+    },
     sequelize,
     modelName: 'Todo',
   });
-  Todo.beforeCreate((instance, opt) => {
-    instance.status = false
-  })
-
   return Todo;
 };
