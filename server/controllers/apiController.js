@@ -12,6 +12,17 @@ class ApiController{
             next(err)
         })
     }
+
+    static getQuotes(req, res, next){
+        axios.get('https://type.fit/api/quotes')
+        .then(response => {
+            // console.log(response.data);
+            res.status(200).json(response.data)
+        })
+        .catch(err => {
+            next(err)
+        })
+    }
 }
 
 module.exports = ApiController
