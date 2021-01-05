@@ -18,8 +18,10 @@
   },
   "homepage": "https://github.com/mulyamutawaqqil/fancy-todo#readme",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "pg": "^8.5.1",
     "sequelize": "^6.3.5",
     "sequelize-cli": "^6.2.0"

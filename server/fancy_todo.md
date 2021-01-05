@@ -12,6 +12,8 @@ GET /todos/:id
 PUT /todos/:id
 PATCH /todos/:id
 DELETE /todos/:id
+POST /signUp
+POST /signIn
 
 ### POST /todos
 
@@ -299,6 +301,80 @@ _Response (500 - Internal Server Error)_
 ```
 {
   "message": "Invalid request"
+}
+```
+
+### POST /signUp
+
+> Create new account
+
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+{
+  "email": "<email to get insert into>",
+  "password": "<password to get insert into>"
+}
+```
+
+_Response (201 - Created)_
+```
+{
+  "id": <given id by system>,
+  "email": "<posted email>"
+}
+```
+
+_Response (400 - Bad Request)_
+```
+{
+  errors
+}
+```
+
+### POST /signIn
+
+> Sign In User
+
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+{
+  "email": "<email to get insert into>",
+  "password": "<password to get insert into>"
+}
+```
+
+_Response (200 - OK)_
+```
+{
+  accessToken
+}
+```
+
+_Response (400 - Bad Request)_
+```
+{
+  errors
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+  "message": "internal server error"
 }
 ```
 ---

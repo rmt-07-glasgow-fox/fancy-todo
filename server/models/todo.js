@@ -23,6 +23,13 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isAfter: createDate()
       }
+    },
+    UserId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "User",
+        key : "id"
+      }
     }
   }, {
     sequelize,
