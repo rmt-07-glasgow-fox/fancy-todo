@@ -2,12 +2,21 @@ const { ToDo } = require('../models')
 
 class ToDoController {
   static getAllTasks(req, res){
+    // console.log(req.userData.id)
     ToDo.findAll({
+      where:{
+        UserId: req.userData.id
+      },
       order: [
         ['id', 'ASC']
       ]
     })
       .then(data => {
+        if(data.length === 0){
+          res.status(200).json({
+            message: "No data please create one"
+          })
+        }
         res.status(200).json(data)
       })
       .catch(err => {
@@ -15,7 +24,13 @@ class ToDoController {
       })
   }
   static handleAddTask(req, res){
-    ToDo.create(req.body)
+    ToDo.create({
+      title: req.body.title || '',
+      description: req.body.description || '',
+      status: req.body.status || '',
+      due_date: req.body.due_date || '',
+      UserId: req.userData.id
+    })
       .then(data => {
         res.status(201).json(data)
       })
