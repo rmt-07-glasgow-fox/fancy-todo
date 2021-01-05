@@ -2,7 +2,7 @@ const { Todo } = require('../models')
 
 class ControllerTodo {
 
-    static createTodo(req,res) {
+    static createTodo(req,res,next) {
         const obj = {
             title: req.body.title,
             UserId: req.loggedInUser.id,
@@ -24,11 +24,11 @@ class ControllerTodo {
             })
         })
         .catch(error => {
-            res.status(400).json(error.errors[0].message)
+            next(error)
         })
     }
 
-    static listTodo(req,res){
+    static listTodo(req,res,next){
         Todo.findAll()
         .then(data => {
             res.status(200).json(data)
@@ -51,15 +51,18 @@ class ControllerTodo {
                     UserId: data.UserId
                 })
             } else {
-                res.status(404).json({ message: 'todo not found' })
+                throw {
+                    status: 404,
+                    message: "todo not found"
+                }
             }
         })
         .catch(error => {
-            res.status(500).json({ message: 'internal server error' })
+            next(error)
         })
     }
 
-    static updateTodo(req,res){
+    static updateTodo(req,res,next){
         Todo.update({
             title: req.body.title,
             description: req.body.description,
@@ -68,7 +71,10 @@ class ControllerTodo {
         },{where: {id: req.params.id}})
         .then(data => {
             if (!data){
-                res.status(401).json({ message: 'todo not found' })
+                throw {
+                    status: 404,
+                    message: "todo not found"
+                }
             } else {
                 return Todo.findOne({where: {id: req.params.id}})
                 .then(data2 => {
@@ -82,17 +88,20 @@ class ControllerTodo {
                             UserId: data2.UserId
                         })
                     }else {
-                        res.status(500).json({ message: 'internal server error' })
+                        throw {
+                            status: 404,
+                            message: "todo not found"
+                        }
                     }
                 })
             }
         })
         .catch(error => {
-            res.status(400).json(error.message)
+            next(error)
         })
     }
 
-    static updateStatusTodo(req,res){
+    static updateStatusTodo(req,res,next){
         Todo.update({
             status: req.body.status,
         },{where: {id: req.params.id}})
@@ -109,26 +118,32 @@ class ControllerTodo {
                         UserId: data2.UserId
                     })
                 }else {
-                    res.status(404).json({message: 'todo not found'})
+                    throw {
+                        status: 404,
+                        message: "todo not found"
+                    }
                 }
             })
         })
         .catch(error => {
-            res.status(500).json({message: 'internal server error'})
+            next(error)
         })
     }
 
-    static deleteTodo(req,res){
+    static deleteTodo(req,res,next){
         Todo.destroy({where: {id: req.params.id}})
         .then( data => {
             if (data){
                 res.status(200).json({message: 'todo success to delete'})
             } else {
-                res.status(404).json({message: 'todo not found'})
+                throw {
+                    status: 404,
+                    message: "todo not found"
+                }
             }
         })
         .catch( error => {
-            res.status(500).json({message: 'internal server error'})
+            next(error)
         })
     }
 }

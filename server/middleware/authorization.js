@@ -7,13 +7,19 @@ module.exports = (req,res,next) => {
                 if (data.UserId == req.loggedInUser.id){
                     next()
                 } else {
-                    res.status(401).json({message: 'you are not authorize with this todo'})
+                    throw {
+                        status: 401,
+                        message: "you are not authorize with this todo"
+                    }
                 }
             } else {
-                res.status(404).json({message: 'todo not found'})
+                throw {
+                    status: 401,
+                    message: "you are not authorize with this todo"
+                }
             }
         })
         .catch(error => {
-            res.status(401).json({message: 'you are not authorize with this todo'})
+            next(error)
         })
 }
