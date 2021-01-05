@@ -45,7 +45,7 @@ class TodoController {
 
     static async store(req, res) {
         const { title, description, status, due_date } = req.body;
-        const input = { title, description, status, due_date };
+        const input = { title, description, status, due_date, userId: req.user.id };
 
         try {
             const data = await Todo.create(input);
