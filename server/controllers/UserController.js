@@ -42,7 +42,9 @@ class UserController {
               id: data.id,
               email: data.email
             })
-            res.status(200).json(jwtToken)
+            res.status(200).json({
+              jwtToken
+            })
           }else{
             res.status(404).json({
               message: 'Login failed. Invalid email or password'
