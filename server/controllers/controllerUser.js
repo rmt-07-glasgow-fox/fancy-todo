@@ -5,7 +5,7 @@ const { generateToken } = require('../helper/jwt')
 
 class ControllerUser {
 
-    static register(req,res,){
+    static register(req,res){
         const obj = {
             firstname: req.body.firstname,
             lastname: req.body.lastname,
@@ -14,6 +14,7 @@ class ControllerUser {
         }
         User.create(obj)
         .then(data => {
+            console.log('masuk register')
             res.status(201).json({
                 id: data.id,
                 firstname: data.firstname,
@@ -22,11 +23,13 @@ class ControllerUser {
             })
         })
         .catch(error => {
+            console.log(error)
+            console.log('masuk error register')
             res.status(500).json({ message: "internal server error" })
         })
     }
 
-    static login(req,res,){
+    static login(req,res){
         User.findOne({where: {email: req.body.email}})
         .then(data => {
             if (data){

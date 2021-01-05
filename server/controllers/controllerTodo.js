@@ -15,6 +15,7 @@ class ControllerTodo {
         Todo.create(obj)
         .then( data => {
             res.status(201).json({
+                id: data.id,
                 title: data.title,
                 description: data.description,
                 status: data.status,
@@ -42,6 +43,7 @@ class ControllerTodo {
         .then(data => {
             if (data){
                 res.status(200).json({
+                    id: data.id,
                     title: data.title,
                     description: data.description,
                     status: data.status,
@@ -72,6 +74,7 @@ class ControllerTodo {
                 .then(data2 => {
                     if (data2){ 
                         res.status(200).json({
+                            id: data.id,
                             title: data2.title,
                             description: data2.description,
                             status: data2.status,
@@ -98,6 +101,7 @@ class ControllerTodo {
             .then(data2 => {
                 if (data2){
                     res.status(200).json({
+                        id: data.id,
                         title: data2.title,
                         description: data2.description,
                         status: data2.status,
