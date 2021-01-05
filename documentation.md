@@ -6,8 +6,12 @@ JSON formatted response
  
 
 ## RESTful endpoints
-GET /assets
-Get all assets
+GET /todos => Get all To Do Lists
+POST /todos => Create a new To Do List
+GET /todos/:id => Get current list depends on id
+PUT /todos/:id => Update data current list depends on id
+PATCH /todos/:id => Update status on current list depends on id
+DELETE /todos/:id => Delete current list depends on id
 
 # Request Header
 
