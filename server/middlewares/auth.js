@@ -1,5 +1,6 @@
 const { User } = require ('../models/index')
 const { checkToken } = require ('../helper/jwt')
+const { Todo } = require ('../models/index')
 
 async function authenticate (req, res, next) {
   try {
@@ -23,6 +24,25 @@ async function authenticate (req, res, next) {
   }
 }
 
+async function authorize (req, res, next) {
+  try {
+    let data = await Todo.findOne ({
+      where: {
+        id: req.params.id
+      }
+    })
+    console.log (data)
+    if (data.user_id === +req.user) {
+      next ()
+    } else {
+      res.status(401).json({ message: 'Not authorized'})
+    }
+  } catch (err) {
+    res.status(500).json({ message: err.message})
+  }
+}
+
 module.exports = {
-  authenticate
+  authenticate,
+  authorize
 }
