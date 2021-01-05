@@ -25,7 +25,8 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isAfter: getYesterdayDate()
       }
-    }
+    },
+    UserId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Todo',
