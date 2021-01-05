@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const { Sequelize } = require('.');
 module.exports = (sequelize, DataTypes) => {
   class TodoList extends Model {
     /**
@@ -11,13 +12,28 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      TodoList.belongsTo(models.User, {foreignKey : 'user_id'})
     }
   };
   TodoList.init({
-    titie: DataTypes.STRING,
+    title: {
+      type : DataTypes.STRING,
+      validate : {
+        notEmpty : true
+      }
+    },
     description: DataTypes.STRING,
     status: DataTypes.BOOLEAN,
-    due_date: DataTypes.DATE
+    due_date: {
+      type : DataTypes.DATE,
+      validate : {
+        isAfter : {
+          args : new Date().toISOString().slice(0, 10),
+          message : 'minimum date today'
+        }
+      }
+    },
+    user_id : DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'TodoList',
