@@ -19,7 +19,14 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     status: DataTypes.STRING,
     due_date: {
-      type: DataTypes.DATE
+      type: DataTypes.DATE,
+      validate: {
+        valid_date(value) {
+          if (value < new Date()) {
+            throw new Error("masukkan tanggal besok atau kedepannya")
+          }
+        }
+      }
     },
     UserId: DataTypes.INTEGER
   }, {
