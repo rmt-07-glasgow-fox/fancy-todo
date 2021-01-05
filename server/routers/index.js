@@ -1,16 +1,12 @@
-const router = require('express').Router()
-const ToDo = require('../controllers/todo')
+const router = require ('express').Router()
+const todoRouter = require ('./todoRouter')
+const authRouter = require ("./auth")
+const { authenticate } = require ('../middlewares/auth')
 
-router.get('/', (req, res) =>{
-    res.send('Test')
-})
+router.use (authRouter)
 
-router.get("/todos", ToDo.todoList)
-router.post("/todos", ToDo.addTodo)
-router.get("/todos/:id", ToDo.pickTodo)
-router.put("/todos/:id", ToDo.updateData)
-router.patch("/todos/:id", ToDo.updateStatus)
-router.delete("/todos/:id", ToDo.deleteTodo)
+router.use (authenticate)
 
+router.use ('/todos', todoRouter)
 
 module.exports = router
