@@ -1,4 +1,6 @@
 'use strict';
+const { hashPass } = require('../helper/bcrypt')
+
 const {
   Model
 } = require('sequelize');
@@ -25,13 +27,24 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    fullName: DataTypes.STRING,
+    fullName: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: 'Username is required'
+        }
+      }
+    },
     username: {
       type: DataTypes.STRING,
       unique: true,
       validate: {
         notEmpty: {
           msg: 'Username is required'
+        },
+        len: {
+          args: [3],
+          msg: 'Username at least 3 character'
         }
       }
     },
@@ -40,12 +53,21 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           msg:'Password is required'
+        },
+        len: {
+          args: [6],
+          msg: 'Password at least 6 character'
         }
       }
     }
   }, {
     sequelize,
     modelName: 'User',
+    hooks: {
+      beforeCreate: (user, options) => {
+        user.password = hashPass(user.password)
+      }
+    }
   });
   return User;
 };

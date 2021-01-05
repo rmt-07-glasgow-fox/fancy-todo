@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     status: {
       type: DataTypes.BOOLEAN,
+      defaultValue: false,
       validate: {
         notEmpty: { msg: `status can't be empty`}
       }
