@@ -171,6 +171,16 @@
         }
     ```
 
+  * **Code:** 401 <br />
+    **Content:** 
+    ```json
+        {
+            "message": "please login first"
+        }
+    ```
+
+
+
 
 **SHOW TODOS USER BY ID**
 ----
@@ -221,8 +231,6 @@
         }
     ```
 
-  OR
-
   * **Code:** 404  <br />
     **Content:** 
     ```json
@@ -230,6 +238,16 @@
             "message": "todo not found"
         }
     ```
+
+  * **Code:** 401 <br />
+    **Content:** 
+    ```json
+        {
+            "message": "please login first"
+        }
+    ```
+
+
 
 **DELETE TODOS USER**
 ----
@@ -279,6 +297,22 @@
     ```json
         {
             "message": "todo not found!"
+        }
+    ```
+
+  * **Code:** 401  <br />
+    **Content:** 
+    ```json
+        {
+            "message": "you are not authorize with this todo"
+        }
+    ```
+
+  * **Code:** 401 <br />
+    **Content:** 
+    ```json
+        {
+            "message": "please login first"
         }
     ```
 
@@ -339,6 +373,23 @@
             "message": "todo not found!"
         }
     ```
+
+  * **Code:** 401  <br />
+    **Content:** 
+    ```json
+        {
+            "message": "you are not authorize with this todo"
+        }
+    ```
+
+  * **Code:** 401 <br />
+    **Content:** 
+    ```json
+        {
+            "message": "please login first"
+        }
+    ```
+
 
 **UPDATE TODOS**
 ----
@@ -406,6 +457,22 @@
         }
     ```
 
+  * **Code:** 401  <br />
+    **Content:** 
+    ```json
+        {
+            "message": "you are not authorize with this todo"
+        }
+    ```
+
+  * **Code:** 401 <br />
+    **Content:** 
+    ```json
+        {
+            "message": "please login first"
+        }
+    ```
+
 
 **CREATE TODOS**
 ----
@@ -467,5 +534,13 @@
               "description cannot be empty",
               "staus cannot be empty"
               ]
+        }
+    ```
+
+  * **Code:** 401 <br />
+    **Content:** 
+    ```json
+        {
+            "message": "please login first"
         }
     ```
