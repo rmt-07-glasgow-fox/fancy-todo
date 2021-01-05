@@ -76,33 +76,25 @@ class ToDoController {
       })
   }
   static handlePatch(req, res){
-    let findData
-    ToDo.findOne({
-      where: {
-        id: req.params.id
-      }
-    })
+    ToDo.update(
+      {
+        status: req.body.status
+      }, 
+      {
+        where:{
+          id: req.params.id
+        },
+        returning: true
+      },
+    )
       .then(data => {
-        if(data){
-          findData = data
-          return ToDo.update({
-            status: req.body.status
-          }, {
-            where:{
-              id: req.params.id
-            }
+        if(data[0] === 1){
+          res.status(200).json({
+            data: data[1][0]
           })
         }else{
           res.status(404).json({
             message: 'data not found'
-          })
-        }
-      })
-      .then(status => {
-        if(status[0] === 1){
-          findData.status = req.body.status
-          res.status(200).json({
-            data: findData
           })
         }
       })
