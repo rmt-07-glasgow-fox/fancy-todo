@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const createDate = require("../helpers/date.js")
 module.exports = (sequelize, DataTypes) => {
   class Todo extends Model {
     /**
@@ -19,13 +20,9 @@ module.exports = (sequelize, DataTypes) => {
     status: DataTypes.STRING,
     due_date: {
       type: DataTypes.DATEONLY,
-      // validate: {
-      //   hasPassed(value, option) {
-      //     if (new Date(value).getTime() < new Date().getTime()) {
-      //       throw new Error("Invalid date")
-      //     }
-      //   }
-      // }
+      validate: {
+        isAfter: createDate()
+      }
     }
   }, {
     sequelize,
