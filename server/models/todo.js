@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const yesterday = require('../helpers/getYesterday')
 module.exports = (sequelize, DataTypes) => {
   class Todo extends Model {
     /**
@@ -17,9 +18,17 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     description: DataTypes.STRING,
     due_date: {
-      type: DataTypes.DATEONLY
+      type: DataTypes.DATEONLY,
+      validate: {
+        isAfter: yesterday()
+      }
     },
-    status: DataTypes.BOOLEAN
+    status: {
+      type: DataTypes.BOOLEAN,
+      validate: {
+        isIn: [[true, false]]
+      }
+    }
   }, {
     sequelize,
     modelName: 'Todo',

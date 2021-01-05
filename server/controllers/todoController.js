@@ -5,21 +5,21 @@ class ControllerTodo {
     const input = {
       title: req.body.title,
       description: req.body.description,
-      status: false,
+      status: req.body.status,
       due_date: req.body.due_date
     }
     Todo.create(input)
       .then(response => {
-        if (response) {
-          res.status(201).json(response)
-        } else {
-          res.status(400).json({
-            message: 'Validation Error'
-          })
-        }
+        res.status(201).json(response)
       })
       .catch(err => {
-        res.status(500).json(err.message)
+        if (err.errors.length) {
+          res.status(400).json({
+            message: 'Validation error'
+          })
+        } else {
+          res.status(500).json(err.message)
+        }
       })
   }
 
@@ -57,7 +57,8 @@ class ControllerTodo {
     const input = {
       title: req.body.title,
       description: req.body.description,
-      due_date: req.body.due_date
+      due_date: req.body.due_date,
+      status: req.body.status
     }
 
     Todo.update(input, {
@@ -83,7 +84,7 @@ class ControllerTodo {
     const id = +req.params.id
 
     const input = {
-      status: true
+      status: req.body.status
     }
 
     Todo.update(input, {
