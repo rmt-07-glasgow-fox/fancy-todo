@@ -2,7 +2,7 @@
   "name": "fancy-todo",
   "version": "1.0.0",
   "description": "Membuat website untuk mencatat hal - hal menarik untuk dilakukan",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
