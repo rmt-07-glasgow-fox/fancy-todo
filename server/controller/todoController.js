@@ -2,6 +2,7 @@ const { todo } = require('../models/index')
 
 class todoController {
     static getAllTodo (req, res) {
+        // console.log(req.user.id);
         todo.findAll()
         .then(todo => {
             res.status(200).json(todo)
@@ -16,7 +17,8 @@ class todoController {
             title: req.body.title,
             description: req.body.description,
             status: req.body.status,
-            due_date: req.body.due_date
+            due_date: req.body.due_date,
+            UserId: req.user.id
         }
 
         console.log(newTodo);

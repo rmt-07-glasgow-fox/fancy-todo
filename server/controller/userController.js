@@ -38,12 +38,13 @@ class userController {
             )
           })
         .then( data => {
-            let data_login = data[0].dataValues.password 
-            const passMatch = HelperBcrypt.comparePassword(login.password, data_login)   
+            let data_login = data[0].dataValues
+            console.log(data_login);
+            const passMatch = HelperBcrypt.comparePassword(login.password, data_login.password)   
                 if(passMatch){
                     let payload = { 
-                        id: data.id,
-                        email: data.email
+                        id: data_login.id,
+                        email: data_login.email
                     } 
                     const access_token = HelperJWT.generateTokenJwt(payload)  
                     return res.status(200).json({access_token: access_token})

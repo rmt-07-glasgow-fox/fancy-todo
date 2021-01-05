@@ -6,7 +6,11 @@ class HelperJWT {
         const token = jwt.sign(payload, SECRET_KEY)
         return token
     }
+
+    static cekToken(token){
+        return jwt.verify(token, SECRET_KEY)
+    }
 }
 
 
-module.exports = HelperJWT
+module.exports = HelperJWT 
