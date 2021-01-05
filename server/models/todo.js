@@ -24,18 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    due_date: {
-      type: DataTypes.DATEONLY,
-      validate: {
-        dateValidate(value) {
-          const todayDate = new Date().toISOString().slice(0, 10);
-
-          if (value <= todayDate) {
-            throw new Error('gak boleh masukin tanngal yg udah lewat hari ini')
-          }
-        }
-      }
-    }
+    due_date: DataTypes.DATEONLY
     }, {
     sequelize,
     modelName: 'Todo',
@@ -46,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
     const todayDate = new Date().toISOString().slice(0, 10);
 
     if (instance.due_date <= todayDate) {
-      throw new Error('gak boleh masukin tanggal yg udah lewat hari ini')
+      throw new Error('do not enter a date that is past today')
     }
   })
 

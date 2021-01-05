@@ -139,7 +139,7 @@ _Response (200)_
 _Response (400 - Bad Request)_
 ```
 {
-  "messages": "Validation error: gak boleh masukin tanggal yg udah lewat hari ini"
+  "messages": "do not enter a date that is past today"
 }
 ```
 
