@@ -18,15 +18,16 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     status: DataTypes.BOOLEAN,
     due_date:{
-    type: DataTypes.DATE,
-    validate: {
-      dateNotToday(value) {
-        if(value < new Date()) {
-          throw Error ('date Must Greater Than Today')
+      type: DataTypes.DATE,
+      validate: {
+        dateNotToday(value) {
+          if(value < new Date()) {
+            throw Error ('date Must Greater Than Today')
+          }
         }
       }
-    }
-  }
+    },
+    UserId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Todo',

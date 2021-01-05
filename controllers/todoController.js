@@ -17,7 +17,8 @@ class TodoController {
       title: req.body.title,
       description: req.body.description,
       status: req.body.status,
-      due_date: req.body.due_date
+      due_date: req.body.due_date,
+      UserId: req.body.UserId
     }
     Todo.create(param)
     .then(data => {
@@ -25,7 +26,8 @@ class TodoController {
         title: data.title,
         description: data.description,
         status: data.status,
-        due_date: data.due_date
+        due_date: data.due_date,
+        UserId: data.UserId
       }
       res.status(201).json(out)
     })
