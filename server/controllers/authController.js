@@ -1,6 +1,6 @@
 const { User } = require('../models')
 const comparePassword = require('../helpers/bcryptjs.js').comparePassword
-const generateToken = require('../helpers/jwt.js')
+const generateToken = require('../helpers/jwt.js').generateToken
 
 module.exports = class AuthController {
     static getRegister(req, res) {

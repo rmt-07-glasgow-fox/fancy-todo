@@ -22,7 +22,13 @@ module.exports = class TodoController {
             }
         })
         .then( data => {
-            return res.status(200).json(data)
+            if (data) {
+                return res.status(200).json(data)
+            } else {
+                return res.status(404).json({
+                    message: 'Todo not found'
+                })
+            }
         } )
         .catch( err => {
             console.log(err);
@@ -84,10 +90,7 @@ module.exports = class TodoController {
 
     static patchTodo(req, res) {
         const newData = {
-            title: req.body.title,
-            description: req.body.description,
-            status: req.body.status,
-            due_date: req.body.due_date
+            status: req.body.status
         }
         Todo.update(newData, {
             where: {
@@ -96,12 +99,19 @@ module.exports = class TodoController {
         })
         .then( data => {
             if (data[0] === 1) {
-                return res.status(201).json(newData)
+                return Todo.findByPk(+req.params.id, {
+                    attributes: {
+                        exclude: [ 'createdAt', 'updatedAt' ]
+                    }
+                })
             } else {
                 return res.status(404).json({
                     message: 'Todo not found'
                 })
             }
+        } )
+        .then( data => {
+            return res.status(201).json(data)
         } )
         .catch( err => {
             return res.status(400).json({
