@@ -4,6 +4,9 @@ const {
 const { 
   compare
 } = require("../helpers/bcrypt")
+const {
+  generateToken
+} = require("../helpers/jwt")
 
 
 class UserController {
@@ -16,6 +19,35 @@ class UserController {
     .catch(err => {
       return res.status(400).json(err.message)
     })
+  }
+
+  static async login (req, res) {
+    try {
+      const { email, password} = req.body
+      const user = await User.findOne({
+        where: {
+          email
+        }
+      })
+      if (!user) {
+        return res.status(401).json({message: "invalid email or password"})
+      }
+      const isValidPass = compare(password, user.password)
+      if (isValidPass) {
+        const payload = {
+          id: user.id,
+          email: user.email
+        }
+        const access_token =  generateToken(payload)
+        return res.status(200).json({
+          access_token
+        })
+      } else {
+        return res.status(401).json({message: "invalid email or password"})
+      }
+    } catch (err) {
+      return res.status(400).json(err.message)
+    }
   }
 
 
