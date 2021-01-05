@@ -34,7 +34,7 @@ class userController {
     }
 
     static login(req, res){
-        let url = "https://api.weatherbit.io/v2.0/current?city=Jakarta,ID&key=46da47a5a04743feb6f7e71d297a5590"
+        let url = ""
         const { email, password } = req.body
         let loginUser = ''
         User.findOne({
