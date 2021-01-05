@@ -11,7 +11,8 @@ class Controller{
             title: req.body.title,
             description: req.body.description,
             status: false,
-            due_date: req.body.due_date
+            due_date: req.body.due_date,
+            userId: req.user.id
         }
         Todo.create(obj)
         .then(data =>{
