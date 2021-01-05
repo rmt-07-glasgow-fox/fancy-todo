@@ -10,10 +10,10 @@ async function authentication(req, res, next) {
             req.user = find
             next()
         } else {
-            req.status(401).json({message : "Please SignUp or SignIn first"})
+            throw ({ name: "invalidAccessToken"})
         }
     } catch (err) {
-        res.status(400).json({message: err.message})
+        next(err)
     }
 }
 
@@ -21,13 +21,13 @@ async function authorization(req, res, next) {
     try {
         let id = req.params.id
         let find = await Todo.findOne({ where: { id } })
-        if (!find || find.UserId !== req.user.id) {
-            res.status(401).json({ message : "This Todo not belong to your Username"})
+        if (find && find.UserId !== req.user.id) {
+            throw { name: "userIdNotMatch"}
         } else {
             next()
         }
     } catch (err) {
-        res.status(500).json({ message: err.message})
+        next(err)
     }
 }
 

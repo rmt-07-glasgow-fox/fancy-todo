@@ -1,7 +1,8 @@
 const { Todo } = require('../models')
 
 class Controller {
-    static showAll(req, res) {
+    static showAll(req, res, next) {
+        console.log(req.user.id);
         Todo.findAll({
             where: {UserId: req.user.id},
             order: [['createdAt', 'ASC']]
@@ -10,11 +11,11 @@ class Controller {
             res.status(200).json(data);
         })
         .catch(err => {
-            res.status(500).json({message: "internal server error"});
+            next(err)
         })
     }
 
-    static add(req, res) {
+    static add(req, res, next) {
         let input = {
             title: req.body.title,
             description: req.body.description,
@@ -41,37 +42,29 @@ class Controller {
             res.status(201).json(output)
         })
         .catch(err => {
-            let message = []
-            err.errors.forEach(el => {
-                message.push(el.message)
-            });
-            if (message.length) {
-                return res.status(400).json({message})
-            }
-            res.status(500).json({message: "internal server error"})
+            next(err)
         })
     }
 
-    static showOne(req, res) {
+    static showOne(req, res, next) {
         let id = req.params.id
         Todo.findOne({
             where: {
                 id,
-                UserId: req.user.id
             }})
         .then(data => {
             if (data) {
                 res.status(200).json(data)
             } else {
-                throw {message: "error not found"}
+                throw ({ name : "resourceNotFound"})
             }
         })
         .catch(err => {
-            res.status(404).json(err)
+            next(err)
         })
     }
 
-    static edit(req, res) {
+    static edit(req, res, next) {
         let input = {
             title: req.body.title,
             description: req.body.description,
@@ -85,7 +78,7 @@ class Controller {
         })
         .then(data => {
             if (data[0] === 0) {
-                res.status(404).json({message: `error not found`})                
+                throw ({ name: "resourceNotFound"})
             } else {
                 const options = { 
                     month: '2-digit', 
@@ -98,14 +91,11 @@ class Controller {
             }
         })
         .catch(err => {
-            if (err.errors[0].message === "due date must be greater or equal today") {
-                return res.status(400).json({message: "due date must be greater or equal today"})
-            }
-            res.status(500).json({message: "internal server error"})
+            next(err)
         })
     }
 
-    static editStatus(req, res) {
+    static editStatus(req, res, next) {
         let { status } = req.body
         let { id }= req.params
         Todo.update({status: Boolean(status)}, {
@@ -114,7 +104,7 @@ class Controller {
         })
         .then(data => {
             if (data[0] === 0) {
-                res.status(404).json({message: `error not found`})
+                throw ({ name: "resourceNotFound"})
             } else{
                 const options = { 
                     month: '2-digit', 
@@ -126,24 +116,21 @@ class Controller {
             }
         })
         .catch(err => {
-            if (err.errors[0].message === "due date must be greater or equal today") {
-                return res.status(400).json({message: "due date must be greater or equal today"})
-            }
-            res.status(500).json({message: `internal server error`})
+            next(err)
         })
     }
 
-    static delete(req, res) {
+    static delete(req, res, next) {
         let { id } = req.params
         Todo.destroy({where: {id}})
         .then(data => {
             if (data === 0) {
-                return res.status(404).json({message: "error not found"})
+                throw ({ name: "resourceNotFound"})
             }
             res.status(200).json({message: `todo success to delete`})
         })
         .catch(err => {
-            res.status(500).json({message: "internal server error"})
+            next(err)
         })
     }
 }
