@@ -9,8 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       title: {
-        type: Sequelize.STRING,
-        allowNull: false
+        type: Sequelize.STRING
       },
       description: {
         type: Sequelize.STRING
@@ -20,8 +19,7 @@ module.exports = {
         defaultValue: false
       },
       due_date: {
-        type: Sequelize.DATE,
-        allowNull: false
+        type: Sequelize.DATEONLY
       },
       createdAt: {
         allowNull: false,

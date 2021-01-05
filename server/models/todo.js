@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static getDateToday() {
-      return (new Date()).toJSON().slice(0, -14)
+      return (new Date(new Date().setDate(new Date().getDate() - 1))).toJSON().slice(0, -14)
     }
   };
   Todo.init({
@@ -33,11 +33,11 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: false
     },
     due_date: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       validate: {
         isAfter: {
           args: `${Todo.getDateToday()}`,
-          msg: `Minimal tanggal harus hari ini ${Todo.getDateToday()}`
+          msg: `due_date should one day after today, ${Todo.getDateToday()}`
         },
         notEmpty: {
           args: true,
@@ -45,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         isDate: {
           args: true,
-          msg: 'input due_date harus datatype date'
+          msg: 'Invalid due_date format'
         }
       }
     }
@@ -55,13 +55,6 @@ module.exports = (sequelize, DataTypes) => {
     hooks: {
       beforeCreate: (instance, options) => {
         instance.status = false
-      },
-      afterFind: (instance, options) => {
-        instance.forEach(todo => {
-          todo.due_date = todo.due_date
-          // console.log(todo.due_date)
-        })
-        // console.log(instance)
       }
     }
   });
