@@ -3,7 +3,7 @@ const { generateToken } = require('../helpers/generateToken');
 const {User} = require('../models')
 
 class UsersController{
-    static registerUser(req, res) {
+    static registerUser(req, res, next) {
         let {name, email, password} = req.body
         User.create({
             name, email, password
@@ -17,15 +17,15 @@ class UsersController{
             return res.status(201).json(response);
         })
         .catch(err => {
-            return res.status(400).json(err.message)
+            next(err)
         })
     }
-    static loginUser(req, res) {
+    static loginUser(req, res,next) {
         let {email, password} = req.body
         User.findOne({where: {email}})
         .then(user => {
             if(!user){
-                return res.status(401).json({message: "Invalid Email / Password"})
+                next({name: "wrongInput"})
             }
             const match = comparePassword(password, user.password)
             if(match){
@@ -37,11 +37,11 @@ class UsersController{
                 const access_token = generateToken(payload)
                 return res.status(200).json({access_token});
             }else {
-                return res.status(401).json({message: "Invalid Email / Password"})
+                next({name: "wrongInput"})
             }
         })
         .catch(err => {
-            return res.status(401).json(err)
+            next(err)
         })
     }
 }

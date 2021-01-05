@@ -1,15 +1,15 @@
 const {Todo} = require('../models')
 class TodosController{
-    static showTodos (req, res) {
+    static showTodos (req, res, next) {
         Todo.findAll()
         .then(result => {
             return res.status(200).json(result);
         })
         .catch(err => {
-            return res.status(500).json({message: 'Your Server Is not Connect'});
+            next(err)
         })
     }
-    static saveTodos(req, res) {
+    static saveTodos(req, res, next) {
         const bodyObj = {
             title : req.body.title,
             description : req.body.description,
@@ -22,30 +22,24 @@ class TodosController{
             return res.status(201).json(data);
         })
         .catch(err => {
-            if (err.errors){
-                err.errors.forEach(e => {
-                    if(e.message === 'Date must be more than this day'){
-                        return res.status(400).json({message: err.message});
-                    }
-                });
-            }
-            res.status(500).json({message: 'Your Server Is not Connect'});
+            next(err)
         })
     }
-    static showTodosById(req, res) {
+    static showTodosById(req, res, next) {
         let id = +req.params.id
         Todo.findByPk(id)
         .then(data => {
-            if(data === null) {
-                return res.status(404).json({message: 'Error Not Found'})
+            if(data) {
+                res.status(200).json(data)
+            }else if (data === null) {
+                next({name: "resourceNotFound"})
             }
-            res.status(200).json(data)
         })
         .catch(err => {
-            res.status(500).json({message: 'Your Server Is not Connect'})
+            next(err)
         })
     }
-    static updateTodos (req, res) {
+    static updateTodos (req, res, next) {
         let id = +req.params.id
         const bodyObj = {
             title : req.body.title,
@@ -57,40 +51,42 @@ class TodosController{
         Todo.update(bodyObj, { where : {id} })
         .then(data => {
             if (data === 0){
-                return res.status(404).json({message: 'Error Not Found'});
+                next({name: "resourceNotFound"})
+            }else {
+                res.status(200).json({message: 'Succes Update todos'})
             }
-            res.status(200).json({message: 'Succes Update todos'})
         })
         .catch(err => {
-            res.status(500).json({message: 'Your Server Is not Connect / Error'});
+            next(err)
         })
     }
-    static patchTodos (req, res) {
+    static patchTodos (req, res, next) {
         let id = +req.params.id
         let { status } = req.body
         Todo.update({ status }, { where : {id} })
         .then(data => {
             if(data[0] === 0){
-                return res.status(404).json({message: 'Error Not Found'});
+                next({name: "resourceNotFound"})
+            }else {
+                res.status(200).json({message: 'Success Update Status'})
             }
-            res.status(200).json({message: 'Success Update Status'})
         })
         .catch(err => {
-            res.status(500).json({message: 'Your Server Is not Connect / Error'});
+           next(err)
         })
-
     }
-    static deleteTodos(req, res) {
+    static deleteTodos(req, res, next) {
         let id = +req.params.id
         Todo.destroy({ where : {id} })
         .then(data => {
             if (data === 0){
-                return res.status(404).json({message: 'Error Not Found'});
+                next({name: "resourceNotFound"})
+            }else {
+                res.status(200).json({message: 'Todos Success to Delete'})
             }
-            res.status(200).json({message: 'Todos Success to Delete'})
         })
         .catch(err => {
-            res.status(500).json({message: 'Your Server Is not Connect / Error'});
+            next(err)
         })
     }
 }
