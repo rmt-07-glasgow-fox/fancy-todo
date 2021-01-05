@@ -4,26 +4,19 @@ const generateToken = require('../helpers/jwt');
 
 
 class AuthController {
-    static async login(req, res) {
-        const { email, password } = req.body;
-
+    static async login(req, res, next) {
         try {
+            const { email, password } = req.body;
             const user = await User.findOne({ where: { email: email } });
 
             if (!user) {
-                return res.status(401).json({
-                    status: 'error',
-                    message: 'invalid email or password from email wrong'
-                })
+                next({ name: "authValidate" })
             }
 
             const checkPassword = comparePassword(password, user.password);
 
             if (!checkPassword) {
-                return res.status(401).json({
-                    status: 'error',
-                    message: 'invalid email or password from password wrong'
-                })
+                next({ name: "authValidate" })
             }
 
             const payload = {
@@ -33,7 +26,6 @@ class AuthController {
 
             const access_token = generateToken(payload);
 
-
             return res.status(200).json({
                 status: 'success',
                 message: 'login succesfully',
@@ -42,31 +34,14 @@ class AuthController {
             })
 
         } catch (err) {
-            if (err.name = "SequelizeValidationError") {
-                let temp = [];
-
-                if (err.errors.length > 0) {
-                    err.errors.forEach(el => temp.push(el.message))
-
-                    return res.status(400).json({
-                        status: 'error',
-                        message: temp
-                    })
-                }
-            }
-
-            return res.status(500).json({
-                status: 'error',
-                message: err.message
-            })
+            next(err)
         }
     }
 
-    static async register(req, res) {
-        const { email, password } = req.body;
-        const input = { email, password };
-
+    static async register(req, res, next) {
         try {
+            const { email, password } = req.body;
+            const input = { email, password };
             const data = await User.create(input);
 
             return res.status(201).json({
@@ -74,26 +49,8 @@ class AuthController {
                 data
             })
         } catch (err) {
-            if (err.name = "SequelizeValidationError") {
-                let temp = [];
-
-                if (err.errors.length > 0) {
-                    err.errors.forEach(el => temp.push(el.message))
-
-                    return res.status(400).json({
-                        status: 'error',
-                        message: temp
-                    })
-                }
-            }
-
-
-            return res.status(500).json({
-                status: 'error',
-                message: err.message
-            })
+            next(err)
         }
-
     }
 }
 

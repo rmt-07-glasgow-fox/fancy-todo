@@ -1,7 +1,7 @@
 const { Todo } = require('../models');
 
 class TodoController {
-    static async getAll(req, res) {
+    static async getAll(req, res, next) {
         try {
             const data = await Todo.findAll({
                 attributes: { exclude: ['createdAt', 'updatedAt'] }
@@ -11,24 +11,18 @@ class TodoController {
                 data
             })
         } catch (err) {
-            return res.status(500).json({
-                status: 'error',
-                message: err.message
-            })
+            next(err)
         }
     }
 
-    static async get(req, res) {
+    static async get(req, res, next) {
         try {
             const data = await Todo.findByPk(+req.params.id, {
                 attributes: { exclude: ['createdAt', 'updatedAt'] }
             });
 
             if (!data) {
-                return res.status(404).json({
-                    status: 'error',
-                    message: 'todo not found'
-                })
+                next({ name: 'notFound' })
             }
 
             return res.status(200).json({
@@ -36,18 +30,14 @@ class TodoController {
                 data
             })
         } catch (err) {
-            return res.status(500).json({
-                status: 'error',
-                message: err.message
-            })
+            next(err)
         }
     }
 
-    static async store(req, res) {
-        const { title, description, status, due_date } = req.body;
-        const input = { title, description, status, due_date, userId: req.user.id };
-
+    static async store(req, res, next) {
         try {
+            const { title, description, status, due_date } = req.body;
+            const input = { title, description, status, due_date, userId: req.user.id };
             const data = await Todo.create(input);
 
             return res.status(201).json({
@@ -56,40 +46,20 @@ class TodoController {
             })
 
         } catch (err) {
-            if (err.name = "SequelizeValidationError") {
-                let temp = [];
-
-                if (err.errors.length > 0) {
-                    err.errors.forEach(el => temp.push(el.message))
-
-                    return res.status(400).json({
-                        status: 'error',
-                        message: temp
-                    })
-                }
-            }
-
-            return res.status(500).json({
-                status: 'error',
-                message: err.message
-            })
+            next(err)
         }
     }
 
-    static async update(req, res) {
-        const id = req.params.id;
-        const { title, description, status, due_date } = req.body;
-        const input = { title, description, status, due_date };
-
+    static async update(req, res, next) {
         try {
+            const id = req.params.id;
+            const { title, description, status, due_date } = req.body;
+            const input = { title, description, status, due_date };
             const data = await Todo.findByPk(id, {
                 attributes: { exclude: ['createdAt', 'updatedAt'] }
             });
             if (!data) {
-                return res.status(404).json({
-                    status: 'error',
-                    message: 'todo not found'
-                })
+                next({ name: 'notFound' })
             }
 
             await Todo.update(input, { where: { id } })
@@ -100,41 +70,21 @@ class TodoController {
                 data
             })
         } catch (err) {
-            if (err.name = "SequelizeValidationError") {
-                let temp = [];
-
-                if (err.errors.length > 0) {
-                    err.errors.forEach(el => temp.push(el.message))
-
-                    return res.status(400).json({
-                        status: 'error',
-                        message: temp
-                    })
-                }
-            }
-
-            return res.status(500).json({
-                status: 'error',
-                message: err.message
-            })
+            next(err)
         }
     }
 
-    static async updateStatus(req, res) {
-        const id = req.params.id
-        const { status } = req.body;
-        const input = { status };
-
+    static async updateStatus(req, res, next) {
         try {
+            const id = req.params.id
+            const { status } = req.body;
+            const input = { status };
             const data = await Todo.findByPk(id, {
                 attributes: { exclude: ['createdAt', 'updatedAt'] }
             })
 
             if (!data) {
-                return res.status(404).json({
-                    status: 'error',
-                    message: 'todo not found'
-                })
+                next({ name: 'notFound' })
             }
 
             await Todo.update(input, { where: { id } })
@@ -145,23 +95,7 @@ class TodoController {
                 data
             })
         } catch (err) {
-            if (err.name = "SequelizeValidationError") {
-                let temp = [];
-
-                if (err.errors.length > 0) {
-                    err.errors.forEach(el => temp.push(el.message))
-
-                    return res.status(400).json({
-                        status: 'error',
-                        message: temp
-                    })
-                }
-            }
-
-            return res.status(500).json({
-                status: 'error',
-                message: err.message
-            })
+            next(err)
         }
     }
 
@@ -170,10 +104,7 @@ class TodoController {
             const data = await Todo.findByPk(+req.params.id);
 
             if (!data) {
-                return res.status(404).json({
-                    status: 'error',
-                    message: 'todo not found'
-                })
+                next({ name: 'notFound' })
             }
 
             data.destroy();
@@ -184,10 +115,7 @@ class TodoController {
             })
 
         } catch (err) {
-            return res.status(500).json({
-                status: 'error',
-                message: err.message
-            })
+            next(err)
         }
     }
 }

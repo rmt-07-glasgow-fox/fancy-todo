@@ -7,15 +7,15 @@ const isLogin = async(req, res, next) => {
         const user = await User.findOne({ where: { email: decoded.email } });
 
         if (!user) {
-            return res.status(401).json({ message: 'Please login first' });
+            next({ name: "authValidate" })
         }
 
         req.user = decoded;
 
         return next();
 
-    } catch (error) {
-        return res.status(400).json({ message: error.message })
+    } catch (err) {
+        next(err)
     }
 
 }
