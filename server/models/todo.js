@@ -32,21 +32,14 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    status: DataTypes.STRING,
+    status: DataTypes.BOOLEAN,
     due_date: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       validate: {
-      //   min: {
-      //     args: new Date().setHours(0,0,0,0),
-      //     msg: "must be greater or equal than today" 
-      //   },
-        validator: function(value) {
-          let today = new Date().setHours(0,0,0,0)
-          // today = today.setHours(0,0,0,0)
-          let date = value >= today ? true : false
-          return date
-        },
+        isAfter: {
+          args: new Date().toString(),
           msg: "must be greater or equal than today" 
+        },
       }
     }
   }, {

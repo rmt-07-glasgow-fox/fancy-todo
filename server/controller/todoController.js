@@ -19,11 +19,14 @@ class todoController {
             due_date: req.body.due_date
         }
 
+        console.log(newTodo);
+
         todo.create(newTodo) 
         .then(todo => {
             res.status(201).json(todo)
         })
         .catch(err => {
+            console.log(err);
             res.status(500).json({msg:'Internal Server Error'})
         })
     }
@@ -71,6 +74,7 @@ class todoController {
         let updtStatus = {
             status: req.body.status        
         }
+        // console.log(updtStatus);
 
         todo.update(updtStatus, {
             where: {
@@ -79,7 +83,7 @@ class todoController {
         })
         .then(newTodo => {
             if(newTodo == 1){
-                res.status(200).json({msg: 'Todo "status" has been updated'})
+                res.status(200).json({msg: 'Todo status has been updated'})
             }else {
                 res.status(400).json({msg: 'validation errors'})
             }
