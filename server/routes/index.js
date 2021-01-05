@@ -1,14 +1,13 @@
 const router = require ("express").Router ()
-const TodoController = require("../controllers/todoController")
+const todoRoutes = require ("./todo")
+const userRoutes = require ("./user")
 
+router.get ("/", (req, res) => {
+    res.send ( "Welcome" )
+})
 
-router.get ("/todos", TodoController.list)
-router.post ("/todos", TodoController.linkAddTodo)
-router.get ("/todos/:id", TodoController.showDataTodo)
-router.put ("/todos/:id", TodoController.replaceTodo)
-router.patch ("/todos/:id", TodoController.modifyTodo)
-router.delete ("/todos/:id", TodoController.removeTodo)
-
+router.use ("/todos", todoRoutes)
+router.use (userRoutes)
 
 
 module.exports = router

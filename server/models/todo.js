@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Todo.belongsTo (models.User, { foreignKey: "UserId" })
     }
   };
   Todo.init({
@@ -46,6 +47,9 @@ module.exports = (sequelize, DataTypes) => {
           msg: "Due Date Must After Today's Date"
         }
       }
+    },
+    UserId: {
+      type: DataTypes.INTEGER,
     }
   }, {
     sequelize,
