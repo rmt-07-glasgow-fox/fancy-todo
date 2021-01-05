@@ -16,6 +16,7 @@ class UserController {
         return res.status(201).json({
           id: result.id,
           username: result.username,
+          fullName: result.fullName,
           email: result.email,
         });
       })
@@ -44,6 +45,7 @@ class UserController {
         const payload = {
           id: result.id,
           username: result.username,
+          fullName: result.fullName,
           email: result.email,
         };
 

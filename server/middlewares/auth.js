@@ -10,6 +10,7 @@ async function authenticate(req, res, next) {
       where: {
         id: decoded.id,
         username: decoded.username,
+        fullName: decoded.fullName,
         email: decoded.email,
       },
     });

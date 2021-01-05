@@ -1,8 +1,24 @@
 const { Todo } = require("../models");
+const axios = require("axios");
+const nameSplit = require("../helpers/nameSplit");
 
 class TodoController {
   static home(req, res) {
-    res.send("Welcome to Fancy ToDo");
+    axios
+      .get("https://icanhazdadjoke.com/", {
+        headers: {
+          Accept: "application/json",
+        },
+      })
+      .then(({ data }) => {
+        res.status(200).json({
+          message: "Greetings!",
+          joke: data.joke,
+        });
+      })
+      .catch((err) => {
+        res.send(err);
+      });
   }
 
   static addTodo(req, res, next) {
@@ -26,9 +42,50 @@ class TodoController {
   }
 
   static listTodo(req, res, next) {
-    Todo.findAll()
+    let joke;
+    let { firstName, lastName } = nameSplit(req.user.fullName);
+    let openWeather;
+
+    const options = {
+      method: "GET",
+      url: "https://community-open-weather-map.p.rapidapi.com/weather",
+      params: {
+        q: "Jakarta, Indonesia",
+        lat: "0",
+        lon: "0",
+        id: "2172797",
+        lang: "null",
+        units: "metric",
+        mode: "",
+      },
+      headers: {
+        "x-rapidapi-key": "d690b410f2mshbaf88be650b1abep1a3d2ejsn62e9e7705340",
+        "x-rapidapi-host": "community-open-weather-map.p.rapidapi.com",
+      },
+    };
+
+    axios
+      .get(
+        `http://api.icndb.com/jokes/random?escape=javascript&firstName=${firstName}&lastName=${lastName}`
+      )
+      .then(({ data }) => {
+        joke = data.value.joke;
+        return axios.request(options);
+      })
+      .then(({ data }) => {
+        openWeather = data;
+        return Todo.findAll();
+      })
       .then((todoList) => {
-        return res.status(200).json(todoList);
+        return res.status(200).json({
+          joke,
+          openWeather : {
+            weather: openWeather.weather,
+            main: openWeather.main,
+            city: openWeather.name
+          },
+          todoList,
+        });
       })
       .catch((err) => {
         next(err);
