@@ -49,7 +49,7 @@ class todoController {
             title: req.body.title,
             description: req.body.description,
             status: req.body.status,
-            // due_date: req.body.due_date
+            due_date: req.body.due_date
         }
 
         todo.update(updtTodo, {
@@ -102,7 +102,7 @@ class todoController {
         })
         .then(data => {
             if(data == 1) {
-                res.status(200).json({msg: 'Todo Success to Delete'})
+                res.status(200).json({msg: 'Todo Success to Deleted'})
             } else {
                 res.status(404).json({msg: 'Error Not Found'})
             }
