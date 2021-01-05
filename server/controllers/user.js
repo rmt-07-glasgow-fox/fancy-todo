@@ -42,7 +42,13 @@ exports.register = async (req, res) => {
 
   try {
     const user = await User.create(body);
-    return res.status(201).json(user);
+
+    const data = {
+      id: user.id,
+      email: user.email,
+    };
+
+    return res.status(201).json(data);
   } catch (error) {
     return res.status(400).json(error);
   }

@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const requireToken = require('../middlewares/requireToken');
 
 const {
   list,
@@ -10,11 +11,11 @@ const {
   destroy,
 } = require('../controllers/todo');
 
-router.get('/', list);
-router.post('/', create);
-router.get('/:id', detail);
-router.put('/:id', update);
-router.patch('/:id', updateStatus);
-router.delete('/:id', destroy);
+router.get('/', requireToken, list);
+router.post('/', requireToken, create);
+router.get('/:id', requireToken, detail);
+router.put('/:id', requireToken, update);
+router.patch('/:id', requireToken, updateStatus);
+router.delete('/:id', requireToken, destroy);
 
 module.exports = router;
