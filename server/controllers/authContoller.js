@@ -33,6 +33,7 @@ class AuthController {
 
             const access_token = generateToken(payload);
 
+
             return res.status(200).json({
                 status: 'success',
                 message: 'login succesfully',
