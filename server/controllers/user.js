@@ -1,12 +1,12 @@
 const { User } = require('../models')
 const Token = require('../helpers/jsonwebtoken')
 const Password = require('../helpers/hash-password')
-const {OAuth2Client} = require('google-auth-library');
-const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+// const {OAuth2Client} = require('google-auth-library');
+// const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 class UserController {
 
-    // ? POST '/register'
+    //POST '/register'
     static async register(req, res, next) {
         const payload = {
             email: req.body.email,
@@ -22,7 +22,7 @@ class UserController {
         }
     }
 
-    // ? POST '/login'
+    //POST '/login'
     static async login(req, res, next) {
         const payload = {
             email: req.body.email,
