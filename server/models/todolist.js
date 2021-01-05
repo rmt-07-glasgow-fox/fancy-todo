@@ -1,6 +1,6 @@
 'use strict';
 const {
-  Model
+  Model, INTEGER
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class TodoList extends Model {
@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      TodoList.belongsTo(models.User)
       // define association here
     }
   };
@@ -27,12 +28,16 @@ module.exports = (sequelize, DataTypes) => {
     due_date: {
       type: DataTypes.DATE,
       validate:{
-        isAfter:{
-          args: new Date().toDateString(),
-          msg: "Date must be greater than today"
+        dateValidasion(value){
+          let dateNow = new Date ()
+          let inputDate = new Date (value)
+          if(dateNow > inputDate){
+            throw new Error ('Date must be greater than today')
+          }
         }
       }
     },
+    UserId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'TodoList',

@@ -3,11 +3,13 @@ const {TodoList} = require('../models/index')
 class Controller{
     static newTodos(req, res){
         let body = req.body
+        let userId = req.user.id
         let data = {
             title: body.title,
             description: body.description,
             status: body.status,
-            due_date: body.due_date
+            due_date: body.due_date,
+            UserId: userId
         }
         TodoList.create(data)
         .then(data=>{
@@ -19,7 +21,8 @@ class Controller{
         })
     }
     static allTodos(req, res){
-        TodoList.findAll()
+        let UserId = req.user.id
+        TodoList.findAll({where:{UserId}})
         .then(data=>{
             res.status(200).json(data)
         })
@@ -47,7 +50,8 @@ class Controller{
             title: body.title,
             description: body.description,
             status: body.status,
-            due_date: body.due_date
+            due_date: body.due_date,
+            UserId:req.user.id
         }
         TodoList.update(data,{where:{id}})
         .then(data=>{
