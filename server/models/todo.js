@@ -22,13 +22,18 @@ module.exports = (sequelize, DataTypes) => {
     due_date: {
       type: DataTypes.DATE,
       validate: {
-        checkDueDate(value){
-          const dateInput = new Date(value).setHours(0,0,0,0);
-          const dateNow = new Date().setHours(0,0,0,0);
-          if (dateInput < dateNow) {
-            throw new Error('Bad Request. Validation Error, cannot input an older date than now');
-          }
+        isAfter: {
+          args: new Date().toISOString().split('T')[0], // e.g: "2021-01-05"
+          msg: 'Validation Error, cannot input an older date than now'
         }
+        // Custom Validation for input the same date
+        // checkDueDate(value){
+        //   const dateInput = new Date(value).setHours(0,0,0,0);
+        //   const dateNow = new Date().setHours(0,0,0,0);
+        //   if (dateInput < dateNow) {
+        //     throw new Error('Bad Request. Validation Error, cannot input an older date than now');
+        //   }
+        // }
       }
     }
   }, {
