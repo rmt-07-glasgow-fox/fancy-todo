@@ -1,6 +1,30 @@
 const { todoList } = require('../models')
 
 class todo {
+    static async createTodo (req, res) {
+        let input = req.body
+        try {
+            const data = await todoList.create(input)
+            if (!data) return res.status(400).json({
+                msg: 'validation errors'
+            })
+            else {
+                return res.status(201).json({
+                    id: data.id,
+                    title: data.title,
+                    description: data.description,
+                    status: data.status,
+                    due_date: data.due_date
+                })
+
+            }
+        }
+        catch (err) {
+            res.status(500).send({
+                msg: 'Error in internal server'
+            })
+        }
+    }
     static async readTodo (req, res) {
         try {
             const data = await todoList.findAll()
@@ -12,47 +36,32 @@ class todo {
             })
         }
     }
-    static async createTodo (req, res) {
-        let input = req.body
-        try {
-            const data = await todoList.create(input)
-            res.status(201).json({
-                id: data.id,
-                tittle: data.tittle,
-                description: data.description,
-                status: data.status,
-                due_date: data.due_date
-            })
-        }
-        catch (err) {
-            res.status(500).send({
-                msg: 'Error in internal server'
-            })
-        }
-    }
     static async getOneTodo (req, res) {
         let id = req.params.id
         try {
             const data = await todoList.findByPk(id)
             if(data) return res.status(200).json({
                 id: data.id,
-                tittle: data.tittle,
+                title: data.title,
                 description: data.description,
                 status: data.status,
                 due_date: data.due_date
             })
-            if(!data) return res.status(404).json({
+            else{ return res.status(404).json({
                 msg: 'error not found'
             })
+            }
         }
         catch (err) {
-            res.status(404).json(err)
+            res.status(500).json({
+                msg: 'Error in internal server'
+            })
         }
     }
     static async editTodo (req, res) {
         let id = req.params.id
         const edit = {
-            tittle: req.body.tittle,
+            title: req.body.title,
             description: req.body.description,
             status: req.body.status,
             due_date: req.body.due_date,
@@ -92,7 +101,9 @@ class todo {
             }
         }
         catch (err) {
-            res.status(500).json(err)
+            res.status(500).json({
+                msg: 'Error in internal server'
+            })
         }
     }
     static async deleteTodo (req, res) {
@@ -107,12 +118,14 @@ class todo {
                     where: { id }
                 })
                 return res.status(200).json({
-                    msg: 'todo success to delete'
+                    msg: 'todo success deleted'
                 })
             }
         }
         catch (err) {
-            res.status(500).json(err)
+            res.status(500).json({
+                msg: 'Error in internal server'
+            })
         }
     }
 }

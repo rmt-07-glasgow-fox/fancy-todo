@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   todoList.init({
-    tittle: DataTypes.STRING,
+    title: DataTypes.STRING,
     description: DataTypes.STRING,
     status: DataTypes.BOOLEAN,
     due_date: {

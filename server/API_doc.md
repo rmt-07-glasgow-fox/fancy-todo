@@ -2,82 +2,264 @@
 My Fancy Todo app is an application to manage your activities. This app has : 
 * RESTful endpoint for asset's CRUD operation
 * JSON formatted response
-
 &nbsp;
 
 ## List endpoitns
-- `POST /fancyTodo`
-- `GET /fancyTodo`
+- `POST /todos`
+- `GET /todos`
+- `GET /todos/:id`
+- `PUT /todos/:id`
+- `PATCH /todos/:id`
+- `DELETE /todos/:id`
 
-## RESTful endpoint
+### POST /todos
+> Create new Todo
 
-### GET /assets
-> Get all assets
 _Request Header_
+```json
+  {
+    "access_token": "application/json"
+  }
 ```
-{
-  "access_token": "<your access token>"
-}
+_Request Body_
+```json
+  {
+    "title": "Take a Nap",
+    "description": "after lunch",
+    "status": false,
+    "due_date": "2021-01-07"
+  }
+```
+_Response (201 - Created)_
+```json
+  {
+    "id": <given id by system>,
+    "title": "Take a Nap",
+    "description": "after lunch",
+    "status": false,
+    "due_date": "2021-01-07T00:00:00.000Z",
+  }
+```
+_Response (400 - Bad Request)_
+```json
+  {
+    "message": "validation errors"
+  }
+```
+_Response (500 - Internal Server Error)_
+```json
+  {
+    "message": "Error in internal server"
+  }
+```
+---
+### GET /todos
+> Get all Todos
+
+_Request Header_
+```json
+  {
+    "access_token": "application/todos"
+  }
 ```
 _Request Body_
 ```
-not needed
+  no needed
 ```
 _Response (200)_
-```
+```json
 [
-  {
-    "id": 1,
-    "name": "<asset name>",
-    "description": "<asset description>",
-    "createdAt": "2020-03-20T07:15:12.149Z",
-    "updatedAt": "2020-03-20T07:15:12.149Z",
-  },
-  {
-    "id": 2,
-    "name": "<asset name>",
-    "description": "<asset description>",
+  { 
+    "id": <given id by system>,
+    "title": "<posted name>",
+    "description": "<posted description>",
+    "status": "<posted status>",
+    "due_date": "2020-03-20T07:15:12.149Z",
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
   }
 ]
 ```
-_Response (400 - Bad Request)_
+_Response (500 - Internal Server Error)_
+```json
+  {
+    "message": "Error in internal server"
+  }
 ```
-{
-     "message": "Invalid request"
-}
+
+### GET /todos/:id
+> Get Todo by id from Params 
+
+_Request Header_
+```json
+  {
+    "access_token": "application/json"
+  }
+```
+_Request Params_
+```json
+  {
+    "id": 1
+  }
+```
+_Request Body_
+```json
+  no needed
+```
+_Response (200)_
+```json
+  {
+    "id": 1,
+    "title": "New Take a Nap",
+    "description": "before lunch",
+    "status": false,
+    "due_date": "2021-01-07T00:00:00.000Z",
+  }
+```
+_Response (404 - Not Found)_
+```json
+  {
+    "message": "error not found"
+  }
+```
+_Response (500 - Internal Server Error)_
+```json
+  {
+    "message": "Error in internal server"
+  }
 ```
 ---
 
-### POST /fancyTodo
-> Create new asset
+### PUT /todos/:id
+> Edit Todos by id from Params 
+
 _Request Header_
+```json
+  {
+    "access_token": "application/json"
+  }
 ```
-{
-  "access_token": "<your access token>"
-}
+_Request Params_
+```json
+  {
+    "id": 1
+  }
 ```
 _Request Body_
+```json
+  {
+    "title": "New Take a Nap",
+    "description": "before lunch",
+    "status": false,
+    "due_date": "2021-01-07"
+  }
 ```
-{
-  "name": "<name to get insert into>",
-  "description": "<description to get insert into>"
-}
+_Response (200)_
+```json
+  {
+    "id": 1,
+    "title": "New Take a Nap",
+    "description": "before lunch",
+    "status": false,
+    "due_date": "2021-01-07T00:00:00.000Z",
+  }
 ```
-_Response (201 - Created)_
+_Response (404 - Not Found)_
+```json
+  {
+    "message": "error not found"
+  }
 ```
-{
-  "id": <given id by system>,
-  "name": "<posted name>",
-  "description": "<posted description>",
-  "createdAt": "2020-03-20T07:15:12.149Z",
-  "updatedAt": "2020-03-20T07:15:12.149Z",
-}
+_Response (500 - Internal Server Error)_
+```json
+  {
+    "message": "Error in internal server"
+  }
 ```
-_Response (400 - Bad Request)_
+---
+
+### PATCH /todos/:id
+> Edit Todo Status by id from params
+
+_Request Header_
+```json
+  {
+    "access_token": "application/json"
+  }
 ```
-{
-    "message": "Invalid requests"
-}
+_Request Params_
+```json
+  {
+    "id": 1
+  }
 ```
+_Request Body_
+```json
+  {
+    "status": true,
+  }
+```
+_Response (200)_
+```json
+  {
+    "id": 1,
+    "title": "New Take a Nap",
+    "description": "before lunch",
+    "status": false,
+    "due_date": "2021-01-07T00:00:00.000Z",
+    "createdAt": "2021-01-07T00:00:00.000Z",
+    "updatedAt": "2021-01-07T00:00:00.000Z"
+  }
+```
+_Response (404 - Not Found)_
+```json
+  {
+    "message": "error not found"
+  }
+```
+_Response (500 - Internal Server Error)_
+```json
+  {
+    "message": "Error in internal server"
+  }
+```
+---
+
+### DELETE /todos/:id
+> Remove Todo by id from Params 
+
+_Request Header_
+```json
+  {
+    "access_token": "application/json"
+  }
+```
+_Request Params_
+```json
+  {
+    "id": 1
+  }
+```
+_Request Body_
+```json
+  no needed
+```
+_Response (200)_
+```json
+  {
+    "message": 'todo success deleted'
+  }
+```
+_Response (404 - Not Found)_
+```json
+  {
+    "message": "error not found"
+  }
+```
+_Response (500 - Internal Server Error)_
+```json
+  {
+    "message": "Error in internal server"
+  }
+```
+---
