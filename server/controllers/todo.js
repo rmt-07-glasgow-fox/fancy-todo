@@ -59,7 +59,7 @@ class TodoController {
         mode: "",
       },
       headers: {
-        "x-rapidapi-key": "d690b410f2mshbaf88be650b1abep1a3d2ejsn62e9e7705340",
+        "x-rapidapi-key": process.env.OPENWEATHER_API_KEY,
         "x-rapidapi-host": "community-open-weather-map.p.rapidapi.com",
       },
     };
