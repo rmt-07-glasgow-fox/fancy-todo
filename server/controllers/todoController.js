@@ -20,7 +20,7 @@ class TodoController {
     })
   }
 
-  static getAllTask (req, res) {
+  static getAllTask (req, res, next) {
     Todo.findAll({
       order: [["id", "ASC"]]
     })
@@ -28,26 +28,26 @@ class TodoController {
       res.status(200).json(data)
     })
     .catch(err => {
-      res.status(500).json({message: err.message})
+      next(err)
     })
   }
 
-  static getOneTask (req, res) {
+  static getOneTask (req, res, next) {
     let id = req.params.id
     Todo.findByPk(id)
     .then(data => {
       if (data) {
         res.status(200).json(data)
       } else if (!data) {
-        res.status(404).json({message: "data not found"})
+        next({message: "resourceNotFound"})
       }
     })
     .catch(err => {
-      res.status(500).json({message: "server error"})
+      next(err)
     })
   }
 
-  static updateTask (req, res) {
+  static updateTask (req, res, next) {
     let id = req.params.id
     let input = {
       title: req.body.title,
@@ -60,28 +60,24 @@ class TodoController {
     })
     .then(data => {
       if (data == 0) {
-        res.status(404).json({message: "data not found"})
+        next({name: "resourceNotFound"})
       } else {
         res.status(200).json( {...{id: id}, ...input})
       }
     })
     .catch(err => {
-      if (err.name === "SequelizeValidationError") {
-        res.status(400).json({message: "Date must be greater than today"})
-      } else {
-        res.status(500).json({message: "server error"})
-      }
+      next(err)
     })
   }
 
-  static modifyTask (req, res) {
+  static modifyTask (req, res, next) {
     let id = req.params.id
     let status = req.body.status
   
     Todo.findByPk(id)
     .then(data => {
       if (!data) {
-        return res.status(404).json({message: "data not found"})
+        next({name: "resourceNotFound"})
       } else {
         data.status = status
         return data.save()
@@ -91,15 +87,11 @@ class TodoController {
       return res.status(200).json(data2)
     })
     .catch(err => {
-      if (err.name === "SequelizeValidationError") {
-        res.status(400).json({message: "Date must be greater than today"})
-      } else {
-        res.status(500).json({message: err.message})
-      }
+      next(err)
     })
   }
 
-  static deleteTask (req, res) {
+  static deleteTask (req, res, next) {
     let id = req.params.id
     Todo.destroy({
       where: {
@@ -108,13 +100,13 @@ class TodoController {
     })
     .then(data => {
       if (data == 0) {
-        res.status(404).json({message: "data not found"})
+        next({message: "resourceNotFound"})
       } else {
         res.status(200).json({message: "todo success to delete"})
       }
     })
     .catch(err => {
-        res.status(500).json({message: "server error"})
+      next(err)
     })
   }
 }

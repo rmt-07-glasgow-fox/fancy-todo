@@ -9,9 +9,22 @@ const errorHandlers = (err, req, res, next) => {
           }
         })
         return res.status(400).json(errorMessages);
+      case "SequelizeUniqueConstraintError":
+        return res.status(400).json({
+          message: err.message,
+          column: err.path
+        });
       case "unauthorized":
         return res.status(401).json({
           message: "unauthorized"
+        });
+      case "notLoggedIn":
+        return res.status(401).json({
+          message: "please login first"
+        });
+      case "wrongLogin":
+        return res.status(401).json({
+          message: "invalid email or password"
         });
       case "resourceNotFound":
         return res.status(404).json({

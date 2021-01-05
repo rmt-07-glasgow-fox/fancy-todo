@@ -6,9 +6,9 @@ const {
 
 //logged in user
 router.post("/", TodoController.createTask)
+router.get("/", TodoController.getAllTask)
 
 //need authorization
-router.get("/", TodoController.getAllTask)
 router.get("/:id", authorization, TodoController.getOneTask)
 router.put("/:id", authorization, TodoController.updateTask)
 router.patch("/:id", authorization, TodoController.modifyTask)

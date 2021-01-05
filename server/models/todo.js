@@ -17,8 +17,24 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Todo.init({
-    title: DataTypes.STRING,
-    description: DataTypes.STRING,
+    title: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "Title cannot be empty"
+        }
+      }
+    },
+    description: {
+      type:DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "Description cannot be empty"
+        }
+      }
+    },
     status: DataTypes.BOOLEAN,
     due_date: {
       type: DataTypes.DATE,
@@ -27,6 +43,10 @@ module.exports = (sequelize, DataTypes) => {
           if (value < new Date()) {
             throw new Error(`Date must be greater than today`);
           }
+        },
+        notEmpty: {
+          args: true,
+          msg: "Due date cannot be empty"
         }
       }
     },

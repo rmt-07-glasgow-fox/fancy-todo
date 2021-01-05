@@ -18,36 +18,34 @@ const authentication = (req, res, next) => {
     })
     .then(data => {
       if (!data) {
-        res.status(401).json({message: "please login first"})
+        next({name: "notLoggedIn"})
       } else {
         req.user = data
         next()
       }
     })
     .catch(err => {
-      res.status(500).json({message: err.message})
+      next(err)
     })
     
   } catch (err) {
-    res.status(400).json({message: err.message})
+    next({name: "notLoggedIn"})
   }
 }
 const authorization = (req, res, next) => {
   let id = req.params.id
   Todo.findByPk(id)
   .then(data => {
-    if (data.userId == req.user.id) {
+    if (!data) {
+      next({name: "resourceNotFound"})
+    } else if (data.userId == req.user.id) {
       next()
     } else {
-      res.status(401).json( {
-        message: "unauthorized"
-      })
+      next({name: "unauthorized"})
     } 
   })
   .catch(err => {
-    res.status(500).json({
-      message: err.message
-    })
+    next(err)
   })
 }
 
