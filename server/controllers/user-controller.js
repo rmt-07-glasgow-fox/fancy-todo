@@ -51,10 +51,10 @@ class UserController{
                     email: result.email
                 }
 
-                const accessToken = generateToken(payload)
+                const access_token = generateToken(payload)
 
                 return res.status(200).json({
-                    accessToken
+                    access_token
                 })
             }else{
                 return res.status(401).json({

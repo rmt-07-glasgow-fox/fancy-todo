@@ -33,7 +33,8 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'due date cannot be today or yesterday!'
         }
       }
-    }
+    },
+    userId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Todo',

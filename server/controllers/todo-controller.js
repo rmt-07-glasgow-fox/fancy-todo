@@ -18,7 +18,8 @@ class TodoController{
                 title: req.body.title,
                 description: req.body.description,
                 status: req.body.status,
-                dueDate: req.body.dueDate
+                dueDate: req.body.dueDate,
+                userId: req.user.id
             }
             
             const result = await Todo.create(opt)
