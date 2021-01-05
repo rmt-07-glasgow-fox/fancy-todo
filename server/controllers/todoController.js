@@ -3,7 +3,7 @@ const {
 } = require("../models")
 
 class TodoController {
-  static createTask (req, res) {
+  static createTask (req, res, next) {
     let input = {
       title: req.body.title,
       description: req.body.description,
@@ -16,11 +16,7 @@ class TodoController {
       res.status(201).json(data)
     })
     .catch(err => {
-      if (err.name === "SequelizeValidationError") {
-        res.status(400).json({message: "Date must be greater than today"})
-      } else {
-        res.status(500).json({message: "server error"})
-      }
+      next(err)
     })
   }
 
