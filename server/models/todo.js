@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         isIn: {
-          args: ['done', 'onlist'],
+          args: [['done', 'onlist']],
           msg: 'Invalid requests'
         }
       }
@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       validate: {
         isAfter: {
-          args: Date.now(),
+          args: new Date().toString(),
           msg: 'ToDo can only be set for the future'
         }
       }

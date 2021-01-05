@@ -6,7 +6,7 @@ module.exports = class AuthController {
     static getRegister(req, res) {
         User.findAll({
             attributes: {
-                exclude: [ 'createdAt', 'updatedAt' ]
+                exclude: [ 'password', 'createdAt', 'updatedAt' ]
             }
         })
         .then( data => {

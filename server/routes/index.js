@@ -1,10 +1,11 @@
 const router = require('express').Router()
 const todosRouter = require('./todos.js')
 const authRouter = require('./auth.js')
-const { authentication } = require('../middlewares/auth.js')
+const { authenticate } = require('../middlewares/auth.js')
 
 router.use(authRouter)
-router.use(authentication)
+
+router.use(authenticate)
 router.use('/todos', todosRouter)
 
 router.get('/', (req, res) => {

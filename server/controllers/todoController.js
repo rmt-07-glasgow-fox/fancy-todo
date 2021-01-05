@@ -18,7 +18,7 @@ module.exports = class TodoController {
     static getTodo(req, res) {
         Todo.findByPk(+req.params.id, {
             attributes: {
-                exclude: [ 'createdAt', 'updatedAt' ]
+                exclude: [ 'UserId', 'createdAt', 'updatedAt' ]
             }
         })
         .then( data => {
@@ -55,6 +55,7 @@ module.exports = class TodoController {
             return res.status(201).json(response)
         } )
         .catch( err => {
+            console.log(err);
             return res.status(400).json({
                 message: 'Invalid requests'
             })
@@ -62,25 +63,34 @@ module.exports = class TodoController {
     }
 
     static editTodo(req, res) {
+        const getId = +req.params.id
         const newData = {
             title: req.body.title,
             description: req.body.description,
             status: req.body.status,
-            due_date: req.body.due_date
+            due_date: req.body.due_date,
+            UserId: req.user
         }
         Todo.update(newData, {
             where: {
-                id: +req.params.id
+                id: getId
             }
         })
         .then( data => {
             if (data[0] === 1) {
-                return res.status(201).json(newData)
+                return Todo.findByPk(getId, {
+                    attributes: {
+                        exclude: [ 'UserId', 'createdAt', 'updatedAt' ]
+                    }
+                })
             } else {
                 return res.status(404).json({
                     message: 'Todo not found'
                 })
             }
+        } )
+        .then( data => {
+            return res.status(201).json(response)
         } )
         .catch( err => {
             return res.status(400).json({
@@ -102,7 +112,7 @@ module.exports = class TodoController {
             if (data[0] === 1) {
                 return Todo.findByPk(+req.params.id, {
                     attributes: {
-                        exclude: [ 'createdAt', 'updatedAt' ]
+                        exclude: [ 'UserId', 'createdAt', 'updatedAt' ]
                     }
                 })
             } else {
@@ -115,6 +125,7 @@ module.exports = class TodoController {
             return res.status(201).json(data)
         } )
         .catch( err => {
+            console.log(err);
             return res.status(400).json({
                 message: 'Invalid requests'
             })
