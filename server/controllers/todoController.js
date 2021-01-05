@@ -11,12 +11,15 @@ class TodoController{
         })
     }
     static addTodo(req,res){
+        console.log('>>>>>>>>>>',req.user.id);
+        console.log('romi');
         const newTodo = {
             name: req.body.name,
             type: req.body.type,
             description: req.body.description,
             date: req.body.date,
-            time: req.body.time
+            time: req.body.time,
+            UserId: req.user.id
         }
         Todo.create(newTodo)
         .then(data => {
@@ -47,6 +50,18 @@ class TodoController{
             description: req.body.description,
             date: req.body.date,
             time: req.body.time
+        }
+        Todo.update(newTodo)
+        .then(data => {
+            res.status(200).json(data)
+        })
+        .catch(err => {
+            res.status(405).json({message: 'Wrong data update'})
+        })
+    }
+    static editOne(req,res){
+        const newTodo = {
+            status: req.body.status
         }
         Todo.update(newTodo)
         .then(data => {

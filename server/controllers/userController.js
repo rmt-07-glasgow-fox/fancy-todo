@@ -1,6 +1,6 @@
 const { User } = require('../models')
 const { comparePass } = require('../helper/hash')
-const {generateToken} = require('../helper/jwt')
+const { generateToken } = require('../helper/jwt')
 
 class UserController{
     static addNew(req,res){
@@ -34,10 +34,9 @@ class UserController{
                     username: data.username,
                     email: data.email
                 }
-                console.log('romi');
-                const accesToken = generateToken(payload)
+                const access_token = generateToken(payload)
                 return res.status(200).json({
-                    accesToken : accesToken
+                    access_token : access_token
                 })
             } else {
                 throw{
