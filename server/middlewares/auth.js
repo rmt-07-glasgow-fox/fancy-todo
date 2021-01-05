@@ -1,11 +1,23 @@
-const { Todo } = require('../models/index');
+const { User, Todo } = require('../models/index');
 const { cekToken } = require('../helpers/jwt');
 
 async function authentication (req, res, next) {
-    if (req.headers.token) {
-        next();
-    } else {
-        res.status(401).json({ msg: 'You must logged in!!!' });
+    try {
+        if (req.headers.token) {
+            let data = cekToken(req.headers.token);
+    
+            data = await User.findByPk(data.id);
+    
+            if (data) {
+                next();
+            } else {
+                res.status(401).json({ msg: 'You must logged in!!!' });    
+            }
+        } else {
+            res.status(401).json({ msg: 'You must logged in!!!' });
+        }
+    } catch (err) {
+        res.status(500).json('Server Error');
     }
 }
 

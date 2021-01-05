@@ -32,8 +32,10 @@ module.exports = (sequelize, DataTypes) => {
             }
           })
             .then((data) => {
-              if (data[0].id) {
+              if (data.length > 0) {
                 next(Error('Email already in use!!!'));
+              } else {
+                next();
               }
             })
             .catch((err) => {
