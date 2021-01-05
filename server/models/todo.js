@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Todos extends Model {
+  class Todo extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   };
-  Todos.init({
+  Todo.init({
     title: DataTypes.STRING,
     description: DataTypes.STRING,
     status: DataTypes.STRING,
@@ -21,14 +21,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       validate: {
         isAfter: {
-          args: new Date(),
+          args: new Date().toString(),
           msg: "Date must be more than this day"
         }
       }
     }
   }, {
     sequelize,
-    modelName: 'todos',
+    modelName: 'Todo',
   });
-  return Todos;
+  return Todo;
 };
