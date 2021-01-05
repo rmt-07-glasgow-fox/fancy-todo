@@ -55,6 +55,13 @@ module.exports = (sequelize, DataTypes) => {
     hooks: {
       beforeCreate: (instance, options) => {
         instance.status = false
+      },
+      afterFind: (instance, options) => {
+        instance.forEach(todo => {
+          todo.due_date = todo.due_date
+          // console.log(todo.due_date)
+        })
+        // console.log(instance)
       }
     }
   });
