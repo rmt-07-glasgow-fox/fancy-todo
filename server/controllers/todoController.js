@@ -11,7 +11,7 @@ class TodoController {
         } catch (err) {
             return res.status(500).json({
                 status: 'error',
-                message: "Invalid server error"
+                message: err.message
             })
         }
     }
@@ -52,17 +52,17 @@ class TodoController {
             })
 
         } catch (err) {
-            let temp = [];
+            if (err.name = "SequelizeValidationError") {
+                let temp = [];
 
-            if (err.errors.length > 0) {
-                err.errors.forEach(el => {
-                    temp.push(el.message);
-                })
+                if (err.errors.length > 0) {
+                    err.errors.forEach(el => temp.push(el.message))
 
-                return res.status(400).json({
-                    status: 'error',
-                    message: temp
-                })
+                    return res.status(400).json({
+                        status: 'error',
+                        message: temp
+                    })
+                }
             }
 
             return res.status(500).json({
@@ -93,17 +93,17 @@ class TodoController {
                 message: 'todo updated successfully'
             })
         } catch (err) {
-            let temp = [];
+            if (err.name = "SequelizeValidationError") {
+                let temp = [];
 
-            if (err.errors.length > 0) {
-                err.errors.forEach(el => {
-                    temp.push(el.message);
-                })
+                if (err.errors.length > 0) {
+                    err.errors.forEach(el => temp.push(el.message))
 
-                return res.status(400).json({
-                    status: 'error',
-                    message: temp
-                })
+                    return res.status(400).json({
+                        status: 'error',
+                        message: temp
+                    })
+                }
             }
 
             return res.status(500).json({
@@ -135,17 +135,17 @@ class TodoController {
                 message: 'todo updated successfully'
             })
         } catch (err) {
-            let temp = [];
+            if (err.name = "SequelizeValidationError") {
+                let temp = [];
 
-            if (err.errors.length > 0) {
-                err.errors.forEach(el => {
-                    temp.push(el.message);
-                })
+                if (err.errors.length > 0) {
+                    err.errors.forEach(el => temp.push(el.message))
 
-                return res.status(400).json({
-                    status: 'error',
-                    message: temp
-                })
+                    return res.status(400).json({
+                        status: 'error',
+                        message: temp
+                    })
+                }
             }
 
             return res.status(500).json({
