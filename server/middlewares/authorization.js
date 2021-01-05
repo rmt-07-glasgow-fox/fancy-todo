@@ -1,7 +1,6 @@
 const { Todo } = require('../models')
 
 module.exports = async (req, res, next) => {
-
     try {
         const todoId = req.params.id
         const userId = req.loggedInUser.id

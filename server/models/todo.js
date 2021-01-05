@@ -18,8 +18,27 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     description: DataTypes.STRING,
     status: DataTypes.STRING,
-    due_date: DataTypes.STRING
+    due_date: {
+      type: DataTypes.DATE,
+      validate: {
+        lesserDate: function(value) {
+          if(value < new Date) {
+            throw new Error('Due date must past today')
+          }
+        },
+        isNull: function(value) {
+          if(value == null || value == undefined) {
+            throw new Error('Due date must be filled')
+          }
+        } 
+      }
+    }
   }, {
+    hooks : {
+      beforeCreate(instance, options) {
+        instance.status = 'belum'
+      }
+    },
     sequelize,
     modelName: 'Todo',
   });
