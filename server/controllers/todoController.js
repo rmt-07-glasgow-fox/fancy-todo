@@ -2,15 +2,20 @@ const {Todo} = require('../models')
 
 class todoController{
     static getTodo(req, res){
-        Todo.findAll()
+        Todo.findAll({
+            where: {
+                userId : req.user.id
+            }
+        })
         .then(data => {
-            res.status(200).json(data)
+            if(data.length !== 0){
+                res.status(200).json(data)
+            } else {
+                res.status(404).json({message : 'Not found'})
+            }
         })
         .catch(err => {
-            console.log(err)
-            res.status(500).json({
-                message : 'Internal Server Error'
-            })
+            res.status(500).json({message : 'Internal Server Error'})
         })
     }
 
@@ -36,7 +41,7 @@ class todoController{
                     Errors : message
                 })
             } else {
-                res.status(500)
+                res.status(500).json({message : 'Internal Server Error'})
             }
         })
     }
@@ -45,6 +50,7 @@ class todoController{
         let todoID = +req.params.id
         Todo.findOne({
             where : {
+                userId : req.user.id,
                 id : todoID
             }
         })
@@ -56,6 +62,7 @@ class todoController{
             } 
         })
         .catch(err => {
+            console.log(err)
             res.status(500).json({message: 'Internal Server Error'})
         })
     }
@@ -82,17 +89,14 @@ class todoController{
                     }
                 })
             } else if (data[0] === 0) {
-                const errorMessage = {
-                    message : 'error not found'
-                }
-                res.status(404).send(errorMessage)
+                res.status(404).json({message : 'Error not found'})
             }
         })
         .then(editedTodo => {
             res.status(200).json(editedTodo)
         })
         .catch(err => {
-            res.status(500)
+            res.status(500).json({message : 'Internal Server Error'})
         })
     }
 
@@ -114,10 +118,7 @@ class todoController{
                     }
                 })
             } else {
-                const errorMessage = {
-                    message : 'error not found'
-                }
-                res.status(404).send(errorMessage)
+                res.status(404).json({message : 'Error not found'})
             }
         })
         .then(updatedData => {
@@ -133,7 +134,7 @@ class todoController{
                     Errors : message
                 })
             } else {
-                res.status(500).json(err)
+                res.status(500).json({message : 'Internal Server Error'})
             }
         })
     }
@@ -149,11 +150,6 @@ class todoController{
         .then(data => {
             if(data === 1){
                 res.status(200).json({message: 'todo success to delete'})
-            } else {
-                const errorMessage = {
-                    message : 'error not found'
-                }
-                res.status(404).send(errorMessage)
             }
         })
         .catch(err => {
