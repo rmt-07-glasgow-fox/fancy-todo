@@ -42,8 +42,8 @@ class TodoController {
       if(result){
         res.status(200).json(result)
       } else {
-        res.status(400).json({
-          msg: 'data not found'
+        res.status(404).json({
+          msg: 'error not found'
         })
       }
     }).catch((err) => {
@@ -69,7 +69,7 @@ class TodoController {
     .then((result) => {
       // console.log(result)
       if(result[0] === 0){
-        res.status(400).json({
+        res.status(404).json({
           msg: 'error not found'
         })
       } else {
@@ -99,7 +99,7 @@ class TodoController {
     .then((result) => {
       // console.log(result)
       if(result[0] === 0){
-        res.status(400).json({
+        res.status(404).json({
           msg: 'error not found'
         })
       } else {
