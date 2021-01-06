@@ -6,7 +6,7 @@ class RestoController {
 
             axios.get(restoUrl, {
                   headers: {
-                        user_key: "33445422ea162020c393c8f17f2ef589"
+                        user_key: process.env.ZOMATO_USER_KEY
                   }
             }) 
                   .then(response => {
