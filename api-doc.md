@@ -16,13 +16,13 @@ Fancy To Do
 
 **Body**:
 
-`{ title:[string], description:[string], status: [string], due_date: Date }`
+`{ title:string, description:string, status: string, due_date: Date }`
 
 *  **Success Response:**
 
 **Code:** 201 <br  />
 
-**Content:**  `{ message: success creating To Do {req.body.title} }`
+**Content:**  `content`
 *  **Error Response:**
 
 **Code:** 400 <br  />
@@ -123,14 +123,14 @@ Fancy To Do
 
 **Body**:
 
-`{ title:[string], description:[string], status: [string], due_date: Date }`
+`{ title:string, description:string, status: string, due_date: Date }`
 
 
 *  **Success Response:**
 
 **Code:** 200 <br  />
 
-**Content:**  `{ `{ title:[string], description:[string], status: [string], due_date: Date }` }`
+**Content:**  `{ `{ title:string, description:string, status: string, due_date: Date }` }`
 *  **Error Response:**
 
 **Code:** 404 <br  />
@@ -162,19 +162,19 @@ or<br  />
 
 **Required:**
 
-`id=[integer]`
+`id=integer`
 *  **Data Params**
 
 **Body**:
 
-`{ status: [string] }`
+`{ status: string }`
 
 
 *  **Success Response:**
 
 **Code:** 200 <br/>
 
-**Content:**  `{ `{ title:[string], description:[string], status: [string], due_date: Date }` }`
+**Content:**  `{ `{ title:string, description:string, status: string, due_date: Date }` }`
 *  **Error Response:**
 
 **Code:** 404 <br  />
@@ -207,7 +207,7 @@ or<br  />
 
 **Required:**
 
-`id=[integer]`
+`id=integer`
 
 
 *  **Success Response:**
