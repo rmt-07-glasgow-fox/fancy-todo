@@ -1,12 +1,16 @@
 
 $(document).ready(function(){
-    $("#form-login").on("submit", function(e){
-        e.preventDefault();
-        login()
-    });
-
+    // $("#form-login").on("submit", function(e){
+    //     e.preventDefault();
+    //     login()
+    // });
+    loginPage()
 });
 
+function loginPage () {
+    $("#login").hide();
+    $("#homePage").show();
+}
 
 function login(){
     const email = $("#email").val()
@@ -28,7 +32,7 @@ function login(){
         console.log(xhr,textstatus)
     })
     .always(_ => {
-        // $("#email").val("")
-        // $("#password").val("")
+        $("#email").val("")
+        $("#password").val("")
     })
 }
