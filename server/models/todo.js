@@ -25,21 +25,23 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    due_date: DataTypes.DATEONLY,
+    due_date: {
+      type: DataTypes.DATEONLY,
+      validate: {
+        dateValidate(value) {
+          const todayDate = new Date().toISOString().slice(0, 10);
+
+          if (value <= todayDate) {
+            throw new Error('do not enter a date that is past today')
+          }
+        }
+      }
+    },
     UserId: DataTypes.INTEGER
-    }, {
+  }, {
     sequelize,
     modelName: 'Todo',
   });
-
-  Todo.beforeCreate((instance, option) => {
-
-    const todayDate = new Date().toISOString().slice(0, 10);
-
-    if (instance.due_date <= todayDate) {
-      throw new Error('do not enter a date that is past today')
-    }
-  })
 
   return Todo;
 };
