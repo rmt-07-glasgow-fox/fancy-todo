@@ -15,6 +15,8 @@ let baseUrl = 'http://localhost:3000'
 let mainTodoSection = $('#main-todo')
 let newsContainer = $('#get-news')
 let tasksContainer = $('#get-tasks')
+let tasksDoneContainer = $('#get-tasks-done')
+let addTaskBtn = $('#add-task-btn')
 
 registerContainer.hide()
 mainTodoSection.hide()
@@ -28,6 +30,8 @@ $(document).ready(() => {
 const checkAuth = () => {
   if(localStorage.getItem('access_token')){
     showTodo()
+    $('#userEmail a').empty()
+    $('#userEmail a').append(localStorage.getItem('email'))
   }else{
     showAuth()
   }
@@ -78,6 +82,7 @@ loginBtn.click((e) => {
   })
     .done(res => {
       localStorage.setItem('access_token', res.jwtToken)
+      localStorage.setItem('email', res.userData.email)
       showTodo()
       console.log(res, 'res')
     })
@@ -118,7 +123,7 @@ registerBtn.click((e) => {
 })
 
 logoutBtn.click((e) => {
-  localStorage.removeItem('access_token')
+  localStorage.clear()
   checkAuth()
 })
 
@@ -132,18 +137,41 @@ const getTasks = () => {
     }
   })
     .done(res => {
-      console.log(res, 'res')
       let tasks = res
+      let done = []
+      let undone = []
       tasksContainer.empty('')
       if(res.length){
         tasks.forEach(task => {
-          tasksContainer.append(`<div class="card mb-3" style="width: 18rem;">
-          <div class="card-body">
-            <h5 class="card-title">${task.title}</h5>
-            <p class="card-text">${task.description}</p>
-            <a href="#" id="patchDone" class="btn btn-warning">Mark as Done</a>
-          </div>
-        </div>`)
+          if(task.status){
+            done.push(task)
+          }else{
+            undone.push(task)
+          }
+        })
+        done.forEach(task => {
+          tasksDoneContainer.append(`<div class="card mb-3" style="width: 20rem;">
+            <div class="card-body">
+              <h5 class="card-title">${task.title}</h5>
+              <p class="card-text">${task.description}</p>
+              <p class="card-text">due date : ${task.due_date.slice(0,10)}</p>
+              <a href="#" id="markBtn" onclick="updateStatus(${task.id}, ${task.status})" class="btn btn-outline-primary">Mark as Done</a>
+              <a href="#" id="editBtn" class="btn btn-warning">Edit</a>
+              <a href="#" id="deleteBtn" class="btn btn-danger">Delete</a>
+            </div>
+          </div>`)
+        })
+        undone.forEach(task => {
+          tasksContainer.append(`<div class="card mb-3" style="width: 20rem;">
+            <div class="card-body">
+              <h5 class="card-title">${task.title}</h5>
+              <p class="card-text">${task.description}</p>
+              <p class="card-text">due date : ${task.due_date.slice(0,10)}</p>
+              <a href="#" id="markBtn" onclick="updateStatus(${task.id}, ${task.status})" class="btn btn-outline-primary">Mark as Done</a>
+              <a href="#" id="editBtn" class="btn btn-warning">Edit</a>
+              <a href="#" id="deleteBtn" class="btn btn-danger">Delete</a>
+            </div>
+          </div>`)
         })
       }else{
         tasksContainer.append(`<h2>${res.message}</h2>`)
@@ -166,7 +194,6 @@ const getNews = () => {
     }
   })
     .done(res => {
-      console.log(res.articles, 'res')
       let articles = res.articles
       newsContainer.empty('')
       articles.forEach(article => {
@@ -196,7 +223,62 @@ const getWeather = () => {
     }
   })
     .done(res => {
-      console.log(res, 'res')
+      // console.log(res, 'res')
+    })
+    .fail(err => {
+      console.log(err.responseJSON, 'err')
+    })
+    .always(_ => {
+      console.log('always')
+    })
+}
+
+addTaskBtn.click((e) => {
+  e.preventDefault()
+  $('#addTaskModal').modal('toggle')
+  let title = $('#title').val()
+  let description = $('#description').val()
+  let due_date = $('#due_date').val()
+  console.log(localStorage.getItem('access_token'))
+  $.ajax({
+    method: 'POST',
+    url: `${baseUrl}/todos`,
+    data:{
+      title,
+      description,
+      status: false,
+      due_date
+    },
+    headers:{
+      access_token: localStorage.getItem('access_token')
+    }
+  })
+    .done(res => {
+      // console.log(res)
+      checkAuth()
+    })
+    .fail(err => {
+      console.log(err.responseJSON, 'err')
+    })
+    .always(_ => {
+      console.log('always')
+    })
+})
+
+const updateStatus = (id, status) => {
+  console.log(status)
+  $.ajax({
+    method: 'PATCH',
+    url: `${baseUrl}/todos/${id}`,
+    data:{
+      status: !status,
+    },
+    headers:{
+      access_token: localStorage.getItem('access_token')
+    }
+  })
+    .done(res => {
+      checkAuth()
     })
     .fail(err => {
       console.log(err.responseJSON, 'err')

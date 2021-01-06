@@ -61,9 +61,12 @@
     </div>
   </section>
   <section id="main-todo">
-    <ul class="nav bg-white">
-      <li class="nav-item" id="username">
-        <a class="nav-link btn-primary mr-3" href="#" data-toggle="modal" data-target="#exampleModal">Add</a>
+    <ul class="nav bg-white justify-content-end">
+      <li class="nav-item" id="userEmail">
+        <a class="nav-link disabled" href="#"></a>
+      </li>
+      <li class="nav-item" id="add">
+        <a class="nav-link btn-primary mr-3" href="#" data-toggle="modal" data-target="#addTaskModal">Add</a>
       </li>
       <li class="nav-item" id="logout-btn">
         <a class="nav-link btn-danger" href="#">Logout</a>
@@ -71,36 +74,59 @@
     </ul>
     <div class="container mt-3">
       <div class="row">
-        <div class="col-md">
+        <div class="col-md-4">
           <h2>News for you</h2>
+          <h3>Top 5 News</h3>
           <div id="get-news">
           </div>
         </div>
-        <div class="col-md">
+        <div class="col-md-8">
           <h2>Tasks for you</h2>
-          <div id="get-tasks">
+          <div class="row">
+            <div class="col-md">
+              <h3>Undone</h3>
+              <div id="get-tasks">
+              </div>
+            </div>
+            <div class="col-md">
+              <h3>Done</h3>
+              <div id="get-tasks-done">
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
   <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="addTaskModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <h5 class="modal-title" id="addTaskModalLabel">Add Task</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
+          <form id="add-task-form" class="form" method="post">
+            <div class="form-group">
+              <label for="title">Title:</label><br>
+              <input type="text" name="title" id="title" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="description">Description:</label><br>
+              <input type="text" name="description" id="description" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="due_date">Due Date:</label><br>
+              <input type="date" name="due_date" id="due_date" class="form-control">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <input type="submit" id="add-task-btn" class="btn btn-primary pull-right" value="Add Task">
+          </div>
+        </form>
       </div>
     </div>
   </div>
