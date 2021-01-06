@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-signin-client_id" content="557948819370-81l50efb2ei1fm8amqbecdoud753scu1.apps.googleusercontent.com">
   <title>Fancy Todo</title>
 </head>
 <body>
@@ -20,9 +21,6 @@
 
   <!-- covid api -->
   <div id="covidApiArea">
-    <h3>Indonesia COVID cases</h3>
-
-    <p>Stay safe</p>
   </div>
 
   <!-- Register/Login -->
@@ -37,6 +35,7 @@
         <button id="createNewUser" type="submit">Register</button>
         <button id="toLogin">Already have account</button>
       </form>
+      <div class="g-signin2" data-onsuccess="onSignIn"></div>
     </div>
     <div id="login">
       <h1>Login</h1>
@@ -48,6 +47,7 @@
         <button id="loginUser" type="submit">Login</button>
         <button id="toRegister">I don't have account</button>
       </form>
+      <div class="g-signin2" data-onsuccess="onSignIn"></div>
     </div>
   </div>
 
@@ -68,17 +68,9 @@
 
   <!-- Show all todo -->
   <div id="showTodo">
-
-    <div id="showTodoDetail">
-      <div>status</div>
-      <h3 id="showTitle">contoh</h3>
-      <p id="showDate">contoh</p>
-      <p id="showDescription">contoh</p>
-      <button id="updateTodos" type="submit">Update</button>
-      <button id="deleteTodos" type="submit">Delete</button>
-    </div>
   </div>
 
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="./script.js"></script>
 </body>

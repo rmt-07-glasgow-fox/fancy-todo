@@ -7,10 +7,10 @@ class CovidController {
     axios.get(indonesiaUrl)
     .then(response => {
       let data = response.data.All
-      res.send({
-        Confirmed: data.confirmed,
-        Recovered: data.recovered,
-        Deaths: data.deaths,
+      res.status(200).json({
+        confirmed: data.confirmed,
+        recovered: data.recovered,
+        deaths: data.deaths,
       })
     })
     .catch(err => {

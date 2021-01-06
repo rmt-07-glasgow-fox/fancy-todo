@@ -13,6 +13,7 @@ function checkAuth() {
     $("#addForm").hide()
     getAllTodos()
     $("#showTodo").show()
+    showCovidApi()
     $("#covidApiArea").show()
   } else {
     $("#register").show()
@@ -71,7 +72,6 @@ function login(email, password) {
     }
   })
   .done(response => {
-    console.log(response, "ini res");
     localStorage.setItem("access_token", response.access_token)
     checkAuth()
   })
@@ -97,14 +97,64 @@ $("#toRegister").click((event)=> {
   $("#register").show()
 })
 
+//google login
+function onSignIn(googleUser) {
+  var id_token = googleUser.getAuthResponse().id_token;
+  $.ajax({
+    method: "POST",
+    url: `${baseUrl}/googleLogin`,
+    data: { id_token }
+  })
+  .done(response => {
+    localStorage.setItem("access_token", response.access_token)
+    checkAuth()
+  })
+  .fail((xhr, status) => {
+
+  })
+}
+
 //logout
 $("#logout").click((event) => {
   event.preventDefault()
   localStorage.clear()
+  const auth2 = gapi.auth2.getAuthInstance();
+  auth2.signOut().then(function () {
+    console.log('User signed out.');
+  });
   checkAuth()
 })
 
 //======================Register, Login, Logout End============================
+
+
+//====================== API START ============================================
+function showCovidApi() {
+  $.ajax({
+    method: "GET",
+    url: `${baseUrl}/covid/cases`,
+    headers: {
+      access_token: localStorage.access_token
+    }
+  })
+  .done(response => {
+    console.log(response);
+    $("#covidApiArea").empty()
+    $("#covidApiArea").append(
+      `<h3>Indonesia COVID cases</h3>
+      <p id="confirmed">Confirmed: ${response.confirmed} person</p>
+      <p id="recovered">Recovered: ${response.recovered} person</p>
+      <p id="deaths">Deaths: ${response.deaths} person</p>
+      <p>Stay safe</p>`
+    )
+  })
+  .fail(err => {
+    console.log(err);
+  })
+}
+//====================== API END ==============================================
+
+
 
 //====================== CRUD START ===========================================
 //create todo
@@ -249,15 +299,14 @@ function getAllTodos() {
 }
 
 
-
-
-
 //====================== CRUD END =============================================
+
 
 
 //========================Document Ready=======================================
 $(document).ready(()=> {
   console.log("page reloaded");
   checkAuth()
-
 })
+
+
