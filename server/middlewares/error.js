@@ -11,6 +11,10 @@ function error(err, req, res, next) {
             res.status(404).json({message: "Errors not found"})
         } else if(err.name === "invalid") {
             res.status(401).json({message: "Invalid email/password"})
+        } else if(err.name === "Not Authenticated") {
+            res.status(401).json({message: "Please login first"})
+        } else if(err.name === "Not Authorized") {
+            res.status(403).json({message: "No Authorization"})
         } else {
             res.status(500).json({message: "internal Server Error"})
         }

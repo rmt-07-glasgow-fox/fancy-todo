@@ -4,8 +4,11 @@ const app = express()
 const port = 3000
 const router = require('./routes')
 const error = require('./middlewares/error')
+const cors = require('cors')
 
 app.use(express.urlencoded({ extended:true }))
+
+app.use(cors())
 
 app.get('/', (req, res) => {
     res.send('hello world')

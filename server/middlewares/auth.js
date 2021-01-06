@@ -8,7 +8,8 @@ async function authentication(req, res, next) {
         let find = await User.findOne({where: { email: decoded.email}})
         // res.send(find)
         if(!find) {
-            res.status(401).json({message: "Please login first"})
+            next({name: "Not Authenticated"})
+            // res.status(401).json({message: "Please login first"})
         } else {
             req.user = find
             // console.log(find)
@@ -16,7 +17,7 @@ async function authentication(req, res, next) {
         }
     }
     catch (err) {
-        res.status(500).json({message: "Internal Server Error"})
+        next(err)
     }
     // next()
 }
@@ -28,14 +29,15 @@ function authorization(req, res, next) {
     }})
         .then(data => {
             console.log(data)
-            if(!data || data.UserId !== req.user.id) {
-                res.status(401).json({message: "No Authorization"})
+            if(!data) {
+                next({name: "Not Authorized"})
+                // res.status(401).json({message: "No Authorization"})
             } else {
                 next()
             }
         })
         .catch(err => {
-            res.status(500).json({message: "Internal Server Error"})
+            next(err)
         })
     
 
