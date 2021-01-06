@@ -169,7 +169,7 @@ class ToDoController {
       })
   }
   static getNews(req, res, next){
-    axios.get(`https://newsapi.org/v2/top-headlines?country=id&apiKey=${process.env.NEWSAPI_API_KEY}`)
+    axios.get(`https://newsapi.org/v2/top-headlines?country=id&pageSize=5&apiKey=${process.env.NEWSAPI_API_KEY}`)
       .then((el) => {
         res.status(200).json(el.data)
       })
