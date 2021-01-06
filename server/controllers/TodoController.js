@@ -1,5 +1,4 @@
 const { Todo } = require('../models')
-const axios = require('axios')
 
 class TodoController {
   static readTodo(req, res, next) {
@@ -8,7 +7,7 @@ class TodoController {
         if (data) {
           res.status(200).json(data)
         } else {
-          res.status(404).json({ message: 'Todo not found' })
+          next({ name: 'todoNotFound' })
         }
       })
       .catch(err => {
@@ -24,6 +23,10 @@ class TodoController {
       due_date: req.body.due_date,
       UserId: req.user.id
     }
+
+    const weather = `http://api.weatherstack.com/current?access_key=f4ec38f9e8f40f4b84ba2c39eb056a96&query=Jakarta`
+
+    axios.get()
 
     Todo.create(todoObj)
       .then(data => {
@@ -121,3 +124,4 @@ class TodoController {
 }
 
 module.exports = TodoController
+

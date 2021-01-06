@@ -25,6 +25,7 @@ const authenticate = ((req, res, next) => {
 })
 
 const authorize = ((req, res, next) => {
+  console.log('halo')
   const todoId = +req.params.id
 
   Todo.findOne({
