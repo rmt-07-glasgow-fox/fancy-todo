@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav id="navbar" class="navbar navbar-light w-75 mx-auto">
+        <div class="container-fluid">
+            <a class="navbar-brand home" href="#">
+                <svg style="width: 2rem; height: 2rem;" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5" />
+                </svg>
+                Home
+            </a>
+            <button class="btn btn-primary btn-register" id="">Register</button>
+            <button class="btn btn-primary btn-login" id="">Login</button>
+            <button class="btn btn-primary btn-logout" id="">Logout</button>
+        </div>
+    </nav>
+
+    <!-- Home -->
+    <div id="home">
+        <div class="container-fluid d-flex justify-content-between w-75 mx-auto mt-5">
+            <div class="d-flex justify-content-center w-100">
+                Belakangan aja
+            </div>
+            <div class="w-75">
+                <div class="shadow rounded">
+                    <!-- Register -->
+                    <div id="register" class="p-5">
+                        <div class="mb-3 text-center">
+                            <h4>Form Register</h4>
+                            <p>Already have an account, please <a class="btn-login">sign in</a></p>
+                        </div>
+                        <form class="w-100" id="form-register">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email address</label>
+                                <input type="email" class="form-control" id="email">
+                            </div>
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="username">
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Register</button>
+                        </form>
+                    </div>
+                    <!-- Login -->
+                    <div id="login" class="p-5">
+                        <div class="mb-3 text-center">
+                            <h4>Form Login</h4>
+                            <p>Dont have an account, please <a class="btn-register">register first</a></p>
+                        </div>
+                        <form class="w-100" id="form-login">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email address</label>
+                                <input type="email" class="form-control" id="email-login">
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password-login">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Todos -->
+    <div id="todo" class="w-75 mx-auto">
+        <div class="d-flex justify-content-between align-items-center my-3">
+            <div class="d-flex align-items-center my-3">
+                <h3 class="m-3">Task</h3>
+                <span id="add-todo">
+                    <svg class="p-2 bg-light rounded-circle text-muted" style="width: 2.25rem; height: 2.25rem;"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                        data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                    </svg>
+                </span>
+            </div>
+            <div>
+                <!-- buat search/filter todo by id-->
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-start">
+            <!-- API Content -->
+            <div class="d-flex justify-content-center" style="width: 35%;max-height: 25rem;">
+                <div class="card" style="width: 20rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Buat Api nanti</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the card's content.</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Cras justo odio</li>
+                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                    </ul>
+                    <div class="card-body">
+                        <a href="#" class="card-link">Card link</a>
+                        <a href="#" class="card-link">Another link</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Task -->
+            <div class="bg-light p-3 shadow rounded" style="width: 65%;">
+                <!-- Header Task -->
+                <div class="d-flex justify-content-between">
+                    <div style="width: 20rem;" class="px-3">
+                        <div class="d-flex justify-content-between p-3 shadow-sm bg-info text-white">
+                            <h5 class="lh-base">Backlog</h5>
+                        </div>
+                    </div>
+                    <div style="width: 20rem;" class="px-3 rounded text-white">
+                        <div class="d-flex justify-content-between p-3 shadow-sm bg-success text-white">
+                            <h5 class="lh-base">Done</h5>
+                        </div>
+                    </div>
+                </div>
+                <!-- Content Task -->
+                <div class="d-flex justify-content-between">
+                    <fieldset id="task-backlog" class="pb-3 px-3 rounded" style="width: 20rem; min-height: 20rem;">
+                        <!-- Buat diisi konten todo backlog -->
+                    </fieldset>
+                    <fieldset id="task-done" class="pb-3 px-3 rounded" style="width: 20rem;min-height: 20rem;">
+                        <!-- Buat diisi konten todo done -->
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Add Todo-->
+    <div class="modal" id="add-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title" id="staticBackdropLabel">Create New Task</h5>
+                </div>
+                <div class="modal-body">
+                    <form id="form-add">
+                        <div class="form-group row my-3 d-flex justify-content-between">
+                            <label for="add-title" class="col-sm-3 col-form-label">Title</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="add-title">
+                            </div>
+                        </div>
+                        <div class="form-group row my-3 d-flex justify-content-between">
+                            <label for="add-description" class="col-sm-3 col-form-label">Description</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" id="add-description" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row my-3 d-flex justify-content-between">
+                            <label for="add-date" class="col-sm-3 col-form-label">Due Date</label>
+                            <div class="col-sm-9">
+                                <input type="date" class="form-control" id="add-date">
+                            </div>
+                        </div>
+                        <div class="form-group row my-3 d-flex justify-content-between">
+                            <label class="col-sm-3 col-form-label">Status</label>
+                            <div class="col-sm-9">
+                                <div class="form-check">
+                                    <input class="form-check-input status-task" type="radio" name="status-task"
+                                        id="new-task" value="false">
+                                    <label class="form-check-label" for="new-task">New Task</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input status-task" type="radio" name="status-task"
+                                        id="done-task" value="true">
+                                    <label class="form-check-label" for="done-task">Done</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-info text-white">Create</button>
+                            <button type="button" class="btn btn-secondary" id="modal-cancel">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous">
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>
