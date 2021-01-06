@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
   User.init({
     username: {
       type: DataTypes.STRING,
+      allowNull: false,
       unique: {
         args: true,
         msg: 'username already registered'
@@ -32,7 +33,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     email: {
       type: DataTypes.STRING,
-      unique: true,
+      allowNull: false,
+      unique: {
+        args: true,
+        msg: 'username already registered'
+      },
       validate: {
         isEmail: {
           args: true,
@@ -46,6 +51,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     password: {
       type: DataTypes.STRING,
+      allowNull: false,
       validate: {
         len: {
           args: [8],
