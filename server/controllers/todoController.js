@@ -12,26 +12,29 @@ class todoController{
     // console.log(newTodo.due_date, '<<<< dari post')
     // console.log(newTodo)
     Todo.create(newTodo)
-    .then(data => {
-      // console.log(data, 'ini dataaaaa<<<<<<<')
-      res.status(201).json(data)
+    .then(todos => {
+      // console.log(todo, 'ini todoaaaa<<<<<<<')
+      res.status(201).json(todos)
     })
     .catch(err => {
       // console.log(err.message, '<<<<ini err.message')
-      if (err.message == 'Validation error: Tanggal sudah lewat'){
+      console.log(err.name)
+      if (err.name == 'SequelizeValidationError'){
         return res.status(400).json({message: 'validation error'})
       }
       res.status(500).json({message: 'internal server error'})
     })
   }
   static getTodo(req,res){
+    console.log(req.user, 'ini req user dalem controller')
     Todo.findAll({
       order: [['id', 'ASC']]
     })
-    .then(data => {
-      res.status(200).json(data)
+    .then(todo => {
+      res.status(200).json(todo)
     })
     .catch(err => {
+      console.log(err)
       res.status(500).json({message: 'internal server error'})
     })
   }
@@ -39,12 +42,12 @@ class todoController{
     Todo.findAll({
       where: {id: req.params.id},
     })
-    .then(data => {
-      if(data.length == 0){
-        return res.status(404).json({message: 'error data not found'})
+    .then(todos => {
+      if(todos.length == 0){
+        return res.status(404).json({message: 'error todos not found'})
       }
-      console.log(data, 'ini data getTodoById')
-      res.status(200).json(data)
+      console.log(todos, 'ini todos getTodosById')
+      res.status(200).json(todos)
     })
     .catch(err => {
       res.status(500).json({message: 'internal server error'})
@@ -56,16 +59,15 @@ class todoController{
       description: req.body.description,
       status: req.body.status,
       due_date: req.body.due_date,
-      message: 'DATA UPDATED'
     }
     Todo.update(updatedTodo, {
       where: {id: req.params.id}
     })
-    .then(data => {
-      if(data == 0){
-        return res.status(404).json({message: 'error data not found'})
+    .then(todos => {
+      if(todos == 0){
+        return res.status(404).json({message: 'error todos not found'})
       }
-      console.log(data)
+      updatedTodo.message = 'todo updated'
       res.status(200).json(updatedTodo)
     })
     .catch(err => {
@@ -76,11 +78,11 @@ class todoController{
     Todo.destroy({
       where: {id: req.params.id}
     })
-    .then(data => {
-      if (data == 0){
-        res.status(404).json({message: 'error data not found'})
+    .then(todos => {
+      if (todos == 0){
+        return res.status(404).json({message: 'error todo not found'})
       }
-      res.status(200).json({message: `data with id ${req.params.id} has been deleted`})
+      return res.status(200).json({message: `todo with id ${req.params.id} has been deleted`})
     })
     .catch(err => {
       res.status(500).json({message: 'internal server error'})
@@ -92,14 +94,14 @@ class todoController{
     }
     Todo.update(newData, {where: {
       id: req.params.id
-    }})
-    .then(data => {
-      res.status(200).json({message: 'data has been updated'})
+    }, returning: true})
+    .then(todos => {
+      res.status(200).json({todo: todos[1][0]})
     })
     .catch(err => {
       res.status(500).json({message: 'internal server error'})
     })
-  }
+  }   
 }
 
 module.exports = todoController

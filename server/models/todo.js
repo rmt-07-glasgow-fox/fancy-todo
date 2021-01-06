@@ -22,7 +22,8 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isAfter: {args: [`${new Date()}`], msg: 'Tanggal sudah lewat'}
       }
-    }
+    },
+    user_id: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Todo',
