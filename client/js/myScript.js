@@ -17,6 +17,8 @@ const dashboardPage = () => {
 }
 
 const registerPage = () => {
+    $('#registerFirstName').val('')
+    $('#registerLastName').val('')
     $('#registerEmail').val('')
     $('#registerPassword').val('')
     $('#registerRepeatPassword').val('')
@@ -85,14 +87,17 @@ $('#btnLogin').click((event) => {
 
 $('#btnRegister').click((event) => {
     event.preventDefault()
+    let firstName = $('#registerFirstName').val()
+    let lastName = $('#registerLastName').val()
     let email = $('#registerEmail').val()
     let password = $('#registerPassword').val()
 
-    console.log(email, password);
     $.ajax({
         method: 'POST',
         url: `${baseUrl}/register`,
         data: {
+            firstName,
+            lastName,
             email,
             password
         },
