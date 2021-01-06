@@ -20,9 +20,7 @@ class todo {
             }
         }
         catch (err) {
-            res.status(500).send({
-                msg: 'Error in internal server'
-            })
+            res.status(500).json(err)
         }
     }
     static async readTodo (req, res) {
@@ -31,9 +29,7 @@ class todo {
             res.status(200).json(data)
         }
         catch (err) {
-            res.status(500).json({
-                msg: 'Error in internal server'
-            })
+            res.status(500).json(err)
         }
     }
     static async getOneTodo (req, res) {
@@ -75,7 +71,7 @@ class todo {
                 const updateData = await todoList.update(edit, {
                     where: { id }
                 })
-                return res.status(200).json(data)
+                return res.status(200).json(updateData)
             }
         }
         catch (err) {
@@ -97,7 +93,7 @@ class todo {
                     where: { id }
                 }, 
                 )
-                return res.status(200).json(data)
+                return res.status(200).json(updateData)
             }
         }
         catch (err) {

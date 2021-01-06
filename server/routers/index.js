@@ -1,9 +1,11 @@
 const router = require('express').Router()
 const controller = require('../controllers/index')
+const authRouter = require('./auth')
 
 router.get('/', (req, res) => {
     res.send('haloo')
 })
+router.use('/', authRouter)
 router.post('/todos', controller.createTodo)
 router.get('/todos', controller.readTodo)
 router.get('/todos/:id', controller.getOneTodo)
