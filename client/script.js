@@ -101,6 +101,7 @@ function cekAuth(){
     $('#login-form').hide()
     $('#todo').show()
     showTodos()
+    getWeather()
   }else{
     $('#login-form').show()
     $('#todo').hide()
@@ -296,6 +297,21 @@ function changeStatus(id){
   })
   .done(response=>{
     showTodos()
+  })
+  .fail(err=>console.log(err))
+}
+
+function getWeather(){
+  const {lat,lon} = localStorage
+  $.ajax({
+    method: 'GET',
+    url: `${baseUrl}/weather/${lat}/${lon}`,
+    headers: {
+      access_token: localStorage.access_token
+    }
+  })
+  .done(response=>{
+    console.log(response);
   })
   .fail(err=>console.log(err))
 }

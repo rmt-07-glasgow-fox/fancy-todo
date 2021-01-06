@@ -3,12 +3,9 @@ const fetch = require('node-fetch')
 class weatherController {
 
     static getWeather(req,res,next){   
-        const query = {
-            lat:"-6.9067536",
-            lon:"107.70381979999999"
-        }
-        // console.log(navigator);
-        let url = 'https://community-open-weather-map.p.rapidapi.com/weather?q=bandung,id'
+        const { lat, lon } = req.params
+
+        let url = `https://community-open-weather-map.p.rapidapi.com/weather?lat=${lat}&lon=${lon}`
         fetch(url, {
             headers : {
                 "x-rapidapi-key": "3a6b37c02dmsh1bad73073dcc94cp171845jsncad9d6e6c78d",
