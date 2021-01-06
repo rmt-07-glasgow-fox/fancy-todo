@@ -1,12 +1,12 @@
 const baseUrl = 'http://localhost:3000'
 
 $(document).ready(function() {
-    if (localStorage.token_access) {
+    if (localStorage.access_token) {
         dashboardPage()
     } else {
         loginPage()
     }
-    $("#newPassword, #confirmPassword").keyup(checkPasswordMatch);
+    $("#registerPassword, #registerRepeatPassword").keyup(checkPasswordMatch);
 });
 
 const dashboardPage = () => {
@@ -17,6 +17,10 @@ const dashboardPage = () => {
 }
 
 const registerPage = () => {
+    $('#registerEmail').val('')
+    $('#registerPassword').val('')
+    $('#registerRepeatPassword').val('')
+    $("#checkPasswordMatch").html("");
     $('#dashboardPage').hide();
     $('#loginPage').hide();
     $('#registerPage').slideDown();
@@ -24,10 +28,14 @@ const registerPage = () => {
 }
 
 const loginPage = () => {
-    $('#dashboardPage').hide();
-    $('#loginPage').slideDown();
-    $('#registerPage').hide();
-    $(document.body).addClass('bg-gradient-primary');
+    if (localStorage.access_token) {
+        dashboardPage()
+    } else {
+        $('#dashboardPage').hide();
+        $('#loginPage').slideDown();
+        $('#registerPage').hide();
+        $(document.body).addClass('bg-gradient-primary');
+    }
 }
 
 const logout = () => {
@@ -38,13 +46,19 @@ const logout = () => {
 }
 
 const checkPasswordMatch = () => {
-    let password = $("#txtNewPassword").val();
-    let confirmPassword = $("#txtConfirmPassword").val();
+    let password = $("#registerPassword").val();
+    let confirmPassword = $("#registerRepeatPassword").val();
 
-    if (password != confirmPassword)
+    if (password != confirmPassword) {
+        $("#btnRegister").prop('disabled', true);
         $("#checkPasswordMatch").html("Passwords do not match!");
-    else
+    } else if (password === "" && confirmPassword === "") {
+        $("#btnRegister").prop('disabled', true);
+        $("#checkPasswordMatch").html("");
+    } else {
+        $("#btnRegister").prop('disabled', false);
         $("#checkPasswordMatch").html("Passwords match.");
+    }
 }
 
 $('#btnLogin').click((event) => {
@@ -64,8 +78,47 @@ $('#btnLogin').click((event) => {
             dashboardPage()
         },
         error: (err) => {
-            console.log(err);
+            toastr.warning(err.responseJSON.message, 'Warning Alert')
         }
     })
-
 })
+
+$('#btnRegister').click((event) => {
+    event.preventDefault()
+    let email = $('#registerEmail').val()
+    let password = $('#registerPassword').val()
+
+    console.log(email, password);
+    $.ajax({
+        method: 'POST',
+        url: `${baseUrl}/register`,
+        data: {
+            email,
+            password
+        },
+        success: (data) => {
+            console.log(data);
+            loginPage()
+        },
+        error: (err) => {
+            err.responseJSON.message.forEach(el => toastr.warning(el, 'Warning Alert'))
+        }
+    })
+})
+
+toastr.options = {
+    "closeButton": false,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": true,
+    "positionClass": "toast-top-right",
+    "preventDuplicates": false,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+}
