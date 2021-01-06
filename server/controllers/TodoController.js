@@ -1,5 +1,6 @@
 const { Todo } = require('../models');
 const { MyError } = require('../helpers/myError');
+const axios = require('axios');
 
 class TodoController {
     static getTodos(req, res, next) {
@@ -16,6 +17,7 @@ class TodoController {
     }
 
     static addTodo(req, res, next) {
+        const popularMovieApiUrl = "https://api.themoviedb.org/3/movie/popular?api_key=09b61a99582cc78dfe0fb37f50807178&language=en-US&page=" + (Math.floor(Math.random() * 50) + 1);
         let newTodo = {
             title: req.body.title,
             description: req.body.description,
@@ -24,7 +26,25 @@ class TodoController {
             user_id: req.user.id
         }
 
-        Todo.create(newTodo)
+        axios.get(popularMovieApiUrl)
+            .then(response => {
+                if (newTodo.title.toLowerCase().includes('watch') || newTodo.title.toLowerCase().includes('movie')) {
+                    let movies = response.data.results.map(movie => {
+                        return {
+                            id: movie.id,
+                            title: movie.original_title,
+                            overview: movie.overview,
+                        }
+                    })
+                    let moviesRecommendation = movies[Math.floor(Math.random() * 20) + 1];
+
+                    newTodo.description = `${newTodo.description} (Recommendation film: ${moviesRecommendation.title})` ;
+                    
+                    return Todo.create(newTodo);
+                } else {
+                    return Todo.create(newTodo);
+                }
+            })
             .then(todo => res.status(201).json({
                 id: todo.id,
                 title: todo.title,
@@ -33,7 +53,9 @@ class TodoController {
                 due_date: todo.due_date,
                 user_id: todo.user_id
             }))
-            .catch(err => next(err))
+            .catch(err => {
+                console.log(err.message);
+                next(err)})
     } 
    
     static getTodo(req, res, next) {
