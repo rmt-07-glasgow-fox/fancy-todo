@@ -164,6 +164,7 @@ $("#showAddForm").click((event) => {
 })
 $("#hideAddForm").click((event) => {
   event.preventDefault
+  $("#addForm").hide()
 })
 $("#addTodo").click((event) => {
   event.preventDefault
@@ -232,7 +233,6 @@ function updateOneTodo(id) {
     }
   })
   .done(response => {
-    getAllTodos()
   })
   .fail(err => {
     console.log(title, due_date, description);
@@ -257,8 +257,8 @@ function getOneTodo(id) {
           <input type="text" id="title${response.id}" name="title" placeholder="Title" value="${response.title}">
           <input type="date" id="due_date${response.id}" name="due_date" value="${(response.due_date).split('T')[0]}"><br><br>
           <input type="text" id="description${response.id}" name="description" placeholder="What's the detail?" value="${response.description}"><br><br>
-          <button id="updateTodos" onclick="updateOneTodo(${response.id})" type="submit">Update</button>
-          <button id="deleteTodos" onclick="" type="submit">cancel</button>
+          <button id="updateTodos" onclick="updateOneTodo(${response.id})" >Update</button>
+          <button id="deleteTodos" onclick="">cancel</button>
         </form>
       </div>`)
   })
