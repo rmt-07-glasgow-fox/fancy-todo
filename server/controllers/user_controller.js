@@ -1,3 +1,4 @@
+const {OAuth2Client} = require('google-auth-library');
 const { comparePassword } = require('../helpers/byecrypt')
 const { generateToken } = require('../helpers/jwt')
 const {User} = require('../models')
@@ -48,6 +49,7 @@ class UserController {
         }
 
         const access_token = generateToken(payload)
+        console.log("USER YG SEDANG LOGIN", user.email);
         return res.status(200).json({access_token})
         
       } else {
@@ -58,6 +60,47 @@ class UserController {
     } catch(error) {
       return res.status(401).json(error)
     }
+  }
+
+  static async googleSignin(req, res, next) {
+    try {
+      const {id_token} = req.body
+      const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+      const ticket = await client.verifyIdToken({
+        idToken: id_token,
+        audience: process.env.GOOGLE_CLIENT_ID,
+      });
+      const payload = ticket.getPayload();
+      let email = payload.email
+
+      let user = await User.findOne({
+        where: {
+          email
+        }
+      })
+
+      if (!user) {
+        user = await User.create({
+          email,
+          password: Math.random()*100+'mahpassword'
+        })
+      }
+
+      const _payload = {
+        id: user.id,
+        email: user.email
+      }
+
+      const access_token = generateToken(_payload)
+      console.log("USER YG SEDANG LOGIN", user.email);
+      return res.status(200).json({access_token})
+
+    } catch(error) {
+      next(error)
+    }
+    
+    const userid = payload['sub'];
+
   }
 }
 
