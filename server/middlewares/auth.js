@@ -3,14 +3,18 @@ const { User, Todo } = require('../models')
 
 async function authenticate(req, res, next) {
     try {
-        // console.log('>>> req.headers : ', req.headers)
+        console.log('>>> req.headers : ', req.headers)
 
         let decodedToken = verifyToken(req.headers.access_token)
         let user = await User.findOne({ where: { email: decodedToken.email } })
         // console.log('>>> decodedToken :', decodedToken)
         // console.log('>>> user :', user)
 
-        if (!user) return res.status(401).json({ message: 'Please' })
+        if (!user) {
+            // return res.status(401).json({ message: 'Please' })
+            return next({ name: '401' })
+        }
+
         if (user) {
             req.user = { id: user.id }
             // console.log('>>> req.user : ', req.user)
@@ -30,11 +34,20 @@ async function authorize(req, res, next) {
 
         let todo = await Todo.findByPk(id)
         // console.log(todo)
-        if (!todo || todo.UserId !== req.user.id) return res.status(401).json({ message: `Bukan todo user id : ${req.user.id}` })
-        if (todo) return next()
+        if (!todo) {
+            return next({ name: '404' })
+        }
+
+        if (todo.UserId !== req.user.id) {
+            return next({ name: '403' })
+            // return res.status(403).json({ message: `Bukan todo user id : ${req.user.id}` })
+        }
+
+        return next()
 
     } catch (err) {
-        return res.send(500).json(err.message)
+        // return res.send(500).json(err.message)
+        return next(err)
     }
 }
 

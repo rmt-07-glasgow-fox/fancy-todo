@@ -5,7 +5,7 @@ class TodoController {
         return res.send('welcome !')
     }
 
-    static async todoAdd(req, res) {
+    static async todoAdd(req, res, next) {
         try {
             // console.log('>>> req.user : ', req.user)
             let { title, description, status, due_date } = req.body
@@ -27,23 +27,15 @@ class TodoController {
                 UserId: data.UserId
             }
 
-            return res.status(201).json(response)
+            return res.status(201).json({ message: response })
         } catch (err) {
-            // console.log(err)
-
-            if (err.name === "SequelizeValidationError") {
-                let errorMessage = err.errors.map(error => error.message)
-                return res.status(400).json(errorMessage)
-            }
-
-            return res.status(500).json(err)
+            return next(err)
         }
     }
 
-    static async todoList(req, res) {
+    static async todoList(req, res, next) {
         try {
-            // console.log(req.user)
-            let data = await Todo.findAll({
+            let response = await Todo.findAll({
                 where: { UserId: req.user.id },
                 order: [['id', 'ASC']],
                 attributes: {
@@ -52,19 +44,17 @@ class TodoController {
                 }
             })
 
-            // console.log(data)
-            return res.status(200).json(data)
+            return res.status(200).json({ message: response })
         } catch (err) {
-            return res.status(500).json(err)
+            return next(err)
         }
     }
 
-    static async todoById(req, res) {
+    static async todoById(req, res, next) {
         try {
             let id = +req.params.id
-            // console.log(req.user)
 
-            let data = await Todo.findByPk(id, {
+            let response = await Todo.findByPk(id, {
                 where: { UserId: req.user.id },
                 attributes: {
                     // include: ['id', 'title', 'description', 'status', 'due_date'],
@@ -72,19 +62,18 @@ class TodoController {
                 }
             })
 
-            // console.log('data : ', data)
-            if (data) return res.status(200).json(data)
-            if (!data) return res.status(404).json('error not found')
+            if (response) {
+                return res.status(200).json({ message: response })
+            }
 
         } catch (err) {
-            return res.status(500).json(err)
+            return next(err)
         }
     }
 
-    static async todoUpdateAll(req, res) {
+    static async todoUpdateAll(req, res, next) {
         try {
             let id = +req.params.id
-            // console.log('req.body : ', req.body)
 
             let update = {
                 title: req.body.title || '',
@@ -94,68 +83,46 @@ class TodoController {
             }
 
             let response = await Todo.update(update, { where: { id } })
-            // console.log('response : ', response)
             if (response[0] > 0) {
                 let updatedData = await Todo.findByPk(id, {
                     attributes: { exclude: ['createdAt', 'updatedAt'] }
                 })
-                return res.status(200).json(updatedData)
+                return res.status(200).json({ message: updatedData })
             }
-
-            return res.status(404).json('error not found')
 
         } catch (err) {
-            // console.log(err)
-
-            if (err.name === "SequelizeValidationError") {
-                let errorMessage = err.errors.map(error => error.message)
-                return res.status(400).json(errorMessage)
-            }
-
-            return res.status(500).json(err)
+            return next(err)
         }
     }
 
-    static async todoUpdateStatus(req, res) {
+    static async todoUpdateStatus(req, res, next) {
         try {
             let id = +req.params.id
             let updateStatus = { status: true }
-
             let response = await Todo.update(updateStatus, { where: { id } })
-            // console.log('response : ', response)
 
             if (response[0] > 0) {
                 let updatedData = await Todo.findByPk(id, {
                     attributes: { exclude: ['createdAt', 'updatedAt'] }
                 })
-                return res.status(200).json(updatedData)
+                return res.status(200).json({ message: updatedData })
             }
-
-            return res.status(404).json('error not found')
 
         } catch (err) {
-            // console.log(err)
-
-            if (err.name === "SequelizeValidationError") {
-                let errorMessage = err.errors.map(error => error.message)
-                return res.status(400).json(errorMessage)
-            }
-
-            return res.status(500).json(err)
+            return next(err)
         }
     }
 
-    static async todoDelete(req, res) {
+    static async todoDelete(req, res, next) {
         try {
             let id = +req.params.id
-
             let deleted = await Todo.destroy({ where: { id: id } })
-
-            if (deleted) return res.sendStatus(200)
-            if (!deleted) return res.status(404).json('error not found')
+            if (deleted) {
+                return res.sendStatus(200)
+            }
 
         } catch (err) {
-            return res.status(500).json(err)
+            return next(err)
         }
     }
 }

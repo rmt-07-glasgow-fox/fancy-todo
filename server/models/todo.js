@@ -55,12 +55,17 @@ module.exports = (sequelize, DataTypes) => {
     },
     UserId: {
       type: DataTypes.INTEGER,
+      allowNull: false,
       validate: {
         notEmpty: {
           args: true,
           msg: 'UserId is empty'
         },
         isInt: {
+          args: true,
+          msg: 'UserId should be Integer'
+        },
+        notNull: {
           args: true,
           msg: 'UserId should be Integer'
         }
