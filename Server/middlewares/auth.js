@@ -14,9 +14,7 @@ async function authenticate (req, res, next) {
       next()
     }
   } catch (err) {
-    res.status(400).json({
-      message: err.message
-    })
+    next({ code: 404, msg: err.message })
   }
 }
 

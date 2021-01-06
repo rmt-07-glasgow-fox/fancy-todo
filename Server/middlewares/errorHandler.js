@@ -1,18 +1,4 @@
-if (process.env.NODE_ENV === 'development') {
-  require('dotenv').config()
-}
-require('dotenv').config()
-const express = require('express')
-const app = express()
-const router = require('./routes')
-
-const port = 3000;
-
-app.use(express.json())
-app.use(express.urlencoded({extended: false}))
-
-app.use(router)
-app.use((err, req, res, next) => {
+function errorHandler (err, req, res, next) {
   let { code, msg, origin } = err
   switch (code) {
     case 400 :
@@ -21,7 +7,7 @@ app.use((err, req, res, next) => {
     case 401 :
       if (origin === 'authenticate') res.status(code).json({ message: "Please Login First"})
       else if (origin === 'user') res.status(code).json({ message: "Invalid Username / Password"})
-      else res.status(code).json({ message: "UnAuthorize Data" })
+      else res.status(code).json({ message: "Unauthorize Data" })
       break;
     case 404 :
       res.status(code).json({ message: "Data Not Found"})
@@ -30,9 +16,8 @@ app.use((err, req, res, next) => {
       res.status(code).json({ message: "Internal Server Error"})
       break;
   }
+}
 
-})
-
-app.listen(port, () => {
-  console.log(`App listen on Port ${port}`);
-})
+module.exports = {
+  errorHandler
+}

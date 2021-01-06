@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         dateNotToday(value) {
           if(value < new Date()) {
-            throw Error ('date Must Greater Than Today')
+            throw Error ('Due Date Must Greater Than Today')
           }
         }
       }

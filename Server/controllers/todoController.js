@@ -2,7 +2,9 @@ const { Todo } = require('../models')
 
 class TodoController {
   static getTodo(req, res, next) {
-    Todo.findAll({})
+    Todo.findAll({
+      attributes: {exclude: ['updatedAt', 'createdAt']}
+    })
     .then(data=> {
       res.status(200).json(data)
     })
