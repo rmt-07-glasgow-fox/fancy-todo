@@ -5,7 +5,10 @@ class TodoController {
         try {
             const data = await Todo.findAll({
                 where: { userId: req.user.id },
-                attributes: { exclude: ['createdAt', 'updatedAt'] }
+                attributes: { exclude: ['createdAt', 'updatedAt'] },
+                order: [
+                    ['title', 'asc']
+                ]
             })
             return res.status(200).json({
                 status: 'success',
