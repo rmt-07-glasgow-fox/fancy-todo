@@ -45,12 +45,16 @@ class UserController {
         author: getQuote.data.author
       }
       const access_token = generateToken(payload);
-      return res.status(200).json({access_token, quote})
+      return res.status(200).json({access_token, email, quote})
     }
 
     catch(err) {
       return res.status(400).json(err);
     }
+  }
+
+  static async loginGoogle () {
+
   }
 }
 
