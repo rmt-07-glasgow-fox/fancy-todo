@@ -3,7 +3,7 @@ const { comparePass } = require('../helpers/bcrypt')
 const { generateToken } = require('../helpers/jwt')
 
 class UserController {
-    static register(req, res) {
+    static register(req, res, next) {
         const { email, password } = req.body
         let obj = {
             email,
@@ -18,12 +18,12 @@ class UserController {
             res.status(200).json(obj)
         })
         .catch(err => {
-            console.log(err)
-            res.status(400).json({err})
+            // console.log(err)
+            next(err)
         })
     }
 
-    static async login(req, res) {
+    static async login(req, res, next) {
         try {
             const { email, password } = req.body
     
@@ -33,7 +33,7 @@ class UserController {
                 }
             })
             if (!user) {
-                return res.status(401).json({message: 'Invalid Email / Password'})
+                next({message: 'Invalid Email / Password'})
             }
             const isValidPass = comparePass(password, user.password)
             if (isValidPass) {
@@ -44,10 +44,10 @@ class UserController {
                 const accessToken = generateToken(payload)
                 return res.status(200).json({ accessToken })
             } else {
-                return res.status(401).json({message: 'Invalid Email / Password'})
+                next({message: 'Invalid Email / Password'})
             }
         } catch (err) {
-
+            next({message: 'Internal Server Error'})
         }
     }
 }

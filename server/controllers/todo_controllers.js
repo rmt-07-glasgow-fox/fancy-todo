@@ -1,7 +1,7 @@
 const {Todo} = require('../models')
 
 class TodoController {
-    static findTodos(req, res) {
+    static findTodos(req, res, next) {
         Todo.findAll({
             where: {
                 user_id: +req.user.id
@@ -14,11 +14,11 @@ class TodoController {
             res.status(200).json(data)
         })
         .catch(err => {
-            res.status(500).json({ message: "Internal Server Error"})
+            next({ message: "Internal Server Error"})
         })
     }
 
-    static addTodos(req, res) {
+    static addTodos(req, res, next) {
         const { title, description, status, due_date} = req.body
         console.log(req.user.id, 'ini disini')
         const user_id = req.user.id
@@ -36,11 +36,11 @@ class TodoController {
         })
         .catch(err => {
             console.log(err)
-            res.status(500).json({message: 'Internal Server Error'})
+            next(err)
         })
     }
     
-    static findTodoById(req, res) {
+    static findTodoById(req, res, next) {
         let id = req.params.id
         Todo.findByPk(id, {
             attributes: {
@@ -48,14 +48,18 @@ class TodoController {
             }
         })
         .then(data => {
-            res.status(200).json(data)
+            if (!data) {
+                next({message: 'Data Not Found'})
+            } else {
+                res.status(200).json(data)
+            }
         })
         .catch(err => {
-            res.status(404).json({message: 'Data Not Found'})
+            next({message: 'Internal Server Error'})
         })
     }
 
-    static update(req, res) {
+    static update(req, res, next) {
         let id = req.params.id
         const { title, description, status, due_date} = req.body
         let obj = {
@@ -73,11 +77,11 @@ class TodoController {
             res.status(200).json(data)
         })
         .catch(err => {
-            res.status(500).json({message: 'Internal Server Error'})
+            next({message: 'Internal Server Error'})
         })
     }
 
-    static editStatus(req, res) {
+    static editStatus(req, res, next) {
         let id = req.params.id
         const { status } = req.body
         let obj = { status }
@@ -90,11 +94,11 @@ class TodoController {
             res.status(200).json(data)
         })
         .catch(err => {
-            res.status(500).json({message: 'Internal Server Error'})
+            next({message: 'Internal Server Error'})
         })
     }
     
-    static delete(req, res) {
+    static delete(req, res, next) {
         let id = req.params.id
         Todo.destroy({
             where: {
@@ -102,10 +106,14 @@ class TodoController {
             }
         })
         .then(data => {
-            res.status(200).json({message: 'Todo Has Been Succesfully Deleted'})
+            if (!data) {
+                next({ message: 'Data Not Found'})
+            } else {
+                res.status(200).json({message: 'Todo Has Been Succesfully Deleted'})
+            }
         })
         .catch(err => {
-            res.status(500).json({message: 'Internal Server Error'})
+            next({message: 'Internal Server Error'})
         })
     }
 
