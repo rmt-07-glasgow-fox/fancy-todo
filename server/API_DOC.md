@@ -6,7 +6,39 @@
 
 &nbsp;
 
-## RESTful endpoints
+# RESTful endpoints
+**Register**
+----
+  Register user into server
+
+* **URL**
+
+  /register
+
+* **Method**
+
+  `POST`
+
+* **Request Body**
+
+  ```
+  {
+    "email": "<your email>",
+    "password": "<your password>"
+  }
+  ```
+
+* **Success Response:** <br />
+  **Code:** 200 <br />
+  **Content:**
+  ```
+
+  ```
+
+
+
+
+
 ### GET /todos
 
 > Get all todos
