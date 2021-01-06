@@ -25,7 +25,8 @@ class ToDoController {
         }
       })
       if (data !== null) {
-        res.status(200).json(data)
+        let weather = await getWeather ()
+        res.status(200).json(data, weather)
       } else {
         throw new Error ('error not found')
       }
