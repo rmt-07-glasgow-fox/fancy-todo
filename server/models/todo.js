@@ -20,11 +20,23 @@ module.exports = (sequelize, DataTypes) => {
   Todo.init({
     title: DataTypes.STRING,
     description: DataTypes.STRING,
-    status: DataTypes.STRING,
+    status: {
+      type: DataTypes.STRING,
+      validate: {
+        validateStatus(value) {
+          if (value === 'done' || value === 'undone') {
+            this.status = value
+          } else {
+            const code = 400
+            throw new Error(['Item status only done/undone!', code])
+          }
+        }
+      }
+    },
     due_date: {
       type: DataTypes.DATE,
       validate: {
-        checkDate(value) {
+        validateDate(value) {
           if (checkDate(value) === 'invalid') {
             const code = 400
             throw new Error(['Date should be greater than or equal to today date!', code])
