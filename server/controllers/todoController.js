@@ -25,11 +25,12 @@ class ToDoController {
     .then(data => {
       if(data) {
         res.status(201).json({id: data.id, title: data.title, description: data.description, due_date: data.due_date})
-      } else {
-        res.status(400).json({message: `Something wrong`})
       }
     })
     .catch(err => {
+      if (err) {
+        res.status(400).json({message: `Something Wrong`})
+      }
       res.status(500).json(err.message)
     })
   }
