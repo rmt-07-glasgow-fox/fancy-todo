@@ -8,7 +8,8 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
     <title>Todo App</title>
   </head>
   <body>
@@ -25,10 +26,10 @@
               <label class="form-label">Password</label>
               <input type="password" class="form-control" id="password">
             </div>
-            <div class="mb-3 form-check">
+            <!-- <div class="mb-3 form-check">
               <input type="checkbox" class="form-check-input" id="exampleCheck1">
               <label class="form-check-label" for="exampleCheck1">Remember me</label>
-            </div>
+            </div> -->
             <div id="login-container">
               <button type="submit" class="btn btn-primary" id="login-btn">Login</button>
               <div class="mt-3">Not registered? <a href="" id="create-account">Create an account</a></div>
@@ -51,10 +52,6 @@
               <label class="form-label">Password</label>
               <input type="password" class="form-control" id="password-register">
             </div>
-            <div class="mb-3 form-check">
-              <input type="checkbox" class="form-check-input" id="exampleCheck1">
-              <label class="form-check-label" for="exampleCheck1">Remember me</label>
-            </div>
             <div id="register-container">
               <button type="submit" class="btn btn-primary" id="register-btn">Register</button>
               <div class="mt-3">Have account? <a href="" id="login-account">Login here</a></div>
@@ -66,23 +63,55 @@
         <div id="todo">
           <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-              <a class="navbar-brand" href="#">Navbar</a>
+              <a class="navbar-brand" href="#">Fancy Todo</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
               <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Features</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Pricing</a>
+                    <a class="nav-link" href="" id="add-todo">Add Todo</a>
                   </li>
                 </ul>
                 <button class="btn btn-warning" id="logout-btn">Logout</button>
               </div>
             </div>
           </nav>
+
+          <!-- add todo -->
+          <div class="card mt-3 bg-light p-3" id="form-add" style="display: none;">
+            <form class="form-floating">
+              <div class="row mb-3">
+                <div class="col">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" id="title" placeholder="Title">
+                    <label>Title</label>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-floating">
+                    <input type="date" class="form-control" id="due_date">
+                    <label>Due Date</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-floating mb-3">
+                <textarea class="form-control" placeholder="Leave a comment here" id="description" style="height: 100px"></textarea>
+                <label>Description</label>
+              </div>
+
+              <div>
+                <button type="submit" class="btn btn-primary" id="add-btn">Add</button>
+                <button type="submit" class="btn btn-danger" id="cancel-btn">Cancel</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- show todos -->
+          <div id="todo-container">
+
+          </div>
         </div>
     </div>
 
