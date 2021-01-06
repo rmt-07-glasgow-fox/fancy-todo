@@ -179,7 +179,7 @@ class ToDoController {
       }))
   }
   static getCurrentWeather(req, res, next){
-    axios.get(`https://api.openweathermap.org/data/2.5/weather?q=bandung&appid=${process.env.OPENWEATHER_API_KEY}`)
+    axios.get(`https://api.openweathermap.org/data/2.5/weather?q=bandung&appid=${process.env.OPENWEATHER_API_KEY}&units=metric`)
       .then((el) => {
         res.status(200).json(el.data)
       })
