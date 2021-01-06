@@ -32,7 +32,8 @@ class ControllerUser {
             if (data){
                 if(compare(req.body.password,data.password)){
                     const access_token = generateToken({id: data.id, email:data.email})
-                    res.status(200).json({ access_token })
+                    const first_name = data.firstname
+                    res.status(200).json({ access_token,first_name })
                 } else {
                     throw {
                         status: 400,

@@ -1,4 +1,4 @@
-const { Todo } = require('../models')
+const { Todo,User } = require('../models')
 
 class ControllerTodo {
 
@@ -7,7 +7,7 @@ class ControllerTodo {
             title: req.body.title,
             UserId: req.loggedInUser.id,
             description: req.body.description,
-            status: req.body.status,
+            status: 'belum selesai',
             due_date: req.body.due_date,
             createdAt: new Date(),
             updatedAt: new Date()
@@ -29,7 +29,7 @@ class ControllerTodo {
     }
 
     static listTodo(req,res,next){
-        Todo.findAll({where: {UserId: req.loggedInUser.id}})
+        Todo.findAll({where: {UserId: req.loggedInUser.id}, include: User})
         .then(data => {
             res.status(200).json(data)
         })
@@ -66,7 +66,6 @@ class ControllerTodo {
         Todo.update({
             title: req.body.title,
             description: req.body.description,
-            status: req.body.status,
             due_date: req.body.due_date
         },{where: {id: req.params.id}})
         .then(data => {
@@ -103,7 +102,7 @@ class ControllerTodo {
 
     static updateStatusTodo(req,res,next){
         Todo.update({
-            status: req.body.status,
+            status: "selesai",
         },{where: {id: req.params.id}})
         .then(data => {
             return Todo.findOne({where: {id: req.params.id}})

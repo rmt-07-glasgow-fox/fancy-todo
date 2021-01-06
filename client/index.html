@@ -6,7 +6,6 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="styleModal.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="index.js"></script>
 </head>
@@ -19,12 +18,37 @@
             <img src="https://to-do-cdn.microsoft.com/static-assets/c87265a87f887380a04cf21925a56539b29364b51ae53e089c3ee2b2180148c6/icons/logo.png" width="150" height="120" style="margin-top: 10px" class="d-inline-block align-top" alt="" loading="lazy">
           </div>
           <form id="form-login">
-            <input type="text" id="email" class="fadeIn second" name="login" placeholder="email" required>
-            <input type="password" id="password" class="fadeIn third" name="login" placeholder="password" required>
+            <input type="text" id="email-login" class="fadeIn second" name="login" placeholder="email" required>
+            <input type="password" id="password-login" class="fadeIn third" name="login" placeholder="password" required>
             <input type="submit" class="fadeIn fourth">
           </form>
+          <div id="error-login" style="color: red;">
+
+          </div>
           <div id="formFooter">
-            <a class="underlineHover">don't have an account?</a>
+            <a id="to-register" class="underlineHover">don't have an account?</a>
+          </div>
+        </div>
+    </div>
+
+    <!-- register page -->
+    <div class="wrapper fadeInDown" id="register">
+        <div id="formContent">
+          <div class="fadeIn first">
+            <img src="https://to-do-cdn.microsoft.com/static-assets/c87265a87f887380a04cf21925a56539b29364b51ae53e089c3ee2b2180148c6/icons/logo.png" width="150" height="120" style="margin-top: 10px" class="d-inline-block align-top" alt="" loading="lazy">
+          </div>
+          <form id="form-register">
+            <input type="text" id="firstname-register" class="fadeIn second" name="register" placeholder="First Name" required>
+            <input type="text" id="lastname-register" class="fadeIn second" name="register" placeholder="Last Name" required>
+            <input type="text" id="email-register" class="fadeIn second" name="register" placeholder="Email" required>
+            <input type="password" id="password-register" class="fadeIn third" name="register" placeholder="Password" required>
+            <input type="submit" class="fadeIn fourth">
+          </form>
+          <div id="error-register" style="color: red;">
+
+          </div>
+          <div id="formFooter">
+            <a id="back-login" class="underlineHover">already have an account?</a>
           </div>
         </div>
     </div>
@@ -34,15 +58,44 @@
         <nav class="navbar navbar-light bg-light">
             <div class="container-fluid">
               <img class="navbar-brand" src="https://to-do-cdn.microsoft.com/static-assets/c87265a87f887380a04cf21925a56539b29364b51ae53e089c3ee2b2180148c6/icons/logo.png" width="40" height="40" style="margin-top: 5 px" class="d-inline-block align-top" alt="" loading="lazy">
-              <h3>hello, </h3>
+              <div id="greeting">
+
+              </div>
+              <button class="mx-auto btn btn-outline-info" id="addTodo-btn">add todo</button>
               <button class="btn btn-outline-danger" id="logout-btn">Logout</button>
             </div>
         </nav>
-        <div class="shadow p-3 mb-5 bg-white rounded card mx-auto mt-5" style="width: 40rem;" id="list-todos">     
+        <div id="list-todos">
+             
         </div>
     </div>
 
-    <!-- edit form -->
+    <!-- add form todo-->
+    <div class="wrapper fadeInDown" id="addTodo">
+        <div id="formContent">
+          <div class="fadeIn first">
+            <img src="https://to-do-cdn.microsoft.com/static-assets/c87265a87f887380a04cf21925a56539b29364b51ae53e089c3ee2b2180148c6/icons/logo.png" width="150" height="120" style="margin-top: 10px" class="d-inline-block align-top" alt="" loading="lazy">
+          <H1>Add New Todo</H1>
+          </div>
+          <form id="form-add-todo">
+            <input type="text" id="name-addTodo" class="fadeIn second" name="name-todo" placeholder="name" required>
+            <input type="text" id="description-addTodo" class="fadeIn second" name="description-todo" placeholder="description" required>
+            <input type="date" id="due-date-addTodo" class="fadeIn second" name="due-date-todo" placeholder="due date" required>
+            <input type="submit" class="fadeIn fourth">
+          </form>
+          <div id="error-addTodo" style="color: red;">
 
+          </div>
+          <div id="formFooter">
+            <a class="underlineHover" id="backHome">back to home</a>
+          </div>
+        </div>
+    </div>
+
+    <!-- edit form todo -->
+
+    <div class="wrapper fadeInDown" id="editTodo">
+        
+    </div>
 </body>
 </html>
