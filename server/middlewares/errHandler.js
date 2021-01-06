@@ -11,7 +11,7 @@ let errHandler = (err, req, res, next) => {
         res.status(404).json({ message: "Error 404: Not Found" });
         break;
       default:
-        res.status(500).json({ message: "Error 500: Internal Server Error" });
+        res.status(500).json(err);
         break;
     };
   };

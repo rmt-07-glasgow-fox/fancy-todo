@@ -14,7 +14,7 @@ _Request Body_
 ```json
 {
   "email": "<your email>",
-  "username": "<your username>",
+  "name": "<your name>",
   "password": "<your password>"
 }
 ```
@@ -24,7 +24,7 @@ _Response (201)_
 {
   "id": "<your id>",
   "email": "<your email>",
-  "username": "<your username>"
+  "name": "<your name>"
 }
 ```
 

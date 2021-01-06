@@ -2,9 +2,12 @@ if (process.env.NODE_ENV === 'development') { require('dotenv').config() };
 const express = require('express');
 const app = express();
 const port = 3000;
+const cors = require('cors');
 
 const errHandler = require('./middlewares/errHandler.js');
 const router = require('./routers/index.js');
+
+app.use(cors());
 
 app.use(express.json());
 

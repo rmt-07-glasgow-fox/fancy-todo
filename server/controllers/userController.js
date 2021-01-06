@@ -5,10 +5,11 @@ const { generateToken } = require('../helpers/jwt.js')
 class UserController {
   static async register(req, res) {
     try {
-      const { email, username, password } = req.body;
-      const register = await User.create({ email, username, password })
+      const { email, name, password } = req.body;
+      console.log({name});
+      const register = await User.create({ email, name, password })
 
-      return res.status(201).json({ id: register.id, email: register.email, username: register.username })
+      return res.status(201).json({ id: register.id, email: register.email, name: register.name })
     } catch (err) {
       return res.status(400).json(err)
     };
@@ -29,7 +30,7 @@ class UserController {
         const payload = {
           id: user.id,
           email: user.email,
-          username: user.username
+          name: user.name
         };
         const access_token = generateToken(payload);
         return res.status(200).json({ access_token });

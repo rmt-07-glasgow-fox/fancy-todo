@@ -31,19 +31,18 @@ module.exports = (sequelize, DataTypes) => {
       },
       unique: true
     },
-    username: {
+    name: {
       type: DataTypes.STRING,
       validate: {
         len: {
-          args: [5, 16],
-          msg: "Username length must be between 5 and 16 characters"
+          args: [2],
+          msg: "Name length atleast 2 characters"
         },
         is: {
-          args: ["^[a-zA-Z0-9]+$", 'i'],
-          msg: "Unique symbol or Whitespace is not allowed"
+          args: ["^[a-zA-Z0-9 ]+$", 'i'],
+          msg: "Unique symbol is not allowed"
         },
       },
-      unique: true
     },
     password: {
       type: DataTypes.STRING,

@@ -38,7 +38,7 @@ class TodoController {
       }
       return res.status(200).json(todo);
     } catch (err) {
-      next(err)
+      next(err);
     };
   };
 
