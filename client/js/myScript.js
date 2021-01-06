@@ -86,23 +86,44 @@ const tableTodosFetch = () => {
         },
         columns: [
             { data: 'id', name: 'id', visible: false, searchable: false },
-            {
-                data: "status",
-                render: (data) => {
-                    let is_checked = data === true ? "checked" : "";
-                    let message = data === true ? "done" : "onProgress";
-                    return `<div class="custom-control custom-checkbox small "> <input type="checkbox" ${is_checked} class="custom-control-input" id="checkbBoxStatus" > <label class="custom-control-label" for="checkbBoxStatus" > <h6> ${message} </h6> </label> </div >`;
-                }
-            },
             { data: "title" },
             { data: "description" },
-            { data: 'action', name: 'action', orderable: false, searchable: false, defaultContent: '<div class="input-group-btn"><button class="btn btn-warning" id="bedit"><i class="fa fa-pencil-alt"></i></button><button class="btn btn-danger" style="margin-left:5px" id="bdestroy"><i class="fa fa-trash"></i></button> </div>' },
+            {
+                data: "due_date",
+                render: function(data) {
+                    return formatDate(data)
+                }
+            },
+            {
+                data: 'status',
+                render: function(data) {
+                    if (data === true) {
+                        return 'Done'
+                    } else {
+                        return 'On Going'
+                    }
+                }
+            },
+            {
+                data: 'action',
+                name: 'action',
+                orderable: false,
+                searchable: false,
+                render: function(data, type, row) {
+                    return `<div class="input-group-btn"><button class="btn btn-warning" id="bedit"><i class="fa fa-pencil-alt"></i></button><button class="btn btn-danger" style="margin-left:5px" id="bdestroy"><i class="fa fa-trash"></i></button> <button class="btn btn-info" style="margin-left:5px" id="bIsDone"> ${(row['status'] === true) ? 'make on going' : 'make done'}</button>  </div>`
+                }
+            },
         ],
     });
 
 }
 
-$('#tableTodo tbody').on('click', '#checkbBoxStatus', function() {
+const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "long", day: "numeric" }
+    return new Date(dateString).toLocaleDateString(undefined, options)
+}
+
+$('#tableTodo tbody').on('click', '#bIsDone', function() {
     var id = tableTodo.row($(this).parents('tr')).data().id;
     var status = tableTodo.row($(this).parents('tr')).data().status;
 
