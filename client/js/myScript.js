@@ -1,5 +1,5 @@
 const baseUrl = 'http://localhost:3000'
-let tableTodo;
+let tableTodo, save_method, method;
 
 $(document).ready(function() {
     if (localStorage.access_token) {
@@ -10,10 +10,53 @@ $(document).ready(function() {
     $("#registerPassword, #registerRepeatPassword").keyup(checkPasswordMatch);
 
     $('#btnCreate').click(function() {
-        $('#mcreate').modal();
+        $('#modal-todos').modal();
+        $('#modal-todos form')[0].reset();
+        $('.modal-title').text('Add new todos');
+        save_method = "add";
+    });
+
+    $('#modal-todos form').on('submit', (e) => {
+        if (!e.isDefaultPrevented()) {
+            var id = $('#id_todos').val();
+            if (save_method == "add") {
+                url = `${baseUrl}/todos`;
+                method = 'POST';
+            } else {
+                url = `${baseUrl}/todos/${id}`;
+                method = 'PUT';
+            }
+            $.ajax({
+                url,
+                method,
+                data: $('#modal-todos form').serialize(),
+                dataType: 'JSON',
+                headers: {
+                    authorization: localStorage.access_token
+                },
+                success: (data) => {
+                    if (save_method == "add") {
+                        toastr.success('Data Berhasil di Simpan!', 'Success Alert', { timeOut: 4000 });
+                    } else {
+                        toastr.success('Data Berhasil di update!', 'Success Alert', { timeOut: 4000 });
+                    }
+                    $('#modal-todos').modal('hide');
+                    tableTodo.ajax.reload(null, false);
+                },
+                error: (err) => {
+                    if (err.responseJSON.message === 'jwt expired') {
+                        toastr.info(`${err.responseJSON.message}`, 'session expired');
+                        $('#modal-todos').modal('hide');
+                        logout()
+                    } else {
+                        err.responseJSON.message.forEach(el => toastr.warning(el, 'Warning Alert'))
+                    }
+                }
+            });
+            return false;
+        }
     });
 });
-
 
 const tableTodosFetch = () => {
     tableTodo = $('#tableTodo').DataTable({
@@ -21,6 +64,7 @@ const tableTodosFetch = () => {
         searchable: true,
         processing: true,
         async: false,
+        order: [],
         language: {
             "processing": '<div class="spinner-border text-info m-2" role="status"><span class="sr-only"></span></div></br><div>Tunggu Sebentar yaa...</div>',
         },
@@ -33,9 +77,11 @@ const tableTodosFetch = () => {
             headers: {
                 authorization: localStorage.getItem('access_token')
             },
-            error: function(err) {
-                toastr.info(`${err.responseJSON.message}`, 'session expired');
-                logout()
+            error: (err) => {
+                if (err.responseJSON.message === 'jwt expired') {
+                    toastr.info(`${err.responseJSON.message}`, 'session expired');
+                    logout()
+                }
             }
         },
         columns: [
@@ -45,7 +91,7 @@ const tableTodosFetch = () => {
                 render: (data) => {
                     let is_checked = data === true ? "checked" : "";
                     let message = data === true ? "done" : "onProgress";
-                    return `<div class="custom-control custom-checkbox small "> <input type="checkbox" ${is_checked} class="custom-control-input" id="customCheck" > <label class="custom-control-label" for="customCheck" > <h6> ${message} </h6> </label> </div >`;
+                    return `<div class="custom-control custom-checkbox small "> <input type="checkbox" ${is_checked} class="custom-control-input" id="checkbBoxStatus" > <label class="custom-control-label" for="checkbBoxStatus" > <h6> ${message} </h6> </label> </div >`;
                 }
             },
             { data: "title" },
@@ -56,9 +102,11 @@ const tableTodosFetch = () => {
 
 }
 
-$('#tableTodo tbody').on('click', '#customCheck', function() {
+$('#tableTodo tbody').on('click', '#checkbBoxStatus', function() {
     var id = tableTodo.row($(this).parents('tr')).data().id;
     var status = tableTodo.row($(this).parents('tr')).data().status;
+
+    console.log(id);
 
     $.ajax({
         type: "PATCH",
@@ -72,22 +120,41 @@ $('#tableTodo tbody').on('click', '#customCheck', function() {
             tableTodo.ajax.reload()
         },
         error: (err) => {
+            if (err.responseJSON.message === 'jwt expired') {
+                toastr.info(`${err.responseJSON.message}`, 'session expired');
+                logout()
+            }
             toastr.error(err.message, 'Error Alert')
         }
     });
 });
 
+$('#tableTodo tbody').on('click', '#bedit', function() {
+    const data = tableTodo.row($(this).parents('tr')).data();
+    let date = new Date(data.due_date)
+    let dateConvert = date.toISOString().split('T')[0]
+    save_method = "edit";
+    $('#modal-todos form')[0].reset();
+    $('#modal-todos').modal('show');
+    $('.modal-title').text('Edit data todo');
+    $('#id_todos').val(data.id);
+    $('#title').val(data.title);
+    $('#description').val(data.description);
+    $('#due_date').val(dateConvert);
+})
+
 $('#tableTodo tbody').on('click', '#bdestroy', function() {
     const id = tableTodo.row($(this).parents('tr')).data().id;
+    const title = tableTodo.row($(this).parents('tr')).data().title;
+
     Swal.fire({
-        title: "Apakah anda yakin?",
-        text: "data yang terhapus tidak bisa dikembalikan!",
-        type: "warning",
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: "Yes, delete it!",
-        closeOnConfirm: false
+        confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
         if (result.value) {
             $.ajax({
@@ -102,6 +169,10 @@ $('#tableTodo tbody').on('click', '#bdestroy', function() {
                     tableTodo.ajax.reload()
                 },
                 error: (err) => {
+                    if (err.responseJSON.message === 'jwt expired') {
+                        toastr.info(`${err.responseJSON.message}`, 'session expired');
+                        logout()
+                    }
                     Swal.fire("Error deleting!", "Please try again", "error");
                     toastr.error(err.message, 'Error Alert')
                 }
