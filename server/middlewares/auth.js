@@ -3,13 +3,12 @@ const {User, Todo} = require('../models')
 
 
 const authentication = async (req, res, next) =>  {
-
   try {
     let decoded = cekToken(req.headers.access_token)
     let user = await User.findOne({where: {email: decoded.email}})
     
     if (!user) {
-      res.status(401).json({msg: 'Please login first!'})
+      next({name: 'loginFirst'})
     } else {
       let currentUser = {
         id: user.id,
@@ -19,7 +18,8 @@ const authentication = async (req, res, next) =>  {
       next()
     }
   } catch(error) {
-    res.status(400).json({msg: error.message})
+    // res.status(400).json({msg: error.message})
+    next(error)
   }
 
   // cekToken(req.headers.access_token, (error, decoded) =>{
@@ -30,7 +30,6 @@ const authentication = async (req, res, next) =>  {
   //     return res.status(400).json({msg: error.message})
   //   }
   // })
-
 }
 
 const authorize = async (req, res, next) => {
@@ -40,12 +39,14 @@ const authorize = async (req, res, next) => {
     let todo = await Todo.findOne({where: {id: id}})
 
     if (!todo || todo.UserId != req.currentUser.id) {
-      res.status(401).json({msg: 'You do not have permission'})
+      // res.status(401).json({msg: 'You do not have permission'})
+      next({name: 'notAuthorize'})
     } else {
       next()
     }
   } catch(error) {
-    res.status(500).json({msg: error.message})
+    // res.status(500).json({msg: error})
+    next(error)
   }
 }
 

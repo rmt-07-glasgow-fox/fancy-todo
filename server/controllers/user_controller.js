@@ -3,13 +3,12 @@ const { generateToken } = require('../helpers/jwt')
 const {User} = require('../models')
 
 class UserController {
-  static async signup(req, res) {
+  static async signup(req, res, next) {
     
     let {email, password} = req.body
 
     try {
       let user = await User.create({email, password})
-      
       let userInstance = {
         id: user.id,
         email: user.email
@@ -26,7 +25,7 @@ class UserController {
     }
   }
 
-  static async signin(req, res) {
+  static async signin(req, res, next) {
     let {email, password} = req.body
 
     try {
@@ -37,10 +36,7 @@ class UserController {
       })
 
       if (!user) {
-        // return res.status(401).json({
-        //   msg: 'Invalid email / password'
-        // })
-        throw {msg: 'Invalid email / password'}
+        next({name: 'errorAuth'})
       }
 
       const isMatch = comparePassword(password, user.password)
@@ -55,10 +51,7 @@ class UserController {
         return res.status(200).json({access_token})
         
       } else {
-        // res.status(401).json({
-        //   msg: 'Invalid email / password'
-        // })
-        throw {msg: 'Invalid email / password'}
+        next({name: 'errorAuth'})
       }
 
       // return res.status(200).json(user)

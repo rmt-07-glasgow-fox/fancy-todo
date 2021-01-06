@@ -1,7 +1,7 @@
 const {Todo} = require('../models')
 
 class TodosController {
-  static async create(req, res) {
+  static async create(req, res, next) {
     let { title, description, status, due_date } = req.body
     let todoObj = {
       title: title,
@@ -15,38 +15,33 @@ class TodosController {
       let todo = await Todo.create(todoObj)
       return res.status(201).json(todo)
     } catch(error) {
-      if (error) {
-        let msg = error.errors.map((err) => err.message)
-        return res.status(400).json({msg})
-      } else {
-        return res.status(500).json({msg: 'Internal server error!'})
-      }
+      next(error)
     }
   }
 
-  static async index(req, res) {
+  static async index(req, res, next) {
     try {
       let todos = await Todo.findAll()
       return res.status(200).json(todos)
     } catch (error) {
-      return res.status(500).json({msg: 'Cannot retrieve data!'})
+      next({name: 'cantRetrieve'})
     }
   }
 
-  static async show(req, res) {
+  static async show(req, res, next) {
     let todo = await Todo.findByPk(+req.params.id)
     try {
       if (todo) {
         return res.status(200).json(todo)
       } else {
-        return res.status(404).json({msg: 'Not found!'})
+        next({name: 'notFound'})
       }
     } catch (error) {
-      return res.status(500).json({msg: 'Data not found!'})
+      next({name: 'internalError'})
     }
   }
 
-  static async updatePut(req, res) {
+  static async updatePut(req, res, next) {
     let { title, description, status, due_date } = req.body
     let todoObj = {
       title: title,
@@ -62,20 +57,19 @@ class TodosController {
         await todo.update(todoObj, {where: {id: todo.id}})
         return res.status(200).json(todo)
       } else {
-        return res.status(404).json({msg: 'Data not found!'})
+        next({name: 'notFound'})
       }
     } catch(error) {
       if (error) {
-        let msg = error.errors.map((err) => err.message)
-        return res.status(400).json({msg})
+        next(error)
       } else {
-        return res.status(500).json({msg: 'Internal server error'})
+        next({name: 'internalError'})
       }
     }
 
   }
 
-  static async updatePatch(req, res) {
+  static async updatePatch(req, res, next) {
     let {status} = req.body
 
     try {
@@ -85,20 +79,20 @@ class TodosController {
         await todo.update({status}, {where: {id: todo.id}})
         return res.status(200).json(todo)
       } else {
-        return res.status(404).json({msg: 'Data not found'})
+        next({name: 'notFound'})
       }
     } catch(error) {
       if (error) {
-        let msg = error.errors.map((err) => err.message)
-        return res.status(400).json({msg})
+        console.log('DIDIEU');
+        next(error)
       } else {
-        return res.status(500).json({msg: 'Internal server error'})
+        next({name: 'internalError'})
       }
     }
 
   }
 
-  static async destroy(req, res) {
+  static async destroy(req, res, next) {
     try {
       let todo = await Todo.findByPk(+req.params.id)
       if (todo) {
@@ -108,10 +102,10 @@ class TodosController {
           todo
         })
       } else {
-        return res.status(404).json({msg: 'Data not found!'})
+        next({name: 'notFound'})
       }
     } catch(error) {
-      return res.status(500).json({msg: 'Internal server error'})
+      next({name: 'internalError'})
     }
 
   }
