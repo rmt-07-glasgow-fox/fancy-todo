@@ -4,9 +4,10 @@ const { authorize } = require('../middlewares/auth')
 
 router.get('/', TodoController.getTodos)
 router.post('/', TodoController.createTodo)
-router.get('/:id', authorize, TodoController.getTodoById)
-router.put('/:id', authorize, TodoController.putTodo)
-router.patch('/:id', authorize, TodoController.patchTodo)
-router.delete('/:id', authorize, TodoController.deleteTodo)
+router.use('/:id', authorize)
+router.get('/:id', TodoController.getTodoById)
+router.put('/:id', TodoController.putTodo)
+router.patch('/:id', TodoController.patchTodo)
+router.delete('/:id', TodoController.deleteTodo)
 
 module.exports = router

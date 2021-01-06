@@ -1,16 +1,16 @@
 const { Todo } = require('../models')
 
 class TodoController {
-  static async getTodos(req, res) {
+  static async getTodos(req, res, next) {
     try {
       const todos = await Todo.findAll()
       return res.status(200).json(todos)
     } catch (err) {
-      return res.status(500).json({message: 'internal server error'})
+      next(err)
     }
   }
 
-  static async createTodo(req, res) {
+  static async createTodo(req, res, next) {
     const { title, description, status, due_date} = req.body
     try {
       const newTodo = await Todo.create({
@@ -30,31 +30,25 @@ class TodoController {
       }
       return res.status(201).json(response)
     } catch (err) {
-      if (err.name === 'SequelizeValidationError') {
-        const errors = err.errors.map(el => {
-          return el.message
-        })
-        return res.status(404).json(errors)
-      }
-      res.send(err)
-      // return res.status(500).json({message: 'internal server error'})
+      next(err)
     }
   }
 
-  static async getTodoById(req, res) {
+  static async getTodoById(req, res, next) {
     const id = +req.params.id
     try {
       const todo = await Todo.findByPk(id)
+      console.log(todo);
       if (!todo) {
-        return res.status(404).json({message: 'error not found'})
+        throw {name: 'notFound'}
       }
       return res.status(200).json(todo)
     } catch (err) {
-      return res.status(500).json({message: 'internal server error'})
+      next(err)
     }
   }
 
-  static async putTodo(req, res) {
+  static async putTodo(req, res, next) {
     const id = +req.params.id
     const { title, description, status, due_date} = req.body
     try {
@@ -63,7 +57,7 @@ class TodoController {
       },
       {where: { id }})
       if (afterPutTodo[0] === 0) {
-        return res.status(404).json({message: 'error not found'})
+        throw {name: 'notFound'}
       }
       const response = {
         id,
@@ -74,11 +68,11 @@ class TodoController {
       }
       return res.status(200).json(response)
     } catch (err) {
-      return res.status(500).json({message: 'internal server error'})
+      next(err)
     }
   }
 
-  static async patchTodo(req, res) {
+  static async patchTodo(req, res, next) {
     const id = +req.params.id
     const { status } = req.body
     try {
@@ -87,25 +81,25 @@ class TodoController {
       },
       {where: { id }, returning: true})
       if (!afterPAtchTodo[1].length) {
-        return res.status(404).json({message: 'error not found'})
+        throw {name: 'notFound'}
       }
       return res.status(200).json(afterPAtchTodo[1][0])
     } catch (err) {
-      return res.status(500).json(err)
+      next(err)
     }
   }
 
-  static async deleteTodo(req, res) {
+  static async deleteTodo(req, res, next) {
     let id = +req.params.id
     try {
       const deletedTodo = await Todo.findByPk(id)
       if (!deletedTodo) {
-        return res.status(404).json({message: 'error not found'})
+        throw {name: 'notFound'}
       }
       await Todo.destroy({where: { id }})
       return res.status(200).json({message: 'todo success to delete'})
     } catch (err) {
-      return res.status(500).json({message: 'internal server error'})
+      next(err)
     }
   }
 }

@@ -3,7 +3,7 @@ const { comparePassword } = require('../helper/bcrypt')
 const { generateToken } = require('../helper/jwt')
 
 class UserController {
-  static async register(req, res) {
+  static async register(req, res, next) {
     try {
       const { email, password } = req.body
       const data = await User.create({email, password})
@@ -13,11 +13,11 @@ class UserController {
       }
       return res.status(201).json(response)
     } catch (err) {
-      return res.status(400).json(err)
+      next(err)
     }
   }
 
-  static async login(req, res) {
+  static async login(req, res, next) {
     try {
       const { email, password } = req.body
       const data = await User.findOne({
@@ -26,9 +26,7 @@ class UserController {
         }
       })
       if(!data) {
-        return res.status(401).json({
-          message: 'Invalid email / password'
-        })
+        throw {name: 'invalidEmailPassword'}
       }
       const match = comparePassword(password, data.password)
       if (match ) {
@@ -41,12 +39,10 @@ class UserController {
           access_token
         })
       } else {
-        return res.status(401).json({
-          message: 'Invalid email / password'
-        })
+        throw {name: 'invalidEmailPassword'}
       }
     } catch (err) {
-      return res.status(401).json(err)
+      next(err)
     }
   }
 }
