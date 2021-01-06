@@ -231,9 +231,17 @@ _Request headers_
 
 _Response (200 - OK)_
 ```json
-{
-  "message": "Data has been updated successfully"
-}
+[
+  {
+    "id": "<default given by system>",
+    "title": "<posted title>",
+    "description": "<posted description>",
+    "status": "<posted status || default: boolean(false)>",
+    "due_date": "<posted date>",
+    "updatedAt": "<default given by system>",
+    "createdAt": "<default given by system>"
+  }
+]
 ```
 
 _Response (400 - Bad Request)_

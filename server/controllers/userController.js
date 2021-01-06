@@ -3,7 +3,7 @@ const { checkPassword } = require('../helpers/bcrypt')
 const { generateToken } = require('../helpers/jwt')
 
 class ControllerUser {
-  static register(req, res) {
+  static register(req, res, next) {
     const input = {
       email: req.body.email,
       password: req.body.password
@@ -18,11 +18,11 @@ class ControllerUser {
         res.status(201).json(response)
       })
       .catch(err => {
-        res.status(400).json(err)
+        next(err)
       })
   }
 
-  static login(req, res) {
+  static login(req, res, next) {
     const userLogin = {
       email: req.body.email,
       password: req.body.password

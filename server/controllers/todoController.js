@@ -1,7 +1,7 @@
 const { Todo } = require('../models')
 
 class ControllerTodo {
-  static addTodo (req, res) {
+  static addTodo (req, res, next) {
     const input = {
       title: req.body.title,
       description: req.body.description,
@@ -15,34 +15,24 @@ class ControllerTodo {
       })
       .catch(err => {
         if (err.errors.length) {
-          const outputErr = []
-
-          err.errors.forEach(errors => {
-            outputErr.push(errors.message)
-          })
-
-          res.status(400).json({
-            message: outputErr.join(', ')
-          })
+          next(err)
         } else {
-          res.status(500).json({
-            message: 'Internal Server Error'
-          })
+          next(err)
         }
       })
   }
 
-  static showAllTodo (req, res) {
+  static showAllTodo (req, res, next) {
     Todo.findAll()
       .then(response => {
         res.status(200).json(response)
       })
       .catch(err => {
-        res.status(500).json(err.message)
+        next(err)
       })
   }
 
-  static showTodoByID (req, res) {
+  static showTodoByID (req, res, next) {
     const id = +req.params.id
 
     Todo.findByPk(id)
@@ -50,17 +40,17 @@ class ControllerTodo {
         if (response) {
           res.status(200).json(response)
         } else {
-          res.status(404).json({
-            message: 'Data Not Found'
+          next({
+            name: 'Data not found'
           })
         }
       })
       .catch(err => {
-        res.status(500).json(err.message)
+        next(err)
       })
   }
 
-  static editTodo (req, res) {
+  static editTodo (req, res, next) {
     const id = +req.params.id;
 
     const input = {
@@ -78,31 +68,21 @@ class ControllerTodo {
         if (response[0] > 0) {
           res.status(200).json(response[1])
         } else {
-          res.status(404).json({
-            message: 'Error not found'
+          next({
+            name: 'Data not found'
           })
         }
       })
       .catch(err => {
         if (err.errors.length) {
-          const outputErr = []
-
-          err.errors.forEach(errors => {
-            outputErr.push(errors.message)
-          })
-
-          res.status(400).json({
-            message: outputErr.join(', ')
-          })
+          next(err)
         } else {
-          res.status(500).json({
-            message: 'Internal Server Error'
-          })
+          next(err)
         }
       })
   }
 
-  static doneTodo (req, res) {
+  static doneTodo (req, res, next) {
     const id = +req.params.id
 
     const input = {
@@ -118,24 +98,14 @@ class ControllerTodo {
       })
       .catch(err => {
         if (err.errors.length) {
-          const outputErr = []
-
-          err.errors.forEach(errors => {
-            outputErr.push(errors.message)
-          })
-
-          res.status(400).json({
-            message: outputErr.join(', ')
-          })
+          next(err)
         } else {
-          res.status(500).json({
-            message: 'Internal Server Error'
-          })
+          next(err)
         }
       })
   }
 
-  static deleteTodo (req, res) {
+  static deleteTodo (req, res, next) {
     const id = +req.params.id
 
     Todo.destroy({
@@ -147,13 +117,13 @@ class ControllerTodo {
             message: 'Todo success to delete'
           })
         } else {
-          res.status(404).json({
-            message: 'Error not found'
+          next({
+            name: 'Data not found'
           })
         }
       })
       .catch(err => {
-        res.status(500).json(err.message)
+        next(err)
       })
   }
 }
