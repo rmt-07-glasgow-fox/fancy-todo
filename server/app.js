@@ -1,10 +1,12 @@
 const dotenv = require('dotenv').config()
+var cors = require('cors')
 const express = require("express")
 const app = express()
 const port = 3000
 const routers = require("./routes")
 const errorHandler = require("./middlewares/errorHandler")
 
+app.use(cors())
 app.use(express.urlencoded({extended:true}))
 app.use(routers)
 app.use(errorHandler)

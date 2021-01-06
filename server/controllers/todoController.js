@@ -14,7 +14,7 @@ class todoController {
     }
 
     static showTodos(req, res, next) {
-        Todo.findAll(+req.params.id)
+        Todo.findAll()
         .then(todos => res.status(200).json(todos))
         .catch(err => next(err))
     }
