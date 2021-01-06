@@ -18,22 +18,21 @@
     <!-- Custom styles for this template-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/4.1.3/css/sb-admin-2.min.css" integrity="sha512-RIG2KoKRs0GLkvl0goS0cdkTgQ3mOiF/jupXuBsMvyB3ITFpTJLnBu59eE+0R39bxDQKo2dsatA5CwHeIKVFcw==" crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" crossorigin="anonymous">
 
 </head>
 
 <body id="page-top">
 
+    <!-- DASHBOARD PAGE -->
     <div id="dashboardPage">
-
         <!-- Page Wrapper -->
         <div id="wrapper">
-
             <!-- Sidebar -->
             <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
                 <!-- Sidebar - Brand -->
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/admin/dashboard">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" type="button" onclick="dashboardPage()">
                     <div class="sidebar-brand-text mx-3">Fancy ToDo List Admin </div>
                 </a>
 
@@ -42,7 +41,7 @@
 
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/dashboard">
+                    <a class="nav-link" type="button" onclick="dashboardPage()">
                         <i class="fas fa-fw fa-home"></i>
                         <span>Dashboard</span></a>
                 </li>
@@ -57,7 +56,7 @@
 
                 <!-- Nav Item - Category -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/category">
+                    <a class="nav-link" type="button" onclick="todoPage()">
                         <i class="fas fa-fw fa-list-alt"></i>
                         <span>Todo</span></a>
                 </li>
@@ -80,7 +79,7 @@
                 <div id="content">
 
                     <!-- Topbar -->
-                    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4  shadow">
 
                         <!-- Sidebar Toggle (Topbar) -->
                         <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -113,8 +112,35 @@
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
 
-                        <!-- Page Heading -->
-                        <h1 class="h3 mb-4 text-gray-800">Welcome to Dashboard <br> Fancy Todo list</h1>
+                        <div id="dasboardContent">
+                            <h1 class="h3 mb-4 text-gray-800">Welcome to Dashboard <br> Fancy Todo list</h1>
+                        </div>
+
+                        <div id="todoContent">
+                            <h1 class="h3 mb-4 text-gray-800">My Todo List</h1>
+                            <!-- DataTales Example -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <a type="button" class="btn btn-primary"> <i class="fa fa-plus-circle"></i> Add Todo</a>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="tableTodo" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Title</th>
+                                                    <th>Description</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                     <!-- /.container-fluid -->
@@ -160,15 +186,14 @@
             </div>
         </div>
     </div>
+    <!-- END OF DASHBOARD PAGE -->
 
+    <!-- LOGIN PAGE -->
     <div id="loginPage">
         <div class="container">
-
             <!-- Outer Row -->
             <div class="row justify-content-center">
-
                 <div class="col-xl-10 col-lg-12 col-md-9">
-
                     <div class="card o-hidden border-0 shadow-lg my-5">
                         <div class="card-body p-0">
                             <!-- Nested Row within Card Body -->
@@ -203,17 +228,15 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
-
             </div>
-
         </div>
     </div>
+    <!-- END OF LOGIN PAGE -->
 
+    <!-- REGISTER PAGE -->
     <div id="registerPage">
         <div class="container">
-
             <div class="card o-hidden border-0 shadow-lg my-5">
                 <div class="card-body p-0">
                     <!-- Nested Row within Card Body -->
@@ -263,21 +286,19 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
-
+    <!-- END OF REGISTER PAGE -->
 
 
     <!-- Bootstrap core JavaScript-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/4.1.3/js/sb-admin-2.min.js" integrity="sha512-COtY6/Rv4GyQdDShOyay/0YI4ePJ7QeKwtJIOCQ3RNE32WOPI4IYxq6Iz5JWcQpnylt/20KBvqEROZTEj/Hopw==" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" crossorigin="anonymous"></script>
     <script src="js/myScript.js"></script>
-
-
-
 
 </body>
 

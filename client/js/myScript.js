@@ -1,8 +1,37 @@
 const baseUrl = 'http://localhost:3000'
+let tableTodo;
 
 $(document).ready(function() {
     if (localStorage.access_token) {
         dashboardPage()
+        tableTodo = $('#tableTodo').DataTable({
+            searchable: true,
+            processing: true,
+            language: {
+                "processing": '<div class="spinner-border text-info m-2" role="status"><span class="sr-only"></span></div></br><div>Tunggu Sebentar yaa...</div>',
+                "paginate": {
+                    "previous": "<i class='uil uil-angle-left'>",
+                    "next": "<i class='uil uil-angle-right'>"
+                }
+            },
+            "drawCallback": function() {
+                $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+            },
+            ajax: {
+                method: 'GET',
+                url: `${baseUrl}/todos`,
+                headers: {
+                    authorization: localStorage.access_token
+                },
+            },
+            columns: [
+                { "data": "id" },
+                { "data": "title" },
+                { "data": "description" },
+                { "data": "status" }
+            ]
+        });
+        console.log(tableTodo);
     } else {
         loginPage()
     }
@@ -11,6 +40,8 @@ $(document).ready(function() {
 
 const dashboardPage = () => {
     $('#dashboardPage').show();
+    $('#dasboardContent').show();
+    $('#todoContent').hide();
     $('#loginPage').hide();
     $('#registerPage').hide();
     document.body.className = document.body.className.replace("no-javascript", "");
@@ -33,6 +64,23 @@ const loginPage = () => {
     if (localStorage.access_token) {
         dashboardPage()
     } else {
+        $('#loginEmail').val('')
+        $('#loginPassword').val('')
+        $('#dashboardPage').hide();
+        $('#loginPage').slideDown();
+        $('#registerPage').hide();
+        $(document.body).addClass('bg-gradient-primary');
+    }
+}
+
+const todoPage = () => {
+    if (localStorage.access_token) {
+        $('#todoContent').show();
+        $('#dasboardContent').hide();
+        tableTodo.ajax.reload(null, false);
+    } else {
+        $('#loginEmail').val('')
+        $('#loginPassword').val('')
         $('#dashboardPage').hide();
         $('#loginPage').slideDown();
         $('#registerPage').hide();
