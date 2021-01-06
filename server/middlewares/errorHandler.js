@@ -1,9 +1,16 @@
 const errorHandler = (err, req, res, next) => {
   if (err) {
     if (err.name === 'SequelizeValidationError') {
-      let errorMessage = err.erros.map((err) => {
+      let errorMessage = err.errors.map((err) => {
         return {
-          message: error.message,
+          message: err.message,
+        };
+      });
+      res.status(400).json(errorMessage);
+    } else if (err.name === 'SequelizeUniqueConstraintError') {
+      let errorMessage = err.errors.map((err) => {
+        return {
+          message: err.message,
         };
       });
       res.status(400).json(errorMessage);

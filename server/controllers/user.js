@@ -32,7 +32,7 @@ exports.login = async (req, res) => {
   }
 };
 
-exports.register = async (req, res) => {
+exports.register = async (req, res, next) => {
   const body = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
@@ -50,6 +50,6 @@ exports.register = async (req, res) => {
 
     return res.status(201).json(data);
   } catch (error) {
-    return res.status(400).json(error);
+    next(error);
   }
 };

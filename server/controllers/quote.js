@@ -7,7 +7,6 @@ exports.qod = async (req, res) => {
     const response = await axios.get(url + '/random');
     return res.status(200).json(response.data);
   } catch (error) {
-    console.log(error);
     return res.status(500).json(error);
   }
 };

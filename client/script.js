@@ -53,6 +53,42 @@ const dahsboardPage = () => {
   }
 };
 
+const register = (e) => {
+  e.preventDefault();
+  const firstName = $('#firstNameRegister').val();
+  const lastName = $('#lastNameRegister').val();
+  const email = $('#emailRegister').val();
+  const password = $('#passwordRegister').val();
+
+  $.ajax({
+    url: url + '/users/register',
+    method: 'POST',
+    data: {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+    },
+  })
+    .done((response) => {
+      const template = alertTemplate(
+        'success',
+        'Your account has been successfully created, you can login now'
+      );
+      $(template).appendTo('#alert');
+    })
+    .fail((err) => {
+      err.responseJSON.map((e) => {
+        const template = alertTemplate('error', e.message);
+        $(template).appendTo('#alert');
+      });
+    })
+    .always(() => {
+      $('#emailLogin').val('');
+      $('#passwordLogin').val('');
+    });
+};
+
 const login = (e) => {
   e.preventDefault();
   const email = $('#emailLogin').val();
@@ -115,7 +151,7 @@ const alertTemplate = (type, message) => {
   } else if (type === 'success') {
     const template = `
     <div class="alert alert-success alert-dismissible fade show" role="alert">
-      <strong>Error!</strong> ${message}.
+      <strong>Success!</strong> ${message}.
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
