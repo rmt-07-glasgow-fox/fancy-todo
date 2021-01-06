@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fancy Todo</title>
+</head>
+<body>
+  <!-- Navbar -->
+  <div id="navbar">
+    <h2>Fancy Todo</h2>
+    <a id="logout" href="">Log Out</a>
+  </div>
+
+  <!-- Home -->
+  <div id="appDesc">
+    <h2>Fancy Todo</h2>
+    <p>lorem ipsum bla bla</p>
+  </div>
+
+  <!-- covid api -->
+  <div id="covidApiArea">
+    <h3>Indonesia COVID cases</h3>
+
+    <p>Stay safe</p>
+  </div>
+
+  <!-- Register/Login -->
+  <div id="loginArea">
+    <div id="register">
+      <h1>Register</h1>
+      <form action="">
+        <label for="emailRegister">Email:</label>
+        <input type="text" id="emailRegister" name="emailRegister"><br><br>
+        <label for="passwordRegister">Password:</label>
+        <input type="password" id="passwordRegister" name="passwordRegister"><br><br>
+        <button id="createNewUser" type="submit">Register</button>
+        <button id="toLogin">Already have account</button>
+      </form>
+    </div>
+    <div id="login">
+      <h1>Login</h1>
+      <form action="">
+        <label for="emailLogin">Email:</label>
+        <input type="text" id="emailLogin" name="emailLogin"><br><br>
+        <label for="passwordLogin">Password:</label>
+        <input type="password" id="passwordLogin" name="passwordLogin"><br><br>
+        <button id="loginUser" type="submit">Login</button>
+        <button id="toRegister">I don't have account</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Add new todo -->
+  <div id="createArea">
+    <button id="showAddForm">Add Todo</button>
+
+    <div id="addForm">
+      <form action="">
+        <input type="text" id="title" name="title" placeholder="Title">
+        <input type="date" id="due_date" name="due_date"><br><br>
+        <input type="text" id="description" name="description" placeholder="What's the detail?"><br><br>
+        <input type="submit" id="addTodo" value="Add">
+        <button id="hideAddForm">cancel</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Show all todo -->
+  <div id="showTodo">
+    <div id="">
+      <!--checkbox-->
+    </div>
+
+    <div id="addForm">
+      <h3 id="showTitle">contoh</h3>
+      <p id="showDate">contoh</p>
+      <p id="showDescription">contoh</p>
+      <button id="updateTodos" type="submit">Update</button>
+      <button id="deleteTodos" type="submit">Delete</button>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="./script.js"></script>
+</body>
+</html>

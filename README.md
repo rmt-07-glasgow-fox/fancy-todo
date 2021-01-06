@@ -3,6 +3,7 @@
 Create fancy to-do app, using express, sequelize and pg
 * REST API endpoint for Todo List's CRUD operation
 * JSON formatted response
+* Getting real time data of covid19 cases in Indonesia
 ```
 
 # USAGE
@@ -11,7 +12,7 @@ Open your text editor with Node.js in your computer and then run `npm install`
 Run `npx nodemon app.js  to start the server
 ```
 
-##Restful endpoints
+## Restful endpoints
 <!-- --- -->
 # URL
 ```
@@ -46,21 +47,36 @@ _Response (201 - Created)_
   "description": "<posted description>",
   "status": "<posted status>",
   "due_date": "<posted due_date>"
+  "userId": "<automatically filled>
 }
 ```
 _Response(400- bad request)_
 ```
 {
-    "Error" :  VALIDATION_ERROR
-    "message": "Date must be today or more than today"
+  "Error" :  VALIDATION_ERROR
+  "message": "Title cannot be empty, Description cannot be empty, Due date must be today or more than today, Due Date cannot be empty"
+}
+```
+_Response(401- notLoggedIn)_
+```
+{
+  "Error" :  "notLoggedIn"
+  "message": "please login first"
+}
+```
+_Response(401- wrongLogin)_
+```
+{
+  "Error" :  "wrongLogin"
+  "message": "invalid email or password"
 }
 ```
 
 _Response (500)_
 ```
 {
-  "Error": server error,
-  "message": "server error"
+  "Error": "internal server error",
+  "message": "internal server error"
 }
 ```
 
@@ -113,11 +129,26 @@ _Response (200)_
 ```
 
 
-_Response (500 - Bad Request)_
+_Response(401- notLoggedIn)_
 ```
 {
-  "Error": server error,
-  "message": "server error"
+  "Error" :  "notLoggedIn"
+  "message": "please login first"
+}
+```
+_Response(401- wrongLogin)_
+```
+{
+  "Error" :  "wrongLogin"
+  "message": "invalid email or password"
+}
+```
+
+_Response (500)_
+```
+{
+  "Error": "internal server error",
+  "message": "internal server error"
 }
 ```
 
@@ -150,22 +181,37 @@ _Response (200)_
   }
 }
 ```
-
+_Response(401- notLoggedIn)_
+```
+{
+  "Error" :  "notLoggedIn"
+  "message": "please login first"
+}
+```
+_Response(401- wrongLogin)_
+```
+{
+  "Error" :  "wrongLogin"
+  "message": "invalid email or password"
+}
+```
 _Response(404 - not found)_
 ```
 {
-  "Error": "invalid id",
-  "message": "Data not found"
+  "Error": "resourceNotFound",
+  "message": "not found"
 }
 ```
 
 _Response (500)_
 ```
 {
-  "Error": server error,
-  "message": "server error"
+  "Error": "internal server error",
+  "message": "internal server error"
 }
 ```
+
+
 ## PUT/todos/:id
 
 >Update todos list by ID
@@ -200,22 +246,37 @@ _Response(200)_
 _Response(400- bad request)_
 ```
 {
-    "Error" :  "VALIDATION_ERROR"
-    "message": "Name required,Description required,Status required,Due date required, Status has to be true or false"
+  "Error" :  VALIDATION_ERROR
+  "message": "Title cannot be empty, Description cannot be empty, Due date must be today or more than today, Due Date cannot be empty"
+}
+```
+_Response(401- notLoggedIn)_
+```
+{
+  "Error" :  "notLoggedIn"
+  "message": "please login first"
+}
+```
+_Response(401- wrongLogin)_
+```
+{
+  "Error" :  "wrongLogin"
+  "message": "invalid email or password"
 }
 ```
 _Response(404 - not found)_
 ```
 {
-  "Error": "invalid id",
-  "message": "Data not found"
+  "Error": "resourceNotFound",
+  "message": "not found"
 }
 ```
+
 _Response (500)_
 ```
 {
-  "Error": server error,
-  "message": "server error"
+  "Error": "internal server error",
+  "message": "internal server error"
 }
 ```
 
@@ -250,22 +311,37 @@ _Response(200)_
 _Response(400- bad request)_
 ```
 {
-    "Error" :  "VALIDATION_ERROR"
-    "message": "Name required,Description required,Status required,Due date required, Status has to be true or false"
+  "Error" :  VALIDATION_ERROR
+  "message": "Title cannot be empty, Description cannot be empty, Due date must be today or more than today, Due Date cannot be empty"
+}
+```
+_Response(401- notLoggedIn)_
+```
+{
+  "Error" :  "notLoggedIn"
+  "message": "please login first"
+}
+```
+_Response(401- wrongLogin)_
+```
+{
+  "Error" :  "wrongLogin"
+  "message": "invalid email or password"
 }
 ```
 _Response(404 - not found)_
 ```
 {
-  "Error": "invalid id",
-  "message": "Data not found"
+  "Error": "resourceNotFound",
+  "message": "not found"
 }
 ```
+
 _Response (500)_
 ```
 {
-  "Error": server error,
-  "message": "server error"
+  "Error": "internal server error",
+  "message": "internal server error"
 }
 ```
 
@@ -288,25 +364,32 @@ _Response(200)_
 }
 ```
 
+_Response(401- notLoggedIn)_
+```
+{
+  "Error" :  "notLoggedIn"
+  "message": "please login first"
+}
+```
+_Response(401- wrongLogin)_
+```
+{
+  "Error" :  "wrongLogin"
+  "message": "invalid email or password"
+}
+```
 _Response(404 - not found)_
 ```
 {
-  "Error": "invalid id",
-  "message": "Data not found"
+  "Error": "resourceNotFound",
+  "message": "not found"
 }
 ```
 
-_Response(404 - not found)_
-```
-{
-  "Error": "INVALID_ID",
-  "message": "Data_not_found"
-}
-```
 _Response (500)_
 ```
 {
-  "Error": server error,
-  "message": "server error"
+  "Error": "internal server error",
+  "message": "internal server error"
 }
 ```

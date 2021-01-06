@@ -35,13 +35,15 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    status: DataTypes.BOOLEAN,
+    status: {
+      type:DataTypes.BOOLEAN,
+    },
     due_date: {
       type: DataTypes.DATE,
       validate: {
         checkDate(value) {
           if (value < new Date()) {
-            throw new Error(`Date must be greater than today`);
+            throw new Error(`Due Date must be greater than today`);
           }
         },
         notEmpty: {
