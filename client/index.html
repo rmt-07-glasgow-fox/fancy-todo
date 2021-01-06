@@ -64,36 +64,77 @@
       </div>
     </nav>
 
-    <section id="register">
-      <div class="container w-50 h-100">
-        <div class="row h-100 justify-content-center align-items-center">
-          <div class="col">
-            <div class="card">
+    <section>
+      <div id="alert"></div>
+    </section>
+
+    <section id="auth">
+      <div class="container">
+        <div class="row align-items-center" style="height: 100vh">
+          <div class="col-md-6">
+            <h1>Fancy Todo App</h1>
+            <br />
+            <h3 id="quote"></h3>
+            <p id="author"></p>
+          </div>
+          <div class="col-md-6">
+            <div class="card" id="register">
               <div class="card-header">
                 <strong>Register</strong>
               </div>
               <div class="card-body">
-                <form>
+                <form onsubmit="register(e)">
                   <div class="form-group">
-                    <label class="text-muted" for="exampleInputEmail1"
+                    <label class="text-muted" for="firstNameRegister"
+                      >First Name</label
+                    ><input
+                      type="text"
+                      class="form-control"
+                      id="firstNameRegister"
+                      placeholder="Enter first name"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label class="text-muted" for="lastNameRegister"
+                      >Last Name</label
+                    ><input
+                      type="text"
+                      class="form-control"
+                      id="lastNameRegister"
+                      placeholder="Enter last name"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label class="text-muted" for="emailRegister"
                       >Email address</label
                     ><input
                       type="email"
                       class="form-control"
-                      id="exampleInputEmail1"
-                      aria-describedby="emailHelp"
+                      id="emailRegister"
                       placeholder="Enter email"
                     />
                   </div>
                   <div class="form-group">
-                    <label class="text-muted" for="exampleInputPassword1"
+                    <label class="text-muted" for="passwordRegister"
                       >Password</label
-                    ><input
-                      type="password"
-                      class="form-control"
-                      id="exampleInputPassword1"
-                      placeholder="Password"
-                    />
+                    >
+                    <div class="input-group" id="passwordInput">
+                      <input
+                        class="form-control"
+                        type="password"
+                        id="passwordRegister"
+                        placeholder="Enter password"
+                      />
+                      <div class="input-group-append">
+                        <span class="input-group-text"
+                          ><a href=""
+                            ><i
+                              class="fa fa-eye-slash"
+                              aria-hidden="true"
+                            ></i></a
+                        ></span>
+                      </div>
+                    </div>
                   </div>
                   <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-block">
@@ -106,55 +147,54 @@
                 <a href="#" onclick="loginPage()"> Login here</a>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <section id="login">
-      <div class="container w-50">
-        <div class="row justify-content-center">
-          <div class="col">
-            <div class="card">
+            <div class="card" id="login">
               <div class="card-header">
-                <strong>Login to your account</strong>
+                <strong>Login</strong>
               </div>
               <div class="card-body">
-                <form>
+                <form onsubmit="login(event)">
                   <div class="form-group">
-                    <label class="text-muted" for="exampleInputEmail1"
+                    <label class="text-muted" for="emailLogin"
                       >Email address</label
                     ><input
                       type="email"
                       class="form-control"
-                      id="exampleInputEmail1"
-                      aria-describedby="emailHelp"
+                      id="emailLogin"
                       placeholder="Enter email"
                     />
                   </div>
                   <div class="form-group">
-                    <label class="text-muted" for="exampleInputPassword1"
+                    <label class="text-muted" for="passwordLogin"
                       >Password</label
-                    ><input
-                      type="password"
-                      class="form-control"
-                      id="exampleInputPassword1"
-                      placeholder="Password"
-                    />
+                    >
+                    <div class="input-group" id="passwordInput">
+                      <input
+                        class="form-control"
+                        type="password"
+                        id="passwordLogin"
+                        placeholder="Enter password"
+                      />
+                      <div class="input-group-append">
+                        <span class="input-group-text"
+                          ><a href=""
+                            ><i
+                              class="fa fa-eye-slash"
+                              aria-hidden="true"
+                            ></i></a
+                        ></span>
+                      </div>
+                    </div>
                   </div>
                   <div class="form-group">
-                    <button
-                      type="submit"
-                      class="btn btn-primary btn-block"
-                      onclick="login()"
-                    >
+                    <button type="submit" class="btn btn-primary btn-block">
                       Login
                     </button>
                   </div>
                 </form>
 
                 Don't have an account?
-                <a href="#" onclick="registerPage()">Register here</a>
+                <a href="#" onclick="registerPage()"> Register here</a>
               </div>
             </div>
           </div>
@@ -164,7 +204,7 @@
 
     <section id="dashboard">
       <div class="container">
-        <div class="row">
+        <div class="row mt-5">
           <div class="col">Kalender</div>
           <div class="col-8">List</div>
         </div>
