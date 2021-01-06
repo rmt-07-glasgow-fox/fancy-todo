@@ -51,6 +51,8 @@ const dahsboardPage = () => {
     $('#navbar').show();
     $('#dashboard').show();
     $('#todoForm').hide();
+    listTodo();
+    month();
   }
 };
 
@@ -99,6 +101,58 @@ addTodo = (e) => {
       $('#descriptionTodo').val('');
       hideTodoForm();
     });
+};
+
+const listTodo = () => {
+  $.ajax({
+    url: url + '/todos',
+    method: 'GET',
+    headers: {
+      authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+    },
+  })
+    .done((response) => {
+      $('#todoList').empty();
+      response.map((data) => {
+        $(`
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+                <input type="checkbox" id="status-${
+                  data.id
+                }" onclick="changeStatus(${data.id}, ${!data.status})" ${
+          data.status ? 'checked' : ''
+        }>
+            </div>
+          </div>
+          <div class="card" style="width: 40rem">
+              <div class="card-body" id="todoCardBody-${data.id}">
+                <div id="todoCardValue-${data.id}">
+                    <h5 class="card-title">${data.title}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted"><i class="fa fa-calendar" aria-hidden="true"></i> ${moment(
+                      data.due_date
+                    ).format('DD MMMM YYYY')}</h6>
+                    <p class="card-text">${data.description}</p>
+                    <a href="#" onclick="editTodoForm(${
+                      data.id
+                    })" class="card-link" id="editTodo"><i class="fa fa-edit" aria-hidden="true"></i> Edit</a>
+                    <a href="#" onclick="deleteTodo(${
+                      data.id
+                    })" class="card-link text-red" id="delTodo"><i class="fa fa-trash" aria-hidden="true"></i> Hapus</a>
+                </div>
+              </div>
+          </div>
+        </div>
+        `).appendTo('#todoList');
+      });
+    })
+    .fail((err) => {
+      err.responseJSON.map((e) => {
+        const template = alertTemplate('error', e.message);
+        $(template).appendTo('#alert');
+      });
+    })
+    .always(() => {});
 };
 
 const register = (e) => {
@@ -208,3 +262,13 @@ const alertTemplate = (type, message) => {
     return template;
   }
 };
+
+const month = () => {
+  $('#holidaysMonth').text(`List holidays in ${moment().format('MMMM')}:`);
+};
+
+const clock = () => {
+  $('#clock').html(moment().format('DD MMMM YYYY, HH:mm:ss'));
+};
+
+setInterval(clock, 1000);
