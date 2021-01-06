@@ -3,7 +3,7 @@ const { comparePassword } = require('../helpers/bcryptjs')
 const { generateToken } = require('../helpers/jsonwebtoken')
 
 class UserController {
-    static register(req, res) {
+    static register(req, res, next) {
         let userObj = {
             fullName: req.body.fullName,
             email: req.body.email, 
@@ -18,19 +18,20 @@ class UserController {
                 res.status(201).json(result)
             })
             .catch(err => {
-                // console.log(err)
+                // res.send(err)
+                // console.log(`INI ERRORNYA`, err)
                 next(err)
             })
     }
     
-    static login(req, res) {
+    static login(req, res, next) {
         const { email, password } = req.body
         User.findOne({
             where: { email }
         }) 
             .then(data => {
                 if (!data) {
-                    throw new Error({ name: 'Invalid Input'})
+                    next({ name: 'Invalid Input' })
                 } else {
                     if (comparePassword(password, data.password)) { 
                         let payload = {
@@ -42,7 +43,7 @@ class UserController {
                         let access_token = generateToken(payload)
                         res.status(200).json({ access_token })
                     } else {
-                        throw new Error({ name: 'Invalid Input'})
+                        next({ name: 'Invalid Input' })
                     }
                 }
             })

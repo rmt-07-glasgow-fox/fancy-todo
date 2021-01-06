@@ -1,7 +1,7 @@
 const axios = require('axios')
 
 class APIController {
-    static getRandomJoke(req, res) {
+    static getRandomJoke(req, res, next) {
         axios.get('https://icanhazdadjoke.com/', {
             headers: {
                 'Accept': 'application/json',

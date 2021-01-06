@@ -10,7 +10,7 @@ function authenticate(req, res, next){
         })
             .then(data => {
                 if(!data) {
-                    throw new Error({ name: 'Unauthorized' })
+                    next({ name: 'Unauthorized' })
                 } else {
                     req.user = data
                     next()
@@ -32,14 +32,15 @@ function authorize(req, res, next) {
     })
         .then(data => {
             if (!data || data.UserId !== req.user.id) {
-                throw new Error({ name: 'Unauthorized' })
+                next({ name: 'Unauthorized' })
             } else {
                 next()
             }
         })
         .catch(err => {
             // console.log('masuk sini auth')
-            err.name = 'Unauthorized'
+            console.log(err)
+            // err.name = 'Unauthorized'
             next(err)
         })
 }

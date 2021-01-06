@@ -1,7 +1,7 @@
 const { Task } = require('../models')
 
 class TaskController {
-    static createTask(req, res) {
+    static createTask(req, res, next) {
         const taskObj = {
             title: req.body.title, 
             description: req.body.description, 
@@ -19,7 +19,7 @@ class TaskController {
             })
     }
 
-    static showTasks(req, res) {
+    static showTasks(req, res, next) {
         Task.findAll()
             .then(data => {
                 res.status(200).json(data)
@@ -29,12 +29,12 @@ class TaskController {
             })
     }
 
-    static taskById(req, res) {
+    static taskById(req, res, next) {
         let id = +req.params.id
         Task.findByPk(id)
             .then(data => {
                 if (!data) {
-                    throw new Error({ name: 'Not Found'})
+                    next({ name: 'Not Found' })
                 } else {
                     res.status(200).json(data)
                 }
@@ -44,7 +44,7 @@ class TaskController {
             })
     }
 
-    static updateTask(req, res) {
+    static updateTask(req, res, next) {
         let id = +req.params.id
         let updatedTask = {
             title: req.body.title,
@@ -55,7 +55,7 @@ class TaskController {
         Task.findByPk(id)
             .then(data => {
                 if (!data) {
-                    throw new Error({ name: 'Not Found' })
+                    next({ name: 'Not Found' })
                 } else {
                     return Task.update(updatedTask, {
                         where: { id },
@@ -72,7 +72,7 @@ class TaskController {
             })
     }
 
-    static patchTask(req, res) {
+    static patchTask(req, res, next) {
         let id = +req.params.id
         let status = req.body.status
         Task.findOne({
@@ -80,7 +80,7 @@ class TaskController {
         })
             .then(data => {
                 if (!data) {
-                    throw new Error({ name: 'Not Found'})
+                    next({ name: 'Not Found' })
                 } else {
                     let newStatus = status
                     return Task.update({
@@ -99,14 +99,14 @@ class TaskController {
             })
     }
 
-    static deleteTask(req, res) {
+    static deleteTask(req, res, next) {
         let id = +req.params.id
         Task.destroy({
             where: { id }
         })
             .then(result => {
                 if (result == 0) {
-                    throw new Error({ name: 'Not Found'})
+                    next({ name: 'Not Found' })
                 } else {
                     res.status(200).json({ message: 'Task has been deleted' })
                 }

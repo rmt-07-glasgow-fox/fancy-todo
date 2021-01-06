@@ -6,7 +6,7 @@ function errorHandler (err, req, res, next) {
                 for (let i = 0; i < err.errors.length; i++) {
                     errors.push(err.errors[i].message)
                 }
-                res.status(400).send(errors)
+                res.status(400).json({ message: errors})
                 break;
             case 'Not Found':
                 res.status(404).json({ message: 'Not Found' })
@@ -17,6 +17,10 @@ function errorHandler (err, req, res, next) {
             case 'Unauthorized':
                 res.status(401).json({ message: `Unauthorized`})
                 break
+            case 'JsonWebTokenError': 
+                res.status(401).json({ message: 'You need to login first'})
+            case 'SequelizeUniqueConstraintError':
+                res.status(400).json({ message: err.errors[0].message })
             default:
                 res.status(500).json({ message: 'Internal Server Error'})
 
