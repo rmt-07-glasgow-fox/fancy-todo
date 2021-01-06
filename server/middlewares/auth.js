@@ -6,18 +6,13 @@ async function authenticate(req, res, next) {
         const decoded = checkToken(req.headers.access_token)
         const found = await User.findByPk(decoded.id)
         
-        if (!found) {
-            return res.status(401).json({
-                message: "Please login first"
-            })
-        } else {
+        if (!found) next({ name: 'notLogin' })
+        else {
             req.user = found.id
             next()
         }
     } catch (err) {
-        return res.status(400).json({
-            message: err.message
-        })
+        next(err)
     }
 }
 
@@ -25,23 +20,16 @@ async function authorize(req, res, next) {
     try {
         console.log(req.params.id);
         const found = await Todo.findByPk(+req.params.id)
-        if (!found) {
-            return res.status(404).json({
-                message: 'Todo not found'
-            })
-        } else {
+        if (!found) next({ name: 'todoNotFound' })
+        else {
             if (req.user === found.UserId) {
                 next()
             } else {
-                res.status(401).json({
-                    message: 'Unauthorized to make a change of data'
-                })
+                next({ name: 'unauthorized' })
             }
         }
     } catch (err) {
-        return res.status(500).json({
-            message: err.message
-        })
+        next(err)
     }
 }
 

@@ -1,7 +1,7 @@
 const { Todo } = require('../models')
 
 module.exports = class TodoController {
-    static getTodos(req, res) {
+    static getTodos(req, res, next) {
         Todo.findAll({
             attributes: {
                 exclude: [ 'createdAt', 'updatedAt' ]
@@ -11,11 +11,11 @@ module.exports = class TodoController {
             return res.status(200).json(data)
         } )
         .catch( err => {
-            return res.status(500).json({ message: 'Internal server error' })
+            next(err)
         } )
     }
 
-    static getTodo(req, res) {
+    static getTodo(req, res, next) {
         Todo.findByPk(+req.params.id, {
             attributes: {
                 exclude: [ 'UserId', 'createdAt', 'updatedAt' ]
@@ -25,18 +25,15 @@ module.exports = class TodoController {
             if (data) {
                 return res.status(200).json(data)
             } else {
-                return res.status(404).json({
-                    message: 'Todo not found'
-                })
+                next({ name: 'todoNotFound' })
             }
         } )
         .catch( err => {
-            console.log(err);
-            return res.status(500).json({ message: 'Internal server error' })
+            next(err)
         } )
     }
 
-    static createTodo(req, res) {
+    static createTodo(req, res, next) {
         const newData = {
             title: req.body.title,
             description: req.body.description,
@@ -55,14 +52,11 @@ module.exports = class TodoController {
             return res.status(201).json(response)
         } )
         .catch( err => {
-            console.log(err);
-            return res.status(400).json({
-                message: 'Invalid requests'
-            })
+            next(err)
         } )
     }
 
-    static editTodo(req, res) {
+    static editTodo(req, res, next) {
         const getId = +req.params.id
         const newData = {
             title: req.body.title,
@@ -84,22 +78,18 @@ module.exports = class TodoController {
                     }
                 })
             } else {
-                return res.status(404).json({
-                    message: 'Todo not found'
-                })
+                next({ name: 'todoNotFound' })
             }
         } )
         .then( data => {
             return res.status(201).json(response)
         } )
         .catch( err => {
-            return res.status(400).json({
-                message: 'Invalid requests'
-            })
+            next(err)
         } )
     }
 
-    static patchTodo(req, res) {
+    static patchTodo(req, res, next) {
         const newData = {
             status: req.body.status
         }
@@ -116,23 +106,18 @@ module.exports = class TodoController {
                     }
                 })
             } else {
-                return res.status(404).json({
-                    message: 'Todo not found'
-                })
+                next({ name: 'todoNotFound' })
             }
         } )
         .then( data => {
             return res.status(201).json(data)
         } )
         .catch( err => {
-            console.log(err);
-            return res.status(400).json({
-                message: 'Invalid requests'
-            })
+            next(err)
         } )
     }
 
-    static removeTodo(req, res) {
+    static removeTodo(req, res, next) {
         Todo.destroy( {
             where: {
                 id: req.params.id
@@ -142,11 +127,11 @@ module.exports = class TodoController {
             if (data === 1) {
                 return res.status(200).json({ message: 'Todo has been deleted' })
             } else {
-                return res.status(404).json({ message: 'Todo not found' })
+                next({ name: 'todoNotFound' })
             }
         } )
         .catch( err => {
-            return res.status(500).json({ message: 'Internal server error' })
+            next(err)
         } )
     }
 }

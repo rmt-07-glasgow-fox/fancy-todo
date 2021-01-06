@@ -3,7 +3,7 @@ const comparePassword = require('../helpers/bcryptjs.js').comparePassword
 const generateToken = require('../helpers/jwt.js').generateToken
 
 module.exports = class AuthController {
-    static getRegister(req, res) {
+    static getRegister(req, res, next) {
         User.findAll({
             attributes: {
                 exclude: [ 'password', 'createdAt', 'updatedAt' ]
@@ -13,13 +13,11 @@ module.exports = class AuthController {
             return res.status(200).json(data)
         } )
         .catch( err => {
-            return res.status(500).json({
-                message: "Internal server error"
-            })
+            next(err)
         } )
     }
 
-    static postRegister(req, res) {
+    static postRegister(req, res, next) {
         const { email, password } = req.body
 
         User.create({
@@ -33,11 +31,11 @@ module.exports = class AuthController {
             return res.status(201).json(response)
         } )
         .catch( err => {
-            return res.status(400).json(err)
+            next(err)
         } )
     }
 
-    static removeRegister(req, res) {
+    static removeRegister(req, res, next) {
         User.destroy({
             where: {
                 id: req.params.id
@@ -47,15 +45,15 @@ module.exports = class AuthController {
             if (data === 1) {
                 return res.status(200).json({ message: 'User has been deleted' })
             } else {
-                return res.status(404).json({ message: 'User not found' })
+                next({ name: "todoNotFound" })
             }
         } )
         .catch( err => {
-            return res.status(500).json(err)
+            next(err)
         } )
     }
 
-    static async postLogin(req, res) {
+    static async postLogin(req, res, next) {
         try {
             const { email, password } = req.body
             const user = await User.findOne({
@@ -64,9 +62,7 @@ module.exports = class AuthController {
                 }
             })
 
-            if (!user) return res.status(401).json({
-                message: 'Invalid email/ password'
-            })
+            if (!user) next({ name: 'loginFailed' })
             
             const match = comparePassword(password, user.password)
 
@@ -80,13 +76,10 @@ module.exports = class AuthController {
                 return res.status(200).json({
                     acces_token: acces_token
                 })
-            } else return res.status(401).json({
-                message: 'Invalid email/ password'
-            })
+            } else next({ name: 'loginFailed' })
 
         } catch (err) {
-            console.log(err);
-            return res.status(401).json(err)
+            next(err)
         }
     }
 }

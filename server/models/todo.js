@@ -16,7 +16,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Todo.init({
-    title: DataTypes.STRING,
+    title: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: 'Title Todo cant be empty'
+        }
+      }
+    },
     description: DataTypes.STRING,
     status: {
       type: DataTypes.STRING,
@@ -32,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isAfter: {
           args: new Date().toString(),
-          msg: 'ToDo can only be set for the future'
+          msg: 'Cant set Past Todo'
         }
       }
     }
