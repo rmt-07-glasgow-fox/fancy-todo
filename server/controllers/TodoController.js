@@ -7,7 +7,7 @@ class TodoController {
         if (data) {
           res.status(200).json(data)
         } else {
-          next({ name: 'todoNotFound' })
+          res.status(404).json({ message: 'Todo not found' })
         }
       })
       .catch(err => {

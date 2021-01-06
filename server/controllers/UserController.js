@@ -1,10 +1,9 @@
 const { User } = require('../models')
 const { comparePassword } = require('../helpers/bcrypt')
 const { generateToken } = require('../helpers/jwt')
-const user = require('../models/user')
 
 class UserController {
-  static register(req, res) {
+  static register(req, res, next) {
     const newUser = {
       email: req.body.email,
       password: req.body.password
@@ -18,11 +17,11 @@ class UserController {
         res.status(201).json(response)
       })
       .catch(err => {
-        res.status(400).json({ message: err.message })
+        next(err)
       })
   }
 
-  static login(req, res) {
+  static login(req, res, next) {
     const loginObj = {
       email: req.body.email,
       password: req.body.password
@@ -47,7 +46,7 @@ class UserController {
         res.status(200).json(data)
       })
       .catch(err => {
-        res.status(400).json({ message: err.message })
+        next(err)
       })
   }
 }
