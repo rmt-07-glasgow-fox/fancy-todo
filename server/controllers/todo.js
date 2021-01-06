@@ -3,7 +3,7 @@ const {Todo} = require('../models')
 class TodoController {
 
     //POST '/todos'
-    static async inputTodo(req, res) {
+    static async inputTodo(req, res, next) {
         const payload = {
             title: req.body.title || '',
             description: req.body.description || '',
@@ -26,7 +26,7 @@ class TodoController {
               where: {
                   UserId: req.loggedIn.id
               },
-              order: [['status', 'asc'], ['due_date', 'asc'], ['createdAt', 'desc']]
+              order: [['status', 'asc'], ['due_date', 'asc']]
           })
           res.status(200).json(todo)
       } catch (error) {
@@ -53,7 +53,7 @@ class TodoController {
     }
 
     //PUT '/todos/:id'
-    static async editTodo(req, res) {
+    static async editTodo(req, res, next) {
         const id = req.params.id
         const payload = {
             title: req.body.title,
@@ -75,7 +75,7 @@ class TodoController {
     }
 
     //PATCH '/todos/:id'
-    static async editStatusTodo(req, res) {
+    static async editStatusTodo(req, res, next) {
         const id = req.params.id
         const payload = {
             status: req.body.status
@@ -95,7 +95,7 @@ class TodoController {
     }
 
     //DELETE '/todos/:id'
-    static async deleteTodo(req, res) {
+    static async deleteTodo(req, res, next) {
         const id = +req.params.id
         try {
           const todo = await Todo.destroy({where: {id}})
