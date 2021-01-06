@@ -291,7 +291,7 @@ $('#btnLogin').click((event) => {
             password
         },
         success: (data) => {
-            localStorage.setItem('access_token', data.token)
+            localStorage.setItem('access_token', data.access_token)
             dashboardPage()
         },
         error: (err) => {
