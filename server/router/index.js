@@ -2,27 +2,15 @@ const express = require('express')
 const router = express.Router()
 const todo = require('./todo')
 const auth = require('./auth')
-const { tokenCheck } = require('../helper/jwt')
-const { User } = require('../models')
+const {authenticate} = require('../middleware/auth')
+const resto = require('./zomato.js')
+
+
 
 
 router.use('/', auth)
-router.use(async (req, res, next)=> {
-      try{
-            let decoded = tokenCheck(req.headers.access_token)
-            let match = await User.findOne({where: {email: decoded.email}})
-
-            if(!match) {
-                  res.status(401).json({message: "you must login fisrt"})
-            } else {
-                  next()
-            }
-
-
-      }catch (err) { 
-            res.status(400).json(err)
-      }
-})
+router.use(authenticate)
 router.use('/todos', todo )
+router.use('/resto',resto )
 
 module.exports = router

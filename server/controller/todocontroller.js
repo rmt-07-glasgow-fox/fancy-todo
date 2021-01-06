@@ -1,22 +1,24 @@
 const { User, Todo } = require('../models')
 
 class TodoController {
-      static showTodo(req, res) {
+      static showTodo(req, res, next) {
+            
             Todo.findAll()
                   .then(data => {
                         res.status(200).json(data)
                   })
                   .catch(err => {
-                        res.status(500).json(err)
+                        next(err)
                   })
       }
 
-      static addTodo(req, res) {
+      static addTodo(req, res, next) {
             const newTodo = {
                   title: req.body.title,
                   description: req.body.description,
                   status: req.body.status,
-                  due_date: req.body.due_date
+                  due_date: req.body.due_date,
+                  UserId: req.user.id
             }
 
             Todo.create(newTodo)
@@ -25,11 +27,13 @@ class TodoController {
                               title: data.title,
                               description: data.description,
                               status: data.status,
-                              due_date: data.due_date
+                              due_date: data.due_date,
+                              UserId: req.user.id
                         })
                   })
                   .catch(err => {
-                        res.status(400).json(err)
+                        if (err.name == "SequelizeValidationError") next({name: "SequelizeValidationError"})
+                        next(err)
                   })
       }
 
@@ -38,10 +42,11 @@ class TodoController {
 
             Todo.findByPk(id)
                   .then(data => {
+                  
                         res.status(200).json(data)
                   })
                   .catch(err => {
-                        res.status(404).json(err)
+                        next({name: "SourceNotFound"})
                   })
 
       }
@@ -58,10 +63,12 @@ class TodoController {
 
             Todo.update(editedTodo, {where: {id}})
                   .then(data => {
-                        res.status(200).json(data)
+                        res.status(200).json(data, {message: "todo has updated"})
                   })
                   .catch(err => {
-                        res.status(400).json(err)
+                        if (err.name == "SequelizeValidationError") next({name: "SequelizeValidationError"})
+                        if (err.name == "SourceNotFound") next({name: "SourceNotFound"})
+                        next(err)
                   }) 
       }
 
@@ -77,7 +84,10 @@ class TodoController {
                         res.status(200).json(data)
                   })
                   .catch(err => {
-                        res.status(400).json(err)
+                        if (err.name == "SequelizeValidationError") next({name: "SequelizeValidationError"})
+                        if (err.name == "SourceNotFound") next({name: "SourceNotFound"})
+                        next(err)
+            
                   })
 
       }
@@ -89,7 +99,9 @@ class TodoController {
                         res.status(200).json({message: "success deleted"})
                   })
                   .catch(err => {
-                        res.status(404).json(err)
+                        if (err.name == "SequelizeValidationError") next({name: "SequelizeValidationError"})
+                        if (err.name == "SourceNotFound") next({name: "SourceNotFound"})
+                        next(err)
                   })
       }
 

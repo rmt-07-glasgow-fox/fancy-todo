@@ -37,7 +37,6 @@ class AuthConroller {
                               email: user.email
                         }
 
-
                         const access_token = tokenGenerate(payLoad)
                         return res.status(200).json({
                               access_token
