@@ -7,7 +7,9 @@ class TodoController {
                 where: { userId: req.user.id },
                 attributes: { exclude: ['createdAt', 'updatedAt'] },
                 order: [
-                    ['title', 'asc']
+                    ['title', 'asc'],
+                    ['status', 'asc']
+
                 ]
             })
             return res.status(200).json({
