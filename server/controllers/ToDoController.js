@@ -8,7 +8,7 @@ class ToDoController {
         UserId: req.userData.id
       },
       order: [
-        ['id', 'ASC']
+        ['due_date', 'ASC']
       ]
     })
       .then(data => {
