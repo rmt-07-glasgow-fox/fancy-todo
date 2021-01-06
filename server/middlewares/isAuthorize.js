@@ -5,7 +5,7 @@ const isAuthorize = async(req, res, next) => {
         const todo = await Todo.findByPk(req.params.id);
 
         if (!todo || todo.userId !== req.user.id) {
-            next({ name: "unauthorize" })
+            return next({ name: "unauthorize" })
         }
 
         return next();
