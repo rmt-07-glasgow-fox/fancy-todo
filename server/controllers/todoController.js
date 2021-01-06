@@ -22,6 +22,9 @@ class TodoController {
 
   static getAllTask (req, res, next) {
     Todo.findAll({
+      where: {
+        userId: req.user.id
+      },
       order: [["id", "ASC"]]
     })
     .then(data => {
