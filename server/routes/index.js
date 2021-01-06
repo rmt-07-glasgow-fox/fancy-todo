@@ -4,6 +4,7 @@ const authRouter = require('./auth')
 const { authenticate } = require('../middlewares/auth')
 
 
+
 router.get('/', (req, res) => {
   res.send('ini home')
 })

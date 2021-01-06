@@ -1,3 +1,5 @@
+const user = require('../models/user')
+
 const Todo = require('../models/index').Todo
 
 class todoController{
@@ -6,7 +8,8 @@ class todoController{
       title: req.body.title,
       description: req.body.description,
       status: req.body.status,
-      due_date: req.body.due_date
+      due_date: req.body.due_date,
+      user_id: req.user.id //jangan lupa isi ini setelah selesai bikin authentikasi, ini dipake buat authorization
     }
     // console.log(new Date(),'<<<< new date')
     // console.log(newTodo.due_date, '<<<< dari post')
@@ -18,7 +21,7 @@ class todoController{
     })
     .catch(err => {
       // console.log(err.message, '<<<<ini err.message')
-      console.log(err.name)
+      // console.log(err.name)
       if (err.name == 'SequelizeValidationError'){
         return res.status(400).json({message: 'validation error'})
       }
@@ -28,6 +31,7 @@ class todoController{
   static getTodo(req,res){
     console.log(req.user, 'ini req user dalem controller')
     Todo.findAll({
+      // where: {user_id: req.user.id},
       order: [['id', 'ASC']]
     })
     .then(todo => {
@@ -46,7 +50,7 @@ class todoController{
       if(todos.length == 0){
         return res.status(404).json({message: 'error todos not found'})
       }
-      console.log(todos, 'ini todos getTodosById')
+      // console.log(todos, 'ini todos getTodosById')
       res.status(200).json(todos)
     })
     .catch(err => {
@@ -57,8 +61,9 @@ class todoController{
     const updatedTodo = {
       title: req.body.title,
       description: req.body.description,
-      status: req.body.status,
+      // status: req.body.status,
       due_date: req.body.due_date,
+      // user_id: req.user.id
     }
     Todo.update(updatedTodo, {
       where: {id: req.params.id}
@@ -71,6 +76,9 @@ class todoController{
       res.status(200).json(updatedTodo)
     })
     .catch(err => {
+      if (err.name == 'SequelizeValidationError'){
+        return res.status(400).json({message: 'validation error'})
+      }
       res.status(500).json({message: 'internal server error'})
     })
   }

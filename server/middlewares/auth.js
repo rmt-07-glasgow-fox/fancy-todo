@@ -1,5 +1,6 @@
 const { cekToken } = require('../helpers/jwt')
-const { User } = require('../models')
+const { User, Todo } = require('../models')
+const user = require('../models/user')
 
 async function authenticate (req, res, next){
   console.log('masuk proses authentikasi')
@@ -7,7 +8,7 @@ async function authenticate (req, res, next){
   try {
     let token = req.headers.access_token
     let decoded = cekToken(token)
-    console.log(decoded, 'ini decoded')
+    // console.log(decoded, 'ini decoded')
     //jangan langsung di next, karena masih ada kemungkinan untuk dibobol
     let find = await User.findOne({
       where: {email : decoded.email}
@@ -22,4 +23,22 @@ async function authenticate (req, res, next){
   }
 }
 
-module.exports = { authenticate }
+async function authorize(req, res, next){
+  console.log('masuk authorize')
+  try {
+    // console.log(req.user, '<<<< ini dalem authorize')
+    console.log(req.params.id)
+    let find = await Todo.findOne({
+      where: {id: req.params.id}
+    })
+    if(!find || req.user.id !== find.user_id){
+      res.status(401).json({message: 'error not authorized'})
+    } else {
+      next()
+    }
+  } catch (err) {
+    res.status(500).json({message: 'internal server error'})
+  }
+}
+
+module.exports = { authenticate , authorize }
