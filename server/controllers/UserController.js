@@ -42,7 +42,7 @@ class UserController {
                     email: user.email
                 }
                 let accessToken = genToken(payload)
-                res.status(200).json({accessToken})
+                res.status(200).json({access_token})
             } else {
                 res.status(401).json({message: 'invalid email / password'})
             }
