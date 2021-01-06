@@ -4,11 +4,18 @@ class todosController {
 
   static createTodos(req, res) {
     const { title, description, status, due_date } = req.body
-    let input = {title, description, status, due_date}
+    let input = {
+      title, 
+      description, 
+      status, 
+      due_date,
+      UserId: req.user.id
+    }
 
     Todo.create((input))
-    .then(() => {
-      res.status(200).json(input)
+    .then((data) => {
+      console.log(input);
+      res.status(200).json(data)
     })
     .catch((err) => {
       if (err.name == "SequelizeValidationError") {

@@ -3,8 +3,6 @@ var router = express.Router()
 
 const todosRouter = require('../routers/todosRouter')
 
-const { authentication, authorization} = require('../middlewares/middleware')
-
 const todosController = require('../controllers/todosController')
 const usersController = require('../controllers/usersController')
 
@@ -19,6 +17,6 @@ router.post('/register', usersController.register)
 router.post('/login', usersController.login)
 
 // todos router
-router.use('/todos', authentication, todosRouter)
+router.use('/todos', todosRouter)
 
 module.exports = router

@@ -6,7 +6,7 @@ const { checkToken } = require('../helpers/jwt')
 function authentication(req, res, next) {
   try {
     //the token is stored in the header
-    let decoded = checkToken(req.header.access_token)
+    let decoded = checkToken(req.headers.access_token)
 
     //search whether an email exist in decoded.email
     User.findOne({
@@ -31,11 +31,24 @@ function authentication(req, res, next) {
 
 // authorization -> to delete/update, user Id must be the same
 function authorization(req, res, next) {
+  //the userId is stored in token, while the TodoId is in the req.params
+  let todoId = +req.params.id //the targeted id that wants to be deleted
   try {
-
+    Todo.findByPk(todoId)
+    .then((data) => {
+      if (!data) {
+        return res.status(404).json({message:"Error 404: todo not found"})
+      }
+      if (data.UserId === req.user.id) {
+        next()
+      }
+      else {
+        return res.status(401).json({message:"Unauthorized"})
+      }
+    })
   }
-  catch {
-    
+  catch(err) {
+    return res.status(400).json({message: err.message})
   }
 }
 
