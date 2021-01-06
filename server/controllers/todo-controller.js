@@ -9,6 +9,7 @@ class TodoController{
         }
         catch(err){
             return res.status(500).json(err)
+            // return next(err)
         }
     }
 
@@ -27,7 +28,8 @@ class TodoController{
             return res.status(201).json(result)
         }
         catch(err){
-            return res.status(400).json(err)
+            return res.status(500).json(err)
+            // return next(err)
         }    
     }
 
@@ -39,10 +41,19 @@ class TodoController{
                 where: { id }
             })
 
-            return res.status(200).json(result)
+            if(result){
+                return res.status(200).json(result)
+            }else{
+                return res.status(404).json({name: 'error not found'})
+                // return next({
+                //     name: "resourceNotFound"
+                // })
+                // throw new Error('resourceNotFound')
+            }
         }
-        catch{
-            return res.status(404).json({message: 'server error'})
+        catch(err){
+            // next(err)
+            return res.status(500).json({message: 'server error'})
         }
     }
 
@@ -103,6 +114,9 @@ class TodoController{
 
             if(!result){
                 return res.status(404).json({message: 'error not found'})
+                // next({
+                //     name: "resourceNotFound"
+                // })
             }
 
             return res.status(200).json({message: 'todo success to delete'})

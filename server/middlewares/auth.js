@@ -15,7 +15,7 @@ async function authenticate(req, res, next) {
 
         if(!find){
             return res.status(401).json({
-                message: 'Please login first'
+                message: 'please login first'
             })
         }else{
             req.user = find

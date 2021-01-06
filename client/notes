@@ -1,0 +1,1 @@
+preventDefault() untuk button ga reload otomatis (jangan lupa masukin event nya di function)
