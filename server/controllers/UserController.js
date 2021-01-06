@@ -50,7 +50,10 @@ class UserController {
               email: data.email
             })
             res.status(200).json({
-              jwtToken
+              jwtToken,
+              userData: {
+                email: data.email
+              }
             })
           }else{
             next({
