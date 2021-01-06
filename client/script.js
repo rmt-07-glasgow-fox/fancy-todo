@@ -17,6 +17,14 @@ $(document).ready(() => {
       $('#passwordInput i').addClass('fa-eye');
     }
   });
+
+  $('#modalConfirmDelete').on('show.bs.modal', function (event) {
+    const deleteid = $(event.relatedTarget).data('todoid');
+    $('#btn-delete').click(function () {
+      deleteTodo(deleteid);
+      $('#modalConfirmDelete').modal('hide');
+    });
+  });
 });
 
 const loginPage = () => {
@@ -88,6 +96,7 @@ addTodo = (e) => {
     .done((response) => {
       const template = alertTemplate('success', 'Your Todo has been added');
       $(template).appendTo('#alert');
+      listTodo();
     })
     .fail((err) => {
       err.responseJSON.map((e) => {
@@ -136,9 +145,9 @@ const listTodo = () => {
                     <a href="#" onclick="editTodoForm(${
                       data.id
                     })" class="card-link" id="editTodo"><i class="fa fa-edit" aria-hidden="true"></i> Edit</a>
-                    <a href="#" onclick="deleteTodo(${
+                    <a href="#" data-todoid="${
                       data.id
-                    })" class="card-link text-red" id="delTodo"><i class="fa fa-trash" aria-hidden="true"></i> Hapus</a>
+                    }" data-toggle="modal" data-target="#modalConfirmDelete" class="card-link text-red" id="deleteTodo"><i class="fa fa-trash" aria-hidden="true"></i> Hapus</a>
                 </div>
               </div>
           </div>
@@ -153,6 +162,27 @@ const listTodo = () => {
       });
     })
     .always(() => {});
+};
+
+const deleteTodo = (id) => {
+  $.ajax({
+    method: 'DELETE',
+    url: url + `/todos/${id}`,
+    headers: {
+      authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+    },
+  })
+    .done((response) => {
+      const template = alertTemplate('success', 'Your Todo has been deleted');
+      $(template).appendTo('#alert');
+      listTodo();
+    })
+    .fail((err) => {
+      err.responseJSON.map((e) => {
+        const template = alertTemplate('error', e.message);
+        $(template).appendTo('#alert');
+      });
+    });
 };
 
 const register = (e) => {
