@@ -13,21 +13,32 @@ let baseUrl = 'http://localhost:3000'
 
 // TODO VARIABLES
 let mainTodoSection = $('#main-todo')
+let newsContainer = $('#get-news')
+let tasksContainer = $('#get-tasks')
 
 registerContainer.hide()
 mainTodoSection.hide()
 
 $(document).ready(() => {
-  if(localStorage.getItem('access_token')){
-    showTodo()
-  }
+  checkAuth()
 })
 
 // Auth 
 
+const checkAuth = () => {
+  if(localStorage.getItem('access_token')){
+    showTodo()
+  }else{
+    showAuth()
+  }
+}
+
 const showTodo = () => {
   authSection.hide()
   mainTodoSection.show()
+  getTasks()
+  getNews()
+  getWeather()
 }
 
 const showAuth = () => {
@@ -108,7 +119,89 @@ registerBtn.click((e) => {
 
 logoutBtn.click((e) => {
   localStorage.removeItem('access_token')
-  showAuth()
+  checkAuth()
 })
 
 // Todo
+const getTasks = () => {
+  $.ajax({
+    method: 'GET',
+    url: `${baseUrl}/todos`,
+    headers:{
+      access_token: localStorage.getItem('access_token')
+    }
+  })
+    .done(res => {
+      console.log(res, 'res')
+      let tasks = res
+      tasksContainer.empty('')
+      if(res.length){
+        tasks.forEach(task => {
+          tasksContainer.append(`<div class="card mb-3" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">${task.title}</h5>
+            <p class="card-text">${task.description}</p>
+            <a href="#" id="patchDone" class="btn btn-warning">Mark as Done</a>
+          </div>
+        </div>`)
+        })
+      }else{
+        tasksContainer.append(`<h2>${res.message}</h2>`)
+      }
+    })
+    .fail(err => {
+      console.log(err.responseJSON, 'err')
+    })
+    .always(_ => {
+      console.log('always')
+    })
+}
+
+const getNews = () => {
+  $.ajax({
+    method: 'GET',
+    url: `${baseUrl}/todos/news`,
+    headers:{
+      access_token: localStorage.getItem('access_token')
+    }
+  })
+    .done(res => {
+      console.log(res.articles, 'res')
+      let articles = res.articles
+      newsContainer.empty('')
+      articles.forEach(article => {
+        newsContainer.append(`<div class="card mb-3" style="width: 18rem;">
+          <img class="card-img-top" src=${article.urlToImage} alt="news thumbnail">
+          <div class="card-body">
+            <h5 class="card-title">${article.title}</h5>
+            <a href="${article.url}" target="_blank" class="btn btn-primary">Go to article</a>
+          </div>
+        </div>`)
+      })
+    })
+    .fail(err => {
+      console.log(err.responseJSON, 'err')
+    })
+    .always(_ => {
+      console.log('always')
+    })
+}
+
+const getWeather = () => {
+  $.ajax({
+    method: 'GET',
+    url: `${baseUrl}/todos/weather`,
+    headers:{
+      access_token: localStorage.getItem('access_token')
+    }
+  })
+    .done(res => {
+      console.log(res, 'res')
+    })
+    .fail(err => {
+      console.log(err.responseJSON, 'err')
+    })
+    .always(_ => {
+      console.log('always')
+    })
+}
