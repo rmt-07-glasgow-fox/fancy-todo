@@ -6,27 +6,29 @@ async function authentication (req, res, next) {
         let decoded = cekToken(req.headers.access_token)
         let find = await User.findOne({where:{email:decoded.email}})
         if(!find){
-            res.status(401).json({message: 'Please login first'})
+            next({name:'Forbidden'})
         }else{
             req.user = find
             next()
         }
     }catch(err){
-        res.status(400).json({message: err.message})
+        next({name:'Forbidden'})
     }
 }
 
 function authorization (req, res, next){
     TodoList.findOne({where:{id:req.params.id}})
     .then(data=>{
-        if(!data || data.UserId !== req.user.id){
-            res.status(401).json({message: "Sorry you don't have permision"})
+        if(!data){
+            next({name:'NotFound'})   
+        }else if (data.UserId !== req.user.id){
+            next({name:'Unauthorized'})
         }else{
             next()
         }
     })  
     .catch (err=>{
-        res.status(500).json({message:err.message})
+        next(err)
     })    
 }
 

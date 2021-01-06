@@ -1,7 +1,7 @@
 const {TodoList} = require('../models/index')
 
 class Controller{
-    static newTodos(req, res){
+    static newTodos(req, res, next){
         let body = req.body
         let userId = req.user.id
         let data = {
@@ -16,70 +16,66 @@ class Controller{
             res.status(201).json(data)
         })
         .catch(err=>{
-            res.status(500).json({message:err})
+            next(err)
             console.log(err)
         })
     }
-    static allTodos(req, res){
+
+    static allTodos(req, res, next){
         let UserId = req.user.id
         TodoList.findAll({where:{UserId}})
         .then(data=>{
             res.status(200).json(data)
         })
         .catch(err=>{
-            res.status(500).json({message: err})
+            next(err)
         })
     }
+
     static findTodoById(req, res){
         let id = req.params.id
         TodoList.findByPk(id)
         .then(data=>{
-            if(data === null){
-                return res.status(404).json({message:'id not found'})
-            }
             res.status(200).json(data)
         })
         .catch(err=>{
-            res.status(500).json({message:err})
+            next(err)
         })
     }
-    static updateTodo(req, res){
+
+    static updateTodo(req, res, next){
         let id = req.params.id
         let body = req.body
-        let data = {
+        let dataUser = {
             title: body.title,
             description: body.description,
             status: body.status,
             due_date: body.due_date,
             UserId:req.user.id
         }
-        TodoList.update(data,{where:{id}})
+        TodoList.update(dataUser,{where:{id}})
         .then(data=>{
-            if(data[0] === 0){
-                return res.status(404).json({message:'id not found'})
-            }
-            res.status(200).json({message: 'Data Updated'})
+            res.status(200).json({message: 'Data Updated', data:dataUser})
         })
         .catch(err=>{
-            res.status(500).json({message:err})
+            next(err)
             console.log(err)
         })
     }
+
     static editStatusTodo(req, res){
         let id = req.params.id
         let status = {status:req.body.status}
         TodoList.update(status,{where:{id}})
         .then(data=>{
-            if(data[0] === 0){
-                return res.status(404).json({message:'id not found'})
-            }
             res.status(200).json({message: 'Data Updated'})
         })
         .catch(err=>{
-            res.status(500).json({message:err})
+            next(err)
             console.log(err)
         })
     }
+    
     static deleteTodo(req, res){
         let id = req.params.id
         TodoList.destroy({where:{id}})
@@ -87,7 +83,7 @@ class Controller{
             res.status(200).json({message:"Todo has been delete"})
         })
         .catch(err=>{
-            res.status(500).json({message:err})
+            next(err)
         })
     }
 }

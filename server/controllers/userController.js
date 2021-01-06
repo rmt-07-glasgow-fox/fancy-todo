@@ -17,6 +17,7 @@ class Controller{
             res.status(400).json({message: err})
         })
     }
+    
     static login(req, res){
         let body = req.body
         let dataUser = {
