@@ -1,16 +1,16 @@
 const { Todo } = require('../models');
 
-exports.list = async (req, res) => {
+exports.list = async (req, res, next) => {
   try {
     const userId = req.user.id;
     const todos = await Todo.findAll({ where: { UserId: userId } });
     return res.status(200).json(todos);
   } catch (error) {
-    return res.status(500).json(error);
+    next(error);
   }
 };
 
-exports.create = async (req, res) => {
+exports.create = async (req, res, next) => {
   const body = {
     title: req.body.title,
     description: req.body.description,
@@ -23,24 +23,24 @@ exports.create = async (req, res) => {
     const todo = await Todo.create(body);
     return res.status(201).json(todo);
   } catch (error) {
-    return res.status(400).json(error);
+    next(error);
   }
 };
 
-exports.detail = async (req, res) => {
+exports.detail = async (req, res, next) => {
   const id = req.params.id;
   const userId = req.user.id;
 
   try {
     const todo = await Todo.findOne({ where: { id: id, UserId: userId } });
-    if (!todo) return res.status(404).json({ message: 'error not found' });
+    if (!todo) return next({ name: 'NotFound' });
     return res.status(200).json(todo);
   } catch (error) {
-    return res.status(500).json(error);
+    next(error);
   }
 };
 
-exports.update = async (req, res) => {
+exports.update = async (req, res, next) => {
   const id = req.params.id;
   const userId = req.user.id;
   const body = {
@@ -52,24 +52,24 @@ exports.update = async (req, res) => {
 
   try {
     const isFound = await Todo.findOne({ where: { id: id, UserId: userId } });
-    if (!isFound) return res.status(404).json({ message: 'error not found' });
+    if (!isFound) return next({ name: 'NotFound' });
     else {
       const todo = await Todo.update(body, { where: { id: id } });
       return res.status(200).json(isFound);
     }
   } catch (error) {
-    return res.status(500).json(error);
+    next(error);
   }
 };
 
-exports.updateStatus = async (req, res) => {
+exports.updateStatus = async (req, res, next) => {
   const id = req.params.id;
   const userId = req.user.id;
   const status = req.body.status;
 
   try {
     const isFound = await Todo.findOne({ where: { id: id, UserId: userId } });
-    if (!isFound) return res.status(404).json({ message: 'error not found' });
+    if (!isFound) return next({ name: 'NotFound' });
     else {
       const todo = await Todo.update(
         { status: status },
@@ -78,22 +78,22 @@ exports.updateStatus = async (req, res) => {
       return res.status(200).json(todo[1][0]);
     }
   } catch (error) {
-    return res.status(500).json(error);
+    next(error);
   }
 };
 
-exports.destroy = async (req, res) => {
+exports.destroy = async (req, res, next) => {
   const id = req.params.id;
   const userId = req.user.id;
 
   try {
     const isFound = await Todo.findOne({ where: { id: id, UserId: userId } });
-    if (!isFound) return res.status(404).json({ message: 'error not found' });
+    if (!isFound) return next({ name: 'NotFound' });
     else {
       const todo = await Todo.destroy({ where: { id: id } });
       return res.status(200).json({ message: 'todo success to delete' });
     }
   } catch (error) {
-    return res.status(500).json(error);
+    next(error);
   }
 };
