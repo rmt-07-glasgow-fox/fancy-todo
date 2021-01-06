@@ -22,7 +22,7 @@ async function authenticate(req, res, next) {
         }
 
     } catch (err) {
-        return res.status(500).json({ message: err.message })
+        return next(err)
     }
 }
 
@@ -33,20 +33,18 @@ async function authorize(req, res, next) {
         // console.log('>>> req.user', req.user)
 
         let todo = await Todo.findByPk(id)
-        // console.log(todo)
+        
         if (!todo) {
             return next({ name: '404' })
         }
-
+        
         if (todo.UserId !== req.user.id) {
             return next({ name: '403' })
-            // return res.status(403).json({ message: `Bukan todo user id : ${req.user.id}` })
         }
 
         return next()
 
     } catch (err) {
-        // return res.send(500).json(err.message)
         return next(err)
     }
 }

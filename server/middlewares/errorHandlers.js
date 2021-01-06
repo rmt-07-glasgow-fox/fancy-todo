@@ -8,6 +8,11 @@ const errorHandlers = (err, req, res, next) => {
             return res.status(400).json({ message: errorMessages })
         }
 
+        if (err.name === "JsonWebTokenError") {
+            let errorMessages = err.message
+            return res.status(401).json({ message: errorMessages })
+        }
+
         if (err.name === '401') {
             let errorMessages = 'Unauthorized'
             return res.status(401).json({ message: errorMessages })
@@ -23,8 +28,8 @@ const errorHandlers = (err, req, res, next) => {
             return res.status(404).json({ message: errorMessages })
         }
 
-        // let errorMessages = 'Internal server error'
-        return res.status(500).json({ message: err })
+        let errorMessages = 'Internal server error'
+        return res.status(500).json({ message: errorMessages })
         // return res.send(err)
     }
 }

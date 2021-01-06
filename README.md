@@ -28,28 +28,52 @@ Server URL : http://localhost:3000
 ---
 >get all todos list
 
+_Request Headers_
+```
+access_token : MOutCvMHysWtpWDi00
+```
+
 _Request Body_
 ```
 not needed
 ```
-_Response (200)_
+
+_Response ( 200 )_
 ```
-[
-  {
-    "id": 1,
-    "title": "Belajar Vue JS",
-    "description": "",
-    "status": true,
-    "due_date": "2020-01-04"
-  },
-  {
-    "id": 2,
-    "title": "Belajar React JS",
-    "description": "",
-    "status": false,
-    "due_date": "2020-02-05"
-  }
-]
+{
+    "message": [
+        {
+            "id": 10,
+            "title": "Belajar React",
+            "description": "updated",
+            "status": true,
+            "due_date": "2021-01-06",
+            "UserId": 4
+        },
+        {
+            "id": 13,
+            "title": "Belajar React",
+            "description": "updated",
+            "status": false,
+            "due_date": "2021-01-06",
+            "UserId": 4
+        }
+    ]
+}
+```
+
+_Response ( 401 )_
+```
+{
+    "message": "jwt must be provided" / "jwt malformed"
+}
+```
+
+_Response (500)_
+```
+{
+    "message": "Internal server error"
+}
 ```
 
 ---
@@ -57,28 +81,35 @@ _Response (200)_
 ---
 >Create new todos list
 
+_Request Headers_
+```
+access_token : MOutCvMHysWtpWDi00
+```
+
 _Request Body_
 ```
 {
-  "title": "<title to get insert into>",
-  "description": "<description to get insert into>",
-  "due_date": "<due_date to get insert into>",
-  "status": "<status to get insert into>"
+    "title": "test",
+    "description": "",
+    "due_date": "2021-01-06"
 }
 ```
 
-_Response (201 - Created)_
+_Response ( 201 - Created )_
 ```
 {
-  "id": <given id by system>,
-  "title": "<posted title>",
-  "description": "<posted description>",
-  "status": "<posted status>",
-  "due_date": "<posted due_date>"
+    "message": {
+        "id": 18,
+        "status": false,
+        "title": "test",
+        "description": "",
+        "due_date": "2021-01-06",
+        "UserId": 4
+    }
 }
 ```
 
-_Response(400- bad request)_
+_Response( 400 - bad request )_
 ```
 {
     "message" : [
@@ -91,25 +122,52 @@ _Response(400- bad request)_
 }
 ```
 
+_Response ( 401 - Forbidden )_
+```
+{
+    "message": "jwt must be provided" / "jwt malformed"
+}
+```
+
+_Response( 404 - Not Found )_
+```
+{
+    "message": "Not found"
+}
+```
+
+_Response ( 500 - Internal Server Error )_
+```
+{
+    "message": "Internal server error"
+}
+```
+
 ---
 ### GET /todos/:id
 ---
 >Get todos list by ID
+
+_Request Headers_
+```
+access_token : MOutCvMHysWtpWDi00
+```
 
 _Request Body_
 ```
 not needed
 ```
 
-_Response (200)_
+_Response ( 200 - OK )_
 ```
 {
-    "todo": {
-        "id": 6,
-        "title": "nyapu",
-        "description": "nyapu kamar",
+    "message": {
+        "id": 18,
         "status": false,
-        "due_date": "2020-01-01"
+        "title": "test",
+        "description": "",
+        "due_date": "2021-01-06",
+        "UserId": 4
     }
 }
 ```
@@ -126,38 +184,66 @@ _Response(404 - not found)_
 ---
 >Update todos list by ID
 
+_Request Headers_
+```
+access_token : MOutCvMHysWtpWDi00
+```
+
 _Request Body_
 ```
 {
-  "title": "<title to get updated later on>",
-  "description": "<description to get updated later on>",
-  "due_date": "<due_date to get updated later on>",
-   "status": "<status to get updated later on>"
+    "title": "test",
+    "description": "",
+    "due_date": "2021-01-06",
+    "status": true / false
 }
 ```
 
-_Response(200)_
+_Response( 200 - OK )_
 ```
 {
-    "todo": [
-        1
+    "message": {
+        "id": 18,
+        "status": false,
+        "title": "test",
+        "description": "",
+        "due_date": "2021-01-06",
+        "UserId": 4
+    }
+}
+```
+
+_Response( 400 - Bad Request )_
+```
+{
+    "message" : [
+        "Name required",
+        "Description required",
+        "Status required",
+        "Due date required",
+        "Status has to be true or false"
     ]
 }
 ```
 
-_Response(404 - not found)_
+_Response( 403 - Forbidden )_
 ```
 {
-  "Error": "INVALID_ID",
-  "message": "Data_not_found"
+    "message": "It doesn't belongs to user"
 }
 ```
 
-_Response(400- bad request)_
+_Response( 404 - Not Found )_
 ```
 {
-    "Error" :  "VALIDATION_ERROR"
-    "message": "Name required,Description required,Status required,Due date required, Status has to be true or false"
+    "message": "Not found"
+}
+```
+
+_Response ( 500 - Internal Server Error )_
+```
+{
+    "message": "Internal server error"
 }
 ```
 
@@ -166,10 +252,15 @@ _Response(400- bad request)_
 ---
 >Update todos status by ID
 
+_Request Headers_
+```
+access_token : MOutCvMHysWtpWDi00
+```
+
 _Request Body_
 ```
 {
- "status": Boolean
+ "status": true / false
 }
 ```
 
@@ -180,20 +271,24 @@ _Response(200)_
 }
 ```
 
-_Response(404 - not found)_
+_Response( 403 - Forbidden )_
 ```
 {
-  "message": "Data_not_found"
+    "message": "It doesn't belongs to user"
 }
 ```
 
-_Response(400- bad request)_
+_Response( 404 - Not Found )_
 ```
 {
-    "Error" :  "VALIDATION_ERROR"
-    "message": "message" : [
-        "Status has to be true or false"
-    ]
+    "message": "Not found"
+}
+```
+
+_Response ( 500 - Internal Server Error )_
+```
+{
+    "message": "Internal server error"
 }
 ```
 
@@ -202,23 +297,135 @@ _Response(400- bad request)_
 ---
 >Delete todos list by ID
 
-_Response(200)_
+_Request Headers_
+```
+access_token : MOutCvMHysWtpWDi00
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response( 200 )_
+```
+OK
+```
+_Response( 403 - Forbidden )_
 ```
 {
-    "message": 'Success Delete'
+    "message": "It doesn't belongs to user"
 }
 ```
 
-_Response(404 - not found)_
+_Response( 404 - Not Found )_
 ```
 {
-  "message": "Data_not_found"
+    "message": "Not found"
 }
 ```
 
-_Response (500)_
+_Response ( 500 - Internal Server Error )_
 ```
 {
-  "message": "Error undescribable"
+    "message": "Internal server error"
+}
+```
+
+---
+### POST /register 
+---
+>Delete todos list by ID
+
+_Request Headers_
+```
+not needed
+```
+
+_Request Body_
+```
+{
+    "email": "user01@gmail.com",
+    "password": "user01"
+}
+```
+
+_Response( 200 )_
+```
+{
+    "id": 5,
+    "email": "user03@gmail.com"
+}
+```
+
+_Response( 400 - Bad Request )_
+```
+{
+    "message": [
+        "Email is empty",
+        "Invalid email format",
+        "Password is empty",
+        "Password at least 6 characters"
+    ]
+}
+```
+
+_Response( 404 - Not Found )_
+```
+{
+    "message": "Not found"
+}
+```
+
+_Response ( 500 - Internal Server Error )_
+```
+{
+    "message": "Internal server error"
+}
+```
+
+---
+### POST /login 
+---
+>Delete todos list by ID
+
+_Request Headers_
+```
+not needed
+```
+
+_Request Body_
+```
+{
+    "email": "user01@gmail.com",
+    "password": "user01"
+}
+```
+
+_Response( 200 )_
+```
+{
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ1c2VyMDJAZ21haWwuY29tIiwiaWF0IjoxNjA5OTI0ODg1fQ.PdvoxOqmU8s7Vl40B9UcdLg08EQL9t3O1XDyHbOsbsk"
+}
+```
+
+_Response( 400 - Bad Request )_
+```
+{
+    "message": "Email / Password is invalid"
+}
+```
+
+_Response( 404 - Not Found )_
+```
+{
+    "message": "Not found"
+}
+```
+
+_Response ( 500 - Internal Server Error )_
+```
+{
+    "message": "Internal server error"
 }
 ```
