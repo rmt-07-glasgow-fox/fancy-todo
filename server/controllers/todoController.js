@@ -114,9 +114,7 @@ class ControllerTodo {
       returning: true
     })
       .then(response => {
-        res.status(200).json({
-          message: 'Data has been updated successfully'
-        })
+        res.status(200).json(response)
       })
       .catch(err => {
         if (err.errors.length) {

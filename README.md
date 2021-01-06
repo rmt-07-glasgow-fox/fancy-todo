@@ -1,6 +1,7 @@
 # fancy-todo
 Membuat website untuk mencatat hal - hal menarik untuk dilakukan. App ini memiliki fitur:
 * RESTful endpoint untuk operasi CRUD
+* Login dan register untuk users
 
 ## RESTful endpoints
 ### POST /todos
@@ -14,6 +15,13 @@ _Request body_
   "description": "deskripsi untuk hal yang ingin dilakukan",
   "status": "<default: boolean(false)>",
   "due_date": "tanggal untuk hal yang ingin dilakukan"
+}
+```
+
+_Request headers_
+```json
+{
+  "access_token": "<generated default when user is logged in>"
 }
 ```
 
@@ -49,9 +57,14 @@ _Response (500 - Internal Server Error)_
 > Menampilkan semua Todos
 
 _Request body_
+```
+  "not needed"
+```
+
+_Request headers_
 ```json
 {
-  "not needed"
+  "access_token": "<generated default when user is logged in>"
 }
 ```
 
@@ -82,9 +95,21 @@ _Response (500 - Internal Server Error)_
 > Menampilkan semua Todos berdasarkan id todos
 
 _Request body_
+```
+  "not needed"
+```
+
+_Request params_
 ```json
 {
-  "not needed"
+  "id": "<user id>"
+}
+```
+
+_Request headers_
+```json
+{
+  "access_token": "<generated default when user is logged in>"
 }
 ```
 
@@ -98,6 +123,13 @@ _Response (200 - OK)_
   "due_date": "<posted date>",
   "updatedAt": "<default given by system>",
   "createdAt": "<default given by system>"
+}
+```
+
+_Response (404 - Not Found)_
+```json
+{
+  "message": "Error not found"
 }
 ```
 
@@ -119,6 +151,20 @@ _Request body_
   "description": "deskripsi untuk hal yang ingin dilakukan",
   "status": "<default: boolean(false)>",
   "due_date": "tanggal untuk hal yang ingin dilakukan"
+}
+```
+
+_Request params_
+```json
+{
+  "id": "<user id>"
+}
+```
+
+_Request headers_
+```json
+{
+  "access_token": "<generated default when user is logged in>"
 }
 ```
 
@@ -169,6 +215,20 @@ _Request Body_
 }
 ```
 
+_Request params_
+```json
+{
+  "id": "<user id>"
+}
+```
+
+_Request headers_
+```json
+{
+  "access_token": "<generated default when user is logged in>"
+}
+```
+
 _Response (200 - OK)_
 ```json
 {
@@ -195,9 +255,21 @@ _Response (500 - Internal Server Error)_
 > Menghapus Todos yang sudah tidak diperlukan
 
 _Request Body_
+```
+  "not needed"
+```
+
+_Request params_
 ```json
 {
-  "not needed"
+  "id": "<user id>"
+}
+```
+
+_Request headers_
+```json
+{
+  "access_token": "<generated default when user is logged in>"
 }
 ```
 

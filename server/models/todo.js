@@ -54,9 +54,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     user_id: {
       type: DataTypes.INTEGER,
+      allowNull: false,
       validate: {
-        allowNull: {
-          args: false,
+        notNull: {
+          args: true,
           msg: 'Require user id'
         }
       }
