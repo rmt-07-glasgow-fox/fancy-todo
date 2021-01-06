@@ -17,15 +17,15 @@ module.exports = (sequelize, DataTypes) => {
   Todo.init({
     title: {
       type: DataTypes.STRING,
-      validate: {
-        allowNull: false
-      }
+      // validate: {
+      //   allowNull: false
+      // }
     },
     description: {
       type: DataTypes.STRING,
-      validate: {
-        allowNull: false
-      }
+      // validate: {
+      //   allowNull: false
+      // }
     },
     status: DataTypes.STRING,
     due_date: {

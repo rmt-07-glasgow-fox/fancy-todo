@@ -1,4 +1,6 @@
 const {Todo, User} = require('../models')
+const {verifyPassword} = require('../helpers/bcrypt')
+const {generateToken} = require('../helpers/jwt')
 
 class Controller {
 
@@ -15,14 +17,7 @@ class Controller {
             const created = await Todo.create(body)
             res.status(201).json(created)
         } catch (err) {
-            let message
-            if(err.name === 'SequelizeValidationError'){
-                message = err.errors[0].message
-                res.status(400).json({message})
-            } else {
-                message = err.message
-                res.status(500).json({message})
-            }
+            next(err)
         }
     }
 
@@ -31,7 +26,7 @@ class Controller {
             const list = await Todo.findAll()
             res.status(200).json(list)
         } catch (err) {
-            res.status(500).json({message: err.message})
+            next(err)
         }
     }
     
@@ -41,7 +36,7 @@ class Controller {
             const list = await Todo.findByPk(id)
             res.status(200).json(list)
         } catch (err) {
-            res.status(500).json({message: err.message})
+            next(err)
         }
     }
 
@@ -64,11 +59,7 @@ class Controller {
                 res.status(200).json('Data edited')
             }
         } catch (err) {
-            if(err.status){
-                res.status(err.status).json(err.message)
-            } else {
-                res.status(500).json({message: err.message})
-            }
+            next(err)
         }
     }
 
@@ -89,11 +80,7 @@ class Controller {
                 res.status(200).json('Data edited')
             }
         } catch (err) {
-            if(err.status){
-                res.status(err.status).json(err.message)
-            } else {
-                res.status(500).json({message: err.message})
-            }
+            next(err)
         }
     }
 
@@ -111,13 +98,58 @@ class Controller {
                 res.status(200).json({message: 'Data deleted'})
             }
         } catch (err) {
-            if(err.status){
-                res.status(err.status).json({message: err.message})
-            } else {
-                res.status(500).json({message: err.message})
-            }
+            next(err)
         }
     }
+
+    static async register (req, res, next) {
+        try {
+            let body = {
+                email: req.body.email,
+                password: req.body.password
+            }
+            const created = await User.create(body)
+            res.status(201).json({id: created.id, email: created.email})
+        } catch (err) {
+            next(err)
+        }
+    }
+
+    static async login (req, res, next) {
+        try {
+            let body = {
+                email: req.body.email,
+                password: req.body.password
+            }
+            const find = await User.findOne({where: {email: body.email}})
+            if(!find){
+                throw {
+                    status: 400,
+                    message: "Email/Password Invalid"
+                }
+            } else {
+                if(verifyPassword(body.password, find.password) == true){
+                    let access_token = generateToken({id: find.id, email: find.email})
+                    res.status(200).json({access_token})
+                } else {
+                    throw {
+                        status: 400,
+                        message: "Email/Password Invalid"
+                    }
+                }
+            }
+        } catch (err) {
+            next(err)
+        }   
+    }
+
+    // static async loginGoogle(req, res, next) {
+    //     try {
+            
+    //     } catch (err) {
+            
+    //     }   
+    // }
 
 }
 
