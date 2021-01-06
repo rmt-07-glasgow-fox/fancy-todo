@@ -18,13 +18,13 @@
 
     <!--Register-->
     <div class="container d-flex justify-content-center register-pages">
-        <div class="card" style="width: 18rem;" id="register-page">
+        <div class="card" style="width: 18rem; padding: 2rem;" id="register-page">
             <div id="card-body">
                 <h1>Register</h1>
                 <form action="/register" method="post">
                     <input id="email-register" type="text" name="username" placeholder="email" /><br><br>
                     <input id="password-register" type="password" name="password" placeholder="password" /><br><br>
-                    <button id="register-btn" type="submit">Register</button>
+                    <button id="register-btn" type="submit">Register</button><br><br>
                     <p> I have an account already! <a href="/login" id="login-link"> Login here </a></a></p>
                 </form>
             </div>
@@ -33,13 +33,13 @@
 
     <!--Login -->
     <div class="container d-flex justify-content-center login-pages">
-        <div class="card" style="width: 18rem;" id="login-page">
+        <div class="card" style="width: 18rem; padding: 2rem;" id="login-page">
             <div id="card-body">
                 <h1>Login</h1>
                 <form action="/login" method="post">
                     <input id="email-login" type="text" name="username" placeholder="email" /><br><br>
                     <input id="password-login" type="password" name="password" placeholder="password" /><br><br>
-                    <button id="login-btn" type="submit">Login</button>
+                    <button id="login-btn" type="submit">Login</button><br><br>
                     <div class="g-signin2" data-onsuccess="onSignIn"></div>
                     <p>Not registered? <a href="/register" id="register-link">Create an account</a></p>
                 </form>

@@ -3,7 +3,7 @@ const { User, Todo } = require('../models')
 
 const authenticate = async (req, res, next) => {
     try {
-        const decoded = await checkToken(req.headers.accesstoken)
+        const decoded = await checkToken(req.headers.access_token)
         const find = await User.findOne({
             where: {
                 email: decoded.email

@@ -12,7 +12,7 @@ const errorHandler = (err, req, res, next) => {
                 res.status(400).json(errorMessages)
                 break
             case "ResourceNotFound":
-                res.status(404).json({ message: "Not found." })
+                res.status(404).render('./404')
                 break
             case "AuthorisationError":
                 res.status(401).json({ message: "Not authorised." })

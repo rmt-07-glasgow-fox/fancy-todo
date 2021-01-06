@@ -1,6 +1,7 @@
 const { User } = require('../models')
 const comparePassword = require('../helpers/comparePassword')
 const { generateToken } = require('../helpers/jwt')
+const { OAuth2Client } = require('google-auth-library')
 
 
 class UserController {
@@ -46,10 +47,10 @@ class UserController {
                         email: user.email
                     }
 
-                    const accessToken = generateToken(payload)
+                    const access_token = generateToken(payload)
 
                     return res.status(200).json({
-                        accessToken
+                        access_token
                     })
                 }
                 else {
@@ -61,6 +62,58 @@ class UserController {
             })
             .catch(err => {
                 res.status(401).json(err)
+            })
+    }
+
+    static loginGoogle(req, res, next) {
+        const { id_token } = req.body
+        let email = null
+        const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
+
+        client.verifyIdToken({
+            idToken: id_token,
+            audience: process.env.GOOGLE_CLIENT_ID
+        })
+            .then(ticket => {
+                const payload = ticket.getPayload()
+                email = payload.email
+
+                // cek apakah email sudah terdaftar
+                // kalau belum create user, generate jwt
+                // kalau udah, generate jwt
+                // res json jwt/accesstoken
+                return User.findOne({
+                    where: {
+                        email
+                    }
+                })
+            })
+            .then(user => {
+                if (!user) {
+                    return User.create({
+                        email,
+                        password: Math.random() * 1000 + 'random password generator'
+                    })
+                }
+                else {
+                    return user
+                }
+            })
+            .then(user => {
+                const payload = {
+                    email: user.email,
+                    id: user.id
+                }
+
+                const access_token = generateToken(payload)
+
+                res.status(200).json({
+                    access_token
+                })
+
+            })
+            .catch(err => {
+                next(err)
             })
     }
 }
