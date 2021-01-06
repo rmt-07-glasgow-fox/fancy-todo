@@ -6,6 +6,12 @@ My Todo List App is an application to manage your Todo List. This app has :
 &nbsp;
 
 ## RESTful endpoints
+
+_Auth Endpoint_
+- `POST /login`
+- `POST /register`
+
+_Todos Endpoint_
 - `GET /todos`
 - `GET /todos/:id`
 - `POST /todos`
@@ -13,13 +19,115 @@ My Todo List App is an application to manage your Todo List. This app has :
 - `PATCH /todos/:id`
 - `DELETE /todos/:id`
 
+### POST /login
+
+> Create new todo list
+
+_Request Header_
+```
+{
+  not needed
+}
+```
+
+_Request Body_
+```json
+{
+  "email": "<email to get login>",
+  "password": "<password to get login>",
+}
+```
+
+_Response (200)_
+```json
+{
+"status" : "success",
+"data" : {
+  "email": "<login email>",
+  "password": "<login password>",
+}
+}
+```
+
+_Response (401 - Unauthorized)_
+```json
+{
+  "status" : "error",
+  "message": 
+    "invalid email or password"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "status" : "error",
+  "message": "Internal server error"
+}
+```
+
+---
+
+### POST /register
+
+> Create new todo list
+
+_Request Header_
+```
+{
+  not needed
+}
+```
+
+_Request Body_
+```json
+{
+  "email": "<email to get register>",
+  "password": "<password to get register>",
+}
+```
+
+_Response (200)_
+```json
+{
+"status" : "success",
+"data" : {
+  "email": "<posted email>",
+  "password": "<posted password>",
+}
+}
+```
+
+_Response (400 - Bad Request)_
+```json
+{
+  "status": "error",
+  "message": [
+        "email must be unique"
+        "invalid email",
+        "field email is required",
+        "field password is required",
+        "password must at least 6 character"
+    ]
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "status" : "error",
+  "message": "Internal server error"
+}
+```
+
+---
 
 ### GET /todos
 
 > Get all todo list
 
 _Request Header_
-```
+```json
 {
   "access_token": "<your access token>"
 }
@@ -42,8 +150,6 @@ _Response (200)_
             "description": "<todos description>",
             "status": "<todos status>",
             "due_date": "2020-03-20T07:15:12.149Z",
-            "createdAt": "2020-03-20T07:15:12.149Z",
-            "updatedAt": "2020-03-20T07:15:12.149Z",
         },
         {
             "id": 2,
@@ -51,8 +157,6 @@ _Response (200)_
             "description": "<todos description>",
             "status": "<todos status>",
             "due_date": "2020-03-20T07:15:12.149Z",
-            "createdAt": "2020-03-20T07:15:12.149Z",
-            "updatedAt": "2020-03-20T07:15:12.149Z",
         }
     ]
 }
@@ -62,7 +166,7 @@ _Response (500 - Internal Server Error)_
 ```json
 {
   "status" : "error",
-  "message": "Invalid server error"
+  "message": "Internal server error"
 }
 ```
 ---
@@ -71,7 +175,7 @@ _Response (500 - Internal Server Error)_
 > Get a todo list
 
 _Request Header_
-```
+```json
 {
   "access_token": "<your access token>"
 }
@@ -98,6 +202,14 @@ _Response (200)_
 }
 ```
 
+_Response (401 - Unauthorized)_
+```json
+{
+  "status" : "error",
+  "message": "unauthorized!"
+}
+```
+
 _Response (404 - Not Found)_
 ```json
 {
@@ -110,7 +222,7 @@ _Response (500 - Internal Server Error)_
 ```json
 {
   "status" : "error",
-  "message": "Invalid server error"
+  "message": "Internal server error"
 }
 ```
 ---
@@ -119,7 +231,7 @@ _Response (500 - Internal Server Error)_
 > Create new todo list
 
 _Request Header_
-```
+```json
 {
   "access_token": "<your access token>"
 }
@@ -169,7 +281,7 @@ _Response (500 - Internal Server Error)_
 ```json
 {
   "status" : "error",
-  "message": "Invalid server error"
+  "message": "Internal server error"
 }
 ```
 
@@ -179,7 +291,7 @@ _Response (500 - Internal Server Error)_
 > Update todo list
 
 _Request Header_
-```
+```json
 {
   "access_token": "<your access token>"
 }
@@ -188,10 +300,10 @@ _Request Header_
 _Request Body_
 ```json
 {
-  "title": "<title to get insert into>",
-  "description": "<description to get insert into>",
-  "status": "<status to get insert into>",
-  "due_date": "<due date to get insert into>"
+  "title": "<title to get update into>",
+  "description": "<description to get update into>",
+  "status": "<status to get update into>",
+  "due_date": "<due date to get update into>"
 }
 ```
 
@@ -199,7 +311,15 @@ _Response (200)_
 ```json
 {
     "status" : "success",
-    "message" : "todo updated successfully"
+    "message" : "todo updated successfully",
+    "data" : {
+      "title": "<updated title>",
+      "description": "<updated description>",
+      "status": "<updated status>",
+      "due_date": "<updated due_date>",
+      "createdAt": "2020-03-20T07:15:12.149Z",
+      "updatedAt": "2020-03-20T07:15:12.149Z",
+    }
 }
 ```
 
@@ -217,6 +337,14 @@ _Response (400 - Bad Request)_
 }
 ```
 
+_Response (401 - Unauthorized)_
+```json
+{
+  "status" : "error",
+  "message": "unauthorized!"
+}
+```
+
 _Response (404 - Not Found)_
 ```json
 {
@@ -229,7 +357,7 @@ _Response (500 - Internal Server Error)_
 ```json
 {
   "status" : "error",
-  "message": "Invalid server error"
+  "message": "Internal server error"
 }
 ```
 
@@ -239,7 +367,7 @@ _Response (500 - Internal Server Error)_
 > Update status todo list
 
 _Request Header_
-```
+```json
 {
   "access_token": "<your access token>"
 }
@@ -257,6 +385,9 @@ _Response (200)_
 {
   "status": "success",
   "message": "todo updated successfully",
+  "data" : {
+    "status": "<updated status>",
+  }
 }
 ```
 
@@ -265,12 +396,16 @@ _Response (400 - Bad Request)_
 {
   "status" : "error",
   "message": [
-        "Start date at least start today.",
-        "title is required",
-        "description is required",
         "status is required",
-        "due date is required"
     ]
+}
+```
+
+_Response (401 - Unauthorized)_
+```json
+{
+  "status" : "error",
+  "message": "unauthorized!"
 }
 ```
 
@@ -286,7 +421,7 @@ _Response (500 - Internal Server Error)_
 ```json
 {
   "status" : "error",
-  "message": "Invalid server error"
+  "message": "Internal server error"
 }
 ```
 
@@ -296,7 +431,7 @@ _Response (500 - Internal Server Error)_
 > Delete todo list
 
 _Request Header_
-```
+```json
 {
   "access_token": "<your access token>"
 }
@@ -315,6 +450,14 @@ _Response (200)_
 }
 ```
 
+_Response (401 - Unauthorized)_
+```json
+{
+  "status" : "error",
+  "message": "unauthorized!"
+}
+```
+
 _Response (404 - Not Found)_
 ```json
 {
@@ -327,6 +470,6 @@ _Response (500 - Internal Server Error)_
 ```json
 {
   "status" : "error",
-  "message": "Invalid server error"
+  "message": "Internal server error"
 }
 ```
