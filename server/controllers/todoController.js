@@ -1,5 +1,4 @@
 const { Todo } = require('../models')
-const todo = require('../models/todo')
 
 class TodoController {
     static async fetch(req, res, next) {
@@ -92,7 +91,7 @@ class TodoController {
                 }
             })
             if(updateTodo) {
-                res.status(200).json(updateTodo, 'Updated successfully!')
+                res.status(200).json(updateTodo, 'Done!')
             }
             else {
                 throw {
@@ -107,7 +106,52 @@ class TodoController {
     }
 
     static async deleteById(req, res, next) {
-        
+        try {
+            const todoId = req.params.id
+            const destroyTodo = await Todo.Todo({
+                where: {
+                    id: todoId
+                }
+            })
+            if (destroyTodo == 0) {
+                throw {
+                    status: 404,
+                    message: 'Todo not found'
+                }
+            }
+            res.status(200).json('Deleted successfully!')
+        }
+        catch(error) {
+            next(error)
+        }
+    }
+
+    static async editById(req, res, next) {
+        try {
+            const todoId = req.params.id
+            const updated = {
+                title: req.body.title,
+                description: req.body.description,
+                due_date: req.body.due_date,
+            }
+            const updateTodo = await Todo.update(updated, {
+                where: {
+                    id: todoId
+                }
+            })
+            if(updateTodo) {
+                res.status(200).json(updateTodo, 'Updated successfully!')
+            }
+            else {
+                throw {
+                    status: 404,
+                    message: 'Todo not found'
+                }
+            }
+        }
+        catch(error) {
+            next(error)
+        }
     }
 }
 

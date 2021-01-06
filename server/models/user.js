@@ -16,8 +16,26 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   User.init({
-    email: DataTypes.STRING,
-    password: DataTypes.STRING
+    email: {
+      type: DataTypes.STRING,
+      validate: {
+        isEmpty: function(value) {
+          if(value == '' || value == undefined) {
+            throw new Error('Email must be filled')
+          }
+        }
+      }
+    },
+    password: {
+      type: DataTypes.STRING,
+      validate : {
+        isEmpty: function(value) {
+          if(value == '' || value == undefined) {
+            throw new Error('Password must be filled')
+          }
+        }
+      }
+    } 
   }, {
     hooks: {
       beforeCreate: (instances, options) => {
