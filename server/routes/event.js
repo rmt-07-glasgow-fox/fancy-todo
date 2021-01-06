@@ -5,7 +5,9 @@ const router = require('express').Router()
 
 router.get('/',EventController.showAllEvent)
 router.post('/',EventController.addEvent)
-router.delete('/:id',authorize,EventController.deleteEvent)
-router.put('/:id',authorize,EventController.editEvent)
+router.get('/:id',EventController.showOneEvent)
+router.use('/:id',authorize)
+router.delete('/:id',EventController.deleteEvent)
+router.put('/:id',EventController.editEvent)
 
 module.exports = router

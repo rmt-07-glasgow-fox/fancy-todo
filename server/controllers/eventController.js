@@ -1,56 +1,61 @@
 const {Event} = require('../models')
 
 class EventController{
-    static addEvent(req,res){
+    static addEvent(req,res,next){
         let data = req.body
         data.UserId = req.userData.id
         Event.create(data)
         .then(result=>{
-            res.status(201).json({messages:'Event Created',result})
+            res.status(201).json({result})
         })
-        .catch(err=>{
-            res.status(500).json({messages:err.messages})
-        })
+        .catch(next)
     }
-    static showAllEvent(req,res){
+    static showAllEvent(req,res,next){
         Event.findAll()
         .then(result=>{
             res.status(200).json(result)
         })
-        .catch(err=>{
-            res.status(500).json({messages:err.messages})
-        })
+        .catch(next)
     }
-    static editEvent(req,res){
+    static showOneEvent(req,res,next){
+        let {id} = req.params
+        Event.findByPk(id)
+        .then(result=>{
+            if(!result){
+                next({name:'NotFound', message:'Event not found'})
+            }
+            res.status(200).json(result)
+        })
+        .catch(next)
+    }
+    static editEvent(req,res,next){
         let id = req.params.id
         let data = req.body
 
         Event.update(data,{
             where:{
                 id
-            }
+            },
+            returning:true
         })
         .then(result=>{
             res.status(200).json({messages:'update sukses',result})
         })
-        .catch(err=>{
-            res.status(500).json({messages:err.messages})
-        })
+        .catch(next)
     }
-    static deleteEvent(req,res){
+    static deleteEvent(req,res,next){
         let id = req.params.id
 
         Event.destroy({
             where:{
                 id
-            }
+            },
+            returning: true
         })
         .then(result=>{
-            res.status(200).json({messages:'delete sukses'})
+            res.status(200).json({messages:'delete sukses',result})
         })
-        .catch(err=>{
-            res.status(500).json({messages:err.messages})
-        })
+        .catch(next)
     }
 }
 

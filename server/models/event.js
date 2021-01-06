@@ -18,7 +18,23 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     description: DataTypes.STRING,
     status: DataTypes.BOOLEAN,
-    due_date: DataTypes.DATE,
+    due_date: {
+      type: DataTypes.DATE,
+      validate:{
+        isDate:{
+          args: true,
+          msg:'bukan sebuah format tanggal'
+        },
+        isDatePassed(value){
+          let now = new Date()
+          let today = new Date(now.getFullYear(),now.getMonth(),now.getUTCDate())
+
+          if(today>value){
+            throw new Error('batas waktu tidak boleh kurang dari hari ini')
+          }
+        }
+      }
+    },
     UserId: DataTypes.INTEGER
   }, {
     sequelize,

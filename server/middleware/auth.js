@@ -8,16 +8,15 @@ module.exports = {
             User.findByPk(decoded.id)
             .then(result=>{
                 if(!result){
-                    return res.status(404).json({message:'User Not Found'})
+                    // return res.status(404).json({message:'User Not Found'})
+                    next({name:'NotFound', message:'User Not Found'})
                 }
                 req.userData = decoded
                 next()
             })
-            .catch(err=>{
-                res.status(500).json({message:err.message})
-            })
+            .catch(next)
         }else{
-            res.status(500).json({message:`You're Authenticated`})
+            next({name:'Unauthorized', message:'Silahkan login dahulu'})
         }
     },
     authorize: (req,res,next)=>{
@@ -25,15 +24,13 @@ module.exports = {
         Event.findByPk(id)
         .then(result=>{
             if(!result){
-                return res.status(404).json({message:'Event Not Found'})
+                next({name:'NotFound', message:'Event not found'})
             }else if(result.UserId != req.userData.id){
-                return res.status(403).json({message:`You don't have access`})
+                next({name: 'Forbidden',message:`You don't have access` })
             }else{
                 next()
             }
         })
-        .catch(err=>{
-            res.status(500).json({message:err.message})
-        })
+        .catch(next)
     }
 }
