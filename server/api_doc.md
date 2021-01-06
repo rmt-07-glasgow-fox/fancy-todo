@@ -4,6 +4,65 @@ Fancy ToDo is an web application to list all your plan. This Web App has:
  - JSON formatted response
 
 ## RESTful endpoints
+### POST /register
+_Request Header_
+```
+  not needed
+```
+
+_Request Body_
+```json
+{
+  "email": "<your email>",
+  "username": "<your username>",
+  "password": "<your password>"
+}
+```
+
+_Response (201)_
+```json
+{
+  "id": "<your id>",
+  "email": "<your email>",
+  "username": "<your username>"
+}
+```
+
+_Response (400)_
+```json
+{
+  "message": "Error 400: Bad Request"
+}
+```
+
+### POST /login
+_Request Header_
+```
+  not needed
+```
+
+_Request Body_
+```json
+{
+  "email": "<your email>",
+  "password": "<your password>"
+}
+```
+
+_Response (201)_
+```json
+{
+"access_token": "<your access token>"
+}
+```
+
+_Response (400)_
+```json
+{
+  "message": "Error 400: Bad Request"
+}
+```
+
 ### POST /todos
 
 _Request Header_
