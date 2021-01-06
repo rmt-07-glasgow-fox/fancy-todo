@@ -49,7 +49,7 @@ class TodoController {
             return res.status (200).json (result)
         })
         .catch (err => {
-            next ({ name: "InternalError" })
+            next ({ name: "ResourceNotFound" })
         })
     }
 
@@ -90,7 +90,8 @@ class TodoController {
         Todo.update ({ status }, { 
             where : {
                 id 
-            }, fields: [ "status" ]
+            }, fields: [ "status" ],
+            returning: true
         })
         .then (result => {
             if (result[0] === 1) {

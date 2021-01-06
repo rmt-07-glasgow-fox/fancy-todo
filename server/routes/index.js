@@ -10,7 +10,7 @@ router.get ("/", (req, res) => {
     res.send ( "Welcome" )
 })
 
-router.use (userRoutes)
+router.use ("/users", userRoutes)
 
 router.use (cekLogin)
 
