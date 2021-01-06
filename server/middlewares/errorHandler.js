@@ -19,8 +19,10 @@ const errorHandlers = (err, req, res, next) => {
         case "invalidAccessToken":
             res.status(401).json({ message: "Please SignUp or SignIn first"})
             break;
+        case "invalidQuery":
+            res.status(601).json({ message: "Please check again City name"})
         default:
-            res.status(500).json({ message: "Internal Server Error"})
+            // res.status(500).json({ message: "Internal Server Error"})
             break;
     }
 
