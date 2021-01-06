@@ -7,6 +7,7 @@ class TaskController {
             description: req.body.description, 
             status: req.body.status, 
             due_date: new Date(req.body.due_date),
+            UserId: req.user.id
         }
         Task.create(taskObj)
             .then(data => {
@@ -14,15 +15,7 @@ class TaskController {
             })
             .catch(err => {
                 // res.send(err)
-                if (err.name == 'SequelizeValidationError') {
-                    res.status(400).json({
-                        message: 'Validation Errors'
-                    })
-                } else {
-                    res.status(500).json({
-                        message: 'Internal Server Error'
-                    })
-                }
+                next(err)
             })
     }
 
@@ -32,9 +25,7 @@ class TaskController {
                 res.status(200).json(data)
             })
             .catch(err => {
-                res.status(500).json({
-                    message: 'Internal Server Error'
-                })
+                next(err)
             })
     }
 
@@ -43,17 +34,13 @@ class TaskController {
         Task.findByPk(id)
             .then(data => {
                 if (!data) {
-                    res.status(404).json({
-                        message: 'Not Found'
-                    })
+                    throw new Error({ name: 'Not Found'})
                 } else {
                     res.status(200).json(data)
                 }
             })
             .catch(err => {
-                res.status(500).json({
-                    message: 'Internal Server Error'
-                })
+                next(err)
             })
     }
 
@@ -68,9 +55,7 @@ class TaskController {
         Task.findByPk(id)
             .then(data => {
                 if (!data) {
-                    res.status(404).json({
-                        message: 'Not Found'
-                    })
+                    throw new Error({ name: 'Not Found' })
                 } else {
                     return Task.update(updatedTask, {
                         where: { id },
@@ -83,15 +68,7 @@ class TaskController {
                 res.status(200).json(data[1]) //yang ini gimana ya kak yang benar?
             })
             .catch(err => {
-                if (err.name == 'SequelizeValidationError') {
-                    res.status(400).json({
-                        message: 'Validation Errors'
-                    })
-                } else {
-                    res.status(500).json({
-                        message: 'Internal Server Error'
-                    })
-                }
+                next(err)
             })
     }
 
@@ -103,9 +80,7 @@ class TaskController {
         })
             .then(data => {
                 if (!data) {
-                    res.status(404).json({
-                        message: 'Not Found'
-                    })
+                    throw new Error({ name: 'Not Found'})
                 } else {
                     let newStatus = status
                     return Task.update({
@@ -120,15 +95,7 @@ class TaskController {
                 res.status(200).json(data[1])
             })
             .catch(err => {
-                if (err.name == 'SequelizeValidationError') {
-                    res.status(400).json({
-                        message: 'Validation Errors'
-                    })
-                } else {
-                    res.status(500).json({
-                        message: 'Internal Server Error'
-                    })
-                }
+                next(err)
             })
     }
 
@@ -139,19 +106,13 @@ class TaskController {
         })
             .then(result => {
                 if (result == 0) {
-                    res.status(404).json({
-                        message: 'Not Found'
-                    })
+                    throw new Error({ name: 'Not Found'})
                 } else {
-                    res.status(200).json({
-                        message: 'Task has been deleted'
-                    })
+                    res.status(200).json({ message: 'Task has been deleted' })
                 }
             })
             .catch(err => {
-                res.status(500).json({
-                    message: 'Internal Server Errors'
-                })
+                next(err)
             })
     }
 }

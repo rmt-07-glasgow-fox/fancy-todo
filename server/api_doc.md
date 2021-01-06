@@ -1,6 +1,8 @@
 # Fancy Todo
 
 ## Available endpoints
+- `POST /register`
+- `POST /login`
 - `POST /todos`
 - `GET /todos`
 - `GET /todos/:id`
@@ -9,6 +11,72 @@
 - `DELETE /todos/:id`
 
 ## RESTful endpoints
+### POST /register
+
+> Create new user
+
+_Request Header_
+```
+not needed
+```
+
+_Request Body_
+```
+{
+  "fullName": "<full name to get insert into>"
+  "email": "<email to get insert into>",
+  "password": "<password to get insert into>"
+}
+```
+
+_Response (201 - Created)_
+```
+{
+  "id": <given id by system>,
+  "email": "<posted email>"
+}
+```
+
+_Response (400 - Bad Request)_
+```
+{
+  "message": "Errors"
+}
+```
+
+---
+### POST /login
+
+> Login
+
+_Request Header_
+```
+not needed
+```
+
+_Request Body_
+```
+{
+  "email": "<email to get insert into>",
+  "password": "<password to get insert into>"
+}
+```
+
+_Response (200 - OK)_
+```
+{
+  "access_token": "<access_token>"
+}
+```
+
+_Response (400 - Bad Request)_
+```
+{
+  "message": "Error"
+}
+```
+
+---
 ### POST /todos
 
 > Create new task
@@ -51,6 +119,7 @@ _Response (400 - Bad Request)_
 ```
 _Response (500 - Internal Server Error)_
 
+---
 ### GET /todos
 
 > Get all tasks
