@@ -1,0 +1,21 @@
+:root{
+  --lightBlue: #17a2b8;
+  --cardBorder: #9C9C9C;
+  --cardBackground: #EAEAEA;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--lightBlue);
+}
+
+.auth-form {
+  padding: 20px;
+}
+
+.auth-box {
+  margin-top: 120px;
+  border: 1px solid var(--cardBorder);
+  background-color: var(--cardBackground);
+}
