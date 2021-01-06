@@ -17,10 +17,11 @@ module.exports = {
       },
       status: {
         type: Sequelize.BOOLEAN,
-        allowNull: false,
+        allowNull: false
       },
       due_date: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,

@@ -37,7 +37,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     due_date: {
       type: DataTypes.DATE,
+      allowNull: false,
       validate: {
+        notNull: {
+          msg: 'Due date cannot empty'
+        },
         isAfter: {
           args: new Date().toISOString().split('T')[0], // e.g: "2021-01-05"
           msg: 'Cannot input an older date than now'
