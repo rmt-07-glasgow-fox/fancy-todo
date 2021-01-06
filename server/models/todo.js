@@ -4,6 +4,19 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Todo extends Model {
+    get due_date() {
+      let dd = this.due_date.getDate();
+      let mm = this.due_date.getMonth()+1;
+      const yyyy = this.due_date.getFullYear();
+      if(dd<10) {
+          dd=`0${dd}`;
+      } 
+
+      if(mm<10) {
+          mm=`0${mm}`;
+      } 
+      return `${dd}/${mm}/${yyyy}`
+    }
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -67,6 +80,21 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'cascade'
     }
   }, {
+    hooks: {
+      beforeCreate: (instance, options) => {
+        let dd = instance.due_date.getDate();
+        let mm = instance.due_date.getMonth()+1;
+        const yyyy = instance.due_date.getFullYear();
+        if(dd<10) {
+            dd=`0${dd}`;
+        } 
+  
+        if(mm<10) {
+            mm=`0${mm}`;
+        } 
+        instance.due_date = `${dd}/${mm}/${yyyy}`
+      }
+    },
     sequelize,
     modelName: 'Todo',
   });

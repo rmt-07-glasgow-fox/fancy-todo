@@ -1,13 +1,22 @@
-const { Todo } = require('../models')
+const { Todo } = require('../models');
 
 class Controller {
     static showAll(req, res, next) {
-        console.log(req.user.id);
+        const options = { 
+            month: '2-digit', 
+            day: '2-digit',
+            year: 'numeric', 
+        };
         Todo.findAll({
             where: {UserId: req.user.id},
-            order: [['createdAt', 'ASC']]
+            order: [['due_date', 'ASC']]
         })
         .then(data => {
+            data.forEach(el => {
+                let { due_date } = el
+                el.dataValues.due_date = due_date.toLocaleString("en-ID", options)
+            });
+            console.log(data);
             res.status(200).json(data);
         })
         .catch(err => {
