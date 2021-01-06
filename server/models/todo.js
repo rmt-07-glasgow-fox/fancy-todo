@@ -46,13 +46,16 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     status: {
-      type : DataTypes.DATE,
+      type : DataTypes.STRING,
       validate: {
         notEmpty: {
           args: true,
           msg: "status is not confirmed"
         }
       }
+    },
+    userId: {
+      type : DataTypes.INTEGER
     }
   }, {
     sequelize,
