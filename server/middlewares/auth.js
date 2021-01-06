@@ -8,17 +8,17 @@ function authenticate (req,res,next) {
      User.findOne({ where : { email: decoded.email}})
      .then (find => {
          if(!find) {
-             res.status(401).json({ message: 'you are not login, please login first'})
+             next({code: 401, origin: 'authenticate'})
          } else {
             //  req.user = find
              req.user = {id: find.id}
              next()
          }
      }).catch(err => {
-         res.status(500).json({ message: err.message})
+         next({code: 500})
      })
     }catch(err){
-     res.status(400).json({message: err.message})
+        next({ code: 404, msg: err.message })
     }
  }
 
@@ -30,11 +30,11 @@ function authorize (req, res, next) {
             next()
         }
         else {
-            res.status(401).json({message: 'todo not match'})
+            next({ code: 401, origin:'authorize' })
         }
     })
     .catch(err => {
-        res.status(500).json({message: err.message})
+        next({code: 500})
     })
 }
  module.exports = {authenticate,authorize}

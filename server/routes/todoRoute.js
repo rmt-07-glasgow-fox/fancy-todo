@@ -1,9 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const TodoController = require('../controllers/todoController')
+const {TodoController} = require('../controllers/todoController')
 const {authorize} = require('../middlewares/auth')
 
 router.get("/todos",TodoController.todoPage)
+router.get("/todos/weather",TodoController.getWeather)
 router.get("/todos/:id",TodoController.todoByid)
 router.post("/todos",TodoController.createTodo)
 router.put("/todos/:id",authorize, TodoController.updateTodo)
