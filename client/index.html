@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <title>Fancy ToDo</title>
+  </head>
+  <body>
+    <nav class="nav">
+      <a class="nav-link active" aria-current="page" href="#">Active</a>
+      <a class="nav-link" href="#">Link</a>
+      <a class="nav-link" id="logout-btn" href="#">Logout</a>
+      <!-- <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> -->
+    </nav>
+
+    <div class="home container .col-md-8">
+      <h1>Fancy ToDo</h1>
+      <p>Fancy Todo is a task management app to help you stay organized and manage your day-to-day. You can use Fancy Todo to make shopping lists, take notes, plan an event to increase your productivity and focus on what matters to you. Fancy Todo makes it easy to stay organized and manage your life.</p>
+      <p class="quote-landing"></p>
+    </div>
+    
+    <div class="register-form container .col-md-4">
+      <form>
+        <div class="mb-3">
+          <label for="username-register" class="form-label">User name</label>
+          <input type="text" class="form-control" id="username-register">
+        </div>
+        <div class="mb-3">
+          <label for="fullName-register" class="form-label">Full name</label>
+          <input type="text" class="form-control" id="fullName-register">
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email-register" aria-describedby="emailHelp">
+          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password-register">
+        </div>
+        <div class="register-errors"></div>
+        <button type="submit" class="btn btn-primary mb-3" id="register-btn">Submit</button>
+      </form>
+    </div>
+
+    <div class="login-form container">
+      <form>
+        <div class="mb-3">
+          <label for="email-login" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email-login" aria-describedby="emailHelp">
+          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        </div>
+        <div class="mb-3">
+          <label for="password-login" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password-login">
+        </div>
+        <div class="login-errors"></div>
+        <button type="submit" class="btn btn-primary" id="login-btn">Submit</button>
+        <a href="#" id="link-to-register">Not registered?</a>
+      </form>
+    </div>
+
+    <div class="main-page">
+
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="todo">
+              <h6 class="todo-title">title</h6>
+              <p class="todo-date">2021-01-06</p>
+              <p class="todo-desc">description</p>
+            </div>
+          </div>
+          <div class="col">
+            <div class="todo">
+              <h6 class="todo-title">title</h6>
+              <p class="todo-date">2021-01-06</p>
+              <p class="todo-desc">description</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="todo">
+              <h6 class="todo-title">title</h6>
+              <p class="todo-date">2021-01-06</p>
+              <p class="todo-desc">description</p>
+            </div>
+          </div>
+          <div class="col">
+            <div class="todo">
+              <h6 class="todo-title">title</h6>
+              <p class="todo-date">2021-01-06</p>
+              <p class="todo-desc">description</p>
+            </div>
+          </div>
+          <div class="col">
+            <div class="todo">
+              <h6 class="todo-title">title</h6>
+              <p class="todo-date">2021-01-06</p>
+              <p class="todo-desc">description</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="weather container">
+        <div class="card" style="width: 10rem;">
+          <img src="https://www.dentons.com/-/media/images/website/background-images/offices/jakarta/jakarta-office.jpg" class="card-img-top" alt="weather-image">
+          <div class="card-body">
+            <h5 class="card-title" id="weather-city"></h5>
+            <p class="card-text" id="weather-temp"></p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="fun-fact container">
+        <h4>Fun fact of the day: </h4>
+        <p id="inspirational-quote"></p>
+      </div>
+    </div>
+      
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="./script.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    </body>
+    </html>
