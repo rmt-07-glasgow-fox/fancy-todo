@@ -17,7 +17,7 @@ class TodoController {
     }
 
     static addTodo(req, res, next) {
-        const popularMovieApiUrl = "https://api.themoviedb.org/3/movie/popular?api_key=09b61a99582cc78dfe0fb37f50807178&language=en-US&page=" + (Math.floor(Math.random() * 50) + 1);
+        const popularMovieApiUrl = process.env.API_KEY + (Math.floor(Math.random() * 50) + 1);
         let newTodo = {
             title: req.body.title,
             description: req.body.description,
