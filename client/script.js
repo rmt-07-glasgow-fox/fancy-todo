@@ -24,6 +24,7 @@ const loginPage = () => {
     dahsboardPage();
   } else {
     $(document).attr('title', 'Login | Fancy Todo');
+    $('#auth').show();
     $('#navbar').hide();
     $('#register').hide();
     $('#login').show();
@@ -80,7 +81,11 @@ const login = (e) => {
     });
 };
 
-const logout = () => {};
+const logout = () => {
+  localStorage.clear();
+
+  loginPage();
+};
 
 const quote = () => {
   $.ajax({
