@@ -1,65 +1,101 @@
 const {Todo} = require('../models')
 
 class ControllerTodo {
-    static readTodo(req, res){
+    static readTodo(req, res, next){
         Todo.findAll()
         .then(data => {
             res.status(200).json({data})
         })
         .catch(err => {
-            res.status(404).json({
-                message: "Invalid request"
-            })
+            next(err)
         })
     }
-    static createTodo(req, res){
-        const {title, description, due_date} = req.body
-        Todo.create({title, description, status: true, due_date: new Date(due_date), user_id:req.user_id, createdAt: new Date(), updatedAt: new Date()})
+
+    static createTodo(req, res, next){
+        const {title, description, status, due_date} = req.body
+        Todo.create({title, description, status, due_date: new Date(due_date), user_id:req.user.id, createdAt: new Date(), updatedAt: new Date()})
         .then(data => {
             res.status(200).json({data})
         })
         .catch(err => {
-            console.log(err)
-            res.status(404).json({
-                message: "Invalid request"
-            })
+            next(err)
         })
     }
-    static updateTodo(req, res){
+
+    static getTodo(req, res, next){
+        console.log(req.params)
+        Todo.findByPk(+req.params.id)
+        .then(data => {
+            if(data){
+                res.status(200).json({data})
+            } else {
+                next({name: "resourceNotFound"})
+            }
+        })
+        .catch(err => {
+            next(err)
+        })
+    }
+
+    static putTodo(req, res, next){
         const {title, description, status, due_date} = req.body
-        Todo.update({title, description, status, due_date}, {
+        Todo.update({title, description, status, due_date:new Date(due_date)}, {
             where: {
                 id: +req.params.id
             }
         })
         .then(data => {
-            console.log(data)
-            res.status(200).json({
-                message: "Data updated"
-            })
+            if(data){
+                res.status(200).json({
+                    message: "Data updated"
+                })
+            } else {
+                next({name: "resourceNotFound"})
+            }
         })
         .catch(err => {
-            res.status(404).json({
-                message: "Invalid request"
-            })
+            next(err)
         })
     }
-    static deleteTodo(req, res){
+
+    static patchTodo(req, res, next){
+        const {status} = req.body
+        Todo.update({status}, {
+            where: {
+                id: +req.params.id
+            }
+        })
+        .then(data => {
+            if(data){
+                res.status(200).json({
+                    message: "Data updated"
+                })
+            } else {
+                next({name: "resourceNotFound"})
+            }
+        })
+        .catch(err => {
+            next(err)
+        })
+    }
+
+    static deleteTodo(req, res, next){
         Todo.destroy({
             where: {
                 id: +req.params.id
             }
         })
         .then(data => {
-            console.log(data)
-            res.status(200).json({
-                message: "One To-do is deleted"
-            })
+            if(data){
+                res.status(200).json({
+                    message: "One To-do is deleted"
+                })
+            } else {
+                next({name: "resourceNotFound"})
+            }
         })
         .catch(err => {
-            res.status(404).json({
-                message: "Invalid request"
-            })
+            next(err)
         })
     }
 }

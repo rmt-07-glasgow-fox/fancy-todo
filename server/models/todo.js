@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         notEmpty: {
-          msg : "Task title required"
+          msg : "Title Required"
         }
       }
     },
@@ -27,15 +27,25 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         notEmpty: {
-          msg : "Task title required"
+          msg : "Description Required"
         }
       }
     },
-    status: DataTypes.BOOLEAN,
+    status: {
+      type: DataTypes.BOOLEAN,
+      validate: {
+        notEmpty: {
+          msg : "Status Required"
+        }
+      }
+    },
     due_date: {
       type: DataTypes.DATE,
       validate: {
-        isAfter: `${new Date()}`
+        isAfter: {
+          args: `${new Date()}`,
+          msg: "Date Must Be Greater Than Today" 
+        }
       }
     },
     user_id: DataTypes.INTEGER

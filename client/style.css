@@ -1,0 +1,61 @@
+body {
+    background-color: #d3e3fe;
+}
+
+.home-pict{
+    width: 85%;
+    float: right
+}
+
+.caption{
+    left:61%;
+    top:10%;
+    font-size: 25px;
+    position:absolute
+}
+
+.logo-pict{
+    left:65%;
+    top:5%;
+    position: absolute;
+    width: 15%;
+}
+
+.signin{
+    padding-left: 180px;
+    padding-top: 120px;
+    text-align: center;
+    color: #2e2d48
+}
+
+.row-1{
+    margin-bottom: 50px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    font-size: 50px;
+    font-weight: 800;
+}
+
+.form-label{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    color: #2e2d48
+}
+
+.form-control{
+    text-align: center;
+    border-radius: 30px !important;
+}
+
+.btn {
+    font-weight: 800;
+    margin-bottom: 30px;
+    border-radius: 30px !important;
+}
+
+.platform{
+    font-weight: 600;
+    color: #2e2d48
+}

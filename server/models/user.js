@@ -20,10 +20,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         notEmpty: {
-          msg : "Email required"
+          msg : "Email Required"
         },
         isEmail: {
-          msg: "Should follow email format (ex: foo@bar.com)"
+          msg: "Should Follow Email Format (ex: foo@bar.com)"
         }
       }
     },
@@ -31,11 +31,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         notEmpty: {
-          msg : "Task title required"
+          msg : "Password Required"
         },
         len: {
           args: [6],
-          msg: "Password should be more than 6 characters"
+          msg: "Password Should Be More Than 6 Characters"
         }
       }
     }

@@ -4,31 +4,31 @@ const { generateToken } = require("../helpers/jwt")
 const axios = require('axios')
 
 class ControllerUser {
-    static async signup(req, res){
+    static async signup(req, res, next){
         try {
             const {email, password} = req.body
             const user = await User.create({
                 email, password
             })
             const result = {
+                id: user.id,
                 email: user.email
             }
             return res.status(201).json(result)
         } catch(err) {
-            return res.status(400).json(err)
+            next(err)
         }
     }
 
-    static async signin(req, res){
+    static async signin(req, res, next){
         try {
             const {email, password} = req.body
             const user = await User.findOne({
                 where: {email}
             })
             if(!user){
-                return res.status(401).json({
-                    message: "invalid email/password"
-                })
+                next({name: "Invalid Email/Password"})
+                
             }
             const check = comparePassword(password, user.password)
             if(check){
@@ -39,23 +39,21 @@ class ControllerUser {
                 const acess_token = generateToken(payload)
                 return res.status(200).json({acess_token})
             } else {
-                return res.status(401).json({
-                    message: "invalid email/password"
-                })
+                next({name: "Invalid Email/Password"})
             }
         } catch (err) {
-            return res.status(401).json(err)
+            next(err)
         }
     }
 
     static weather(req, res){
-        let urlWeather = "https://api.openweathermap.org/data/2.5/weather?id=1643084&appid=49ecf64121971fb566f9f10613213c13"
+        let urlWeather = `https://api.openweathermap.org/data/2.5/weather?id=1643084&appid=${process.env.WEATHER_API_KEY}`
         axios.get(urlWeather)
         .then((response) => {
             res.status(200).json(response.data)
         })
         .catch((error) => {
-            res.status(400).json({message:"Weather Are Unavailable"})
+            next(err)
         })
     }
 }

@@ -27,7 +27,7 @@ async function authorize(req, res, next){
                 id: +req.params.id
             }
         })
-        if(!find || ßfind.user_id !== req.user.id){
+        if(!find || find.user_id !== req.user.id){
             res.status(401).json({message:"You don't Have Access"})
         } else {
             next()
