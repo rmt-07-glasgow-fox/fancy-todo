@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      ToDo.belongsTo(models.User)
     }
   };
   ToDo.init({
@@ -30,7 +31,8 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Can not choose past date'
         }
       }
-    }
+    },
+    UserId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'ToDo',

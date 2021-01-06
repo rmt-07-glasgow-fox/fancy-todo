@@ -1,13 +1,13 @@
 # Fancy Todo App Server
 Fancy Todo is an application that tracks your daily todo list. This app has:
-* RESTful endpoint for todo's CRUD operation
+* REST endpoint for todo's CRUD operation
 * JSON formatted response
 
 &nbsp;
 
-## RESTful endpoints
+# REST endpoints
 
-### POST /todos
+## POST /todos
 _Request Header_
 ```
 {
@@ -51,9 +51,9 @@ code: 500
 content: { message: 'internal server error' }
 ```
 
+&nbsp;
 
-
-### GET /todos
+## GET /todos
 _Request Header_
 ```
 {
@@ -88,7 +88,9 @@ code: 500
 content: { message: 'internal server error' }
 ```
 
-### GET /todos/:id
+&nbsp;
+
+## GET /todos/:id
 _Request Header_
 ```
 {
@@ -129,8 +131,9 @@ code: 500
 content: { message: 'internal server error' }
 ```
 
+&nbsp;
 
-### PUT /todos/:id
+## PUT /todos/:id
 _Request Header_
 ```
 {
@@ -187,8 +190,9 @@ code: 500
 content: { message: 'internal server error' }
 ```
 
+&nbsp;
 
-### PATCH /todos/:id
+## PATCH /todos/:id
 _Request Header_
 ```
 {
@@ -239,7 +243,9 @@ code: 500
 content: { message: 'internal server error' }
 ```
 
-### DELETE /todos/:id
+&nbsp;
+
+## DELETE /todos/:id
 
 _Request Header_
 ```
