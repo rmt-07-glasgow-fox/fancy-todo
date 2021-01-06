@@ -3,7 +3,7 @@ const { comparePassword } = require('../helpers/bcrypt')
 const { generateToken } = require('../helpers/jwt')
 
 class AuthController {
-  static signUp(req, res) {
+  static signUp(req, res, next) {
     const newUser = {
       email: req.body.email,
       password: req.body.password
@@ -15,21 +15,11 @@ class AuthController {
         email: result.email
       })
     }).catch((err) => {
-      if(err.errors){
-        const errMessages = []
-        err.errors.forEach(element => {
-            errMessages.push(element.message)
-        })
-        res.status(400).json(errMessages)
-      } else {
-        res.status(500).json({
-          msg: 'internal server error'
-        })
-      }
+      next(err)
     })
   }
   
-  static signIn(req, res) {
+  static signIn(req, res, next) {
     const { email, password } = req.body
     console.log(email, password)
     User.findOne({where: {
@@ -51,12 +41,10 @@ class AuthController {
         const access_token = generateToken(payload)
         return res.status(200).json({access_token})
       } else {
-        return res.status(401).json({
-          msg: 'Invalid email/ password'
-        })
+        next({ name: 'invalidEmailPassword' })
       }
     }).catch((err) => {
-      return res.status(401).json(err)
+      next(err)
     })
   }
 }
