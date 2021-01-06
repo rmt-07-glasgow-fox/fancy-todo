@@ -102,7 +102,7 @@ _Request body_
 _Request params_
 ```json
 {
-  "id": "<user id>"
+  "id": "[INTEGER]"
 }
 ```
 
@@ -157,7 +157,7 @@ _Request body_
 _Request params_
 ```json
 {
-  "id": "<user id>"
+  "id": "[INTEGER]"
 }
 ```
 
@@ -218,7 +218,7 @@ _Request Body_
 _Request params_
 ```json
 {
-  "id": "<user id>"
+  "id": "[INTEGER]"
 }
 ```
 
@@ -262,7 +262,7 @@ _Request Body_
 _Request params_
 ```json
 {
-  "id": "<user id>"
+  "id": "[INTEGER]"
 }
 ```
 

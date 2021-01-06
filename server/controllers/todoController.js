@@ -114,7 +114,7 @@ class ControllerTodo {
       returning: true
     })
       .then(response => {
-        res.status(200).json(response)
+        res.status(200).json(response[1])
       })
       .catch(err => {
         if (err.errors.length) {
