@@ -19,6 +19,9 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
+                notNull: {
+                    msg: 'Please enter a title'
+                },
                 notEmpty: {
                     args: true,
                     msg: "Title must be filled!"
@@ -29,6 +32,9 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
+                notNull: {
+                    msg: 'Please enter a description'
+                },
                 notEmpty: {
                     args: true,
                     msg: "Description must be filled!"
@@ -39,6 +45,9 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             validate: {
+                notNull: {
+                    msg: 'Please set a status'
+                },
                 notEmpty: {
                     args: true,
                     msg: "Status must be filled!"
@@ -55,6 +64,9 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             defaultValue: false, // kenapa defaultValue gak ke-trigger?
             validate: {
+                notNull: {
+                    msg: 'Please enter a due date'
+                },
                 notEmpty: {
                     args: true,
                     msg: "Due Date must be filled!"
@@ -64,7 +76,7 @@ module.exports = (sequelize, DataTypes) => {
                     valueDate.setHours(0, 0, 0, 0)
                     let today = new Date()
                     today.setHours(0, 0, 0, 0)
-                    if (valueDate <= today) {
+                    if (valueDate < today) {
                         throw new Error("date must be greater than today!")
                     }
                 }

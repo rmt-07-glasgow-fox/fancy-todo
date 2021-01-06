@@ -1,6 +1,79 @@
-let baseUrl = "http://localhost:3000" // npm i cors first since port is 8080 by default
+let baseUrl = "http://localhost:3000"
 $(document).ready(function () {
+    // first thing when client hit our webpage
     checkAuth()
+
+    $('#register-btn').click((event) => {
+        event.preventDefault()
+        let email = $("#email-register").val()
+        let password = $("#password-register").val()
+
+        $.ajax({
+            method: 'POST',
+            url: `${baseUrl}/register`,
+            data: {
+                email,
+                password
+            }
+        })
+            .done(response => {
+                localStorage.setItem("access_token", response.access_token)
+                // do your thing once user has logged in
+                checkAuth()
+            })
+            .fail(err => {
+                console.log(err, ">>>> this is error from ajax form submission")
+            })
+            .always(() => {
+                console.log("ALWAYS!")
+                $("#email").val('')
+                $("#password").val('')
+            })
+    })
+
+    $('#login-btn').click((event) => {
+        event.preventDefault()
+        let email = $("#email-login").val()
+        let password = $("#password-login").val()
+
+        $.ajax({
+            method: 'POST',
+            url: `${baseUrl}/login`,
+            data: {
+                email,
+                password
+            }
+        })
+            .done(response => {
+                console.log(response)
+                localStorage.setItem("access_token", response.access_token)
+                checkAuth()
+            })
+            .fail(err => {
+                console.log(err, ">>>> this is error from ajax form submission")
+            })
+            .always(() => {
+                console.log("ALWAYS!")
+                $("#email").val('')
+                $("#password").val('')
+            })
+    })
+
+    $('#logout-btn').click((event) => {
+        event.preventDefault()
+        localStorage.clear()
+        checkAuth()
+    })
+
+    $('#register-link').click((event) => {
+        event.preventDefault()
+        registerMenu()
+    })
+
+    $('#login-link').click((event) => {
+        event.preventDefault()
+        loginMenu()
+    })
 })
 
 function checkAuth() {
@@ -87,74 +160,3 @@ function getTodoList() {
 
 }
 
-$('#register-btn').click((event) => {
-    event.preventDefault()
-    let email = $("#email-register").val()
-    let password = $("#password-register").val()
-
-    $.ajax({
-        method: 'POST',
-        url: `${baseUrl}/register`,
-        data: {
-            email,
-            password
-        }
-    })
-        .done(response => {
-            localStorage.setItem("access_token", response.access_token)
-            // do your thing once user has logged in
-            checkAuth()
-        })
-        .fail(err => {
-            console.log(err, ">>>> this is error from ajax form submission")
-        })
-        .always(() => {
-            console.log("ALWAYS!")
-            $("#email").val('')
-            $("#password").val('')
-        })
-})
-
-$('#login-btn').click((event) => {
-    event.preventDefault()
-    let email = $("#email-login").val()
-    let password = $("#password-login").val()
-
-    $.ajax({
-        method: 'POST',
-        url: `${baseUrl}/login`,
-        data: {
-            email,
-            password
-        }
-    })
-        .done(response => {
-            console.log(response)
-            localStorage.setItem("access_token", response.access_token)
-            checkAuth()
-        })
-        .fail(err => {
-            console.log(err, ">>>> this is error from ajax form submission")
-        })
-        .always(() => {
-            console.log("ALWAYS!")
-            $("#email").val('')
-            $("#password").val('')
-        })
-})
-
-$('#logout-btn').click((event) => {
-    event.preventDefault()
-    localStorage.clear()
-    checkAuth()
-})
-
-$('#register-link').click((event) => {
-    event.preventDefault()
-    registerMenu()
-})
-
-$('#login-link').click((event) => {
-    event.preventDefault()
-    loginMenu()
-})

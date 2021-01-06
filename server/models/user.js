@@ -25,6 +25,9 @@ module.exports = (sequelize, DataTypes) => {
         msg: "Email address already in use!"
       },
       validate: {
+        notNull: {
+          msg: 'Please enter your email'
+        },
         isEmail: {
           args: true,
           msg: "Must be a valid email address",
@@ -35,6 +38,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
+        notNull: {
+          msg: 'Please enter your password'
+        },
         len: {
           args: [12, 24],
           msg: "password at least 12 characters and maximum 24 characters"
