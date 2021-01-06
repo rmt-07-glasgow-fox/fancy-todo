@@ -8,9 +8,8 @@ const {
 
 const generateToken = (payload) => {
     const token = jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_ACCESS_TOKEN_EXPIRED });
-    const refreshToken = jwt.sign(payload, JWT_SECRET_REFRESH_TOKEN, { expiresIn: JWT_REFRESH_TOKEN_EXPIRED });
 
-    return { token, refreshToken }
+    return token
 }
 
 module.exports = generateToken;

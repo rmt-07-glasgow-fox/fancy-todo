@@ -30,8 +30,7 @@ class AuthController {
             return res.status(200).json({
                 status: 'success',
                 message: 'login succesfully',
-                token: access_token.token,
-                refresh_token: access_token.refreshToken
+                access_token
             })
 
         } catch (err) {

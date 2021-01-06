@@ -27,9 +27,7 @@ class TodoController {
                 attributes: { exclude: ['createdAt', 'updatedAt'] }
             });
 
-            if (!data) {
-                return next({ name: 'notFound' })
-            }
+            if (!data) return next({ name: 'notFound' })
 
             return res.status(200).json({
                 status: 'success',
@@ -61,21 +59,22 @@ class TodoController {
             const id = req.params.id;
             const { title, description, status, due_date } = req.body;
             const input = { title, description, status, due_date };
+
             const data = await Todo.findByPk(id, {
                 attributes: { exclude: ['createdAt', 'updatedAt'] }
             });
 
-            if (!data) {
-                return next({ name: 'notFound' })
-            }
+            if (!data) return next({ name: 'notFound' })
 
             await Todo.update(input, { where: { id } })
+            await data.reload();
 
             return res.status(200).json({
                 status: 'success',
                 message: 'todo updated successfully',
                 data
             })
+
         } catch (err) {
             return next(err)
         }
@@ -90,11 +89,11 @@ class TodoController {
                 attributes: { exclude: ['createdAt', 'updatedAt'] }
             })
 
-            if (!data) {
-                return next({ name: 'notFound' })
-            }
+            if (!data) return next({ name: 'notFound' })
 
             await Todo.update(input, { where: { id } })
+            await data.reload();
+
 
             return res.status(200).json({
                 status: 'success',
@@ -110,9 +109,7 @@ class TodoController {
         try {
             const data = await Todo.findByPk(+req.params.id);
 
-            if (!data) {
-                return next({ name: 'notFound' })
-            }
+            if (!data) return next({ name: 'notFound' })
 
             data.destroy();
 
