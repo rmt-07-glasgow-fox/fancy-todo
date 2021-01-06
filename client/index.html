@@ -62,6 +62,9 @@
   </section>
   <section id="main-todo">
     <ul class="nav bg-white justify-content-end">
+      <li class="nav-item" id="weather">
+        <a class="nav-link disabled" href="#"></a>
+      </li>
       <li class="nav-item" id="userEmail">
         <a class="nav-link disabled" href="#"></a>
       </li>
@@ -98,7 +101,7 @@
       </div>
     </div>
   </section>
-  <!-- Modal -->
+  <!-- Add task Modal -->
   <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="addTaskModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -125,6 +128,38 @@
           </div>
           <div class="modal-footer">
             <input type="submit" id="add-task-btn" class="btn btn-primary pull-right" value="Add Task">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Edit Modal -->
+  <div class="modal fade" id="editTaskModal" tabindex="-1" role="dialog" aria-labelledby="editTaskModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editTaskModalLabel">Edit Task</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="edit-task-form" class="form" method="post">
+            <div class="form-group">
+              <label for="title">Title:</label><br>
+              <input type="text" name="title" id="edit-title" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="description">Description:</label><br>
+              <input type="text" name="description" id="edit-description" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="due_date">Due Date:</label><br>
+              <input type="date" name="due_date" id="edit-due_date" class="form-control">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <input type="submit" id="edit-task-btn" class="btn btn-primary pull-right" value="Edit Task">
           </div>
         </form>
       </div>
