@@ -4,22 +4,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <title>Fancy Todo</title>
 </head>
 
 <body>
-    <div id='login' class="container">
-        <h1 id="test">Test 1</h1>
-    </div>
-    <button id="hide">hide</button>
-    <button id="show">show</button>
-</body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-light bg-light shadow">
+        <div class="container-fluid">
+            <button class="w-20 btn btn-lg" type="button">Fancy Todo</button>
+            <button class="w-20 btn btn-lg btn-danger" type="button" id="logout">Logout</button>
+        </div>
+    </nav>
 
-<script src="./script.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <!-- REGISTER -->
+    <div class="container d-flex justify-content-center">
+        <div class="card" style="width: 20rem;" id="register-page">
+            <div class="card-body">
+                <h5 class="card-title">Register</h5>
+                <form>
+                    <label for="emailRegister">Email address</label>
+                    <input type="email" id="emailRegister" class="form-control" placeholder="Email address" required
+                        autofocus>
+
+                    <label for="passwordRegister">Password</label>
+                    <input type="password" id="passwordRegister" class="form-control" placeholder="Password" required>
+
+                    <button class="w-100 btn btn-lg btn-primary" type="submit" id="register">Register</button>
+                    <button class="w-100 btn btn-lg " type="button" id="toLoginPage">Already have Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOGIN -->
+    <div class="container d-flex justify-content-center">
+        <div class="card" style="width: 20rem;" id="login-page">
+            <div class="card-body">
+                <h5 class="card-title">Login</h5>
+                <form>
+                    <label for="emailLogin">Email address</label>
+                    <input type="email" id="emailLogin" class="form-control" placeholder="Email address" required
+                        autofocus>
+
+                    <label for="passwordLogin">Password</label>
+                    <input type="password" id="passwordLogin" class="form-control" placeholder="Password" required>
+
+                    <button class="w-100 btn btn-lg btn-primary" type="submit" id="login">Login</button>
+                    <button class="w-100 btn btn-lg" type="button" id="toRegisterPage">Register an Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- TODO -->
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+        integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+        crossorigin="anonymous"></script>
+    <script src="./script.js"></script>
+</body>
 
 </html>

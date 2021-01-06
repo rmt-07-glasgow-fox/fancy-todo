@@ -6,13 +6,13 @@ const express = require('express')
 const app = express()
 const PORT = process.env.PORT || 3000
 const { authenticate } = require('./middlewares/auth')
-// const cors = require('cors')
+const cors = require('cors')
 const errorHandlers = require('./middlewares/errorHandlers')
 
 // middleware
-// app.use(cors())
-app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+app.use(express.json())
+app.use(cors())
 
 const { todoRouter, userRouter, publicAPIRouter } = require('./routers')
 app.use('', publicAPIRouter)
