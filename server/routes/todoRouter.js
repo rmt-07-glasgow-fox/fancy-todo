@@ -1,15 +1,15 @@
 const router = require('express').Router()
 
 const Controller = require('../controller/todoController.js')
-const { authentication } = require('../middleware/authentication')
-const { authorization } = require('../middleware/authorization')
+const { authUser } = require('../middleware')
+const { authorUser } = require('../middleware')
 
-router.use(authentication)
+// router.use(authUser)
 
-router.post('/', Controller.create)
 router.get('/', Controller.readList)
+router.post('/', Controller.create)
 
-router.use('/:id', authorization)
+// router.use('/:id', authorUser)
 
 router.get('/:id', Controller.getTodoId)
 router.put('/:id', Controller.edit)
