@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <title>Fancy ToDo</title>
+</head>
+<body style="background-image: url('./resources/cloud.jpg'); background-size: cover;">
+    <!--nav bar-->
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #dae0e4;">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Fancy ToDo</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav" ">
+              <a class="link-home" aria-current="page" href="#" style="text-decoration: none; margin-right: 20px;">Home</a>
+              <a class="link-login" href="#" style="text-decoration: none;margin-right: 20px;">Login</a>
+              <a class="link-regis" href="#" style="text-decoration: none;margin-right: 20px;">Register</a>
+              <button type="button" class="btn btn-outline-primary" id="logout" style="margin-right: 10px;">Logout</button>
+              <button type="button" class="btn btn-outline-primary" id="add-todo">ADD</button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!--Content Home-->
+    <div id="home">
+        <div class="home-tontent" style="text-align: justify; margin: 10%; border: 1px solid black; border-radius: 4px; padding: 50px;">
+            <p>
+                Fancy Todo is a task management app to help you stay organized and manage your day-to-day. You can use Fancy Todo to make shopping lists, take notes, plan an event to increase your productivity and focus on what matters to you. Fancy Todo makes it easy to stay organized and manage your life.
+            </p>
+        </div>
+    </div>
+
+
+    <!--Register Form-->
+    <form id="register-form" style="position: fixed; top: 30%; left: 43%; width: 250px;">
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Email address</label>
+          <input type="email" class="form-email" id="formEmail" aria-describedby="emailHelp">
+          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Full Name</label>
+            <input type="text" class="form-FullName" id="formFullName" aria-describedby="fullNameHelp">
+          </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label><br>
+          <input type="password" class="form-password" id="formPassword">
+        </div>
+        <button type="button" class="btn btn-outline-primary" id="regist-button">SUBMIT</button>
+      </form>
+      
+      <!--Form Login-->
+      <form id="login-form" style="position: fixed; top: 30%; left: 43%; width: 250px;">
+          <div>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                <input type="email" class="form-email" id="email" aria-describedby="emailHelp">
+              </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Password</label><br>
+                <input type="password" class="form-password" id="password">
+            </div>
+            <button type="button" class="btn btn-outline-primary" id="login-button">LOGIN</button>
+          </div>
+      </form>
+
+      <!--todo content-->
+      <div class="todos" id="todo">
+            <div>
+                <h3>ToDo List</h3>
+            </div>
+      </div>
+
+      <!--form edit todo-->
+      <div class="editContainer" id="todoEdit" >
+          <form class="editTodo" id="updateEdit" style="position: fixed; top: 30%; left: 43%; width: 250px;">
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Title</label>
+              <input type="text" class="form-control" id="title" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Description</label>
+              <input type="text" class="form-control" id="description">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Status</label>
+                <input type="text" class="form-control" id="status">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Due Date</label>
+                <input type="date" class="form-control" id="duedate">
+            </div>
+            <button type="submit" class="edit-button">Submit</button>
+          </form>
+      </div>
+
+      <!--form Add Todo-->
+      <div >
+        <form class="addTodos" id="addTodo" style="position: fixed; top: 30%; left: 43%; width: 250px;">
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Title</label>
+          <input type="text" class="form-control" id="addTitle" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Description</label>
+          <input type="text" class="form-control" id="addDescription">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Status</label>
+            <input type="text" class="form-control" id="addStatus">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Due Date</label>
+            <input type="date" class="form-control" id="addDuedate">
+        </div>
+        <button type="submit" class="add-button">Submit</button>
+      </form>
+      </div>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+      <script src="./script.js"></script>
+</body>
+</html>

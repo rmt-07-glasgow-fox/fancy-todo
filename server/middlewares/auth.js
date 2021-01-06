@@ -3,7 +3,6 @@ const {cekToken} = require('../helpers/jwt')
 
 function authentication(req, res, next){
     try{
-        // let header = req.headers.accessToken
         let decoded = cekToken(req.headers.access_token)
         //console.log(decoded)
         User.findOne({where: {email: decoded.email}})
@@ -35,8 +34,6 @@ function authorization(req, res, next){
         if(!data){
             next({name: 'resourceNotFound'})
         }else if(data.userId !== req.user.id){
-            //.log('---if')
-            //res.status(401).json({message: 'no access'})
             next({name: 'accessDenied'})
         }else {
             next()

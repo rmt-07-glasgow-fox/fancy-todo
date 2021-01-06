@@ -44,7 +44,7 @@ class Controller {
                     //console.log(payload)
                     let accessToken = generateToken(payload)
                     return res.status(200).json({
-                        accessToken: accessToken
+                        access_token: accessToken
                     })
                 }else {
                     next({name: 'accessDenied'})
