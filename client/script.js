@@ -50,7 +50,55 @@ const dahsboardPage = () => {
     $('#auth').hide();
     $('#navbar').show();
     $('#dashboard').show();
+    $('#todoForm').hide();
   }
+};
+
+showTodoForm = () => {
+  $('#todoForm').show();
+};
+
+hideTodoForm = () => {
+  $('#todoForm').hide();
+};
+
+addTodo = (e) => {
+  e.preventDefault();
+
+  const title = $('#titleTodo').val();
+  const due_date = $('#dateTodo').val();
+  const description = $('#descriptionTodo').val();
+  const status = false;
+
+  $.ajax({
+    url: url + '/todos',
+    method: 'POST',
+    data: {
+      title: title,
+      due_date: due_date,
+      description: description,
+      status: status,
+    },
+    headers: {
+      authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+    },
+  })
+    .done((response) => {
+      const template = alertTemplate('success', 'Your Todo has been added');
+      $(template).appendTo('#alert');
+    })
+    .fail((err) => {
+      err.responseJSON.map((e) => {
+        const template = alertTemplate('error', e.message);
+        $(template).appendTo('#alert');
+      });
+    })
+    .always(() => {
+      $('#titleTodo').val('');
+      $('#dateTodo').val('');
+      $('#descriptionTodo').val('');
+      hideTodoForm();
+    });
 };
 
 const register = (e) => {
