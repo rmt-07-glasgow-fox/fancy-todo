@@ -13,14 +13,16 @@
     <!-- NAVBAR -->
     <nav class="navbar navbar-light bg-light shadow">
         <div class="container-fluid">
-            <button class="w-20 btn btn-lg" type="button">Fancy Todo</button>
-            <button class="w-20 btn btn-lg btn-danger" type="button" id="logout">Logout</button>
+            <button class="btn btn-lg" type="button">Fancy Todo</button>
+            <button class="btn btn-lg btn-danger" type="button" id="logout">Logout</button>
         </div>
     </nav>
 
-    <!-- REGISTER -->
-    <div class="container d-flex justify-content-center">
-        <div class="card" style="width: 20rem;" id="register-page">
+    <div class="container d-flex" style="padding: 50px;">
+        <div class="col-7" id="user-API" style="display: flex;">
+        </div>
+        <!-- REGISTER -->
+        <div class="col-3 card" style="width: 20rem; margin-left: 100px;" id="register-page">
             <div class="card-body">
                 <h5 class="card-title">Register</h5>
                 <form>
@@ -36,11 +38,9 @@
                 </form>
             </div>
         </div>
-    </div>
 
-    <!-- LOGIN -->
-    <div class="container d-flex justify-content-center">
-        <div class="card" style="width: 20rem;" id="login-page">
+        <!-- LOGIN -->
+        <div class="col-3 card" style="width: 20rem; margin-left: 100px;" id="login-page">
             <div class="card-body">
                 <h5 class="card-title">Login</h5>
                 <form>
@@ -58,8 +58,48 @@
         </div>
     </div>
 
-    <!-- TODO -->
-
+    <!-- Main -->
+    <div class="container" id="main-page">
+        <div class="row align-items-start">
+            <div class="col-3 flex-column" id="main-API">
+                <h1>Headline News</h1>
+            </div>
+            <div class="col-7" id="main-right">
+                <!--Todo - Add -->
+                <div class="container" id="todo-add-page">
+                    <form>
+                        <div class="mb-3">
+                            <label for="titleAdd" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="titleAdd">
+                        </div>
+                        <div class="mb-3">
+                            <label for="descriptionAdd" class="form-label">Description</label>
+                            <input type="text" class="form-control" id="descriptionAdd">
+                        </div>
+                        <div class="mb-3">
+                            <label for="due_dateAdd" class="form-label">Description</label>
+                            <input type="date" class="form-control" id="due_dateAdd">
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="todoAdd">Add New Todo</button>
+                        <button class="btn btn-primary" id="cancelTodoAdd">Cancel</button>
+                    </form>
+                </div>
+                <button class="btn btn-primary" id="showAddTodoPage">Add New Todo</button>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Checklist</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Deadline</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="todo-list"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
         integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
