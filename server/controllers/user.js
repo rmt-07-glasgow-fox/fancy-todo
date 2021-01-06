@@ -1,6 +1,7 @@
 const { User } = require("../models");
 const { checkPassword } = require("../helpers/bcrypt");
 const { generateToken } = require("../helpers/jwt");
+const { OAuth2Client } = require("google-auth-library");
 
 class UserController {
   static register(req, res, next) {
@@ -54,8 +55,60 @@ class UserController {
         return res.status(200).json({ access_token });
       })
       .catch((err) => {
-        next(err)
+        next(err);
       });
+  }
+
+  static loginGoogle(req, res, next) {
+    // console.log(req.body.id_token);
+    let username, fullName, email;
+    const { id_token } = req.body;
+    const client = new OAuth2Client(process.env.OAUTH_GOOGLE_CLIENT_ID);
+
+    client.verifyIdToken({
+      idToken: id_token,
+      audience: process.env.OAUTH_GOOGLE_CLIENT_ID,
+    })
+    .then(ticket => {
+      const payload = ticket.getPayload();
+      // console.log(payload);
+      username = payload.name;
+      fullName = payload.name;
+      email = payload.email;
+
+      return User.findOne({
+        where: { email }
+      })
+    })
+    .then(user => {
+      if(!user){
+        return User.create({
+          username,
+          fullName,
+          email,
+          password: Math.random()*1000 + "pass Google"
+        })
+      }
+      else {
+        return user;
+      }
+    })
+    .then(user => {
+      const payload = {
+        id: user.id,
+        username: user.username,
+        fullName: user.fullName,
+        email: user.email,
+      };
+      // console.log(payload);
+
+      const access_token = generateToken(payload);
+      req.headers.access_token = access_token;
+      return res.status(200).json({ access_token });
+    })
+    .catch(err => {
+      next(err)
+    })
   }
 }
 
