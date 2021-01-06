@@ -3,8 +3,17 @@ const { todoList } = require('../models')
 class todo {
     static async createTodo (req, res) {
         let input = req.body
+        let newData = {
+            title: input.title,
+            description: input.description,
+            status: input.status,
+            due_date: input.due_date,
+            UserId: req.user.id
+        }
+        let userId = req.user.id
+        console.log(userId);
         try {
-            const data = await todoList.create(input)
+            const data = await todoList.create(newData)
             if (!data) return res.status(400).json({
                 msg: 'validation errors'
             })
@@ -14,7 +23,8 @@ class todo {
                     title: data.title,
                     description: data.description,
                     status: data.status,
-                    due_date: data.due_date
+                    due_date: data.due_date,
+                    UserId: req.user.id
                 })
 
             }

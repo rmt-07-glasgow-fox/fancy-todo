@@ -26,7 +26,8 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Minimum input date is today'
         }
       }
-    }
+    },
+    UserId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'todoList',
