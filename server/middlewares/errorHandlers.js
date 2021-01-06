@@ -11,10 +11,10 @@ function errorHandlers(err, req, res, next) {
             return res.status(401).json({message: err.message})
         case 'NotLogin':
             return res.status(401).json({message: err.message})
-        case 'NotOwn':
-            return res.status(401).json({message: err.message})
         case 'WrongInput':
             return res.status(401).json({message: err.message})
+        case 'Forbidden':
+            return res.status(403).json({message: err.message})
         case 'NotFound':
             return res.status(404).json({message: err.message})
         default:

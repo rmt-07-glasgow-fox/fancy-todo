@@ -35,7 +35,7 @@ async function authorization(req, res, next) {
         if (find.UserId === req.user.id) {
             next()
         } else {
-            next({name: 'NotOwn', message: 'not your own'})
+            next({name: 'Forbidden', message: 'not your own'})
         }
     } catch (err) {
         next(err)
