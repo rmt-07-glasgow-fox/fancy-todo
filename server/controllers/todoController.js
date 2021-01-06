@@ -4,6 +4,7 @@ class TodoController {
     static async getAll(req, res, next) {
         try {
             const data = await Todo.findAll({
+                where: { userId: req.user.id },
                 attributes: { exclude: ['createdAt', 'updatedAt'] }
             })
             return res.status(200).json({
