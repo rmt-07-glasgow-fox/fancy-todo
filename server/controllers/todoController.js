@@ -38,9 +38,6 @@ class todoController {
     const id = req.params.id;
     Todo.findOne({ where: { id } })
       .then(dataTodo => {
-        if (!dataTodo) {
-          next(err);
-        }
         return res.status(200).json(dataTodo);
       })
       .catch(err => {
