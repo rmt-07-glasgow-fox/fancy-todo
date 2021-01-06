@@ -4,6 +4,23 @@ $(document).ready(function(){
   $('#login-form').show()
 })
 
+function onSignIn(googleUser) {
+  const id_token = googleUser.getAuthResponse().id_token;
+  
+  $.ajax({
+    method: 'POST',
+    url: `${baseUrl}/loginGoogle`,
+    data : {
+      id_token
+    }
+  })
+  .done(response => {
+    localStorage.access_token = response.accessToken
+    localStorage.user_name = response.user_name
+  })
+  .fail(err => console.log(err))
+}
+
 $('#login-btn').click(function(event){
   event.preventDefault()
   
@@ -20,7 +37,6 @@ $('#login-btn').click(function(event){
     }
   })
   .done(response => {
-    console.log(response);
     localStorage.access_token = response.accessToken
     localStorage.user_name = user_name
   })
@@ -66,4 +82,13 @@ $('#login-account').click(function(event){
   event.preventDefault()
   $('#login-form').show()
   $('#register-form').hide()
+})
+
+$('#logout-btn').click(function(event){
+  event.preventDefault()
+  localStorage.clear()
+  var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
 })

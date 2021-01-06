@@ -11,6 +11,9 @@ const errorHandler = (err,req,res,next) => {
       case "errorAuthorization" : 
         res.status(401).json({ message: 'you dont have access' })
         break;
+      case "errorLogin":
+        res.status(401).json({message:'invalid email / password'})
+        break;
       case "errorNotFound":
         res.status(404).json({message:'error not found'})
         break;
