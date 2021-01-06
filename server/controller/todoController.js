@@ -1,18 +1,18 @@
 const { todo } = require('../models/index')
 
 class todoController {
-    static getAllTodo (req, res) {
+    static getAllTodo (req, res, next) {
         // console.log(req.user.id);
         todo.findAll()
         .then(todo => {
             res.status(200).json(todo)
         })
         .catch(err => {
-            res.status(500).json({msg:'Internal Server Error'})
+            next(err)
         })
     }
 
-    static createTodo(req, res) {
+    static createTodo(req, res, next) {
         let newTodo = {
             title: req.body.title,
             description: req.body.description,
@@ -21,31 +21,28 @@ class todoController {
             UserId: req.user.id
         }
 
-        console.log(newTodo);
-
         todo.create(newTodo) 
         .then(todo => {
             res.status(201).json(todo)
         })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({msg:'Internal Server Error'})
+        .catch(err => {    
+            next(err)
         })
     }
 
-    static findOne(req, res) {
+    static findOne(req, res, next) {
         let id = +req.params.id
 
-        todo.findOne(id)
+        todo.findByPk(id)
         .then(todo => {
             res.status(200).json(todo)
         })
         .catch(err => {
-            res.status(404).json({msg:'Error Not Found'})
+            next(err)
         })
     }
 
-    static updateTodo(req, res) {
+    static updateTodo(req, res, next) {
         let id = +req.params.id
         let updtTodo = {
             title: req.body.title,
@@ -59,24 +56,26 @@ class todoController {
                 id: id
             }
         })
-        .then(newTodo => {
-            if(newTodo == 1){
+        .then(data => {
+            console.log(data);
+            if(data == 1){
                 res.status(200).json({msg: 'Todo has been updated'})
+                
             }else {
-                res.status(400).json({msg: 'validation errors'})
+                next({name: DataNotFound, msg: 'Data Todo Not Found'})
+                // res.status(404).json({msg: 'not found'})
             }
         })
         .catch(err => {
-            res.status(500).json({msg:'Internal Server Error'})
+            next(err)
         })
     }
 
-    static updateTodoStatus(req, res) {
+    static updateTodoStatus(req, res, next) {
         let id = +req.params.id
         let updtStatus = {
             status: req.body.status        
         }
-        // console.log(updtStatus);
 
         todo.update(updtStatus, {
             where: {
@@ -84,18 +83,18 @@ class todoController {
             }
         })
         .then(newTodo => {
-            if(newTodo == 1){
+            if(!newTodo){
                 res.status(200).json({msg: 'Todo status has been updated'})
             }else {
-                res.status(400).json({msg: 'validation errors'})
+                next({name: DataNotFound, msg: 'Data Todo Not Found'})
             }
         })
-        .catch(err => {
-            res.status(500).json({msg:'Internal Server Error'})
+        .catch(err => {            
+            next(err)
         })
     }
     
-    static deleteTodo(req, res) {
+    static deleteTodo(req, res, next) {
         let id = +req.params.id
 
         todo.destroy({where: {
@@ -103,14 +102,15 @@ class todoController {
             }
         })
         .then(data => {
+            console.log(data);
             if(data == 1) {
                 res.status(200).json({msg: 'Todo Success to Deleted'})
-            } else {
-                res.status(404).json({msg: 'Error Not Found'})
+            } else {               
+                next({name: DataNotFound, msg: 'Data Todo Not Found'})
             }
         })
         .catch(err => {
-            res.status(500).json({msg:'Internal Server Error'})
+            next(err)
         })
     }
 

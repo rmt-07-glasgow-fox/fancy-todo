@@ -3,13 +3,12 @@ const { comparePassword } = require('../helpers/bcrypt');
 const { generateTokenJwt } = require('../helpers/jwt');
 
 class userController {
-    static register( req, res) {
+    static register( req, res, next) {
         let newRegis = {
             email: req.body.email,
             phoneNumber: req.body.phoneNumber,
             password: req.body.password
         }
-        // console.log(newRegis);
         let dataUser
 
         user.create(newRegis)
@@ -22,11 +21,11 @@ class userController {
             res.status(201).json(dataUser)
         }) 
         .catch(err => {
-            res.status(500).json(err)
+            next(err)
         })
     }
 
-    static login (req, res) {
+    static login (req, res, next) {
         let login = {
             search: req.body.search,
             password: req.body.password
@@ -49,11 +48,12 @@ class userController {
                     const access_token = generateTokenJwt(payload)  
                     return res.status(200).json({access_token: access_token})
                 } else {
-                    res.status(401).json({msg: 'Invalid Email/Phone Number or Password'})
+                    next({name: 'JsonWebTokenError', msg: 'Invalid Email/Phone Number or Password'})
                 }
         })
         .catch(err => {
-            res.status(401).json({msg: 'Invalid Email/Phone Number or Password'})
+            next({name: 'NotFoundError', msg: 'Invalid Email/Phone Number or Password'})
+
         })
     }
 }
