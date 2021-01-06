@@ -11,6 +11,8 @@ class ToDoController {
       res.status(201).json(todo)
     })
     .catch(err => {
+      console.log('masuk sini')
+      console.log(err)
       next(err)
     })
   }
@@ -21,8 +23,6 @@ class ToDoController {
       return res.status(200).json(todo)
     })
     .catch(err => {
-      console.log('=======controller todo')
-      console.log(err)
       next(err)
     })
   }
@@ -32,10 +32,7 @@ class ToDoController {
 
     ToDo.findByPk(id, {attributes: {exclude: ['createdAt', 'updatedAt']}})
     .then(todo => {
-      if (todo) {
-        return res.status(200).json(todo)
-      }
-      next({name: 'resourceNotFound'})
+      return res.status(200).json(todo)
     })
     .catch(err => {
       next(err)

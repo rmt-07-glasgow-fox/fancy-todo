@@ -18,6 +18,9 @@ function errorHandler(err, req, res, next) {
     case 'SequelizeUniqueConstraintError':
       res.status(400).json(err.errors.map(e => e.message))
       break
+    case 'JsonWebTokenError':
+      res.status(401).json({message: 'access denied'})
+      break
 
   }
 }

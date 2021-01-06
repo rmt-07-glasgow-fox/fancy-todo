@@ -10,7 +10,6 @@ class UserController {
     User.create(newUser)
     .then(newUser => {
       const registered = {id: newUser.id, email: newUser.email}
-      console.log(registered)
       return res.status(201).json(registered)
     })
     .catch(err => {
@@ -37,7 +36,6 @@ class UserController {
       }
     }) 
     .catch(err => {
-      console.log(err)
       next(err)
     })
   }
