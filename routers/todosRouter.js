@@ -7,10 +7,11 @@ const todosController = require('../controllers/todosController')
 const usersController = require('../controllers/usersController')
 
 // define the route
-router.get('/', todosController.showTodos)
-router.get('/:id', todosController.showTodosById)
+
 //need authentication
 router.use(authentication)
+router.get('/', todosController.showTodos)
+router.get('/:id', todosController.showTodosById)
 router.post('/', todosController.createTodos)
 //need authorization
 router.put('/:id', authorization, todosController.putTodosById)
