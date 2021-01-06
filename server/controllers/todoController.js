@@ -17,7 +17,8 @@ class ToDoController {
       title: req.body.title,
       description: req.body.description,
       status: req.body.status,
-      due_date: req.body.due_date
+      due_date: req.body.due_date,
+      UserId: req.user.id
     }
 
     ToDoList.create(newList)
@@ -58,33 +59,32 @@ class ToDoController {
       due_date: req.body.due_date
     }
 
-    ToDoList.update(forUpdate, {where: {id}})
-    .then(data => {
-      res.status(200).json({message: `Update Success`})
-    })
-    .catch(err => {
-      res.status(500).json({message: `Unable to update data, current data is not found`})
-    })
+    if(!id) {
+      res.status(404).json({message: `Not Found`})
+    } else {
+      ToDoList.update(forUpdate, {where: {id}})
+      .then(data => {
+        res.status(200).json({id: data.id, title: data.title, description: data.description, due_date: data.due_date})
+      })
+      .catch(err => {
+        if (err) {
+          res.status(400).json({message: `Something wrong`})
+        } else {
+          res.status(500).json({message: `Unable to update data, current data is not found`})
+        }
+      })
+    }
   }
 
   static updateStatus(req, res) {
     let id = +req.params.id
 
-    const done = {
-      status: "done"
+    const update = {
+      status: req.body.status
     }
 
-    const undone = {
-      status: "undone"
-    }
-
-    ToDoList.findByPk(id)
+    ToDoList.update(update, {where: {id}})
     .then(data => {
-      if (data.status === "undone") {
-        ToDoList.update(done, {where: {id}})
-      } else if (data.status === "done") {
-        ToDoList.update(undone, {where: {id}})
-      }
       res.status(200).json({message: `Successfuly updated`})
     })
     .catch(err => {
@@ -95,13 +95,17 @@ class ToDoController {
   static deleteList(req, res) {
     let id = +req.params.id
 
-    ToDoList.destroy({where: {id}})
-    .then(data => {
-      res.status(200).json({message: `todo success to delete`})
-    })
-    .catch(err => {
-      res.status(500).json({message: `No such data found`})
-    })
+    if (!id) {
+      res.status(404).json({message: `Not Found`})
+    } else {
+      ToDoList.destroy({where: {id}})
+      .then(data => {
+        res.status(200).json({message: `todo success to delete`})
+      })
+      .catch(err => {
+        res.status(500).json({message: `No such data found`})
+      })
+    }
   }
 }
 

@@ -27,7 +27,8 @@ module.exports = (sequelize, DataTypes) => {
           msg: `The Date must be greater than today or today`
         }
       }
-    }
+    },
+    UserId: DataTypes.INTEGER
   }, {
     hooks: {
       // beforeCreate: (instance, option) => {

@@ -42,8 +42,6 @@ class Authentication {
       } else {
         return res.status(400).json({message: `Invalid email / password`})
       }
-
-      return res.status(200).json(user)
     } catch(err) {
       return res.status(400).json(err)
     }
