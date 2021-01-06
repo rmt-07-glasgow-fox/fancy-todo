@@ -6,10 +6,11 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styleModal.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="index.js"></script>
 </head>
-<body>
+<body> 
 
     <!-- login page -->
     <div class="wrapper fadeInDown" id="login">
@@ -25,19 +26,23 @@
           <div id="formFooter">
             <a class="underlineHover">don't have an account?</a>
           </div>
+        </div>
     </div>
     
     <!-- home page -->
     <div id="homePage">
         <nav class="navbar navbar-light bg-light">
             <div class="container-fluid">
-              <a class="navbar-brand">Navbar</a>
-              <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-              </form>
+              <img class="navbar-brand" src="https://to-do-cdn.microsoft.com/static-assets/c87265a87f887380a04cf21925a56539b29364b51ae53e089c3ee2b2180148c6/icons/logo.png" width="40" height="40" style="margin-top: 5 px" class="d-inline-block align-top" alt="" loading="lazy">
+              <h3>hello, </h3>
+              <button class="btn btn-outline-danger" id="logout-btn">Logout</button>
             </div>
         </nav>
+        <div class="shadow p-3 mb-5 bg-white rounded card mx-auto mt-5" style="width: 40rem;" id="list-todos">     
+        </div>
     </div>
+
+    <!-- edit form -->
+
 </body>
 </html>

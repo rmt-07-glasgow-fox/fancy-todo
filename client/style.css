@@ -1,3 +1,11 @@
+body {
+  background-image: url('https://sorongselatan.bawaslu.go.id/wp-content/uploads/2020/08/Background-opera-speeddials-community-web-simple-backgrounds.jpg');
+  background-size: cover;
+  background-repeat: repeat-y;
+  height: 100%;
+}
+
+
 #LoginPage {
     margin-top: 10%;
 }
