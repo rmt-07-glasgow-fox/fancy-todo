@@ -2,7 +2,7 @@
 const {
   Model
 } = require('sequelize');
-const HelperBcrypt = require('../helpers/bcrypt')
+const {hashpassword} = require('../helpers/bcrypt')
 module.exports = (sequelize, DataTypes) => {
   class user extends Model {
     /**
@@ -34,10 +34,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       unique: true,
       validate: {
-        notEmpty: {
-          args: true,
-          msg: "Phone Number is required"
-        },
         len: {
           args: [12, 12],
           msg: "Phone Number at least 12 Numbers"
@@ -60,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     hooks: {
       beforeCreate(instance, option){
-        instance.password = HelperBcrypt.hashpassword(instance.password)
+        instance.password = hashpassword(instance.password)
       }
     },
     sequelize,

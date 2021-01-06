@@ -1,6 +1,6 @@
 const { user, Sequelize } =  require('../models/index')
-const HelperBcrypt = require('../helpers/bcrypt');
-const HelperJWT = require('../helpers/jwt');
+const { comparePassword } = require('../helpers/bcrypt');
+const { generateTokenJwt } = require('../helpers/jwt');
 
 class userController {
     static register( req, res) {
@@ -39,14 +39,14 @@ class userController {
           })
         .then( data => {
             let data_login = data[0].dataValues
-            console.log(data_login);
-            const passMatch = HelperBcrypt.comparePassword(login.password, data_login.password)   
+            const passMatch = comparePassword(login.password, data_login.password)  
+           
                 if(passMatch){
                     let payload = { 
                         id: data_login.id,
                         email: data_login.email
                     } 
-                    const access_token = HelperJWT.generateTokenJwt(payload)  
+                    const access_token = generateTokenJwt(payload)  
                     return res.status(200).json({access_token: access_token})
                 } else {
                     res.status(401).json({msg: 'Invalid Email/Phone Number or Password'})

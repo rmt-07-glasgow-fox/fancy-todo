@@ -1,10 +1,10 @@
-const HelperJWT = require('../helpers/jwt')
+const { cekToken } = require('../helpers/jwt')
 const { user, todo } = require('../models/index')
 
 class Auth {
     static authentication(req, res, next) {
         try {
-            let decoded = HelperJWT.cekToken(req.headers.access_token)
+            let decoded = cekToken(req.headers.access_token)
             // console.log(decoded.email);
             user.findOne({
                 where: { email: decoded.email }
@@ -28,7 +28,7 @@ class Auth {
     static authorization (req, res, next) {
         const id = +req.params.id
         const userData = +req.user.id
-        
+
         todo.findByPk(id)
         .then(data => {
             if(!data){

@@ -13,4 +13,4 @@ class HelperBcrypt {
     }
 }
 
-module.exports = HelperBcrypt
+module.exports = HelperBcrypt 
