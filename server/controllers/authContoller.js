@@ -40,8 +40,8 @@ class AuthController {
     }
 
     static async register(req, res, next) {
-        const { email, password } = req.body;
-        const input = { email, password };
+        const { firstName, lastName, email, password } = req.body;
+        const input = { firstName, lastName, email, password };
 
         try {
             const data = await User.create(input);
