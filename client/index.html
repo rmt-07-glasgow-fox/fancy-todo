@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Fancy Todo</h1>
+    <nav class="nav">
+        <button id="logout">Log out</button>
+    </nav>
+    <div id="greetings">
+        <h3>Already have an account?</h3>
+        <button id="show-login">Click here</button>
+    </div>
+    <div id="login-form">
+        <form>
+            <label>Email:</label>
+            <input type="email" id="email">
+            <label>Password:</label>
+            <input type="password" id="password">
+            <button type="submit" id="login">Login</button>
+        </form>
+    </div>
+    <div id="signin-form">
+        <form>
+            <label>Email:</label>
+            <input type="text">
+            <label>Password:</label>
+            <input type="password">
+        </form>
+    </div>
+    <div class="todo-feature">
+        <h1>Todo List</h1>
+            <div class ="todo-list">
+                <button id="btn-add-todo">Add Todo</button>  
+                <div id="todo">
+                </div>  
+            </div>
+    </div>
+    <div id="form-todo">
+        <form>
+            <label><h5>Title</h5></label>
+            <input type="text" id='title'>
+            <label><h5>Description</h5></label>
+            <input type="text" id='description'>
+            <label><h5>Due Date</h5></label>
+            <input type="date" id='due_date'>
+            <div class="add">
+                <button id="add-todo" type="submit">Add Todo</button>
+            </div>
+            <div class="edit">
+                <button id="edit-todo" type="submit">Edit</button>
+            </div>
+            <button id="btn-cancel-add-todo">Cancel</button>
+        </form>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./jquery.js"></script>
+</body>
+</html>

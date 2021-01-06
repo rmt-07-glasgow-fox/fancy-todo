@@ -1,4 +1,6 @@
 const {Todo} = require('../models')
+const { sendEmail } = require('../helpers/mailgun')
+
 
 class todoController{
     static getTodo(req, res, next){
@@ -20,6 +22,7 @@ class todoController{
     }
 
     static createTodo(req, res, next){
+        let userEmail = req.user.email
         const todo = {
             title : req.body.title,
             description : req.body.description,
@@ -29,6 +32,12 @@ class todoController{
         }
         Todo.create(todo)
         .then(data => {
+            let todoObj = {
+                title : data.title,
+                description : data.description,
+                due_date : data.due_date.toISOString().substring(0,10)
+            }
+            sendEmail(userEmail, todoObj)
             res.status(201).json(data)
         })
         .catch(err => {
@@ -66,7 +75,6 @@ class todoController{
             }
         })
         .then(data => {
-            console.log(data)
             if(data[0] === 1){
                 return Todo.findOne({
                     where : {

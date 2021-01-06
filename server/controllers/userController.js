@@ -1,8 +1,6 @@
 const {User} = require('../models')
 const { checkPassword } = require('../helpers/bcrypt')
 const { createToken } = require('../helpers/jwt')
-const axios = require('axios')
-
 
 class userController {
     static register(req, res, next){

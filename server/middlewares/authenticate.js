@@ -12,7 +12,8 @@ function authenticate(req, res, next){
         .then(user => {
             if(user){
                 req.user = {
-                    id : user.id
+                    id : user.id,
+                    email : user.email
                 }
                 next()
             }

@@ -16,7 +16,7 @@ function errorHandler(err, req, res , next){
         res.status(404).json({message : 'Not found'})
     }
     else {
-        res.status(500).json({message : 'Internal Server Error'})
+        res.status(500).send({message : 'Internal Server Error'})
     }
 }
 
