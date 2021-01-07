@@ -4,8 +4,8 @@ $(document).ready(function () {
 
     $('#register-btn').click((event) => {
         event.preventDefault()
-        let email = $("#email-register").val()
-        let password = $("#password-register").val()
+        let email = $("#email").val()
+        let password = $("#password").val()
 
         $.ajax({
             method: 'POST',
@@ -22,16 +22,15 @@ $(document).ready(function () {
                 console.log(err, ">>>> this is error from ajax form submission")
             })
             .always(() => {
-                console.log("ALWAYS!")
-                $("#email-register").val('')
-                $("#password-register").val('')
+                $("#email").val('')
+                $("#password").val('')
             })
     })
 
     $('#login-btn').click((event) => {
         event.preventDefault()
-        let email = $("#email-login").val()
-        let password = $("#password-login").val()
+        let email = $("#email").val()
+        let password = $("#password").val()
 
         $.ajax({
             method: 'POST',
@@ -49,8 +48,8 @@ $(document).ready(function () {
                 console.log(jqXHR.responseJSON.message)
             })
             .always(() => {
-                $("#email-login").val('')
-                $("#password-login").val('')
+                $("#email").val('')
+                $("#password").val('')
             })
     })
 
@@ -102,22 +101,24 @@ function onSignIn(googleUser) {
 function loginMenu() {
     $("#email").val('')
     $("#password").val('')
+    $('#main-page').show()
+    $('#content-page').hide()
     $('#login-page').show()
-    $('#logout-btn').hide()
     $('#register-page').hide()
     $('#container-todo-list').hide()
 }
 
 function registerMenu() {
+    $('#main-page').show()
+    $('#content-page').hide()
     $('#register-page').show()
     $('#login-page').hide()
-    $('#logout-btn').hide()
-    $('#todo-list').hide()
+    $('#container-todo-list').hide()
 }
 
 function afterLogin() {
-    $('#login-page').hide()
-    $('#register-page').hide()
+    $('#main-page').hide()
+    $('#content-page').show()
     $('#container-todo-list').show()
     getTodoList()
     $('#logout-btn').show()
@@ -152,6 +153,5 @@ function getTodoList() {
         .always(() => {
             console.log("ALWAYS!")
         })
-
 }
 
