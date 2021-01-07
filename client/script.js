@@ -42,7 +42,10 @@ $('#login-btn').click(function(event){
     localStorage.user_name = user_name
     cekAuth()
   })
-  .fail(err => console.log(err))
+  .fail(err => {
+    $('#login-alert').show()
+    $('#login-alert').text(err.responseJSON.message)
+  })
   .always(()=> {
     $('#email').val("")
     $('#password').val("")
@@ -67,7 +70,11 @@ $('#register-btn').click(function(event){
     $('#login-form').show()
     $('#register-form').hide()
   })
-  .fail(err => console.log(err))
+  .fail(err => {
+    $('#register-alert').show()
+    $('#register-alert').empty()
+    $('#register-alert').append(err.responseJSON.join('<br>'))
+  })
   .always(()=> {
     $('#email-register').val("")
     $('#password-register').val("")
@@ -76,12 +83,14 @@ $('#register-btn').click(function(event){
 
 $('#create-account').click(function(event){
   event.preventDefault()
+  $('#register-alert').hide()
   $('#login-form').hide()
   $('#register-form').show()
 })
 
 $('#login-account').click(function(event){
   event.preventDefault()
+  $('#login-alert').hide()
   $('#login-form').show()
   $('#register-form').hide()
 })
@@ -100,11 +109,13 @@ function cekAuth(){
   if(localStorage.access_token){
     $('#login-form').hide()
     $('#todo').show()
+    $('.bg-login').hide()
     showTodos()
     getWeather()
   }else{
     $('#login-form').show()
     $('#todo').hide()
+    $('.bg-login').show()
   }
 }
 

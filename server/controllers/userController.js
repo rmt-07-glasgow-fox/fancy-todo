@@ -45,6 +45,9 @@ class userController {
         next({name:"errorLogin"})
       }
     })
+    .catch(err=> {
+      next(err)
+    })
   }
 
   static async loginGoogle(req,res,next){

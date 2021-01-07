@@ -13,52 +13,65 @@
     <title>Todo App</title>
   </head>
   <body>
-    <div class="container pt-5">
         <!-- login form -->
-        <div class="card p-5" style="width: 50%;" id="login-form">
-          <form>
-            <div class="mb-3">
-              <label class="form-label">Email address</label>
-              <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
-              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Password</label>
-              <input type="password" class="form-control" id="password">
-            </div>
-            <!-- <div class="mb-3 form-check">
-              <input type="checkbox" class="form-check-input" id="exampleCheck1">
-              <label class="form-check-label" for="exampleCheck1">Remember me</label>
-            </div> -->
-            <div id="login-container">
-              <button type="submit" class="btn btn-primary" id="login-btn">Login</button>
-              <div class="mt-3">Not registered? <a href="" id="create-account">Create an account</a></div>
-            </div>
-            <div class="mt-3">
-              <div class="g-signin2" data-onsuccess="onSignIn"></div>
-            </div>
-          </form>
+        <div class="bg-login">
+          <div class="card p-2 col-5" id="login-form">
+            <form style="width: 80%;">
+              <div class="alert alert-warning" role="alert" id='login-alert' style="display: none;">
+                A simple warning alert—check it out!
+              </div>
+              <h2 class="text-center mb-4">Login</h2>
+              <div class="mb-3 form-floating">
+                <input type="email" class="form-control" id="email" placeholder="Email">
+                <label class="text-secondary">Email address</label>
+              </div>
+              <div class="mb-3 form-floating">
+                <input type="password" class="form-control" id="password" placeholder="Password">
+                <label class="text-secondary">Password</label>
+              </div>
+              <!-- <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Remember me</label>
+              </div> -->
+              <center>
+                <div id="login-container">
+                  <button type="submit" class="btn btn-primary" id="login-btn">Login</button>
+                  <div class="mt-3">Not registered? <a href="" id="create-account">Create an account</a></div>
+                </div>
+                <hr>
+                <div class="mt-3">
+                  <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                </div>
+              </center>
+            </form>
+          </div>
+          
+          <!-- register form -->
+          <div class="card p-2 col-5" style="display: none;" id="register-form">
+            <form style="width: 80%;">
+              <div class="alert alert-warning" role="alert" id='register-alert' style="display: none;">
+                A simple warning alert—check it out!
+              </div>
+              <h2 class="text-center mb-4">Register</h2>
+              <div class="mb-3 form-floating">
+                <input type="email" class="form-control" id="email-register" placeholder="emailHelp">
+                <label class="text-secondary">Email address</label>
+              </div>
+              <div class="mb-3 form-floating">
+                <input type="password" class="form-control" id="password-register" placeholder="password">
+                <label class="text-secondary">Password</label>
+              </div>
+              <center>
+                <div id="register-container">
+                  <button type="submit" class="btn btn-primary" id="register-btn">Register</button>
+                  <div class="mt-3">Have account? <a href="" id="login-account">Login here</a></div>
+                </div>
+              </center>
+            </form>
+          </div>
         </div>
-
-        <!-- register form -->
-        <div class="card p-5" style="width: 50%; display: none;" id="register-form">
-          <form>
-            <div class="mb-3">
-              <label class="form-label">Email address</label>
-              <input type="email" class="form-control" id="email-register" aria-describedby="emailHelp">
-              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Password</label>
-              <input type="password" class="form-control" id="password-register">
-            </div>
-            <div id="register-container">
-              <button type="submit" class="btn btn-primary" id="register-btn">Register</button>
-              <div class="mt-3">Have account? <a href="" id="login-account">Login here</a></div>
-            </div>
-          </form>
-        </div>
-
+          
+      <div class="container pt-5">
         <!-- todo -->
         <div id="todo" style="border: 1px solid;" class="">
           
@@ -83,7 +96,7 @@
           
           <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-              <a class="navbar-brand" href="#">Fancy Todo</a>
+              <a class="navbar-brand">Your Task:</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
