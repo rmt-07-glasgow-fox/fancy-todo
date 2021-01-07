@@ -62,14 +62,16 @@ module.exports = (sequelize, DataTypes) => {
           let day = now.getDate()
           let month = now.getMonth() + 1
           let year = now.getFullYear()
-          if(value.getFullYear() < year){
-            throw new Error('Date must be greather than today')
-          }else{
-            if(value.getMonth() + 1 < month){
+          if(value){
+            if(value.getFullYear() < year){
               throw new Error('Date must be greather than today')
             }else{
-              if(value.getDate() < day){
+              if(value.getMonth() + 1 < month){
                 throw new Error('Date must be greather than today')
+              }else{
+                if(value.getDate() < day){
+                  throw new Error('Date must be greather than today')
+                }
               }
             }
           }
