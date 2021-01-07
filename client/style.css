@@ -17,13 +17,13 @@
     background-color: pink;
 }
 
-.container input {
+/* .container input {
     position: absolute;
     opacity: 0;
     cursor: pointer;
     height: 0;
     width: 0;
-  }
+  } */
   
   /* Create a custom checkbox */
   .checkmark {

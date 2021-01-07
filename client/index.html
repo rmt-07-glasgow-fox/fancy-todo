@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body style="background: black;">
-    <p> test </p>
     <thead>
         <nav style="color: white;">
             <ul>
@@ -55,10 +55,10 @@
                 <div class="col">
                     <h2> How To Start Using It? </h2>
                     <p> You can register. By click the button bellow. </p>
-                    <button class="btn btn-dark"> Sign Up </button> <br>
+                    <button class="btn btn-dark" onclick="signuppage()"> Sign Up </button> <br>
                     <p> Or </p>
                     <p> You can login. </p>
-                    <button class="btn btn-dark"> Login </button> <br>
+                    <button class="btn btn-dark" onclick="loginpage()"> Login </button> <br>
                     <br>
                 </div>
             </div>
@@ -69,22 +69,22 @@
         <div id="container" class="container pt-3 my-3 border" >
             <h1> List To Do </h1>
         </div>
-        <div id="list" class="container pt-3 my-3 border" style="background: #D4AF37; color: white; text-align: center;" >
+        <div id="listToDo" class="container pt-3 my-3 border" style="background: #D4AF37; color: white; text-align: center;" >
             <div id="listfeature">
                 <div class="card my-3 border" id="createtodo">
                     <div class="card-header">Create To Do</div>
                     <form action="/action_page.php">
                         <div class="form-group">
                             <label for="title">Title:</label>
-                            <input type="text" class="form-control" placeholder="Enter title" id="title">
+                            <input type="text" class="form-control" placeholder="Enter title" id="titleCreate">
                         </div>
                         <div class="form-group">
                             <label for="description">Description:</label>
-                            <input type="text" class="form-control" placeholder="Enter description" id="pwd">
+                            <input type="text" class="form-control" placeholder="Enter description" id="descriptionCreate">
                         </div> 
                         <div class="form-group">
                             <label for="dueDate">Due date:</label>
-                            <input type="date" class="form-control" placeholder="Enter due date" id="dueDate">
+                            <input type="date" class="form-control" id="dueDateCreate">
                         </div>
                         <br>
                         <button type="submit" class="btn btn-dark">Create</button>
@@ -95,15 +95,15 @@
                     <form action="/action_page.php">
                         <div class="form-group">
                             <label for="title">Title:</label>
-                            <input type="text" class="form-control" placeholder="Enter title" id="title">
+                            <input type="text" class="form-control" placeholder="Enter title" id="titleEdit">
                         </div>
                         <div class="form-group">
                             <label for="description">Description:</label>
-                            <input type="text" class="form-control" placeholder="Enter description" id="pwd">
+                            <input type="text" class="form-control" placeholder="Enter description" id="descriptionEdit">
                         </div> 
                         <div class="form-group">
                             <label for="dueDate">Due date:</label>
-                            <input type="date" class="form-control" placeholder="Enter due date" id="dueDate">
+                            <input type="date" class="form-control" id="dueDateEdit">
                         </div>
                         <br>
                         <button type="submit" class="btn btn-dark">Save</button>
@@ -124,7 +124,6 @@
                         <div class="card-footer">Temperature</div>
                     </div>
                 </div>
-                
             </div> <br>
         </div>
     </div>
@@ -137,11 +136,11 @@
             <form action="/action_page.php">
                 <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" class="form-control" placeholder="Enter email" id="email">
+                <input type="email" class="form-control" placeholder="Enter email" id="emailSignin">
                 </div>
                 <div class="form-group">
                 <label for="pwd">Password:</label>
-                <input type="password" class="form-control" placeholder="Enter password" id="pwd">
+                <input type="password" class="form-control" placeholder="Enter password" id="passwordSignin">
                 </div> <br>
                 <button type="submit" class="btn btn-dark">Sign In</button>
             </form> <br>
@@ -156,15 +155,18 @@
             <form action="/action_page.php">
                 <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" class="form-control" placeholder="Enter email" id="email">
+                <input type="email" class="form-control" placeholder="Enter email" id="emailSignup">
                 </div>
                 <div class="form-group">
                 <label for="pwd">Password:</label>
-                <input type="password" class="form-control" placeholder="Enter password" id="pwd">
+                <input type="password" class="form-control" placeholder="Enter password" id="passwordSignup">
                 </div> <br>
                 <button type="submit" class="btn btn-dark">Sign Up</button>
             </form> <br>
         </div>
     </div>
+
+    <script src="./assets/helpers.js"></script>
+    <script src="./assets/main.js"></script> 
 </body>
 </html>

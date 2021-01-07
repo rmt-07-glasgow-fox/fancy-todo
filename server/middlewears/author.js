@@ -1,10 +1,10 @@
 const {Todo} = require('../models')
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
     try {
         let idTodo = req.params.id
         let user = req.user 
-        const todo = Todo.findByPk(idTodo)
+        const todo = await Todo.findByPk(idTodo)
         if(todo.userId !== user.id){
             throw{
                 status : 401,

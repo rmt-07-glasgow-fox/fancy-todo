@@ -53,8 +53,8 @@ class TodoController {
                     message: "Todo not found"
                 }
             } else {
-                const edited = await Todo.update(data, {where: {id}})
-                res.status(200).json('Data edited')
+                const edited = await Todo.update(data, {where: {id}, returning: true})
+                res.status(200).json(edited[1][0])
             }
         } catch (err) {
             next(err)
@@ -99,8 +99,6 @@ class TodoController {
             next(err)
         }
     }
-
-    
 
 }
 
