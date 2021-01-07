@@ -18,6 +18,7 @@ function onSignIn(googleUser) {
     localStorage.access_token = response.accessToken
     localStorage.user_name = response.user_name
     cekAuth()
+    $('#login-alert').hide()
   })
   .fail(err => console.log(err))
 }
@@ -41,6 +42,7 @@ $('#login-btn').click(function(event){
     localStorage.access_token = response.accessToken
     localStorage.user_name = user_name
     cekAuth()
+    $('#login-alert').hide()
   })
   .fail(err => {
     $('#login-alert').show()
@@ -67,6 +69,7 @@ $('#register-btn').click(function(event){
     }
   })
   .done(response => {
+    $('#register-alert').hide()
     $('#login-form').show()
     $('#register-form').hide()
   })
@@ -146,12 +149,14 @@ $('#add-btn').click(function(event){
   .done(response => {
     $('#form-add').hide()
     showTodos()
-  })
-  .fail(err => console.log(err))
-  .always(()=> {
     $('#title').val("")
     $('#due_date').val("")
     $('#description').val("")
+  })
+  .fail(err => {
+    $('#modal-message').empty()
+    $('#modal-message').append(err.responseJSON[0])
+    $('#modal').fadeIn(1000)
   })
 })
 
@@ -286,7 +291,11 @@ function editTodo(id){
   .done(response=>{
     showTodos()
   })
-  .fail(err=>console.log(err))
+  .fail(err => {
+    $('#modal-message').empty()
+    $('#modal-message').append(err.responseJSON[0])
+    $('#modal').fadeIn(1000)
+  })
 }
 
 function changeStatus(id){
@@ -333,3 +342,7 @@ function getWeather(){
   })
   .fail(err=>console.log(err))
 }
+
+$('#close-modal').click(function(){
+  $('#modal').fadeOut(1000)
+})
