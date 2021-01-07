@@ -3,6 +3,7 @@ const { authenticate } = require('../middleware/auth')
 const errorHandler = require('../middleware/errorHandler')
 const auth = require('./auth')
 const event = require('./event')
+const weather = require('./weather')
 
 router.get('/',(req,res)=>{
     res.status(200).json({
@@ -12,6 +13,7 @@ router.get('/',(req,res)=>{
 
 router.use(auth)
 router.use(authenticate)
+router.use('/weather',weather)
 router.use('/todos',event)
 router.use(errorHandler)
 
