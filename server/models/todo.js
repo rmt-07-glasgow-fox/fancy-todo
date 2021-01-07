@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class ToDo extends Model {
     /**
@@ -11,31 +9,34 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      ToDo.belongsTo(models.User)
+      ToDo.belongsTo(models.User);
     }
-  };
-  ToDo.init({
-    title: {
-      type: DataTypes.STRING,
-      validate: {
-        notEmpty: true
-      }
+  }
+  ToDo.init(
+    {
+      title: {
+        type: DataTypes.STRING,
+        validate: {
+          notEmpty: true,
+        },
+      },
+      description: DataTypes.STRING,
+      status: DataTypes.BOOLEAN,
+      due_date: {
+        type: DataTypes.DATE,
+        validate: {
+          isAfter: {
+            args: `${new Date()}`,
+            msg: 'Can not choose past date',
+          },
+        },
+      },
+      UserId: DataTypes.INTEGER,
     },
-    description: DataTypes.STRING,
-    status: DataTypes.BOOLEAN,
-    due_date: {
-      type: DataTypes.DATE,
-      validate: {
-        isAfter: {
-          args: `${new Date()}`,
-          msg: 'Can not choose past date'
-        }
-      }
-    },
-    UserId: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'ToDo',
-  });
+    {
+      sequelize,
+      modelName: 'ToDo',
+    }
+  );
   return ToDo;
 };
