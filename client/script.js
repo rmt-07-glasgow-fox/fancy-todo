@@ -60,19 +60,74 @@ const dahsboardPage = () => {
     $('#dashboard').show();
     $('#todoForm').hide();
     listTodo();
+    $('#editFormTodo').hide();
     month();
   }
 };
 
-showTodoForm = () => {
+const showTodoForm = () => {
   $('#todoForm').show();
 };
 
-hideTodoForm = () => {
+const hideTodoForm = () => {
   $('#todoForm').hide();
 };
 
-addTodo = (e) => {
+const showEditTodo = (id) => {
+  $.ajax({
+    url: url + `/todos/${id}`,
+    method: 'GET',
+    headers: {
+      authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+    },
+  })
+    .done((response) => {
+      console.log(response.due_date);
+      $(`#todoCardBody-${id}`).hide();
+      $(`#editFormTodo-${id}`).empty();
+
+      $(`
+      <form onsubmit="editTodo(event, ${id})">
+        <div class="row m-2">
+          <div class="col">
+            <input type="text" class="form-control title" placeholder="Title" id="titleEdit" value="${
+              response.title
+            }">
+          </div>
+          <div class="col">
+            <input type="date" class="form-control due_date" placeholder="due date" id="dueDateEdit" value="${moment(
+              response.due_date
+            ).format('YYYY-MM-DD')}">
+          </div>
+        </div>
+        <div class="form-group mr-4 ml-4">
+          <textarea class="form-control description" id="descriptionEdit" rows="3" placeholder="Description Here....">${
+            response.description
+          }</textarea>
+        </div>
+        <div class="float-right mr-4 mb-1">
+              <button type="submit" class="btn btn-primary" style="width: 100px">Edit</button>
+              <button type="button" onclick="hideEditTodo(${id})" class="btn btn-danger" style="width: 100px">Cancel</button>
+            
+        <div>
+      </form>
+      `).appendTo(`#editFormTodo-${id}`);
+    })
+    .fail((err) => {
+      err.responseJSON.map((e) => {
+        const template = alertTemplate('error', e.message);
+        $(template).appendTo('#alert');
+      });
+    })
+    .always(() => {});
+};
+
+const hideEditTodo = (id) => {
+  $(`#editFormTodo-${id}`).empty();
+  $(`#todoCardBody-${id}`).show();
+};
+
+const addTodo = (e) => {
   e.preventDefault();
 
   const title = $('#titleTodo').val();
@@ -135,21 +190,22 @@ const listTodo = () => {
             </div>
           </div>
           <div class="card" style="width: 40rem">
-              <div class="card-body" id="todoCardBody-${data.id}">
-                <div id="todoCardValue-${data.id}">
-                    <h5 class="card-title">${data.title}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted"><i class="fa fa-calendar" aria-hidden="true"></i> ${moment(
-                      data.due_date
-                    ).format('DD MMMM YYYY')}</h6>
-                    <p class="card-text">${data.description}</p>
-                    <a href="#" onclick="editTodoForm(${
-                      data.id
-                    })" class="card-link" id="editTodo"><i class="fa fa-edit" aria-hidden="true"></i> Edit</a>
-                    <a href="#" data-todoid="${
-                      data.id
-                    }" data-toggle="modal" data-target="#modalConfirmDelete" class="card-link text-red" id="deleteTodo"><i class="fa fa-trash" aria-hidden="true"></i> Hapus</a>
-                </div>
+            <div class="card-body" id="todoCardBody-${data.id}">
+              <div id="todoCardValue-${data.id}">
+                  <h5 class="card-title">${data.title}</h5>
+                  <h6 class="card-subtitle mb-2 text-muted"><i class="fa fa-calendar" aria-hidden="true"></i> ${moment(
+                    data.due_date
+                  ).format('DD MMMM YYYY')}</h6>
+                  <p class="card-text">${data.description}</p>
+                  <a href="#" onclick="showEditTodo(${
+                    data.id
+                  })" class="card-link" id="editTodo"><i class="fa fa-edit" aria-hidden="true"></i> Edit</a>
+                  <a href="#" data-todoid="${
+                    data.id
+                  }" data-toggle="modal" data-target="#modalConfirmDelete" class="card-link text-red" id="deleteTodo"><i class="fa fa-trash" aria-hidden="true"></i> Hapus</a>
               </div>
+            </div>
+            <div id="editFormTodo-${data.id}"></div>
           </div>
         </div>
         `).appendTo('#todoList');
@@ -162,6 +218,45 @@ const listTodo = () => {
       });
     })
     .always(() => {});
+};
+
+const editTodo = (e, id) => {
+  e.preventDefault();
+
+  const title = $('#titleEdit').val();
+  const due_date = $('#dueDateEdit').val();
+  const description = $('#descriptionEdit').val();
+
+  $.ajax({
+    url: url + `/todos/${id}`,
+    method: 'PUT',
+    data: {
+      title: title,
+      due_date: due_date,
+      description: description,
+    },
+    headers: {
+      authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+    },
+  })
+    .done((response) => {
+      const template = alertTemplate('success', 'Your Todo has been updated');
+      $(template).appendTo('#alert');
+      listTodo();
+    })
+    .fail((err) => {
+      console.log(err);
+      err.responseJSON.map((e) => {
+        const template = alertTemplate('error', e.message);
+        $(template).appendTo('#alert');
+      });
+    })
+    .always(() => {
+      $('#titleEdit').val('');
+      $('#dueDateEdit').val('');
+      $('#descriptionEdit').val('');
+      hideEditTodo(id);
+    });
 };
 
 const deleteTodo = (id) => {
