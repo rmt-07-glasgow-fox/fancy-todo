@@ -89,7 +89,12 @@ loginBtn.click((e) => {
     })
     .fail(err => {
       console.log(err.responseJSON, 'err')
-      alert(err.responseJSON.message)
+      swal({
+        title: err.responseJSON.message,
+        text: "Please fill in your credentials to login",
+        icon: "error",
+        button: "OK",
+      })
     })
     .always(_ => {
       console.log('always')
@@ -116,6 +121,16 @@ registerBtn.click((e) => {
     })
     .fail(err => {
       console.log(err.responseJSON, 'err')
+      let errorString = ""
+      err.responseJSON.data.forEach((el, index) => {
+        errorString += `${el}${index === err.responseJSON.data.length - 1 ? '' : ', '}`
+      })
+      swal({
+        title: err.responseJSON.message,
+        text: errorString,
+        icon: "error",
+        button: "OK",
+      });
     })
     .always(_ => {
       console.log('always')
@@ -157,12 +172,12 @@ const getTasks = () => {
           }
         })
         done.forEach(task => {
-          tasksDoneContainer.append(`<div class="card mb-3" style="width: 20rem;">
+          tasksDoneContainer.append(`<div class="card mb-3" style="width: 22rem;">
             <div class="card-body">
               <h5 class="card-title"><s>${task.title}</s></h5>
               <p class="card-text"><s>${task.description}</s></p>
               <p class="card-text"><s>due date : ${task.due_date.slice(0,10)}</s></p>
-              <a href="#" id="markBtn" onclick="updateStatus(${task.id}, ${task.status})" class="btn btn-outline-primary">Mark as Done</a>
+              <a href="#" id="markBtn" onclick="updateStatus(${task.id}, ${task.status})" class="btn btn-outline-primary">Mark as Undone</a>
               <a href="#" id="editBtn" onclick="editData(${task.id})" class="btn btn-warning" data-toggle="modal" data-target="#editTaskModal">Edit</a>
               <a href="#" id="deleteBtn" onclick="deleteData(${task.id})" class="btn btn-danger">Delete</a>
             </div>
@@ -250,7 +265,6 @@ addTaskBtn.click((e) => {
   let title = $('#title').val()
   let description = $('#description').val()
   let due_date = $('#due_date').val()
-  console.log(localStorage.getItem('access_token'))
   $.ajax({
     method: 'POST',
     url: `${baseUrl}/todos`,
@@ -265,11 +279,22 @@ addTaskBtn.click((e) => {
     }
   })
     .done(res => {
-      // console.log(res)
+      swal({
+        title: "Success",
+        text: "New task been added",
+        icon: "success",
+        button: "OK",
+      });
       checkAuth()
     })
     .fail(err => {
-      console.log(err.responseJSON, 'err')
+      let errorString = ""
+      err.responseJSON.data.forEach((el, index) => {
+        errorString += `${el}${index === err.responseJSON.data.length - 1 ? '' : ', '}`
+      })
+      swal(errorString, {
+        icon: "error",
+      });
     })
     .always(_ => {
       console.log('always')
@@ -316,7 +341,7 @@ const editData = (id) => {
       $('#edit-due_date').val(res.due_date.slice(0,10))
     })
     .fail(err => {
-      console.log(err.responseJSON, 'err')
+      console.log(err.responseJSON, 'errsadasd')
     })
     .always(_ => {
       console.log('always')
@@ -343,10 +368,15 @@ const editData = (id) => {
         checkAuth()
       })
       .fail(err => {
-        console.log(err.responseJSON, 'err')
+        let errorString = ""
+        err.responseJSON.data.forEach((el, index) => {
+          errorString += `${el}${index === err.responseJSON.data.length - 1 ? '' : ', '}`
+        })
+        swal(errorString, {
+          icon: "error",
+        });
       })
       .always(_ => {
-        console.log('always')
         $('#edit-title').val('')
         $('#edit-description').val('')
         $('#edit-due_date').val('')
@@ -355,22 +385,38 @@ const editData = (id) => {
 }
 
 const deleteData = (id) => {
-  $.ajax({
-    method: 'DELETE',
-    url: `${baseUrl}/todos/${id}`,
-    headers:{
-      access_token: localStorage.getItem('access_token')
-    }
+  swal({
+    title: "Are you sure?",
+    text: "Once deleted, you will not be able to recover this file!",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
   })
-    .done(res => {
+  .then((willDelete) => {
+    if (willDelete) {
+      swal("Your file has been deleted!", {
+        icon: "success",
+      });
+      $.ajax({
+        method: 'DELETE',
+        url: `${baseUrl}/todos/${id}`,
+        headers:{
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+        .done(res => {
+          checkAuth()
+        })
+        .fail(err => {
+          console.log(err.responseJSON, 'err')
+        })
+        .always(_ => {
+          console.log('always')
+        })
+    } else {
       checkAuth()
-    })
-    .fail(err => {
-      console.log(err.responseJSON, 'err')
-    })
-    .always(_ => {
-      console.log('always')
-    })
+    }
+  });
 }
 
 function onSignIn(googleUser) {
