@@ -5,10 +5,10 @@ class weatherController {
     static getWeather(req,res,next){   
         const { lat, lon } = req.params
 
-        let url = `https://community-open-weather-map.p.rapidapi.com/weather?lat=${lat}&lon=${lon}`
+        let url = `https://community-open-weather-map.p.rapidapi.com/weather?lat=${lat}&lon=${lon}&units=metric`
         fetch(url, {
             headers : {
-                "x-rapidapi-key": "3a6b37c02dmsh1bad73073dcc94cp171845jsncad9d6e6c78d",
+                "x-rapidapi-key": process.env.RAPID_API_KEY,
                 "x-rapidapi-host": "community-open-weather-map.p.rapidapi.com",
                 "useQueryString": true
             }  

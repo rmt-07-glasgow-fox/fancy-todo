@@ -303,15 +303,22 @@ function changeStatus(id){
 
 function getWeather(){
   const {lat,lon} = localStorage
+  const latitude = lat || -6.2146
+  const longitude = lon || 106.8451
   $.ajax({
     method: 'GET',
-    url: `${baseUrl}/weather/${lat}/${lon}`,
+    url: `${baseUrl}/weather/${latitude}/${longitude}`,
     headers: {
       access_token: localStorage.access_token
     }
   })
   .done(response=>{
     console.log(response);
+    $('#header-location').text(response.name)
+    $('#header-name').text(`Hello, ${localStorage.user_name}`)
+    $('#header-temp').text(Math.floor(response.main.temp))
+    $('#header-icon').attr('src',`http://openweathermap.org/img/w/${response.weather[0].icon}.png`)
+    $('#header-weather').text(response.weather[0].main)
   })
   .fail(err=>console.log(err))
 }

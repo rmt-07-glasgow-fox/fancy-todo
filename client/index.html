@@ -60,7 +60,27 @@
         </div>
 
         <!-- todo -->
-        <div id="todo">
+        <div id="todo" style="border: 1px solid;" class="">
+          
+            <div class="bg-cover text-white p-2">
+              <div class="container d-flex justify-content-between">
+                <div>
+                  <div class="display-6" id="header-name">Hello, world!</div>
+                  <div class="d-flex align-items-center">
+                    <i class="fas fa-map-marker-alt mx-1"></i>
+                    <div class="mx-2" style="font-size: 1.5em;" id="header-location">Bandung</div>
+                  </div>
+                </div>
+                <div class="">
+                  <div style="font-size: 1.5em;"><span id="header-temp">22</span> &deg;C</div>
+                  <div class="text-center">
+                    <img src="http://openweathermap.org/img/w/03d.png" alt="" id="header-icon">
+                    <div id="header-weather">clouds</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
           <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
               <a class="navbar-brand" href="#">Fancy Todo</a>
@@ -70,10 +90,10 @@
               <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                   <li class="nav-item">
-                    <a class="nav-link" href="" id="add-todo">Add Todo</a>
                   </li>
                 </ul>
-                <button class="btn btn-warning" id="logout-btn">Logout</button>
+                <a class="text-success" id="add-todo"><i class="fas fa-plus-square"></i></i></a>
+                <a class="text-danger ml-2" id="logout-btn"><i class="fas fa-sign-out-alt"></i></a>
               </div>
             </div>
           </nav>
