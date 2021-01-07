@@ -1,9 +1,10 @@
+const { OAuth2Client } = require('google-auth-library');
 const { User } = require('../models')
 const { isPasswordMatched } = require('../helpers/password')
 const { generateToken } = require('../helpers/token')
 
 class UserController {
-    static async register(req, res) {
+    static async register(req, res, next) {
         try {
             let newUser = {
                 email: req.body.email,
@@ -27,7 +28,7 @@ class UserController {
         }
     }
 
-    static async login(req, res) {
+    static async login(req, res, next) {
         try {
             let { email, password } = req.body
 
@@ -54,6 +55,31 @@ class UserController {
         } catch (err) {
             let errorMessage = err.errors ? err.errors.map(error => error.message) : err
             return res.status(400).json({ message: errorMessage })
+        }
+    }
+
+    static async loginGoogle(req, res, next) {
+        try {
+            // console.log('>>> body.id_token : ', req.body.id_token)
+            const { id_token } = req.body
+            const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
+            const ticket = await client.verifyIdToken({
+                idToken: id_token,
+                audience: process.env.GOOGLE_CLIENT_ID
+            });
+
+            const payload = ticket.getPayload()
+            console.log('>>> payload : ', payload)
+
+            const email = payload.email
+            const password = email.toString().split('@')
+            password = password[0]
+
+            console.log('>>> google email password : ', email, password)
+            // res.status(200).send('success')
+
+        } catch (err) {
+            next(err.name = '')
         }
     }
 }
