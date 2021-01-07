@@ -3,6 +3,7 @@ let tableTodo, save_method, method;
 
 $(document).ready(function() {
     if (localStorage.access_token) {
+        $('span#fullname').html(localStorage.fullname)
         dashboardPage()
     } else {
         loginPage()
@@ -127,8 +128,6 @@ $('#tableTodo tbody').on('click', '#bIsDone', function() {
     var id = tableTodo.row($(this).parents('tr')).data().id;
     var status = tableTodo.row($(this).parents('tr')).data().status;
 
-    console.log(id);
-
     $.ajax({
         type: "PATCH",
         url: `${baseUrl}/todos/${id}`,
@@ -208,6 +207,7 @@ const dashboardPage = () => {
     $('#todoContent').hide();
     $('#loginPage').hide();
     $('#registerPage').hide();
+    $('span#fullname').html(localStorage.fullname)
     document.body.className = document.body.className.replace("no-javascript", "");
 }
 
@@ -226,6 +226,7 @@ const registerPage = () => {
 
 const loginPage = () => {
     if (localStorage.access_token) {
+        $('span#fullname').html(localStorage.fullname)
         dashboardPage()
     } else {
         $('#loginEmail').val('')
@@ -259,6 +260,10 @@ const refreshTableTodo = () => {
 const logout = () => {
     localStorage.clear()
     $('#logoutModal').modal('hide')
+    let auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function() {
+        console.log('User signed out.');
+    });
     loginPage()
 }
 
@@ -278,6 +283,26 @@ const checkPasswordMatch = () => {
     }
 }
 
+function onSignIn(googleUser) {
+    const id_token = googleUser.getAuthResponse().id_token;
+    $.ajax({
+        method: 'POST',
+        url: `${baseUrl}/loginGoogle`,
+        data: {
+            id_token
+        },
+        success: (data) => {
+            dashboardPage()
+            localStorage.setItem('access_token', data.access_token)
+            localStorage.setItem('fullname', data.fullname)
+            $('span#fullname').html(localStorage.fullname)
+        },
+        error: (err) => {
+            toastr.warning(err.responseJSON.message, 'Warning Alert')
+        }
+    })
+}
+
 $('#btnLogin').click((event) => {
     event.preventDefault()
     let email = $('#loginEmail').val()
@@ -292,6 +317,7 @@ $('#btnLogin').click((event) => {
         },
         success: (data) => {
             localStorage.setItem('access_token', data.access_token)
+            localStorage.setItem('fullname', data.fullname)
             dashboardPage()
         },
         error: (err) => {

@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
         static associate(models) {
             User.hasMany(models.Todo, { as: 'todo', foreignKey: 'userId' })
         }
+
+        fullname() {
+            return `${this.firstName} ${this.lastName}`
+        }
     };
     User.init({
         firstName: {

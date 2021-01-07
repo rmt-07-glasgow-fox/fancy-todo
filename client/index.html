@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="fancy todo list create with love">
     <meta name="author" content="Mochammad Trinanda Noviardy">
+    <meta name="google-signin-client_id" content="550351084184-5g9p56nc77t9sqrhi3jq3j7u43efhc9s.apps.googleusercontent.com">
 
     <title>Fancy ToDo list</title>
 
@@ -34,7 +35,7 @@
             <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
                 <!-- Sidebar - Brand -->
                 <a class="sidebar-brand d-flex align-items-center justify-content-center" type="button" onclick="dashboardPage()">
-                    <div class="sidebar-brand-text mx-3">Fancy ToDo List Admin </div>
+                    <div class="sidebar-brand-text mx-3">Fancy ToDo List Admin</div>
                 </a>
 
                 <!-- Divider -->
@@ -94,7 +95,7 @@
                             <!-- Nav Item - User Information -->
                             <li class="nav-item dropdown no-arrow">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small" id="fullname"></span>
                                 </a>
                                 <!-- Dropdown - User Information -->
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -278,9 +279,8 @@
                                                 Login
                                             </a>
                                             <hr>
-                                            <a href="index.html" class="btn btn-google btn-user btn-block">
-                                                <i class="fab fa-google fa-fw"></i> Login with Google
-                                            </a>
+                                            <!-- <div id="my-signin2"></div> -->
+                                            <a type="button" class="btn btn-user btn-block g-signin2" data-width="300" data-height="50" data-scope="profile email" data-theme="dark" data-longtitle="true" data-onsuccess="onSignIn"></a>
                                         </form>
                                         <hr>
                                         <div class="text-center">
@@ -336,9 +336,7 @@
                                         Register Account
                                     </button>
                                     <hr>
-                                    <a href="index.html" class="btn btn-google btn-user btn-block">
-                                        <i class="fab fa-google fa-fw"></i> Register with Google
-                                    </a>
+                                    <a type="button" class="btn btn-user btn-block g-signin2" data-width="500" data-height="50" data-scope="profile email" data-theme="dark" data-longtitle="true" data-onsuccess="onSignIn"></a>
                                 </form>
                                 <hr>
                                 <div class="text-center">
@@ -355,6 +353,7 @@
 
 
     <!-- Bootstrap core JavaScript-->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/4.1.3/js/sb-admin-2.min.js" integrity="sha512-COtY6/Rv4GyQdDShOyay/0YI4ePJ7QeKwtJIOCQ3RNE32WOPI4IYxq6Iz5JWcQpnylt/20KBvqEROZTEj/Hopw==" crossorigin="anonymous"></script>
