@@ -12,7 +12,6 @@ function authenticate(req, res, next){
         })
         .then(data => {
             if (data){
-                console.log(data);
                 req.userData = {
                     id: data.id,
                     username: data.username,
