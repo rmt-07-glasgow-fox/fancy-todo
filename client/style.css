@@ -1,0 +1,8 @@
+.myNavBar {
+    position: fixed;
+    z-index: 5;
+}
+
+.main-content {
+    padding-top: 4.5rem;
+}

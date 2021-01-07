@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         notEmpty: {
-          msg: 'Title Todo cant be empty'
+          msg: 'Title Todo cannot be empty'
         }
       }
     },
@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isIn: {
           args: [['done', 'onlist']],
-          msg: 'Invalid requests'
+          msg: 'Unknown status value'
         }
       }
     },
@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isAfter: {
           args: new Date().toString(),
-          msg: 'Cant set Past Todo'
+          msg: 'Cannot set Obselete Todo'
         }
       }
     }
