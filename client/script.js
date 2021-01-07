@@ -1,6 +1,5 @@
 let baseUrl = "http://localhost:3000"
 $(document).ready(function () {
-    // first thing when client hit our webpage
     checkAuth()
 
     $('#register-btn').click((event) => {
@@ -17,8 +16,6 @@ $(document).ready(function () {
             }
         })
             .done(response => {
-                localStorage.setItem("access_token", response.access_token)
-                // do your thing once user has logged in
                 checkAuth()
             })
             .fail(err => {
@@ -26,8 +23,8 @@ $(document).ready(function () {
             })
             .always(() => {
                 console.log("ALWAYS!")
-                $("#email").val('')
-                $("#password").val('')
+                $("#email-register").val('')
+                $("#password-register").val('')
             })
     })
 
@@ -45,17 +42,15 @@ $(document).ready(function () {
             }
         })
             .done(response => {
-                console.log(response)
                 localStorage.setItem("access_token", response.access_token)
                 checkAuth()
             })
-            .fail(err => {
-                console.log(err, ">>>> this is error from ajax form submission")
+            .fail((jqXHR, textStatus, error) => {
+                console.log(jqXHR.responseJSON.message)
             })
             .always(() => {
-                console.log("ALWAYS!")
-                $("#email").val('')
-                $("#password").val('')
+                $("#email-login").val('')
+                $("#password-login").val('')
             })
     })
 
@@ -105,10 +100,12 @@ function onSignIn(googleUser) {
 }
 
 function loginMenu() {
+    $("#email").val('')
+    $("#password").val('')
     $('#login-page').show()
     $('#logout-btn').hide()
     $('#register-page').hide()
-    $('#todo-list').hide()
+    $('#container-todo-list').hide()
 }
 
 function registerMenu() {
@@ -121,11 +118,13 @@ function registerMenu() {
 function afterLogin() {
     $('#login-page').hide()
     $('#register-page').hide()
-    $('#todo-list').show()
+    $('#container-todo-list').show()
+    getTodoList()
     $('#logout-btn').show()
 }
 
 function getTodoList() {
+    $("#todo-list").empty()
     $.ajax({
         method: 'GET',
         url: `${baseUrl}/todos`,
@@ -134,8 +133,7 @@ function getTodoList() {
         }
     })
         .done(response => {
-            let todoList = response.data
-            $("#todo-list").empty()
+            let todoList = response
 
             todoList.forEach(element => {
                 $('#todo-list').append(`<div class="card col-4" style="width: 18rem;">
@@ -143,19 +141,16 @@ function getTodoList() {
                         <h5 class="card-title">${element.title}</h5>
                         <p class="card-text">${element.description}</p>
                         <p class="card-text">${element.due_date}</p>
+                        <a href="#" class="btn btn-primary">Update</a>
                     </div>
                 </div>`)
             })
-            // empty movieList with .empty()
-            //loop todoList and render the card containing data with append command 
         })
         .fail(err => {
             console.log(err, ">>>> this is error from ajax todolist")
         })
         .always(() => {
             console.log("ALWAYS!")
-            //$("#email").val('')
-            //$("#password").val('')
         })
 
 }
