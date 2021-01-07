@@ -183,18 +183,22 @@ const getTasks = () => {
             </div>
           </div>`)
         })
-        undone.forEach(task => {
-          tasksContainer.append(`<div class="card mb-3" style="width: 20rem;">
-            <div class="card-body">
-              <h5 class="card-title">${task.title}</h5>
-              <p class="card-text">${task.description}</p>
-              <p class="card-text">due date : ${task.due_date.slice(0,10)}</p>
-              <a href="#" id="markBtn" onclick="updateStatus(${task.id}, ${task.status})" class="btn btn-outline-primary">Mark as Done</a>
-              <a href="#" id="editBtn" onclick="editData(${task.id})" class="btn btn-warning" data-toggle="modal" data-target="#editTaskModal">Edit</a>
-              <a href="#" id="deleteBtn" onclick="deleteData(${task.id})" class="btn btn-danger">Delete</a>
-            </div>
-          </div>`)
-        })
+        if(undone.length > 0){
+          undone.forEach(task => {
+            tasksContainer.append(`<div class="card mb-3" style="width: 20rem;">
+              <div class="card-body">
+                <h5 class="card-title">${task.title}</h5>
+                <p class="card-text">${task.description}</p>
+                <p class="card-text">due date : ${task.due_date.slice(0,10)}</p>
+                <a href="#" id="markBtn" onclick="updateStatus(${task.id}, ${task.status})" class="btn btn-outline-primary">Mark as Done</a>
+                <a href="#" id="editBtn" onclick="editData(${task.id})" class="btn btn-warning" data-toggle="modal" data-target="#editTaskModal">Edit</a>
+                <a href="#" id="deleteBtn" onclick="deleteData(${task.id})" class="btn btn-danger">Delete</a>
+              </div>
+            </div>`)
+          })
+        }else{
+          tasksContainer.append('<h2>Woohoo, no work due in soon!</h2>')
+        }
       }else{
         tasksContainer.append(`<h2>${res.message}</h2>`)
       }
