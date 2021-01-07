@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-signin-client_id" content="561115377116-4qh7l3c9c89j34j8ere9v4unqlkbltph.apps.googleusercontent.com">
+
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+
+    <style>
+        #auth-page {
+            width: 300px;
+            margin: 0 auto;
+            margin-top: 40px;
+        }
+    </style>
+
+    <title>Fancy Todo</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="./img//notes.png" width="30" height="24" class="d-inline-block align-top"><strong> FANCY TODO</strong>
+            </a>
+            <button id="logout-btn" class="btn btn-danger"><strong>Logout</strong></button>
+        </div>
+    </nav>
+
+    <div id="auth-page">
+        <div id="login-form">
+            <h4>Sign In</h4>    
+            <form>
+                <label for="">Enter email address:</label>
+                <div class="input-group mt-2">
+                    <span class="input-group-text" id="basic-addon1"><i style="margin: 0 auto;" class="far fa-user"></i></span>
+                    <input id="email-login" type="text" class="form-control" name="email" placeholder="Enter email"><br>
+                    <p class="mt-2" style="font-size: 12px; color:rgb(182, 182, 182)">We'll never share your email with anyone else</p>
+                </div>
+                
+                <label for="">Password:</label>
+                <div class="input-group mt-2 mb-4">
+                    <span class="input-group-text" id="basic-addon1"><i style="margin: 0 auto;"
+                            class="fas fa-lock"></i></span>
+                    <input id="password" type="password" class="form-control" name="password" placeholder="Password"">
+                </div>
+
+                <div class="gap-2">
+                    <button class="btn btn-primary" id="login-btn">Sign In</button>
+                    <button class="btn btn-success" id="to-register-btn">Don't have account</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="register-form">
+            <h4>Sign Up</h4>
+            <form>
+                <label for="">Enter email address:</label>
+                <div class="input-group mt-2">
+                    <input id="email-register" style="display: block;" type="text" class="form-control" name="email" placeholder="Enter email">
+                </div>
+                <div>
+                    <span style="font-size: 12px; color:rgb(182, 182, 182)">We'll never share your email with anyone
+                        else</span>
+                </div>
+                <label class="mt-2" for="">Password:</label>
+                <div class="input-group mt-2">
+                    <input id="password-register" type="password" class="form-control" name="password" placeholder="Password"">
+                </div>
+                
+                <label class="mt-2" for="">Repeat Password:</label>
+                <div class="input-group mt-2 mb-4">
+                    <input id="repeatPassword" type="password" class="form-control" name="repeatPassword" placeholder="Password"">
+                </div>
+        
+                <div class=" gap-2" mb-2>
+                    <button class="btn btn-primary" id="register-btn">Sign Up</button>
+                    <button class="btn btn-success" id="to-login-btn">I have an account</button>
+                </div>
+
+                <hr>
+                <div class="g-signin2" data-onsuccess="onSignIn"></div>
+
+            </form>
+        </div>
+    </div>
+
+    <div id="todo-list-page" class="mt-5" style="width: 1000px; margin: 0 auto;">
+        <div class="mb-3">
+            <h3>Here your task: </h3>
+            <button id="add-form-btn" class="btn btn-primary float-right ">Add Todo</button>
+        </div>
+
+        <hr>
+
+        <form id="todo-form">
+            <div class="input-group mb-3">
+                <div style="width: 750px; margin-right: 30px">
+                    <div class="col">
+                        <input id="title" type="text" class="form-control" placeholder="Title" name="title">
+                    </div>
+                </div>
+
+                <div style="width: 220px">
+                    <div class="col">
+                        <input id="due_date" type="date" class="form-control" name="due_date">
+                    </div>
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <textarea id="description" form="todo-form" class="form-control" aria-label="With textarea" placeholder="Description here..." ></textarea>
+            </div>
+
+            <div id="status-list" class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <label style="width: 71" class="input-group-text" for="status">Status</label>
+                </div>
+                <select id="status" style="display: inline-block; width: 929px">
+                    <option id="selected" selected disabled value=''>--select status--</option>
+                    <option id="new-todo" value="new todo">new todo</option>
+                    <option id="ongoing" value="ongoing">ongoing</option>
+                    <option id="done" value="done">done</option>
+                </select>
+            </div>
+            
+            <div class="gap-2 mb-3">
+                <button class="btn btn-success" id="edit-todo-btn">Edit</button>
+                <button class="btn btn-primary" id="add-todo-btn">Add</button>
+                <button class="btn btn-danger" id="cancel-todo-btn">Cancel</button>
+            </div>
+        </form>
+
+        <table class="table">
+            <thead class="table-dark">
+                <tr style="text-align: center;">
+                    <td style="width: 200px">Title</td>
+                    <td style="width: 400px">Description</td>
+                    <td>Status</td>
+                    <td>Due Date</td>
+                    <td>Action</td>
+                </tr>
+                
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script src="./script.js"></script>
+</body>
+
+</html>

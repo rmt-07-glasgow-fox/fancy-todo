@@ -5,15 +5,18 @@ const axios = require('axios');
 class TodoController {
     static getTodos(req, res, next) {
         let user_id = req.user.id;
-
         Todo.findAll({
+            where: {user_id},
             order: [['id', 'ASC']],
             attributes: {
                 exclude: ['createdAt','updatedAt']
             }
         })
             .then(todos => res.status(200).json(todos))
-            .catch(err => next(err))
+            .catch(err => {
+                console.log(err);
+                // next(err)
+            })
     }
 
     static addTodo(req, res, next) {
@@ -21,38 +24,41 @@ class TodoController {
         let newTodo = {
             title: req.body.title,
             description: req.body.description,
-            status: "new todo",
+            status: req.body.status || "new todo",
             due_date: req.body.due_date,
             user_id: req.user.id
-        }
+        }    
 
-        axios.get(popularMovieApiUrl)
-            .then(response => {
-                if (newTodo.title.toLowerCase().includes('watch') || newTodo.title.toLowerCase().includes('movie')) {
-                    let movies = response.data.results.map(movie => {
-                        return {
-                            id: movie.id,
-                            title: movie.original_title,
-                            overview: movie.overview,
-                        }
-                    })
-                    let moviesRecommendation = movies[Math.floor(Math.random() * 20) + 1];
+        // axios.get(popularMovieApiUrl)
+        //     .then(response => {
+        //         if (newTodo.title.toLowerCase().includes('watch') || newTodo.title.toLowerCase().includes('movie')) {
+        //             let movies = response.data.results.map(movie => {
+        //                 return {
+        //                     id: movie.id,
+        //                     title: movie.original_title,
+        //                     overview: movie.overview,
+        //                 }
+        //             })
+        //             let moviesRecommendation = movies[Math.floor(Math.random() * 20) + 1];
 
-                    newTodo.description = `${newTodo.description} (Recommendation film: ${moviesRecommendation.title})` ;
+        //             newTodo.description = `${newTodo.description} (Recommendation film: ${moviesRecommendation.title})` ;
                     
-                    return Todo.create(newTodo);
-                } else {
-                    return Todo.create(newTodo);
-                }
+        //             return Todo.create(newTodo);
+        //         } else {
+        //             return Todo.create(newTodo);
+        //         }
+        //     })
+        Todo.create(newTodo)
+            .then(todo => {
+                res.status(201).json({
+                    id: todo.id,
+                    title: todo.title,
+                    description: todo.description,
+                    status: todo.status,
+                    due_date: todo.due_date,
+                    user_id: todo.user_id
+                })
             })
-            .then(todo => res.status(201).json({
-                id: todo.id,
-                title: todo.title,
-                description: todo.description,
-                status: todo.status,
-                due_date: todo.due_date,
-                user_id: todo.user_id
-            }))
             .catch(err => {
                 console.log(err.message);
                 next(err)})

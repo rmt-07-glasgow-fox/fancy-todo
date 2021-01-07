@@ -18,6 +18,10 @@ module.exports = {
             case "JsonWebTokenError":
                 res.status(400).json({message: errors.message})
             break
+
+            case "InvalidPassword":
+                res.status(400).json({message: errors.message})
+            break;
             
             case "IdNotFound":
                 res.status(404).json({message: errors.message});
@@ -26,6 +30,10 @@ module.exports = {
             case "SequelizeDatabaseError":
                 res.status(500).json({ message: "Internal server error" });
             break
+
+            default:
+                res.status(500).json({ message: "Error" });
         }
     }
-}
+}       
+  

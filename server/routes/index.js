@@ -12,4 +12,4 @@ router.use('/', authRouter);
 router.use(authenticate)
 router.use('/todos', todoRouter); 
 
-module.exports = router; authenticate
+module.exports = router;
