@@ -6,7 +6,7 @@ module.exports = (req, res, next) => {
         let access_token = req.headers.access_token
         if(!access_token){
             throw {
-                status: 401,
+                status: 400,
                 message: 'Please Log In'
             }
         } else {
