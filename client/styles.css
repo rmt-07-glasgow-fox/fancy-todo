@@ -3,7 +3,7 @@
 }
 
 body {
-    font-family: "Lato", sans-serif;
+    font-family: "Roboto", sans-serif;
 }
 
 .main-head{
@@ -51,12 +51,8 @@ body {
         left: 0;
     }
 
-    .login-form{
-        margin-top: 20%;
-    }
-
-    .register-form{
-        margin-top: 20%;
+    #card-form{
+        margin-top: 30%;
     }
 }
 

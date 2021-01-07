@@ -18,8 +18,8 @@ $(document).ready(function () {
             .done(response => {
                 checkAuth()
             })
-            .fail(err => {
-                console.log(err, ">>>> this is error from ajax form submission")
+            .fail((jqXHR, textStatus, error) => {
+                console.log(jqXHR)
             })
             .always(() => {
                 $("#email").val('')
