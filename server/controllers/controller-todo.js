@@ -1,8 +1,10 @@
 const { Todo } = require('../models')
+const formatDate = require('../helpers/format-date')
 
 class Controller {
     static showAllTodos(req, res, next) {
         Todo.findAll({
+            where: { user_id: req.userId },
             attributes: { exclude: ['createdAt', 'updatedAt', 'user_id'] }
         })
             .then(data => {
@@ -20,10 +22,10 @@ class Controller {
 
     static createTodos(req, res, next) {
         const todo = {
-            title: req.body.title,
-            description: req.body.description,
-            status: req.body.status,
-            due_date: req.body.due_date,
+            title: req.headers.title,
+            description: req.headers.description,
+            status: 'undone',
+            due_date: formatDate(req.headers.due_date),
             user_id: req.userId,
             createdAt: new Date(),
             updatedAt: new Date()
@@ -123,7 +125,7 @@ class Controller {
             .catch(err => {
                 const messageError = err.message.split(',')[0]
                 const code = +err.message.split(',')[1]
-    
+
                 if (code === 400) {
                     //res.status(400).json({ message: messageError })
                     next({
@@ -180,7 +182,7 @@ class Controller {
             .catch(err => {
                 const messageError = err.message.split(',')[0]
                 const code = +err.message.split(',')[1]
-            
+
                 if (code === 400) {
                     //res.status(400).json({ message: messageError })
                     next({
@@ -220,7 +222,7 @@ class Controller {
                 })
             })
             .then(data => {
-                res.status(200).json({message: 'todo successfully deleted'})
+                res.status(200).json({ message: 'todo successfully deleted' })
             })
             .catch(err => {
                 //res.status(500).json({ message: 'internal server error' })

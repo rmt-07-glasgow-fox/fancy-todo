@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- register form -->
+    <div class="register-form">
+        <form>
+            <div class="form-group">
+                <label for="email">Email address :</label><br>
+                <input type="email" class="register-email" placeholder="Enter email">
+                <br><br>
+            </div>
+            <div class="form-group">
+                <label for="password">Password :</label><br>
+                <input type="password" class="register-password" placeholder="Password">
+                <br><br>
+            </div>
+            <button type="submit" class="signup-btn">Sign Up</button>
+            <button type="submit" class="have-account-btn">I Have An Account</button>
+        </form>
+    </div>
+
+    <!-- login form -->
+    <div class="login-form">
+        <form>
+            <div class="form-group">
+                <label for="email">Email address :</label><br>
+                <input type="email" class="login-email" placeholder="Enter email">
+                <br><br>
+            </div>
+            <div class="form-group">
+                <label for="password">Password :</label><br>
+                <input type="password" class="login-password" placeholder="Password">
+                <br><br>
+            </div>
+            <button type="submit" class="signin-btn">Sign In</button>
+        </form>
+    </div>
+
+    <!-- logout form -->
+    <div class="logout-form">
+        <button type="submit" class="signout-btn">Sign Out</button>
+    </div>
+
+    <!-- add todo -->
+    <div class="add-todo">
+        <button type="submit" class="add-todo-btn">Add Todo</button><br><br>
+        <div id="add-todo">
+            <form>
+                <div class="form-group">
+                    <input type="text" class="todo-title" placeholder="Title">
+                    <br><br>
+                </div>
+                <div class="form-group">
+                    <input type="date" class="todo-date">
+                    <br><br>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="todo-description" placeholder="Describe here...">
+                    <br><br>
+                </div>
+                <button type="submit" class="add-todo-confirm">Add</button>
+                <button type="submit" class="cancel-add">Cancel</button>
+            </form>
+        </div><br><br>
+    </div>
+
+    <!-- todo list -->
+    <div class="todo-list-full">
+        <label for="todo-list">INI TODO LIST</label><br><br>
+        <div class="todo-list">
+
+        </div>
+    </div><br><br>
+
+    <!-- update todo list -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./script.js"></script>
+</body>
+
+</html>

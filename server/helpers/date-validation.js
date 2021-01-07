@@ -5,26 +5,21 @@ function checkDate(date) {
 
     let todayDate = new Date()
 
-    let counter = 0
-
     // cek tanggal, bulan, tahun
-    if(dueYear < todayDate.getFullYear()) {
-        counter++
-    }
-
-    if(dueMonth < todayDate.getMonth()) {
-        counter++
-    }
-
-    if(dueDate < todayDate.getDate()) {
-        counter++
-    }
-
-    // cek keseluruhan
-    if(counter > 0) {
-        return 'invalid'
+    if (dueYear >= todayDate.getFullYear()) {
+        if (dueMonth > todayDate.getMonth()) {
+            return date
+        } else if (dueMonth === todayDate.getMonth()) {
+            if (dueDate >= todayDate.getDate()) {
+                return date
+            } else {
+                return 'invalid'
+            }
+        } else {
+            return 'invalid'
+        }
     } else {
-        return date
+        return 'invalid'
     }
 }
 
