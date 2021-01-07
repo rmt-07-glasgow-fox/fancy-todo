@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List Glasgow</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <!-- LOGIN PAGE-->
+    <div class="card mt-4 text-center" id="login-page">
+        <h4>Log In</h4>
+        <div class="text-center intro"> <img src="https://i.imgur.com/uNiv4bD.png" width="160"></div>
+        <span id="error-message"></span>
+        <form>
+            <div>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+            </div>
+            <br>
+            <div>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+            </div>
+            <br>
+            <div class="mt-2">
+                <input type="button" class="btn btn-primary btn-block" id="login-btn" value="Log In">
+            </div>
+        </form>
+        <br>
+        <div>
+            <a id="register">Don't have todo account? Register</a>
+        </div>
+    </div>
+
+    <!-- REGISTER PAGE-->
+    <div class="card mt-4 text-center" id="register-page">
+        <h4>Register</h4>
+        <div class="text-center intro"> <img src="https://i.imgur.com/uNiv4bD.png" width="160"></div>
+        <span id="error-message"></span>
+        <form>
+            <div>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+            </div>
+            <br>
+            <div>
+                <input type="email" class="form-control" id="name" name="name" placeholder="Name">
+            </div>
+            <br>
+            <div>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+            </div>
+            <br>
+            <div class="mt-2">
+                <input type="button" class="btn btn-primary btn-block" id="register-btn" value="Register">
+            </div>
+        </form>
+    </div>
+
+    <!-- TO DO LIST PAGE -->
+    <div class="card-2" id="todo-page">
+        <div class="card-header-tab card-header">
+            <div class="card-header-title font-size-lg text-capitalize font-weight-normal"><i class="fa fa-tasks"></i><h4>&nbsp;To Do Lists</h4></div>
+        </div>
+        <div class="scroll-area-sm">
+            <perfect-scrollbar class="ps-show-limits"></perfect-scrollbar>
+                <div style="position: static;" class="ps ps--active-y">
+                    <div class="ps-content">
+                        <ul class=" list-group list-group-flush">
+                            <div id="todo-list">
+
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </perfect-scrollbar>
+        </div>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./script.js"></script>
+</body>
+</html>

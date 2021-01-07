@@ -1,9 +1,9 @@
-const { Todo } = require('../models');
+const { Todo, User } = require('../models');
 
 class TodoController {
 
     static todosGet = (req, res, next) => {
-        Todo.findAll({attributes:  {exclude: ['createdAt', 'updatedAt']}, order: [['id', 'ASC']]})
+        Todo.findAll({attributes:  {exclude: ['createdAt', 'updatedAt']}, include: {model: User, attributes: ['name']} ,order: [['id', 'ASC']]})
         .then(output => res.status(200).json(output))
         .catch(err => err ? next(err) : next({name: 'InternalServerError'}));
     }
@@ -67,3 +67,4 @@ class TodoController {
 }
 
 module.exports = TodoController;
+// asdasdasdasdasdasdasdas      
