@@ -184,7 +184,7 @@ const listTodo = () => {
             <div class="input-group-text">
                 <input type="checkbox" id="status-${
                   data.id
-                }" onclick="changeStatus(${data.id}, ${!data.status})" ${
+                }" onclick="changeStatusTodo(${data.id}, ${!data.status})" ${
           data.status ? 'checked' : ''
         }>
             </div>
@@ -257,6 +257,35 @@ const editTodo = (e, id) => {
       $('#descriptionEdit').val('');
       hideEditTodo(id);
     });
+};
+
+const changeStatusTodo = (id, value) => {
+  $.ajax({
+    url: url + `/todos/${id}`,
+    method: 'PATCH',
+    data: {
+      status: value,
+    },
+    headers: {
+      authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+    },
+  })
+    .done((response) => {
+      const template = alertTemplate(
+        'success',
+        'Your status Todo has been updated'
+      );
+      $(template).appendTo('#alert');
+      listTodo();
+    })
+    .fail((err) => {
+      console.log(err);
+      err.responseJSON.map((e) => {
+        const template = alertTemplate('error', e.message);
+        $(template).appendTo('#alert');
+      });
+    })
+    .always(() => {});
 };
 
 const deleteTodo = (id) => {
