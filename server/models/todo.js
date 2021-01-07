@@ -58,5 +58,8 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Todo',
   });
+  Todo.addHook('beforeCreate', (todo, options) => {
+    todo.status = 'unfinished';
+  })
   return Todo;
 };
