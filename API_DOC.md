@@ -226,13 +226,6 @@
   ```
 
 * **Failed Response:** <br />
-  **Code:** 400 <br />
-  **Content:**
-  ```
-  {
-    <validation message>
-  }
-  ```
   **Code:** 401 <br />
   **Content:**
   ```
@@ -248,85 +241,262 @@
   }
   ```
 
+**Read Todo by id**
+----
+  Read todo from server
 
+* **URL**
 
+  /todos/:id
 
-### GET /todos
+* **Method**
 
-> Get all todos
+  `GET`
 
-_Request Header_
-```
-{
-  "access_token": "<your access token>"
-}
-```
+* **Request Headers**
 
-_Request Body_
-```
-not needed
-```
-
-_Response (200)_
-```
-[
+  ```
   {
-    "id": 1,
-    "name": "<asset name>",
-    "description": "<asset description>",
-    "createdAt": "2020-03-20T07:15:12.149Z",
-    "updatedAt": "2020-03-20T07:15:12.149Z",
-  },
-  {
-    "id": 2,
-    "name": "<asset name>",
-    "description": "<asset description>",
-    "createdAt": "2020-03-20T07:15:12.149Z",
-    "updatedAt": "2020-03-20T07:15:12.149Z",
+    access_token : <your access_token>
   }
-]
-```
+  ```
 
-_Response (400 - Bad Request)_
-```
-{
-  "message": "Invalid request"
-}
-```
----
-### POST /assets
+* **Success Response:** <br />
+  **Code:** 200 <br />
+  **Content:**
+  ```
+  {
+    "id": 40,
+    "title": "Makan",
+    "description": "Makan Malam",
+    "status": false,
+    "due_date": "2021-01-08T00:00:00.000Z",
+    "UserId": 4,
+    "createdAt": "2021-01-07T13:38:37.181Z",
+    "updatedAt": "2021-01-07T13:38:37.181Z"
+  }
+  ```
 
-> Create new asset
+* **Failed Response:** <br />
+  **Code:** 401 <br />
+  **Content:**
+  ```
+  {
+    "message": "you need to login first"
+  }
+  ```
+  **Code:** 404 <br />
+  **Content:**
+  ```
+  {
+    "message": "error not found"
+  }
+  ```
+  **Code:** 500 <br />
+  **Content:**
+  ```
+  {
+    "message": "Internal server error"
+  }
+  ```
 
-_Request Header_
-```
-{
-  "access_token": "<your access token>"
-}
-```
+**Edit Todo**
+----
 
-_Request Body_
-```
-{
-  "name": "<name to get insert into>",
-  "description": "<description to get insert into>"
-}
-```
+* **URL**
 
-_Response (201 - Created)_
-```
-{
-  "id": <given id by system>,
-  "name": "<posted name>",
-  "description": "<posted description>",
-  "createdAt": "2020-03-20T07:15:12.149Z",
-  "updatedAt": "2020-03-20T07:15:12.149Z",
-}
-```
+  /todos/:id
 
-_Response (400 - Bad Request)_
-```
-{
-  "message": "Invalid requests"
-}
-```
+* **Method**
+
+  `PUT`
+
+* **Request Body**
+
+  ```
+  {
+    "title": "Makan",
+    "description": "Makan Siang",
+    "status": false,
+    "due_date": "2021-01-09"
+  }
+  ```
+
+* **Request Headers**
+
+  ```
+  {
+    access_token : <your access_token>
+  }
+  ```
+
+* **Success Response:** <br />
+  **Code:** 200 <br />
+  **Content:**
+  ```
+  {
+    "id": 40,
+    "title": "Makan",
+    "description": "Makan Siang",
+    "status": false,
+    "due_date": "2021-01-09T00:00:00.000Z",
+    "UserId": 4,
+    "createdAt": "2021-01-07T13:38:37.181Z",
+    "updatedAt": "2021-01-08T05:42:59.342Z"
+  }
+  ```
+
+* **Failed Response:** <br />
+  **Code:** 400 <br />
+  **Content:**
+  ```
+  {
+    <validation message>
+  }
+  ```
+  **Code:** 401 <br />
+  **Content:**
+  ```
+  {
+    "message": "you dont have access"
+  }
+  ```
+  **Code:** 404 <br />
+  **Content:**
+  ```
+  {
+    "message": "error not found"
+  }
+  ```
+  **Code:** 500 <br />
+  **Content:**
+  ```
+  {
+    "message": "Internal server error"
+  }
+  ```
+
+**Edit Status Todo**
+----
+
+* **URL**
+
+  /todos/:id
+
+* **Method**
+
+  `PATCH`
+
+* **Request Body**
+
+  ```
+  {
+    "status": true
+  }
+  ```
+
+* **Request Headers**
+
+  ```
+  {
+    access_token : <your access_token>
+  }
+  ```
+
+* **Success Response:** <br />
+  **Code:** 200 <br />
+  **Content:**
+  ```
+  {
+    "id": 40,
+    "title": "Makan",
+    "description": "Makan Siang",
+    "status": true,
+    "due_date": "2021-01-09T00:00:00.000Z",
+    "UserId": 4,
+    "createdAt": "2021-01-07T13:38:37.181Z",
+    "updatedAt": "2021-01-08T05:42:59.342Z"
+  }
+  ```
+
+* **Failed Response:** <br />
+  **Code:** 400 <br />
+  **Content:**
+  ```
+  {
+    <validation message>
+  }
+  ```
+  **Code:** 401 <br />
+  **Content:**
+  ```
+  {
+    "message": "you dont have access"
+  }
+  ```
+  **Code:** 404 <br />
+  **Content:**
+  ```
+  {
+    "message": "error not found"
+  }
+  ```
+  **Code:** 500 <br />
+  **Content:**
+  ```
+  {
+    "message": "Internal server error"
+  }
+  ```
+
+**Delete Todo**
+----
+
+* **URL**
+
+  /todos/:id
+
+* **Method**
+
+  `DELETE`
+
+* **Request Headers**
+
+  ```
+  {
+    access_token : <your access_token>
+  }
+  ```
+
+* **Success Response:** <br />
+  **Code:** 200 <br />
+  **Content:**
+  ```
+  {
+    "message": "todo success to delete"
+  }
+  ```
+
+* **Failed Response:** <br />
+  **Code:** 401 <br />
+  **Content:**
+  ```
+  {
+    "message": "you dont have access"
+  }
+  ```
+  **Code:** 404 <br />
+  **Content:**
+  ```
+  {
+    "message": "error not found"
+  }
+  ```
+  **Code:** 500 <br />
+  **Content:**
+  ```
+  {
+    "message": "Internal server error"
+  }
+  ```
+
