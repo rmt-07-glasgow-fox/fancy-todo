@@ -50,7 +50,7 @@ function getTodoList() {
       $('#todo-list').empty();
       todoList.forEach(todo => {
         $('#todo-list').append(
-          `<div class="card">
+          `<div class="card"  id="todo-${todo.id}">
             <div class="card-header">
               ${todo.due_date}
             </div>
@@ -82,15 +82,6 @@ function getTodoList() {
 
 }
 
-// function editStatus(status) {
-//   console.log(status, '-------');
-//   if (!status) {
-//     return $("#updateStatus").removeAttr("checked");
-//   }
-//   $("#updateStatus").attr("checked");
-
-// }
-
 function getOneTodo(id) {
   $('#updateTodo').show();
   // $('#todo-list').hide();
@@ -102,7 +93,6 @@ function getOneTodo(id) {
     }
   })
     .done(response => {
-      // TODO: HAPUS UPDATE dan VALUEnya -----------------------------
       $('#updateTitle').val(response.title);
       $('#updateDueDate').val(new Date(response.due_date).toISOString().split('T')[0]);
       $('#updateDescription').val(response.description);
@@ -114,6 +104,8 @@ function getOneTodo(id) {
       }
       console.log(response);
       console.log(response.status);
+      $(`#todo-${id}`).hide()
+
     })
     .fail(err => {
       console.log(err);
@@ -227,7 +219,11 @@ $(document).ready(function () {
       }
     })
       .done(response => {
-        console.log(response);
+        $('#updateTodo').hide();
+        $('#updateDueDate').val('');
+        $('#updateTitle').val('');
+        $('#updateDescription').val('');
+        getTodoList();
       })
       .fail(err => {
         console.log(err, 'ERR');
@@ -239,11 +235,12 @@ $(document).ready(function () {
 
 
   $('#cancelUpdate-btn').click(function () {
-    $('#updateTodo').hide();
     $('#updateDueDate').val('');
     $('#updateTitle').val('');
     $('#updateDescription').val('');
     $("#updateStatus").removeAttr("checked");
+    checkAuth()
+    getTodoList();
   })
 
 })
