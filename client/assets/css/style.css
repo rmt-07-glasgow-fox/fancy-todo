@@ -1,0 +1,68 @@
+body, html {
+    height: 100%;
+    margin: 0;
+}
+  
+.bg {
+    /* The image used */
+    background-image: url('https://image.freepik.com/free-vector/young-author-writer-working-new-article_74855-5602.jpg');
+    /* background: url('https://i.pinimg.com/originals/f7/da/75/f7da7516bbc4f8bcfc101a814124d652.jpg') no-repeat center center fixed; */
+    /* -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover; */
+    /* Full height */
+    height: 100%; 
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    /* background-size: cover; */
+}
+
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+  }
+
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
+}
+
+
+.add-todo-input,
+.edit-todo-input {
+    outline: none;
+}
+
+.add-todo-input:focus,
+.edit-todo-input:focus {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.view-opt-label,
+.date-label {
+    font-size: 0.8rem;
+}
+
+.edit-todo-input {
+    font-size: 1.7rem !important;
+}
+
+.todo-actions {
+    visibility: hidden !important;
+}
+
+.todo-item:hover .todo-actions {
+    visibility: visible !important;
+}
+
+.todo-item.editing .todo-actions .edit-icon {
+    display: none !important;
+}
