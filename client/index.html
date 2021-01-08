@@ -19,20 +19,29 @@
         .g-signin2 {
             color: red;
         }
+
+        body {
+            background: url('https://source.unsplash.com/twukN12EN7c/1920x1080') no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            background-size: cover;
+            -o-background-size: cover;
+        }
     </style>
 </head>
 
 <body>
     <!-- NAVBAR -->
-    <nav class="navbar navbar-light bg-light shadow">
+    <nav class="navbar navbar-light">
         <div class="container-fluid">
-            <button class="btn btn-lg" type="button">Fancy Todo</button>
+            <button class="btn btn-lg" type="button">Welcome To Fancy Todo</button>
             <button class="btn btn-lg btn-danger" type="button" id="logout">Logout</button>
         </div>
     </nav>
 
     <div class="container d-flex" style="padding: 50px;">
-        <div class="col-7" id="user-API" style="display: flex;">
+        <div class="col-7 flex-column" id="user-API">
+            <h4 id="date">Today : </h4>
         </div>
         <!-- REGISTER -->
         <div class="col-3 card" style="width: 20rem; margin-left: 100px;" id="register-page">
@@ -74,10 +83,13 @@
     </div>
 
     <!-- Main -->
-    <div class="container" id="main-page">
-        <div class="row align-items-start">
+    <div class="container flex-column" id="main-page">
+        <div style="display: flex; justify-content: center; margin-bottom: 50px;">
+            <h4>Welcome, Rozak</h4>
+        </div>
+        <div class="row justify-content-between">
             <div class="col-3 flex-column" id="main-API">
-                <h1>Headline News</h1>
+                <!-- <h4 id="dateMain">Today : </h4> -->
             </div>
             <div class="col-7" id="main-right">
                 <!--Todo - Add -->

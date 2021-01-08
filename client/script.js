@@ -208,6 +208,7 @@ function getTodoList() {
 
 function getNewsAPI() {
     console.log('newsAPI')
+    $('#date').append(getDateToday())
 
     $.ajax({
         method: 'GET',
@@ -215,14 +216,14 @@ function getNewsAPI() {
     })
         .done(response => {
             console.log(response)
-            response.slice(-3).forEach(news => {
+            response.slice(-1).forEach(news => {
                 $('#main-API').append(`
                 <div class="card" style="width: 18rem;">
                     <img src="${news.urlToImage}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">${news.source.name}</h5>
                         <p class="card-text">${news.description}</p>
-                        <a href="${news.url}" class="btn btn-primary">Read the news</a>
+                        <a href="${news.url}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Read the news</a>
                     </div>
                 </div>
                 `)
@@ -233,7 +234,7 @@ function getNewsAPI() {
                     <div class="card-body">
                         <h5 class="card-title">${news.source.name}</h5>
                         <p class="card-text">${news.description}</p>
-                        <a href="${news.url}" class="btn btn-primary">Read the news</a>
+                        <a href="${news.url}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Read the news</a>
                     </div>
                 </div>
                 `)
@@ -244,13 +245,25 @@ function getNewsAPI() {
         })
 }
 
+function getDateToday() {
+    return (new Date()).toDateString()
+}
+
 function deleteTodo(id) {
     console.log('deleteTodo', id)
 
-    // $.ajax({
-    //     method:'POST',
-    //     url:`${baseURL}/`
-    // })
+    $.ajax({
+        method: 'DELETE',
+        url: `${baseURL}/todos/${id}`,
+        headers: { access_token: localStorage.access_token }
+    })
+        .done(response => {
+            console.log(response)
+            showMainPage()
+        })
+        .fail(err => {
+            console.log(err)
+        })
 }
 
 function updateTodo(id) {
