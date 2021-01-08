@@ -6,8 +6,8 @@ class usersController {
   static register(req, res) {
     let { email, password } = req.body //get
     let input = { email, password } //ready to input
+    console.log('Controller: register triggered', input);
 
-    console.log(input);
     User.create(input)
     .then(() => {
       res.status(201).json(email)
@@ -19,6 +19,7 @@ class usersController {
 
   static login(req, res) {
     let { email, password } = req.body
+    console.log(`LOGIN`);
 
     User.findOne({where:{email:email}})
     .then((data) => {
