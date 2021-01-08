@@ -20,6 +20,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Fill your email!'
+        },
         isEmail: {
           args: true,
           msg: 'Invalid Email Format!'
@@ -31,20 +35,28 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Fill your password!'
+        },
         len: {
           args: [6],
           msg: 'Password at least 6 characters'
         }
       }
-    }
-  }, {
-    validate: {
-      isEmpty() {
-        if (this.email === '' || this.password === '') {
-          throw new Error('Data cannot be empty!')
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Fill your name!'
         }
       }
-    },
+    }
+  }, {
+    
     hooks: {
       beforeCreate(user, options) {
         user.password = hashPassword(user.password)
