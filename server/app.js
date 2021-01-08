@@ -5,18 +5,16 @@ if (process.env.NODE_ENV === "development") {
 const express = require('express')
 const app = express()
 const router = require('./router/index.js')
-const port = 3000
+const PORT = 3000
 const errorHandler = require('./middleware/errorHandler')
+const cors = require('cors')
 
-app.use(express.json())
+app.use(cors())
 app.use(express.urlencoded({extended: true}))
-
-app.get('/', (req, res) => {
-      res.send("hai")
-})
+app.use(express.json())
 app.use('/', router)
 app.use(errorHandler)
 
-app.listen(port, ()=> {
-      console.log(`connectd to ${port}`);
+app.listen(PORT, ()=> {
+      console.log(`connectd to ${PORT}`);
 })

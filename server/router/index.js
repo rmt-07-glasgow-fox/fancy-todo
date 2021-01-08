@@ -5,9 +5,6 @@ const auth = require('./auth')
 const {authenticate} = require('../middleware/auth')
 const resto = require('./zomato.js')
 
-
-
-
 router.use('/', auth)
 router.use(authenticate)
 router.use('/todos', todo )

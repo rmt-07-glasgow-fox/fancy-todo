@@ -31,7 +31,11 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     UserId: DataTypes.INTEGER
-  }, {
+  }, {hooks: {
+    beforeCreate: (todo) => {
+      todo.status = false
+    }
+  },
     sequelize,
     modelName: 'Todo',
   });
