@@ -3,7 +3,7 @@
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="✓port" content="width=device-width, initial-scale=1" />
     <meta name="google-signin-client_id" content="306581942322-a6i1ecisbujvhhsm0p0d768d9vqarb07.apps.googleusercontent.com">
 
 
@@ -15,15 +15,51 @@
       crossorigin="anonymous"
     />
 
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <link href="./navbar-top-fixed.css" rel="stylesheet">
+
     <title>Fancy ToDo</title>
   </head>
   <body>
-    <nav class="nav">
-      <a class="nav-link active" aria-current="page" href="#">Active</a>
-      <a class="nav-link" href="#">Link</a>
-      <a class="nav-link" id="logout-btn" href="#">Logout</a>
-      <!-- <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> -->
+
+    <!----------------------------------- NAVBAR ----------------------------------->
+
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Fancy Todo</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li class="nav-item active">
+              <a class="nav-link" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="logout-btn" href="#">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </nav>
+
+    <!------------------------------- END OF NAVBAR ------------------------------->
+
+    <!----------------------------------- HOME ----------------------------------->
 
     <div class="home container .col-md-8">
       <h1>Fancy ToDo</h1>
@@ -37,6 +73,9 @@
       <p class="quote-landing"></p>
     </div>
 
+    <!------------------------------- END OF HOME ------------------------------->
+
+    <!----------------------------------- REGISTER ----------------------------------->
     <div class="register-form container .col-md-4">
       <form>
         <div class="mb-3">
@@ -70,6 +109,10 @@
       </form>
     </div>
 
+    <!------------------------------- END OF REGISTER ------------------------------->
+
+    <!----------------------------------- LOGIN ----------------------------------->
+
     <div class="login-form container">
       <form>
         <div class="mb-3">
@@ -97,68 +140,237 @@
       </form>
     </div>
 
+    <!------------------------------- END OF LOGIN ------------------------------->
+    
+    <!----------------------------------- MAIN PAGE ----------------------------------->
     <div class="main-page">
       <div class="container">
-        <div class="row">
+        <div class="row align-items-center">
           <div class="col">
-            <div class="todo">
-              <h6 class="todo-title">title</h6>
-              <p class="todo-date">2021-01-06</p>
-              <p class="todo-desc">description</p>
+            <div class="weather container">
+              <div class="card" style="width: 10rem">
+                <img
+                  src="https://www.dentons.com/-/media/images/website/background-images/offices/jakarta/jakarta-office.jpg"
+                  class="card-img-top"
+                  alt="weather-image"
+                />
+                <div class="card-body">
+                  <h5 class="card-title" id="weather-city"></h5>
+                  <p class="card-text" id="weather-temp"></p>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="col">
-            <div class="todo">
-              <h6 class="todo-title">title</h6>
-              <p class="todo-date">2021-01-06</p>
-              <p class="todo-desc">description</p>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <div class="todo">
-              <h6 class="todo-title">title</h6>
-              <p class="todo-date">2021-01-06</p>
-              <p class="todo-desc">description</p>
-            </div>
-          </div>
-          <div class="col">
-            <div class="todo">
-              <h6 class="todo-title">title</h6>
-              <p class="todo-date">2021-01-06</p>
-              <p class="todo-desc">description</p>
-            </div>
-          </div>
-          <div class="col">
-            <div class="todo">
-              <h6 class="todo-title">title</h6>
-              <p class="todo-date">2021-01-06</p>
-              <p class="todo-desc">description</p>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <div class="weather container">
-        <div class="card" style="width: 10rem">
-          <img
-            src="https://www.dentons.com/-/media/images/website/background-images/offices/jakarta/jakarta-office.jpg"
-            class="card-img-top"
-            alt="weather-image"
-          />
-          <div class="card-body">
-            <h5 class="card-title" id="weather-city"></h5>
-            <p class="card-text" id="weather-temp"></p>
+          </div>
+          <div class="col-8">
+            <section class="py-5 text-center container">
+              <div class="row py-lg-5">
+                <div class="mx-auto">
+                  <h1 class="fw-light">Hi there!</h1>
+                  <p class="lead text-muted">Keep forgetting what you need to do? Put it down below!</p>
+                  <p>
+                    <a href="#" class="btn btn-primary my-2">Add Todo</a>
+                    <a href="#" class="btn btn-secondary my-2">Secondary action</a>
+                  </p>
+                </div>
+              </div>
+            </section>
           </div>
         </div>
+        
       </div>
+      
 
-      <div class="fun-fact container">
-        <h4>Fun fact :</h4>
-        <p id="inspirational-quote"></p>
+      
+    
+      <div class="album py-5 bg-light">
+        <div class="container">
+    
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            <div class="col">
+              <div class="card shadow-sm">
+                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+    
+                <div class="card-body">
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">✓</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    </div>
+                    <small class="text-muted">1 Januari 2022</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card shadow-sm">
+                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+    
+                <div class="card-body">
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">✓</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    </div>
+                    <small class="text-muted">1 Januari 2022</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card shadow-sm">
+                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+    
+                <div class="card-body">
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">✓</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    </div>
+                    <small class="text-muted">1 Januari 2022</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+    
+            <div class="col">
+              <div class="card shadow-sm">
+                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+    
+                <div class="card-body">
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">✓</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    </div>
+                    <small class="text-muted">1 Januari 2022</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card shadow-sm">
+                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+    
+                <div class="card-body">
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">✓</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    </div>
+                    <small class="text-muted">1 Januari 2022</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card shadow-sm">
+                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+    
+                <div class="card-body">
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">✓</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    </div>
+                    <small class="text-muted">1 Januari 2022</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+    
+            <div class="col">
+              <div class="card shadow-sm">
+                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+    
+                <div class="card-body">
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">✓</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    </div>
+                    <small class="text-muted">1 Januari 2022</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card shadow-sm">
+                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+    
+                <div class="card-body">
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">✓</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    </div>
+                    <small class="text-muted">1 Januari 2022</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card shadow-sm">
+                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+    
+                <div class="card-body">
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">✓</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    </div>
+                    <small class="text-muted">1 Januari 2022</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+
+    <!------------------------------- END OF MAIN PAGE ------------------------------->
+
+    <!----------------------------------- FUN FACT ----------------------------------->
+
+    <footer class="text-muted py-5 fun-fact">
+      <div class="row align-items-center justify-content-center">
+        <div class="col-8">
+          <div class="p-3">
+            <p class="mb-1">Fun fact
+              <blockquote class="blockquote">
+                <p class="mb-0" id="inspirational-quote"></a></p>
+              </blockquote>
+            </p>
+          </div>
+        </div>
+        <div class="col">
+          <p class="mb-1">
+            <a href="#">Back to top</a>
+          </p>
+        </div>
+
+      <!-- <div class="container">
+        <p class="float-end mb-1">
+          <a href="#">Back to top</a>
+        </p>
+        <p class="mb-1">Fun fact</p>
+        <blockquote class="blockquote">
+          <p class="mb-0" id="inspirational-quote"></a></p>
+        </blockquote>
+      </div> -->
+    </footer>
+
+    <!------------------------------- END OF FUN FACT ------------------------------->
 
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

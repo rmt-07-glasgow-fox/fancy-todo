@@ -119,6 +119,7 @@ function loginPage() {
   $(".todo-list").hide();
   $(".main-page").hide();
   $("#logout-btn").hide();
+  $("footer").hide();
 
   $.ajax({
     url: "http://localhost:3000/",

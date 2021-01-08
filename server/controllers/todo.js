@@ -125,7 +125,7 @@ class TodoController {
       }
     )
       .then((result) => {
-        if (result) {
+        if (result[0] === 1) {
           return res.status(200).json(result[1]);
         } else {
           next({
@@ -152,7 +152,7 @@ class TodoController {
       }
     )
       .then((result) => {
-        if (result) {
+        if (result[0] === 1) {
           return res.status(200).json(result[1]);
         } else {
           next({
