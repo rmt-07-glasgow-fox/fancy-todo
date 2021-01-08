@@ -5,7 +5,7 @@ const {User} = require('../models')
 
 class UserController {
   static async signup(req, res, next) {
-    
+
     let {email, password} = req.body
 
     try {
@@ -51,7 +51,7 @@ class UserController {
         const access_token = generateToken(payload)
         console.log("USER YG SEDANG LOGIN", user.email);
         return res.status(200).json({access_token})
-        
+
       } else {
         next({name: 'errorAuth'})
       }
@@ -98,8 +98,6 @@ class UserController {
     } catch(error) {
       next(error)
     }
-    
-    const userid = payload['sub'];
 
   }
 }
