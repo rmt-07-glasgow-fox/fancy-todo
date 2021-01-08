@@ -43,6 +43,7 @@ class todoController {
     }
 
     static updateTodo(req, res, next) {
+        console.log(req.params);
         let id = +req.params.id
         let updtTodo = {
             title: req.body.title,
@@ -57,13 +58,11 @@ class todoController {
             }
         })
         .then(data => {
-            console.log(data);
-            if(data == 1){
+            if(data){
                 res.status(200).json({msg: 'Todo has been updated'})
                 
             }else {
-                next({name: DataNotFound, msg: 'Data Todo Not Found'})
-                // res.status(404).json({msg: 'not found'})
+                next({name: 'DataNotFound', msg: 'Data Not Found'})
             }
         })
         .catch(err => {

@@ -11,7 +11,7 @@ class Auth {
             })
             .then( data => {
                 if(!data) {
-                    res.status(401.).json({msg : 'Please Login First'})
+                    res.status(401).json({msg : 'Please Login First'})
                 } else {
                     req.user = data
                     next()
