@@ -123,7 +123,16 @@ $(document).ready(function () {
                 checkAuth()
             })
             .fail((jqXHR, textStatus, error) => {
-                console.log(jqXHR)
+                console.log(jqXHR.responseJSON.messages)
+                let errMessagesRegister = jqXHR.responseJSON.messages
+
+                errMessagesRegister.forEach(element => {
+                    $('#register-errors').append(`
+                                <div class="alert alert-danger" role="alert" id="register-errors">
+                                        ${element}
+                                </div>
+                                `)
+                })
             })
             .always(() => {
                 $("#email").val('')
@@ -149,7 +158,17 @@ $(document).ready(function () {
                 checkAuth()
             })
             .fail((jqXHR, textStatus, error) => {
-                console.log(jqXHR.responseJSON.message)
+                console.log(jqXHR.responseJSON.messages)
+                let errMessagesLogin = jqXHR.responseJSON.messages
+
+                errMessagesLogin.forEach(element => {
+                    $('#login-errors').empty()
+                    $('#login-errors').append(`
+                                <div class="alert alert-danger" role="alert">
+                                        ${element}
+                                </div>
+                                `)
+                })
             })
             .always(() => {
                 $("#email").val('')

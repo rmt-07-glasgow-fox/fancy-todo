@@ -1,26 +1,30 @@
 const errorHandler = (err, req, res, next) => {
   if (err) {
+    const errorMessage = {
+      messages: []
+    }
     switch (err.name) {
       case "SequelizeValidationError":
-        let errorMessages = err.errors.map(err => {
-          return {
-            message: err.message,
-            column: err.path
-          }
-        })
-        res.status(400).json(errorMessages)
+        errorMessage.messages = err.errors.map(err => err.message)
+        res.status(400).json(errorMessage)
+        break
+      case "SequelizeConstraintError":
+        errorMessage.messages = err.errors.map(err => err.message)
+        res.status(400).json(errorMessage)
         break
       case "ResourceNotFound":
-        res.status(404).render('./404')
+        errorMessage.messages.push("Not found.")
+        res.status(404).json(errorMessage)
         break
-      case "AuthorisationError":
-        res.status(401).json({ message: "Not authorised." })
       //case "axiosError":
       //break
+      case "AuthError":
+        errorMessage.messages.push("Invalid email / password")
+        res.status(401).json(errorMessage)
+        break
       default:
-        res.status(500).json({
-          message: "Internal server error."
-        })
+        errorMessage.messages.push("Internal server error.")
+        res.status(500).json(errorMessage)
         break
     }
   }

@@ -5,7 +5,7 @@ const { OAuth2Client } = require('google-auth-library')
 
 
 class UserController {
-    static register(req, res) {
+    static register(req, res, next) {
         const { email, password } = req.body
 
         User.create({
@@ -20,12 +20,13 @@ class UserController {
                 res.status(201).json(resp)
             })
             .catch(err => {
-                res.status(400).json(err)
+                next(err)
             })
     }
 
-    static login(req, res) {
+    static login(req, res, next) {
         const { email, password } = req.body
+        //console.log(email, password)
 
         User.findOne({
             where: {
@@ -33,35 +34,36 @@ class UserController {
             }
         })
             .then(user => {
+                //console.log(user)
                 if (!user) {
-                    return res.status(401).json({
-                        message: "Invalid email / password"
-                    })
-                }
-
-                const match = comparePassword(password, user.password)
-
-                if (match) {
-                    const payload = {
-                        id: user.id,
-                        email: user.email
-                    }
-
-                    const access_token = generateToken(payload)
-
-                    return res.status(200).json({
-                        access_token
-                    })
+                    next({ name: "AuthError" })
                 }
                 else {
-                    return res.status(401).json({
-                        message: "Invalid email / password"
-                    })
+                    const match = comparePassword(password, user.password)
+
+                    if (match) {
+                        const payload = {
+                            id: user.id,
+                            email: user.email
+                        }
+
+                        console.log(payload)
+
+                        const access_token = generateToken(payload)
+
+                        return res.status(200).json({
+                            access_token
+                        })
+                    }
+                    else {
+                        next({ name: "AuthError" })
+                    }
                 }
+
 
             })
             .catch(err => {
-                res.status(401).json(err)
+                next(err)
             })
     }
 
