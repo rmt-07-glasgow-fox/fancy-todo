@@ -142,6 +142,16 @@ $(document).ready(() => {
         e.preventDefault()
         showMainPage()
     })
+
+    $('#updateTodoStatus').click((e) => {
+        e.preventDefault()
+        updateStatusTodo()
+    })
+
+    $('#cancelTodoEdit').click((e) => {
+        e.preventDefault()
+        $('#todo-edit-page').hide()
+    })
 })
 
 function showMainPage() {
@@ -153,6 +163,7 @@ function showMainPage() {
     $('#logout').show()
     $('#showAddTodoPage').show()
     $('#user-API').hide()
+    $('#todo-edit-page').hide()
 }
 
 function showLoginPage() {
@@ -186,14 +197,14 @@ function getTodoList() {
                 $('#todo-list').append(`
             <tr>
                 <td scope="row">
-                ${todo.status === true ? '<input type="checkbox" value="" checked>' : '<input type="checkbox" value="">'}
+                ${todo.status === true ? '<button type="button" class="btn btn-success">Done</button>' : `<button type="button" class="btn btn-outline-danger" id="updateTodoStatus" onclick="updateTodoStatus(${todo.id})">Not done</button>`}
                 </td>
                 <td>${todo.title}</td>
                 <td>${todo.description}</td>
                 <td>${todo.due_date}</td>
                 <td>
-                    <a href="#" class='btn btn-lg btn-danger' id='deleteTodo' onclick="deleteTodo(${todo.id})">Delete</a>
-                    <button class='btn btn-lg btn-success' id='updateTodo' onclick="updateTodo(${todo.id})">Update</button>
+                    <button class='btn btn-lg btn-danger' id='deleteTodo' onclick="deleteTodo(${todo.id})">Delete</button>
+                    <button class='btn btn-lg btn-success' id='updateTodo' onclick="updateTodo(${todo.id})">Edit</button>
                 </td>
             </tr>`)
             });
@@ -267,7 +278,41 @@ function deleteTodo(id) {
 }
 
 function updateTodo(id) {
-    console.log('deleteTodo', id)
+    console.log('update', id)
+    $('#todo-edit-page').show()
+
+    $.ajax({
+        method: 'GET',
+        url: `${baseURL}/todos/${id}`,
+        headers: { access_token: localStorage.access_token }
+    })
+        .done(response => {
+            console.log(response)
+            let { title, status, due_date, description } = response.message
+
+            $('#titleEdit').val(title)
+            $('#descriptionEdit').val(description)
+            $('#due_dateEdit').val(due_date)
+        })
+        .fail(err => {
+            console.log(err)
+        })
+}
+
+function updateTodoStatus(id) {
+    console.log('edit', id)
+    $.ajax({
+        method: 'PATCH',
+        url: `${baseURL}/todos/${id}`,
+        headers: { access_token: localStorage.access_token }
+    })
+        .done(response => {
+            console.log(response)
+            showMainPage()
+        })
+        .fail(err => {
+            console.log(err)
+        })
 }
 
 function onSignIn(googleUser) {

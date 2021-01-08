@@ -28,10 +28,26 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: {
           args: true,
           msg: 'Title is empty'
+        },
+        len: {
+          args: [6],
+          msg: 'Title at least 6 characters'
         }
       }
     },
-    description: DataTypes.STRING,
+    description: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Description is empty'
+        },
+        len: {
+          args: [6],
+          msg: 'Description at least 6 characters'
+        }
+      }
+    },
     status: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
