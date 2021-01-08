@@ -1,74 +1,4 @@
 let baseUrl = "http://localhost:3000"
-$(document).ready(function () {
-    checkAuth()
-
-    $('#register-btn').click((event) => {
-        event.preventDefault()
-        let email = $("#email").val()
-        let password = $("#password").val()
-
-        $.ajax({
-            method: 'POST',
-            url: `${baseUrl}/register`,
-            data: {
-                email,
-                password
-            }
-        })
-            .done(response => {
-                checkAuth()
-            })
-            .fail((jqXHR, textStatus, error) => {
-                console.log(jqXHR)
-            })
-            .always(() => {
-                $("#email").val('')
-                $("#password").val('')
-            })
-    })
-
-    $('#login-btn').click((event) => {
-        event.preventDefault()
-        let email = $("#email").val()
-        let password = $("#password").val()
-
-        $.ajax({
-            method: 'POST',
-            url: `${baseUrl}/login`,
-            data: {
-                email,
-                password
-            }
-        })
-            .done(response => {
-                localStorage.setItem("access_token", response.access_token)
-                checkAuth()
-            })
-            .fail((jqXHR, textStatus, error) => {
-                console.log(jqXHR.responseJSON.message)
-            })
-            .always(() => {
-                $("#email").val('')
-                $("#password").val('')
-            })
-    })
-
-    $('#logout-btn').click((event) => {
-        event.preventDefault()
-        localStorage.clear()
-        checkAuth()
-    })
-
-    $('#register-link').click((event) => {
-        event.preventDefault()
-        registerMenu()
-    })
-
-    $('#login-link').click((event) => {
-        event.preventDefault()
-        loginMenu()
-    })
-})
 
 function checkAuth() {
     if (localStorage.access_token) {
@@ -157,4 +87,76 @@ function getTodoList() {
             console.log("ALWAYS!")
         })
 }
+
+$(document).ready(function () {
+    checkAuth()
+
+    $('#register-btn').click((event) => {
+        event.preventDefault()
+        let email = $("#email").val()
+        let password = $("#password").val()
+
+        $.ajax({
+            method: 'POST',
+            url: `${baseUrl}/register`,
+            data: {
+                email,
+                password
+            }
+        })
+            .done(response => {
+                checkAuth()
+            })
+            .fail((jqXHR, textStatus, error) => {
+                console.log(jqXHR)
+            })
+            .always(() => {
+                $("#email").val('')
+                $("#password").val('')
+            })
+    })
+
+    $('#login-btn').click((event) => {
+        event.preventDefault()
+        let email = $("#email").val()
+        let password = $("#password").val()
+
+        $.ajax({
+            method: 'POST',
+            url: `${baseUrl}/login`,
+            data: {
+                email,
+                password
+            }
+        })
+            .done(response => {
+                localStorage.setItem("access_token", response.access_token)
+                checkAuth()
+            })
+            .fail((jqXHR, textStatus, error) => {
+                console.log(jqXHR.responseJSON.message)
+            })
+            .always(() => {
+                $("#email").val('')
+                $("#password").val('')
+            })
+    })
+
+    $('#logout-btn').click((event) => {
+        event.preventDefault()
+        localStorage.clear()
+        checkAuth()
+    })
+
+    $('#register-link').click((event) => {
+        event.preventDefault()
+        registerMenu()
+    })
+
+    $('#login-link').click((event) => {
+        event.preventDefault()
+        loginMenu()
+    })
+})
+
 

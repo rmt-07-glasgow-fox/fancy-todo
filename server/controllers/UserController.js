@@ -20,7 +20,6 @@ class UserController {
                 res.status(201).json(resp)
             })
             .catch(err => {
-                console.log(err)
                 res.status(400).json(err)
             })
     }
@@ -89,7 +88,7 @@ class UserController {
                 if (!user) {
                     return User.create({
                         email,
-                        password: Math.random() * 1000 + 'random password generator'
+                        password: Math.random().toString().slice(0, 16)
                     })
                 }
                 else {
