@@ -59,6 +59,7 @@ function login(event) {
             $('#logout').show()
             $('.login').hide()
             $('.g-signin2').hide()
+            dashBoard()
         })
         .fail(err => {
             console.log(err, 'err di login')
@@ -69,17 +70,63 @@ function login(event) {
 
 }
 
-function logout(event) {
+function logout() {
     localStorage.clear()
+    $('#todos').hide()
+    $('#logout').hide()
     $('.login').show()
     $('#registerForm').show()
     $('#loginForm').show()
+    $('.g-signin2').show()
     $('#email').val('')
     $('#password').val('')
 
 }
 
+function dashBoard() {
+    $('#registerForm').hide()
+    $('#loginForm').hide()
+    $('.login').hide()
+    $('#logout').show()
+    $('.g-signin2').hide()
+    todosList()
+}
+
+function todosList() {
+    $.ajax({
+        method: 'GET',
+        url: `${baseUrl}/todos`,
+        headers: {
+            access_token: localStorage.getItem('access_token')
+        }
+    })
+    .done(response => {
+        console.log(response)
+        $('#todos').empty()
+        response.map(task => {
+            $(`
+                <div class="card" style="width: 50rem;">
+                    <div class="card-body" id="cardBody">
+                        <h5 class="card-title">${task.title}</h5>
+                        <h7 class="card-subtitle">${task.due_date}</h7><br><br>
+                        <p class="card-text">${task.description}</p>
+                    </div>
+                </div>
+            `).appendTo('#todos')
+        })
+    })
+    .fail(err => {
+        console.log(err)
+    })
+}
+
+
+
 $(document).ready(function() {
+    if (localStorage.access_token) {
+        dashBoard()
+    }
+
     $('#login-btn').click(login)
     $('#register-btn').click(register)
 })
