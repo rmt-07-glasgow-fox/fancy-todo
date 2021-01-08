@@ -2,8 +2,8 @@ const { checkToken } = require('../helpers/jwt.js');
 const { User, Todo } = require('../models');
 
 async function authenticate(req, res, next) {
-  try { 
-    let decoded = checkToken(req.headers.access_token);
+  try {     
+    let decoded = checkToken(req.headers.access_token);    
     const find = await User.findOne({
       where: {email: decoded.email}
     });

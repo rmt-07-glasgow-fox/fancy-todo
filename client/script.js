@@ -13,6 +13,7 @@ $(document).ready( () => {
     $("#sign-out-btn").hide();
     $("#alertSignIn").hide();
     $("#alertSignUp").hide();
+    $("#alertServerSignIn").hide();
   }
 });
 
@@ -99,9 +100,18 @@ $( "#sign-in-btn" ).click((event) => {
       const quote = response.quote;
       afterLogin(email, quote);
     })
-    .fail(err => {
-      const errMessage = err.responseJSON.message;
-      if(errMessage === 'Invalid email / password') $("#alertSignIn").fadeIn('slow');
+    .fail(err => {     
+      if(!err.responseJSON) {
+        $("#alertServerSignIn").empty();
+        $("#alertServerSignIn").append(`<p>Internal server error...</p>`);
+        $("#alertServerSignIn").show();
+      } 
+      else {
+        const errMessage = err.responseJSON.message;
+        if(errMessage === 'Invalid email / password') {
+          $("#alertSignIn").fadeIn('slow');
+        }
+      }
     });
   } 
 });
@@ -160,6 +170,11 @@ $( "#sign-out-btn" ).click((event) => {
   $("#alertSignUp").hide();
   $("#sign-in-div").show();
   $("#todo-list > tbody").empty();
+  $("#alertServerSignIn").hide();
+  const auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+  });
 });
 
 /* ============ Delete todo =============*/
@@ -274,6 +289,36 @@ function getGreetingMsg() {
     msg = 'Good Evening!'
   }
   return msg;
+}
+
+/* ============= Google Sign In */
+function onSignIn(googleUser) {
+  const idToken = googleUser.getAuthResponse().id_token;
+  $.ajax({
+    method: "POST",
+    url: `${baseUrl}/loginGoogle`,
+    data: { idToken }
+  })
+  .done(response => {
+    console.log(response.access_token), '<<<<<<<r';
+    const email = response.email;
+    const quote = response.quote;
+    localStorage.setItem('access_token', response.access_token);
+    localStorage.setItem('email', email);
+    localStorage.setItem('quote', JSON.stringify(response.quote));    
+    afterLogin(email, quote);
+    
+  })
+  .fail((xhr, status) => {
+    console.log('masukk');
+    $("#alertServerSignIn").empty();
+    $("#alertServerSignIn").append(`<p>Internal server error...</p>`);
+    $("#alertServerSignIn").show();
+    const auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+  });
+  })
 }
 
 

@@ -18,7 +18,8 @@ class TodoController {
   static async getAllTodo(req, res, next) {
     try {
       let todos = await Todo.findAll({
-        where: {UserId: req.userId}
+        where: { UserId: req.userId },
+        order: [ 'id' ]
       });
       return res.status(200).json(todos);
     } 
