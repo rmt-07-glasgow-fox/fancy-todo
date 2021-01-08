@@ -5,12 +5,21 @@
     <!-- Required Meta Tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-signin-client_id" content="847872434739-ieov91f4btpg8551tira12pvdtatudrg.apps.googleusercontent.com">
+
+    <!-- Google Sign In -->
+    <meta name="google-signin-client_id"
+        content="847872434739-ieov91f4btpg8551tira12pvdtatudrg.apps.googleusercontent.com">
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
     <title>Fancy Todo</title>
+    <style>
+        .g-signin2 {
+            color: red;
+        }
+    </style>
 </head>
 
 <body>
@@ -39,6 +48,7 @@
 
                     <button class="w-100 btn btn-lg btn-primary" type="submit" id="register">Register</button>
                     <button class="w-100 btn btn-lg " type="button" id="toLoginPage">Already have Account</button>
+                    <div class="g-signin2" data-onsuccess="onSignIn" id="g-signin2">Register using Google Account</div>
                 </form>
             </div>
         </div>
@@ -57,7 +67,7 @@
 
                     <button class="w-100 btn btn-lg btn-primary" type="submit" id="login">Login</button>
                     <button class="w-100 btn btn-lg" type="button" id="toRegisterPage">Register an Account</button>
-                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                    <div class="g-signin2" data-onsuccess="onSignIn" id="g-signin2">Login using Google Account</div>
                 </form>
             </div>
         </div>

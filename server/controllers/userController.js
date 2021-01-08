@@ -69,17 +69,44 @@ class UserController {
             });
 
             const payload = ticket.getPayload()
-            console.log('>>> payload : ', payload)
+            // console.log('>>> payload : ', payload)
 
             const email = payload.email
-            const password = email.toString().split('@')
+            let password = email.toString().split('@')
             password = password[0]
+            console.log('>>> user : ', email, password)
 
-            console.log('>>> google email password : ', email, password)
-            // res.status(200).send('success')
+            let user = await User.findOne({ where: { email } })
+            // console.log('>>> user : ', user)
+
+            if (!user) {
+                let newUser = { email, password }
+
+                let createUser = await User.create(newUser)
+                const payload = {
+                    id: createUser.id,
+                    email: createUser.email
+                }
+
+                const access_token = generateToken(payload)
+                console.log('>>> access_token', access_token)
+
+                return res.status(201).json({ access_token })
+                
+            } else {
+                const payload = {
+                    id: user.id,
+                    email: user.email
+                }
+
+                const access_token = generateToken(payload)
+                console.log('>>> access_token', access_token)
+                
+                return res.status(200).json({ access_token })
+            }
 
         } catch (err) {
-            next(err.name = '')
+            next(err)
         }
     }
 }
