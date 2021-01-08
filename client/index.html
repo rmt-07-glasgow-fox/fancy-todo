@@ -3,59 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="1061793780278-o5r28r5c3s65gupqom5087jf4kqj4s5j.apps.googleusercontent.com">
     <title>Document</title>
 </head>
 <body>
-    <h1>Fancy Todo</h1>
+    <div id="website-name">
+        <h1>Fancy Todo</h1>
+    </div>
     <nav class="nav">
         <button id="logout">Log out</button>
     </nav>
-    <div id="greetings">
-        <h3>Already have an account?</h3>
-        <button id="show-login">Click here</button>
+
+    
+
+    <div id="welcome-page">
+        <p>Manage your To Do list now using our Fancy Todo Website!</p>
+        <div id="signin-form">
+            <form>
+                <label>Email:</label>
+                <input type="text" id="register-email">
+                <label>Password:</label>
+                <input type="password" id="register-password">
+                <div id="signup-error"></div>
+                <div style="margin-top: 10px;">
+                    <button type="submit" id="register">Register</button>
+                </div>
+                <p>Already have an account?</p>
+            </form>
+        </div>
+        <div id="login-form">
+            <form>
+                <label>Email:</label>
+                <input type="email" id="email">
+                <label>Password:</label>
+                <input type="password" id="password">
+                <div id="login-error"></div>
+                <div style="margin-top: 10px;">
+                    <button type="submit" id="login">Login</button>
+                </div>
+                <p>Create an account?</p>
+            </form>
+        </div>
+        <button id="btn-sign-up">Sign up</button>
+        <button id="btn-login">Login</button>
+        <div id="signin-google">
+            <p>Or you can sign in using google</p>
+            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        </div>
     </div>
-    <div id="login-form">
-        <form>
-            <label>Email:</label>
-            <input type="email" id="email">
-            <label>Password:</label>
-            <input type="password" id="password">
-            <button type="submit" id="login">Login</button>
-        </form>
+    
+
+    <div id="main-page">
+        <div id="todo-feature">
+            <h1>Todo List</h1>
+                <div class ="todo-list">
+                    <button id="btn-add-todo">Add Todo</button>  
+                    <div id="error-add"></div>
+                    <div id="todo"></div>  
+                </div>
+        </div>
+        <div id="form-todo">
+            <form>
+                <div id="error-form"></div>
+                <label><h5>Title</h5></label>
+                <input type="text" id='title'>
+                <label><h5>Description</h5></label>
+                <input type="text" id='description'>
+                <label><h5>Due Date</h5></label>
+                <input type="date" id='due_date'>
+                <div class="add">
+                    <button id="add-todo" type="submit">Add Todo</button>
+                </div>
+                <div class="edit">
+                    <button id="edit-todo" type="submit">Edit</button>
+                </div>
+                <button id="btn-cancel-add-todo">Cancel</button>
+            </form>
+        </div>
     </div>
-    <div id="signin-form">
-        <form>
-            <label>Email:</label>
-            <input type="text">
-            <label>Password:</label>
-            <input type="password">
-        </form>
-    </div>
-    <div class="todo-feature">
-        <h1>Todo List</h1>
-            <div class ="todo-list">
-                <button id="btn-add-todo">Add Todo</button>  
-                <div id="todo">
-                </div>  
-            </div>
-    </div>
-    <div id="form-todo">
-        <form>
-            <label><h5>Title</h5></label>
-            <input type="text" id='title'>
-            <label><h5>Description</h5></label>
-            <input type="text" id='description'>
-            <label><h5>Due Date</h5></label>
-            <input type="date" id='due_date'>
-            <div class="add">
-                <button id="add-todo" type="submit">Add Todo</button>
-            </div>
-            <div class="edit">
-                <button id="edit-todo" type="submit">Edit</button>
-            </div>
-            <button id="btn-cancel-add-todo">Cancel</button>
-        </form>
-    </div>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="./jquery.js"></script>
 </body>

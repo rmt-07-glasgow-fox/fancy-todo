@@ -13,10 +13,11 @@ class todoController{
             if(data.length !== 0){
                 res.status(200).json(data)
             } else {
-                next ({name : "Not found"})
+                res.status(200).json({message : 'No Todo'})
             }
         })
         .catch(err => {
+            console.log(err)
             next(err)
         })
     }

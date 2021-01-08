@@ -14,7 +14,7 @@ function sendEmail(email, todo){
         if(error){
             console.log(error)
         }
-        console.log(body);
+        console.log(body)
     });
 }
 
