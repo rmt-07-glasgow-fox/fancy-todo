@@ -12,6 +12,10 @@ const errorHandler = (err, req, res, next) => {
         errorMessage.messages = err.errors.map(err => err.message)
         res.status(400).json(errorMessage)
         break
+      case "SequelizeUniqueConstraintError":
+        errorMessage.messages = err.errors.map(err => err.message)
+        res.status(400).json(errorMessage)
+        break
       case "ResourceNotFound":
         errorMessage.messages.push("Not found.")
         res.status(404).json(errorMessage)

@@ -26,7 +26,6 @@ class UserController {
 
     static login(req, res, next) {
         const { email, password } = req.body
-        //console.log(email, password)
 
         User.findOne({
             where: {
@@ -34,7 +33,6 @@ class UserController {
             }
         })
             .then(user => {
-                //console.log(user)
                 if (!user) {
                     next({ name: "AuthError" })
                 }
@@ -46,8 +44,6 @@ class UserController {
                             id: user.id,
                             email: user.email
                         }
-
-                        console.log(payload)
 
                         const access_token = generateToken(payload)
 

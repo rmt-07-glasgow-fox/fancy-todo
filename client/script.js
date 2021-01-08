@@ -125,6 +125,7 @@ $(document).ready(function () {
             .fail((jqXHR, textStatus, error) => {
                 console.log(jqXHR.responseJSON.messages)
                 let errMessagesRegister = jqXHR.responseJSON.messages
+                $('#register-errors').empty()
 
                 errMessagesRegister.forEach(element => {
                     $('#register-errors').append(`
@@ -160,9 +161,9 @@ $(document).ready(function () {
             .fail((jqXHR, textStatus, error) => {
                 console.log(jqXHR.responseJSON.messages)
                 let errMessagesLogin = jqXHR.responseJSON.messages
+                $('#login-errors').empty()
 
                 errMessagesLogin.forEach(element => {
-                    $('#login-errors').empty()
                     $('#login-errors').append(`
                                 <div class="alert alert-danger" role="alert">
                                         ${element}
