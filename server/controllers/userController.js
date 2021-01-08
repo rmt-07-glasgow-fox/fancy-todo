@@ -22,9 +22,8 @@ class UserController {
             return res.status(201).json(response)
 
         } catch (err) {
-            // console.log(err)
-            let errorMessage = err.errors ? err.errors.map(error => error.message) : err
-            return res.status(400).json({ message: errorMessage })
+            console.log(err)
+            return next(err)
         }
     }
 
@@ -53,8 +52,8 @@ class UserController {
             }
 
         } catch (err) {
-            let errorMessage = err.errors ? err.errors.map(error => error.message) : err
-            return res.status(400).json({ message: errorMessage })
+            console.log(err)
+            return next(err)
         }
     }
 
@@ -92,7 +91,7 @@ class UserController {
                 console.log('>>> access_token', access_token)
 
                 return res.status(201).json({ access_token })
-                
+
             } else {
                 const payload = {
                     id: user.id,
@@ -101,12 +100,13 @@ class UserController {
 
                 const access_token = generateToken(payload)
                 console.log('>>> access_token', access_token)
-                
+
                 return res.status(200).json({ access_token })
             }
 
         } catch (err) {
-            next(err)
+            console.log(err)
+            return next(err)
         }
     }
 }
