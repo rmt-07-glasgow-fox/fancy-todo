@@ -1,3 +1,4 @@
+const {OAuth2Client} = require('google-auth-library');
 const { compare } = require('../helpers/hashPassword')
 const { generateToken } = require('../helpers/jwt')
 const { User } = require('../models')
@@ -30,6 +31,36 @@ class Controller {
                 }
             })
             .catch(err => next({name: 'CustomError', statusCode: 400, message: 'Email or password wrong!'}))
+    }
+
+    static loginGoogle(req, res, next) {
+        const { id_token } = req.body
+        const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+        let payload
+        let email
+        client
+            .verifyIdToken({
+                idToken: id_token,
+                audience: process.env.GOOGLE_CLIENT_ID
+            })
+            .then(ticket => {
+                payload = ticket.getPayload();
+                email = payload.email;
+                return User.findOne({
+                    where: { email }
+                })
+            })
+            .then(user => {
+                const password = Math.random()*100000+' random password'
+                return !user ? User.create({ email, password }) : user
+            })
+            .then(user => {
+                const { email, id } = user
+                const payload = { email, id }
+                const access_token = generateToken(payload)
+                res.status(200).json({ access_token })
+            })
+            .catch(err => next(err))
     }
 }
 
