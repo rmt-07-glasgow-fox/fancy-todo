@@ -59,7 +59,10 @@ const dahsboardPage = () => {
     $('#navbar').show();
     $('#dashboard').show();
     $('#todoForm').hide();
+    $('#hello').text('Hi, ' + localStorage.getItem('fullName'));
+    $('#navbarDropdown').text(localStorage.getItem('fullName'));
     listTodo();
+    listHolidays();
     $('#editFormTodo').hide();
     month();
   }
@@ -361,6 +364,10 @@ const login = (e) => {
     .done((response) => {
       const token = response.accessToken;
       localStorage.setItem('accessToken', token);
+      localStorage.setItem(
+        'fullName',
+        `${response.firstName} ${response.lastName}`
+      );
       dahsboardPage();
     })
     .fail((err) => {
@@ -391,6 +398,34 @@ const quote = () => {
     .fail((err) => {
       console.log(err);
     });
+};
+
+const listHolidays = () => {
+  $.ajax({
+    url: url + '/holidays/month',
+    method: 'GET',
+    headers: {
+      authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+    },
+  })
+    .done((response) => {
+      $('#calendarList').empty();
+      response.map((data) => {
+        $(`
+        <tr>
+          <th scope='row'>${data.date.datetime.day}</th>
+          <td>${data.name}</td>
+        </tr>
+        `).appendTo('#calendarList');
+      });
+    })
+    .fail((err) => {
+      err.responseJSON.map((e) => {
+        const template = alertTemplate('error', e.message);
+        $(template).appendTo('#alert');
+      });
+    })
+    .always(() => {});
 };
 
 const alertTemplate = (type, message) => {

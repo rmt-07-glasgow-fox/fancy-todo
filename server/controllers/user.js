@@ -23,7 +23,13 @@ exports.login = async (req, res) => {
 
       const token = jwt.sign(payload, process.env.JWT_SECRET);
 
-      return res.status(200).json({ accessToken: token });
+      return res
+        .status(200)
+        .json({
+          accessToken: token,
+          firstName: user.firstName,
+          lastName: user.lastName,
+        });
     } else {
       return res.status(422).send({ error: 'Invalid email or password' });
     }
