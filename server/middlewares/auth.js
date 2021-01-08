@@ -3,7 +3,7 @@ const { User, Todo } = require('../models')
 
 function authenticate(req, res, next) {
     try {
-        let decoded = cekToken(req.headers.token)
+        let decoded = cekToken(req.headers.access_token)
         // console.log(decoded)
         User.findOne({
             where: {

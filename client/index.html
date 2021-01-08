@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="826425000447-gt39is72tfoncrialeoedku6p3khjc93.apps.googleusercontent.com">
+
+    <title>Todos</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <h1>Todos</h1>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-link" id="registerForm">
+                            <a class="text-decoration-none" onclick="registerForm()" href="#" style="color: black;">Register</a>
+                        </li>
+                        <li class="nav-link" id="loginForm">
+                            <a class="text-decoration-none" onclick="loginForm()" href="#" style="color: black;">Login</a>
+                        </li>
+                        <li class="nav-link" id="logout" style="display: none;">
+                            <a class="text-decoration-none" onclick="logout()" href="#" style="color: black;">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="register" style="display: none;">
+            <h2>Register</h2>
+            <form action="">
+                <label for="email">Email</label><br>
+                <input type="text" id="email-register" name="email"><br><br>
+                <label for="password">Password</label><br>
+                <input type="password" id="password-register" name="password"><br><br>
+                <label for="password">Confirm Password</label><br>
+                <input type="password" id="password-register-confirm" name="password"><br><br>
+                <button type="submit" id="register-btn">Register</button>
+            </form>
+        </div>
+        <div class="login">
+            <h2>Login</h2>
+            <form action="">
+                <label for="email">Email</label><br>
+                <input type="text" id="email" name="email"><br><br>
+                <label for="passwotd">Password</label><br>
+                <input type="password" id="password" name="password"><br><br>
+                <button type="submit" id="login-btn">Login</button>
+            </form>
+        </div><br><br>
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="./script.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+</body>
+</html>
