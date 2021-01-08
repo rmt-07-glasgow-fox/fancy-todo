@@ -21,12 +21,21 @@ function onSignIn(googleUser) {
     })
         .done(response => {
             localStorage.setItem("access_token", response.access_token)
+            afterLogin()
         })
         .fail((xhr, status) => {
 
         })
         .always()
 }
+
+function googleSignOut() {
+    const auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+        console.log('User signed out.');
+    });
+}
+
 
 function loginMenu() {
     $("#email").val('')
@@ -52,6 +61,12 @@ function afterLogin() {
     $('#container-todo-list').show()
     getTodoList()
     $('#logout-btn').show()
+}
+
+function loggedOut() {
+    loginMenu()
+    googleSignOut()
+
 }
 
 function getTodoList() {
@@ -145,7 +160,7 @@ $(document).ready(function () {
     $('#logout-btn').click((event) => {
         event.preventDefault()
         localStorage.clear()
-        checkAuth()
+        loggedOut()
     })
 
     $('#register-link').click((event) => {
