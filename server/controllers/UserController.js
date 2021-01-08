@@ -20,6 +20,7 @@ class UserController {
                 res.status(201).json(resp)
             })
             .catch(err => {
+                console.log(err)
                 res.status(400).json(err)
             })
     }
@@ -78,10 +79,6 @@ class UserController {
                 const payload = ticket.getPayload()
                 email = payload.email
 
-                // cek apakah email sudah terdaftar
-                // kalau belum create user, generate jwt
-                // kalau udah, generate jwt
-                // res json jwt/accesstoken
                 return User.findOne({
                     where: {
                         email

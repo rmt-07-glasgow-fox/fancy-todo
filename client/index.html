@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-signin-client_id"
         content="507628413455-m832lq9olv6ifj632betdj4sc48lq88a.apps.googleusercontent.com">
-    <link rel="stylesheet" href="./styles.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="./styles.css">
     <title>Document</title>
 </head>
 
@@ -36,6 +36,12 @@
                             <div id="login-page">
                                 <button type="submit" class="btn btn-primary" id="login-btn">Login</button><br><br>
                                 <p>Not registered? <a id="register-link" href="/register">Create an account</a></p>
+                                <div class="divider">
+                                    <div></div>
+                                    <hr />
+                                </div>
+                                <div class="g-signin2" data-onsuccess="onSignIn"></div>
+
                             </div>
                             <div id="register-page">
                                 <button type="submit" class="btn btn-primary"
@@ -48,59 +54,26 @@
             </div>
         </div>
     </div>
-    <!--Register-->
-    <!--<div class="container d-flex justify-content-center register-pages">-->
-    <!--<div class="card" style="width: 18rem; padding: 2rem;" id="register-page">-->
-    <!--<div id="card-body">-->
-    <!--<h1>Register</h1>-->
-    <!--<form action="/register" method="post">-->
-    <!--<input id="email-register" type="text" name="username" placeholder="Email" class="pl-1" /><br><br>-->
-    <!--<input id="password-register" type="password" name="password" placeholder="Password"-->
-    <!--class="pl-1" /><br><br>-->
-    <!--<button id="register-btn" type="submit" class="btn btn-primary">Register</button><br><br>-->
-    <!--<p> I have an account already! <a href="/login" id="login-link"> Login here </a></a></p>-->
-    <!--</form>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
 
-    <!--[>Login <]-->
-    <!--<div class="container d-flex justify-content-center login-pages">-->
-    <!--<div class="card card-login border-primary" style="max-width: 18rem; padding: 2rem;" id="login-page">-->
-    <!--<div id="card-body">-->
-    <!--<h1>Login</h1>-->
-    <!--<form action="/login" method="post">-->
-    <!--<input id="email-login" type="text" name="username" placeholder="Email" class="pl-1" /><br><br>-->
-    <!--<input id="password-login" type="password" name="password" placeholder="Password"-->
-    <!--class="pl-1" /><br><br>-->
-    <!--<button id="login-btn" type="submit" class="btn btn-primary">Login</button><br><br>-->
-    <!--<div class="g-signin2" data-onsuccess="onSignIn"></div><br>-->
-    <!--<p>Not registered? <a href="/register" id="register-link">Create an account</a></p>-->
-    <!--</form>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-
-    <!--list-todo-->
+    <!--content-page-->
     <div id="content-page">
-        <div class="navbar" id="top-navbar">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="#">Navbar</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav">
-                        <a class="nav-item nav-link active" href="/#">Home <span class="sr-only">(current)</span></a>
-                        <a href="#" class="btn btn-danger" id="logout-btn"> Log out
-                        </a>
-                    </div>
+        <div class="container" id="top-navbar">
+            <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+                <div class="container">
+                    <a class="navbar-brand col-sm-3 col-md-2 mr-0 pl-0" href="#"><b>TodoCode</b></a>
+                    <ul class="navbar-nav px-3 pr-0">
+                        <li class="nav-item text-nowrap">
+                            <a class="btn navbar-btn btn-danger navbar-right" id="logout-btn" href="#">Logout</a>
+                        </li>
+                    </ul>
                 </div>
             </nav>
         </div>
         <div class="container mt-5" id="container-todo-list">
             <div class="row justify-content-between" id="todo-list">
+            </div>
+            <div class="card col-4" style="width: 18rem;">
+                <h5> Put your Weather API here! </h5>
             </div>
         </div>
     </div>

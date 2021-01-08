@@ -137,14 +137,17 @@ function getTodoList() {
             let todoList = response
 
             todoList.forEach(element => {
-                $('#todo-list').append(`<div class="card col-4" style="width: 18rem;">
+                $('#todo-list').append(`
+                <div class="card col-8" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title">${element.title}</h5>
                         <p class="card-text">${element.description}</p>
                         <p class="card-text">${element.due_date}</p>
                         <a href="#" class="btn btn-primary">Update</a>
+                        <a href="#" class="btn btn-danger">Delete</a>
                     </div>
-                </div>`)
+                </div>            
+`)
             })
         })
         .fail(err => {

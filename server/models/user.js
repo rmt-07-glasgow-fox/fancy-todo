@@ -1,5 +1,5 @@
 'use strict';
-const hashPassword = require('../helpers/bcrypt')
+const { hashPassword } = require('../helpers/bcrypt')
 
 const {
   Model
