@@ -52,10 +52,35 @@
   <!-- FORM LOGIN -->
 
   <!-- TODO LIST -->
+  <a href="#" id="new-todo-form">New Todo</a>
   <div id="todolist">
     <h3 class="text-center text-info">Todo List</h3>
   </div>
   <!-- TODO LIST -->
+
+  <!-- Form New -->
+  <div id="form-new">
+    <form>
+      <div class="mb-3">
+        <label for="new-title-value" id="new-title-label" class="form-label">Title</label>
+        <input type="text" class="form-control" id="new-title-value" placeholder="Tangisan di Phase2">
+      </div>
+      <div class="mb-3">
+        <label for="new-description-value" id="new-description-label" class="form-label">Description</label>
+        <input type="text" class="form-control" id="new-description-value" placeholder="Banyak2 Menangis biar sadar">
+      </div>
+      <div class="mb-3">
+        <label for="new-status-value" id="new-status-label" class="form-label">Status</label>
+        <input type="" class="form-control" id="new-status-value" placeholder="true / false">
+      </div>
+      <div class="mb-3">
+        <label for="new-duedate-value" id="new-duedate-label" class="form-label">Due Date</label>
+        <input type="date" class="form-control" id="new-duedate-value">
+      </div>
+      <button type="submit" class="btn btn-info btn-md" id="btn-create">Create</button>
+    </form>
+  </div>
+  <!-- Form New -->
 
   <!-- Form Edit -->
   <div id="form-edit">
@@ -74,12 +99,36 @@
       </div>
       <div class="mb-3">
         <label for="edit-duedate-value" id="edit-duedate-label" class="form-label">Due Date</label>
-        <input type="text" class="form-control" id="edit-duedate-value">
+        <input type="date" class="form-control" id="edit-duedate-value">
       </div>
       <button type="submit" class="btn btn-info btn-md" id="btn-update">Update</button>
     </form>
   </div>
   <!-- Form Edit -->
+
+  <!-- Show Detail -->
+  <div id="detail-todo">
+    <p>
+      <strong>Title:</strong>
+      <input type="text" class="form-control" id="detail-todo-title">
+    </p>
+    <p>
+      <strong>Description:</strong>
+      <input type="text" class="form-control" id="detail-todo-description">
+    </p>
+    <p>
+      <strong>Status:</strong>
+      <input type="text" class="form-control" id="detail-todo-status">
+    </p>
+    <p>
+      <strong>Due Date:</strong>
+      <input type="text" class="form-control" id="detail-todo-duedate">
+    </p>
+    <a href="#" id="back-fromdetail-toindex">Back to Home</a>
+
+  </div>
+  <!-- Show Detail -->
+
 
   <script src="https://apis.google.com/js/platform.js" async defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
