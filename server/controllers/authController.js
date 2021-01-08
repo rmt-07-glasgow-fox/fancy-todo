@@ -36,6 +36,7 @@ class Controller {
     static loginGoogle(req, res, next) {
         const { id_token } = req.body
         const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+        let email, name
         client
             .verifyIdToken({
                 idToken: id_token,
@@ -43,13 +44,13 @@ class Controller {
             })
             .then(ticket => {
                 const payload = ticket.getPayload();
-                const email = payload.email;
+                email = payload.email;
+                name = payload.name;
                 return User.findOne({
                     where: { email }
                 })
             })
             .then(user => {
-                const { email, name } = user
                 const password = Math.random()*100000+' random password'
                 return !user ? User.create({ email, password, name }) : user
             })
