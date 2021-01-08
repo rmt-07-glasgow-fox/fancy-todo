@@ -24,10 +24,6 @@ class TodoController {
       UserId: req.user.id
     }
 
-    const weather = `http://api.weatherstack.com/current?access_key=f4ec38f9e8f40f4b84ba2c39eb056a96&query=Jakarta`
-
-    axios.get()
-
     Todo.create(todoObj)
       .then(data => {
         res.status(201).json({ id: data.id, title: data.title, description: data.description, status: data.status, due_date: data.due_date })
