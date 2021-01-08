@@ -12,6 +12,7 @@ class TodoController {
                 due_date: req.body.due_date,
                 userId: req.user.id
             }
+            console.log(body);
             const created = await Todo.create(body)
             res.status(201).json(created)
         } catch (err) {

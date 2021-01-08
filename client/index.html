@@ -19,13 +19,13 @@
                   <a class="nav-link">Home</a>
                 </li>
                 <li>
-                  <a class="nav-link">Sign Up</a>
+                  <a class="nav-link" id="navSignup">Sign Up</a>
                 </li>
                 <li>
-                    <a class="nav-link">Sign In</a>
+                    <a class="nav-link" id="navLogin">Sign In</a>
                 </li>
                 <li style="float:right">
-                    <a class="nav-link">Log Out</a>
+                    <a class="nav-link" id="logout">Log Out</a>
                 </li>
               </ul>
         </nav>        
@@ -73,7 +73,7 @@
             <div id="listfeature">
                 <div class="card my-3 border" id="createtodo">
                     <div class="card-header">Create To Do</div>
-                    <form action="/action_page.php">
+                    <form>
                         <div class="form-group">
                             <label for="title">Title:</label>
                             <input type="text" class="form-control" placeholder="Enter title" id="titleCreate">
@@ -87,12 +87,12 @@
                             <input type="date" class="form-control" id="dueDateCreate">
                         </div>
                         <br>
-                        <button type="submit" class="btn btn-dark">Create</button>
+                        <button type="button" class="btn btn-dark" id="create">Create</button>
                     </form> <br>
                 </div>
                 <div class="card my-3 border" id="edittodo">
                     <div class="card-header">Edit To Do</div>
-                    <form action="/action_page.php">
+                    <form>
                         <div class="form-group">
                             <label for="title">Title:</label>
                             <input type="text" class="form-control" placeholder="Enter title" id="titleEdit">
@@ -109,6 +109,15 @@
                         <button type="submit" class="btn btn-dark">Save</button>
                     </form> <br>
                 </div>
+                <div>
+                    <div class="card my-3 border">
+                        <div class="card-header"> Date </div>
+                        <div class="card-body"> Cuaca </div>
+                        <div class="card-footer">Temperature</div>
+                    </div>
+                </div>
+            </div> 
+            <div id="listTodo">
                 <div class="card my-3 border">
                     <div class="card-header">
                         <input type="checkbox" name="status" id="status" class="form-check-input">
@@ -124,7 +133,7 @@
                         <div class="card-footer">Temperature</div>
                     </div>
                 </div>
-            </div> <br>
+            </div><br>
         </div>
     </div>
 
@@ -133,7 +142,7 @@
             <h1> Sign In </h1>
         </div>
         <div id="container" class="container pt-3 my-3 border" >
-            <form action="/action_page.php">
+            <form>
                 <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" class="form-control" placeholder="Enter email" id="emailSignin">
@@ -142,7 +151,7 @@
                 <label for="pwd">Password:</label>
                 <input type="password" class="form-control" placeholder="Enter password" id="passwordSignin">
                 </div> <br>
-                <button type="submit" class="btn btn-dark">Sign In</button>
+                <button type="click" class="btn btn-dark" id="login">Sign In</button>
             </form> <br>
         </div>
     </div>
@@ -152,7 +161,7 @@
             <h1> Sign Up </h1>
         </div>
         <div id="container" class="container pt-3 my-3 border" >
-            <form action="/action_page.php">
+            <form>
                 <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" class="form-control" placeholder="Enter email" id="emailSignup">
@@ -161,7 +170,7 @@
                 <label for="pwd">Password:</label>
                 <input type="password" class="form-control" placeholder="Enter password" id="passwordSignup">
                 </div> <br>
-                <button type="submit" class="btn btn-dark">Sign Up</button>
+                <button type="submit" class="btn btn-dark" id="signup">Sign Up</button>
             </form> <br>
         </div>
     </div>
