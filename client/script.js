@@ -66,6 +66,8 @@ function todo(){
     $('.editContainer').hide()
     $('#add-todo').show()
     $('.addTodos').hide()
+    $('#errorEdit').hide()
+    $('#errorAdd').hide()
     getTodoList()
 }
 
@@ -320,6 +322,7 @@ $('#updateEdit').submit(function(event){
         getTodoList()
     })
     .fail(xhr =>{
+        let temp = []
         for(let i = 0; i < xhr.responseJSON.length; i++){
             if(xhr.responseJSON.length > 1){
                 temp.push(xhr.responseJSON[i])
@@ -333,10 +336,10 @@ $('#updateEdit').submit(function(event){
         }
     })
     .always(()=>{
-        $('#title').val('')
-        $('#description').val('')
-        $('#status').val('')
-        $('#duedate').val('')
+        // $('#title').val('')
+        // $('#description').val('')
+        // $('#status').val('')
+        // $('#duedate').val('')
     })
 })
 
