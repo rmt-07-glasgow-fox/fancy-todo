@@ -83,8 +83,6 @@ function getTodoList() {
 }
 
 function getOneTodo(id) {
-  $('#updateTodo').show();
-  // $('#todo-list').hide();
   $.ajax({
     method: 'GET',
     url: `${baseUrl}/todos/${id}`,
@@ -93,15 +91,19 @@ function getOneTodo(id) {
     }
   })
     .done(response => {
+      $("#updateStatus").checked = false;  
+
       $('#updateTitle').val(response.title);
       $('#updateDueDate').val(new Date(response.due_date).toISOString().split('T')[0]);
       $('#updateDescription').val(response.description);
       $('#update-btn').data('id', id);
       if (!response.status) {
-        $("#updateStatus").removeAttr("checked");
+        $("#updateStatus").prop( "checked", false );
       } else {
-        $("#updateStatus").attr("checked", "checked");
+        $("#updateStatus").prop( "checked", true );
       }
+      $('#updateTodo').show();
+
       console.log(response);
       console.log(response.status);
       $(`#todo-${id}`).hide()
@@ -219,6 +221,7 @@ $(document).ready(function () {
       }
     })
       .done(response => {
+        console.log(response);
         $('#updateTodo').hide();
         $('#updateDueDate').val('');
         $('#updateTitle').val('');
@@ -229,7 +232,7 @@ $(document).ready(function () {
         console.log(err, 'ERR');
       })
       .always(() => {
-        console.log('ALWAYS');
+        console.log('ALWAYS setelah update');
       })
   })
 
