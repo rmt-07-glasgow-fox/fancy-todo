@@ -82,7 +82,7 @@ class UserController {
                     password: process.env.GOOGLE_PASSWORD
                 })
                 const access_token = Token.getToken({id:createuser.id, email:createuser.email})
-                res.status(200).json({access_token, name: payload.name})
+                res.status(201).json({access_token, name: payload.name})
             }
         } catch (error) {
             next(error)

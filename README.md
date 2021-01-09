@@ -2,7 +2,15 @@
 A simple todo apps, created using node.js, express, sequelize, postgres.
 
 
-List of available endpoints:
+## How to use this site to its fullest?
+- Please give permission to location access, so the Weather API can detect your location. 
+- Double click cards to update the status to done, or not yet done.
+- Todo which haven't been done but the due date has not exceeded, have white background
+- Todo which haven't been done but the due date has exceeded, have red background
+- Todo which has been done, have grey background with crossed description
+
+
+## List of available endpoints:
 
 - `POST /register`
 - `POST /login`
@@ -120,6 +128,56 @@ Response:
   "message": "Internal Server Error"
 }
 ```
+
+### POST /googleLogin
+
+description: 
+  sign in as Google user
+
+Request:
+
+- data:
+
+```json
+{
+  "idToken": "google token"
+}
+```
+
+Response:
+
+- status: 200
+- body:
+  ​
+
+```json
+{
+    "access_token": "jwt string",
+    "name" : "string"
+}
+```
+
+- status: 201
+- body:
+  ​
+
+```json
+{
+    "access_token": "jwt string",
+    "name" : "string"
+}
+```
+
+- status: 500
+- body:
+  ​
+
+```json
+{
+  "message": "Internal Server Error"
+}
+```
+
 
 ### GET /todos
 
@@ -499,6 +557,88 @@ Response:
 ```json
 {
   "message": "Error Not Found"
+}
+```
+
+- status: 500
+- body:
+  ​
+
+```json
+{
+  "message": "Internal Server Error"
+}
+```
+
+### GET /weather
+
+description: 
+  get current weather from city we requested
+
+Request:
+
+- headers: 
+    access_token (string)
+    latitude (string)
+    longitude (string)
+
+Response:
+
+- status: 200
+- body:
+
+```json
+{
+  "coord": {
+    "lon": 110.42,
+    "lat": -6.97
+  },
+  "weather": [
+    {
+      "id": 721,
+      "main": "Haze",
+      "description": "haze",
+      "icon": "50d"
+    }
+  ],
+  "base": "stations",
+  "main": {
+    "temp": 302.15,
+    "feels_like": 306.85,
+    "temp_min": 302.15,
+    "temp_max": 302.15,
+    "pressure": 1010,
+    "humidity": 74
+  },
+  "visibility": 5000,
+  "wind": {
+    "speed": 1.5,
+    "deg": 340
+  },
+  "clouds": {
+    "all": 40
+  },
+  "dt": 1606531646,
+  "sys": {
+    "type": 1,
+    "id": 9362,
+    "country": "ID",
+    "sunrise": 1606515117,
+    "sunset": 1606560062
+  },
+  "timezone": 25200,
+  "id": 1627896,
+  "name": "Semarang",
+  "cod": 200
+}
+```
+
+- status: 401
+- body:
+
+```json
+{
+  "message": "Pleae Login First"
 }
 ```
 
