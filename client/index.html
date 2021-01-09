@@ -8,6 +8,7 @@
     
     <!-- BOOTSTRAP CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
 
     <title>Document</title>
 </head>
@@ -65,8 +66,63 @@
     </div>
 
 <!-- TODO  -->
-    <div id="todo">
-        <h3>HELLO</h3>
+    <div id="todo" class="container">
+        <div class="container row-3 mt-3 mb-3 d-flex justify-content-center" >
+            <section id="add-form">
+                <label> <h5> What's Your Plan ? </h5> </label>
+                <form>
+                    <div class="row g-2 ">
+                        <div class="col-4 ">
+                          <div class="form-floating">
+                            <input type="text" class="form-control" id="add-title" placeholder="Todo Title">
+                            <label for="title">Title</label>
+                          </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-floating">
+                              <input type="date" class="form-control" id="add-due_date" placeholder="Due Date (yyyy/mm/dd)">
+                              <label for="due_date">Due Date</label>
+                            </div>
+                          </div>
+                        <div class="col-4">
+                          <div class="form-floating">
+                            <select class="form-select" id="add-status">
+                                <option value="" aria-readonly>--Please Select--</option>
+                                <option value="true">True</option>
+                                <option value="false">False</option>
+                            </select>
+                            <label for="status">Status</label>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="form-floating mt-2">
+                        <textarea class="form-control" placeholder="Leave a description here" id="add-description" style="height: 100px"></textarea>
+                        <label for="description">Description</label>
+                    </div>
+                    <div class="mt-2">
+                        <button type="submit" class="btn btn-secondary" id="add-button">Add</button>
+                        <button type="reset" class="btn btn-warning" id="hide-add-form">Cancel</button>
+                    </div>
+                </form>
+            </section>
+            <section id="update-form">
+                
+            </section>
+        </div>
+        <div class="container row-9 d-flex justify-content-center">
+            <!-- SIDE BAR -->
+            <div class="col-3 m-3">
+                <div class="card">
+                    <button id="add-todo" class="btn btn danger">Add Todo</button>
+                </div>
+            </div>
+            <!-- CONTENT TODO -->
+            <div class="col-9 m-3" >
+                <section id="todo-list" style="text-align: center;">
+                    
+                </section>
+            </div>
+        </div>
     </div>
 
 

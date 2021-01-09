@@ -80,6 +80,55 @@ $(document).ready(function () {
         })
     })
 
+    $("#add-button").click( function (event) {
+        event.preventDefault()
+        const title = $ ("#add-title").val()
+        const due_date = $ ("#add-due_date").val()
+        const status = $ ("#add-status").val()
+        const description = $ ("#add-description").val()
+
+        $.ajax ({
+            method: "POST",
+            url: `${baseURL}/todos`,
+            data: {
+                title,
+                due_date,
+                status,
+                description
+            },
+            headers: {
+                access_token: localStorage.access_token
+            }
+
+        })
+        .done (result => {
+            console.log(result)
+            checkAuth()
+        })
+        .fail (err => {
+            console.log(err)
+        })
+        .always (function () {
+            $ ("#add-title").val("")
+            $ ("#add-due_date").val("")
+            $ ("#add-status").val("")
+            $ ("#add-description").val("")
+        })
+
+        console.log({ title, due_date, status, description })
+    })
+    
+    $("#add-todo").click(function () {
+        $("#add-form").show()
+    })
+
+    $("#hide-add-form").click(function () {
+        $("#add-form").hide()
+    })
+   
+    
+
+
 })
 
 function checkAuth () {
@@ -89,11 +138,16 @@ function checkAuth () {
         $("#todo").show()
         getTodoList()
         $("#logout-button").show()
+        $("#add-form").hide()
+        $("#update-form").hide()
+        
     } else {
         $("#login").show()
         $("#register").hide()
         $("#todo").hide()
-        $("#logout-button").hide()   
+        $("#logout-button").hide()
+        $("#add-form").hide()
+        $("#update-form").hide() 
     }
 }
 
@@ -132,9 +186,144 @@ function getTodoList () {
         }
     })
     .then (result => {
+        const todoList = result
+        $("#todo-list").empty()
+        todoList.forEach(element => {
+            $("#todo-list").append(
+                `<div class="card mb-2">
+                <div class="card-header">
+                  ${element.due_date}
+                </div>
+                <div class="row card-body">
+                    <div class="col-2 d-flex justify-content-start m-2 border-end border-primary">
+                        <input type="checkbox" class="btn-check" id="status" autocomplete="off">
+                        <label class="btn btn-outline-primary d-flex align-items-center" for="status">Overdue?</label>
+                    </div>
+                    <div class="col-9 d-flex justify-content-center m-2">
+                        <div class="row">
+                            <h5 class="card-title border-bottom border-info">${element.title}</h5>
+                            <p class="card-text mt-2">${element.description}</p>
+                        </div>
+                    </div>
+                    <div class="btn-group" role="group" aria-label="Basic mixed styles example" id="todo-button">
+                        <button href="/" type="button" class="btn btn-danger" onclick="updateTodoList(${+element.id})">Update</button>
+                        <button type="button" class="btn btn-warning" onclick="deleteTodoList(${+element.id})">Delete</button>
+                    </div>
+                </div>
+                </div>`
+            )
+            
+        });
         console.log(result)
+        $("#todo-button").hide()
+
+        $("#todo-list").click(function (event) {
+            event.preventDefault()
+            $("#todo-button").show()
+    })
+       
     })
     .fail (err => {
         console.log(err)
     })
 }
+
+function deleteTodoList(id) {
+    $.ajax ({
+        method: "DELETE",
+        url: `${baseURL}/todos/${id}`,
+        headers: {
+            access_token: localStorage.access_token
+        }
+    })
+    .done (result => {
+        checkAuth()
+    })
+    .fail (err => {
+        console.log(err)
+    })
+}
+
+function updateTodoList (id) {
+
+    $("#update-form").show()
+    $.ajax ({
+        method: "GET",
+        url: `${baseURL}/todos/${id}`,
+        headers: {
+            access_token: localStorage.access_token
+        }
+    })
+    .done (result => {
+        const updateTodo = result
+        const updateDate = updateTodo.due_date.toLocaleString().split("T")[0]
+
+        $("#update-form").empty()
+        $("#update-form").append(
+            `<label> <h5> Update Your Plan ? </h5> </label>
+            <form>
+                <div class="row g-2 ">
+                    <div class="col-6 ">
+                      <div class="form-floating">
+                        <input type="text" class="form-control" id="update-title" placeholder="Todo Title">
+                        <label for="title">${updateTodo.title}</label>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-floating">
+                          <input type="date" class="form-control" id="update-due_date" placeholder="Due Date">
+                          <label for="due_date">${updateDate}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-floating mt-2">
+                    <textarea class="form-control" placeholder="Leave a description here" id="update-description" style="height: 100px"></textarea>
+                    <label for="description">${updateTodo.description}</label>
+                </div>
+                <div class="mt-2">
+                    <button type="submit" class="btn btn-secondary" id="update-button">Update</button>
+                    <button type="reset" class="btn btn-warning" id="hide-update-form">Cancel</button>
+                </div>
+            </form>`
+        )
+
+        $("#hide-update-form").click(function () {
+            $("#update-form").hide()
+        })
+
+        $("#update-button").click (function (event) {
+
+            event.preventDefault()
+            // updateData()
+            const title = $("#update-title").val()
+            const due_date = $("#update-due_date").val()
+            const description = $("#update-description").val()
+        
+            console.log({ title, due_date, description })
+
+            $.ajax ({
+                method: "PUT",
+                url: `${baseURL}/todos/${id}`,
+                data: {
+                    title,
+                    due_date,
+                    description
+                },
+                headers: {
+                    access_token: localStorage.access_token
+                }
+            })
+            .done (result => {
+                checkAuth()
+            })
+            .fail (err => {
+                console.log(err)
+            })
+        })
+    })
+    .fail (err => {
+        console.log(err)
+    })
+}
+
+

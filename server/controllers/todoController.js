@@ -8,10 +8,22 @@ class TodoController {
         const idLoggedIn = req.user.id
         Todo.findAll ({ where: {
                 UserId : idLoggedIn
-            }
+            }, order: [["due_date", "ASC"]]
         })
         .then(result => {
-            return res.status (200).json (result)
+            const newResult = result.map (el => {
+                const newDate = el.due_date.toUTCString()
+                return {
+                    id: el.id,
+                    title: el.title,
+                    description: el.description,
+                    status: el.status,
+                    due_date: newDate,
+                    UserId: el.UserId
+                }
+            })
+            
+            return res.status (200).json (newResult)
         })
         .catch (err => {
             next ({ name: "InternalError" })
