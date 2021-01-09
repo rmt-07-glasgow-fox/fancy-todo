@@ -4,6 +4,9 @@ $(document).ready(function () {
 
   $("#link-to-register").click(function (event) {
     event.preventDefault();
+    $("#email-login").val("");
+    $("#password-login").val("");
+    $(".login-errors").empty();
     registerPage();
   });
 
@@ -72,6 +75,7 @@ $(document).ready(function () {
         $("#fullName-register").val("");
         $("#email-register").val("");
         $("#password-register").val("");
+        $(".register-errors").empty();
         checkAuth();
       })
       .fail((err) => {
@@ -90,6 +94,7 @@ $(document).ready(function () {
     $("#fullName-register").val("");
     $("#email-register").val("");
     $("#password-register").val("");
+    $(".register-errors").empty();
     checkAuth();
   });
 
@@ -133,7 +138,7 @@ $(document).ready(function () {
         checkAuth();
       })
       .fail((xhr) => {
-        console.log(xhr);
+        // console.log(xhr);
         let errMsgScript = "";
         xhr.responseJSON.forEach((msg) => {
           errMsgScript += `<p style="color: red;">${msg}</p>`;
@@ -275,7 +280,7 @@ $(document).ready(function () {
         });
         $(".edit-todo-errors").html(errMsgScript);
       });
-    console.log("edit todo save dipencet");
+    // console.log("edit todo save dipencet");
   });
 });
 
@@ -346,7 +351,6 @@ function todoMainPage() {
     },
   })
     .done((response) => {
-
       $("#todo-list").empty();
       response.todoList.forEach((todo) => {
         // console.log(todo);
@@ -356,26 +360,43 @@ function todoMainPage() {
         }).format(new Date(todo.due_date));
         if (todo.status) {
           statusTodo = "✓";
-        } else {
-          statusTodo = "✕";
-        }
-        $("#todo-list").append(`
-      <div class="col">
-              <div class="card shadow-sm">
-                <div class="card-body">
-                  <h6 class="card-text">${todo.title}</h6>
-                  <p class="card-text">${todo.description}</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary status-btn" id-status-btn="${todo.id}">${statusTodo}</button>
-                      <button type="button" class="btn btn-sm btn-outline-secondary edit-btn" id-edit-btn="${todo.id}">Edit</button>
-                      <button type="button" class="btn btn-sm btn-outline-danger delete-btn" id-delete-btn="${todo.id}">Delete</button>
-                      </div>
-                    <small class="text-muted">${dueDate}</small>
+          $("#todo-list").append(`
+        <div class="col">
+                <div class="card shadow-sm">
+                  <div class="card-body">
+                    <h6 class="card-text">${todo.title}</h6>
+                    <p class="card-text">${todo.description}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-success status-btn" id-status-btn="${todo.id}">${statusTodo}</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary edit-btn" id-edit-btn="${todo.id}">Edit</button>
+                        <button type="button" class="btn btn-sm btn-outline-danger delete-btn" id-delete-btn="${todo.id}">Delete</button>
+                        </div>
+                      <small class="text-muted">${dueDate}</small>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>`);
+              </div>`);
+        } else {
+          statusTodo = "✕";
+          $("#todo-list").append(`
+        <div class="col">
+                <div class="card shadow-sm">
+                  <div class="card-body">
+                    <h6 class="card-text">${todo.title}</h6>
+                    <p class="card-text">${todo.description}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-danger status-btn" id-status-btn="${todo.id}">${statusTodo}</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary edit-btn" id-edit-btn="${todo.id}">Edit</button>
+                        <button type="button" class="btn btn-sm btn-outline-danger delete-btn" id-delete-btn="${todo.id}">Delete</button>
+                        </div>
+                      <small class="text-muted">${dueDate}</small>
+                    </div>
+                  </div>
+                </div>
+              </div>`);
+        }
       });
 
       getChuckQuote();
@@ -412,7 +433,7 @@ function getNews() {
     },
   })
     .done((response) => {
-      console.log(response);
+      // console.log(response);
       $("#accordionNews").empty();
       response.forEach((news, idx) => {
         $("#accordionNews").append(`<div class="accordion-item">
@@ -446,8 +467,8 @@ function onSignIn(googleUser) {
   })
     .done((response) => {
       $("#email-login").val("");
-        $("#password-login").val("");
-        $(".login-errors").empty();
+      $("#password-login").val("");
+      $(".login-errors").empty();
       if (!localStorage.access_token) {
         localStorage.access_token = response.access_token;
         checkAuth();

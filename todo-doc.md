@@ -6,15 +6,139 @@ Fancy Todo App is an application to manage things you want to do. This app has :
 &nbsp;
 
 ## RESTful endpoints
+* GET /
+* POST /register
+* POST /login
 * POST /todos
 * GET /todos
 * GET /todos/:id
 * PUT /todos/:id
 * PATCH /todos/:id
 * DELETE /todos/:id
-* POST /register
-* POST /login
+* GET /news
+* GET /quote
 
+&nbsp;
+
+___
+
+### GET /
+
+> Home page
+
+_Request Header_
+```json
+not needed
+```
+
+_Request Body_
+```json
+Not needed
+```
+
+_Response (200 - Ok)_
+```json
+{
+    {
+    "message": "Greetings!",
+    "joke": "<random joke>"
+}
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "message": "Internal Server Error"
+}
+```
+
+---
+
+### POST /register
+
+> Add new User
+
+_Request Header_
+```json
+not needed
+```
+
+_Request Body_
+```json
+{
+  "username" : "<username to be inserted>",
+  "fullName" : "<fullName to be inserted>",
+  "email" : "<email to be inserted>",
+  "password" : "<password to be inserted>",
+}
+```
+
+_Response (201 - Created)_
+```json
+{
+    "id": "<user id>",
+    "username": "<username>",
+    "fullName": "<user full name>",
+    "email": "<user email>"
+}
+```
+
+_Response (400 - Bad Request)_
+```json
+{
+  "message": "<error message>"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "message": "Internal Server Error"
+}
+```
+
+---
+
+### POST /login
+
+> Login user
+
+_Request Header_
+```json
+not needed
+```
+
+_Request Body_
+```json
+{
+  "email" : "<email to be inserted>",
+  "password" : "<password to be inserted>",
+}
+```
+
+_Response (201 - Created)_
+```json
+{
+    "access_token": "<jwt token>"
+}
+```
+
+_Response (400 - Bad Request)_
+```json
+{
+  "message": "<error message>"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "message": "Internal Server Error"
+}
+```
+
+---
 
 ### POST /todos
 
@@ -144,12 +268,19 @@ _Response (500 - Internal Server Error)_
 
 ### GET /todos/:id
 
-> List all Todos
+> Get specific Todo
 
 _Request Header_
 ```json
 {
   "access_token": "<your access token>"
+}
+```
+
+_Request Params
+```json
+{
+  "id": "integer"
 }
 ```
 
@@ -190,12 +321,19 @@ _Response (500 - Internal Server Error)_
 
 ### PUT /todos/:id
 
-> List all Todos
+> Update a Todo
 
 _Request Header_
 ```json
 {
   "access_token": "<your access token>"
+}
+```
+
+_Request Params
+```json
+{
+  "id": "integer"
 }
 ```
 
@@ -273,12 +411,19 @@ _Response (500 - Internal Server Error)_
 
 ### PATCH /todos/:id
 
-> List all Todos
+> Update status of a Todo
 
 _Request Header_
 ```json
 {
   "access_token": "<your access token>"
+}
+```
+
+_Request Params
+```json
+{
+  "id": "integer"
 }
 ```
 
@@ -353,12 +498,19 @@ _Response (500 - Internal Server Error)_
 
 ### DELETE /todos/:id
 
-> Delete specific Todo
+> Delete a specific Todo
 
 _Request Header_
 ```json
 {
   "access_token": "<your access token>"
+}
+```
+
+_Request Params
+```json
+{
+  "id": "integer"
 }
 ```
 
@@ -378,6 +530,83 @@ _Response (404 - Not found)_
 ```json
 {
   "message": "Todo not found"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "message": "Internal Server Error"
+}
+```
+
+---
+
+### GET /news
+
+> Get 3 trending news in Indonesia
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```json
+Not needed
+```
+
+_Response (200 - Ok)_
+```json
+[
+    {
+        "source": {
+            "id": null,
+            "name": "Jawapos.com"
+        },
+        "author": "<author name>",
+        "title": "<news title>",
+        "description": "<news description>",
+        "url": "<news url>",
+        "urlToImage": "<news image url>",
+        "publishedAt": "<news publish date>",
+        "content": "<news content>"
+    },
+    
+]
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "message": "Internal Server Error"
+}
+```
+
+---
+
+### GET /quote
+
+> Get a quote
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```json
+Not needed
+```
+
+_Response (200 - Ok)_
+```json
+{
+    "quote": "<quote>"
 }
 ```
 

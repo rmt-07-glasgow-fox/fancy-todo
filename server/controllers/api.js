@@ -14,7 +14,7 @@ class ApiController {
         res.send(data.articles.slice(0,3));
       })
       .catch((err) => {
-        res.send(err);
+        next(err)
       });
   }
 
@@ -32,7 +32,7 @@ class ApiController {
         res.status(200).send({ quote });
       })
       .catch((err) => {
-        res.send(err);
+        next(err)
       });
   }
 }
