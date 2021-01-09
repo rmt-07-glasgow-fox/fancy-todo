@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="201375566112-5h139i79o6s50pns31o9ffklumhfb7mi.apps.googleusercontent.com">
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <title>Fancy TODO</title>
+  </head>
+
+  <body>
+    <!------ nav bar ---------->
+    <nav id="navbar">
+      <ul>
+        <li><a class="active" href="">Home</a></li>
+        <li id="logout"><a href="#">Logout</a></li>
+      </ul>
+    </nav>
+
+    <!------ Log in Form ---------->
+    <div class="container" id="form-login">
+      <div class="row">
+        <div class="col-md-5 mx-auto">
+          <div id="first">
+            <div class="myform form ">
+              <div class="logo mb-3">
+                <div class="col-md-12 text-center">
+                  <h1>Login</h1>
+                </div>
+              </div>
+              <form action="" method="post" name="login">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Email address</label>
+                  <input type="email" name="email"  class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Password</label>
+                  <input type="password" name="password" id="password"  class="form-control" aria-describedby="emailHelp" placeholder="Enter Password">
+                </div>
+                <div class="col-md-12 text-center ">
+                  <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm" id="login-btn">Login</button>
+                </div>
+                <div class="col-md-12 ">
+                  <div class="login-or">
+                    <hr class="hr-or">
+                    <span class="span-or">or</span>
+                  </div>
+                </div>
+
+                <div class="g-signin2" data-onsuccess="onSignIn"></div>
+
+                <div class="form-group">
+                  <p class="text-center">Don't have account? <a href="#" id="signup">Sign up here</a></p>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!------ Register Form ---------->
+    <div class="container" id="form-register">
+      <div class="row">
+        <div class="col-md-5 mx-auto">
+          <div id="second" id="register-form">
+            <div class="myform form ">
+              <div class="logo mb-3">
+                <div class="col-md-12 text-center">
+                  <h1 >Signup</h1>
+                </div>
+              </div>
+              <form action="#" name="registration">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Email address</label>
+                  <input type="email" name="email"  class="form-control" id="email-register" aria-describedby="emailHelp" placeholder="Enter email">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Password</label>
+                  <input type="password" name="password" id="password-register"  class="form-control" aria-describedby="emailHelp" placeholder="Enter Password">
+                </div>
+                <div class="col-md-12 text-center mb-3">
+                  <button type="submit"  class=" btn btn-block mybtn btn-primary tx-tfm" id="register-btn" >Register</button>
+                </div>
+                <div class="col-md-12 ">
+                  <div class="form-group">
+                    <p class="text-center"><a href="#" id="signin">Already have an account?</a></p>
+                  </div>
+                </div>
+            </div>
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- todos list -->
+    <div class="container" >
+
+      <div class="" id="add-todos">
+        <div class="border p-3 border-3 rounded rounded-3">
+          <div class="offset-3 col-6 mb-3 align-self-center">
+            <label for="add-title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="add-title" placeholder="TODO">
+          </div>
+          <div class="offset-3 col-6 mb-3">
+            <label for="add-desc" class="form-label">Description</label>
+            <textarea class="form-control" id="add-desc" rows="3"></textarea>
+          </div>
+          <div class="offset-3 col-6 mb-3">
+            <label for="add-date" class="form-label">Dateline</label>
+            <input type="date" class="form-control" id="add-date" placeholder="01-01-2021">
+          </div>
+          <div class="offset-3 col-6 mb-3">
+            <div class="d-grip gap-2 d-md-flex justify-content-md-end">
+              <button id="add-todo" type="button" class="btn btn-primary m-2">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="" id="todos-list">
+        <div class="border p-3 border-3 rounded rounded-3">
+          <div class="offset-3 col-6 mb-3 align-self-center">
+            <label for="exampleFormControlInput1" class="form-label">Title</label>
+            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="TODO">
+          </div>
+          <div class="offset-3 col-6 mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+          </div>
+          <div class="offset-3 col-6 mb-3">
+            <label for="due_date" class="form-label">Dateline</label>
+            <input type="date" class="form-control" id="due_date" placeholder="01-01-2021">
+          </div>
+          <div class="offset-3 col-6 mb-3">
+            <div class="d-grip gap-2 d-md-flex justify-content-md-end">
+              <button type="button" class="btn btn-danger m-2">Delete</button>
+              <button type="button" class="btn btn-success m-2">Mark as Done</button>
+              <button type="button" class="btn btn-primary m-2">Update</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="./script.js"></script>
+
+  </body>
+</html>

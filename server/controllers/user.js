@@ -82,12 +82,12 @@ class Controller {
           id: data.id,
           email: data.email
         }
-        let access_token = generateToken(payload)
+        let accessToken = generateToken(payload)
 
         return res.status(200).json({
           id: data.id,
           email: data.email,
-          access_token
+          accessToken
         })
       })
       .catch(err => {
