@@ -47,6 +47,9 @@ module.exports = (sequelize, DataTypes) => {
         isAfter: {
           args: new Date().toString(),
           msg: "Date must be more than this day"
+        },
+        notEmpty: {
+          msg: "Must be filled"
         }
       }
     }
