@@ -3,8 +3,14 @@ const { User, Todo } = require("../models");
 
 async function authenticate(req, res, next) {
   try {
+    if(!req.headers.access_token){
+      next({
+        name: "NoToken"
+      })
+    }
     // decode access_token dan ambil datanya
     let decoded = checkToken(req.headers.access_token);
+
 
     let currentUser = await User.findOne({
       where: {

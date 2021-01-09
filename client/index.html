@@ -45,10 +45,10 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
-          <ul class="navbar-nav me-auto mb-2 mb-md-0">
-            <li class="nav-item active">
+          <ul class="navbar-nav ml-auto mb-2 mb-md-0">
+            <!-- <li class="nav-item active">
               <a class="nav-link" aria-current="page" href="#">Home</a>
-            </li>
+            </li> -->
             <li class="nav-item">
               <a class="nav-link" id="logout-btn" href="#">Logout</a>
             </li>
@@ -59,16 +59,84 @@
 
     <!------------------------------- END OF NAVBAR ------------------------------->
 
+    <!----------------------------------- MODAL ADD TODO ----------------------------------->
+
+    <div class="modal modal-todo" id="modal-add-todo" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Add Todo</h5>
+            <button type="button" class="btn-close modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="title-add-todo" class="form-label">Title</label>
+                <input type="text" class="form-control" id="title-add-todo" placeholder="What do you want to do?"/>
+              </div>
+              <div class="mb-3">
+                <label for="description-add-todo" class="form-label">Description</label>
+                <input type="text" class="form-control" id="description-add-todo" placeholder="Add a short description"/>
+              </div>
+              <div class="mb-3">
+                <label for="date-add-todo" class="form-label">Password</label>
+                <input type="date" class="form-control" id="date-add-todo" />
+              </div>
+              <div class="add-todo-errors todo-errors"></div>
+              <button type="button" class="btn btn-primary" id="modal-add-todo-save">Save changes</button>
+              <button type="button" class="btn btn-secondary modal-close" data-bs-dismiss="modal">Cancel</button>
+            </form>
+          </div>
+          <!-- <div class="modal-footer">
+          </div> -->
+        </div>
+      </div>
+    </div>
+    
+    <!------------------------------- END OF MODAL ADD TODO ------------------------------->
+
+    <!----------------------------------- MODAL EDIT TODO ----------------------------------->
+
+    <div class="modal modal-todo" id="modal-edit-todo" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit Todo</h5>
+            <button type="button" class="btn-close modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="title-edit-todo" class="form-label">Title</label>
+                <input type="text" class="form-control" id="title-edit-todo" placeholder="What do you want to do?"/>
+              </div>
+              <div class="mb-3">
+                <label for="description-edit-todo" class="form-label">Description</label>
+                <input type="text" class="form-control" id="description-edit-todo" placeholder="Add a short description"/>
+              </div>
+              <div class="mb-3">
+                <label for="date-edit-todo" class="form-label">Password</label>
+                <input type="date" class="form-control" id="date-edit-todo" />
+              </div>
+              <div class="edit-todo-errors"></div>
+              <button type="button" class="btn btn-primary" id="modal-edit-todo-save" idTodo="" statusTodo="">Save changes</button>
+              <button type="button" class="btn btn-secondary modal-close" data-bs-dismiss="modal">Cancel</button>
+            </form>
+          </div>
+          <!-- <div class="modal-footer">
+          </div> -->
+        </div>
+      </div>
+    </div>
+    
+    <!------------------------------- END OF MODAL EDIT TODO ------------------------------->
+
     <!----------------------------------- HOME ----------------------------------->
 
     <div class="home container .col-md-8">
       <h1>Fancy ToDo</h1>
       <p>
-        Fancy Todo is a task management app to help you stay organized and
-        manage your day-to-day. You can use Fancy Todo to make shopping lists,
-        take notes, plan an event to increase your productivity and focus on
-        what matters to you. Fancy Todo makes it easy to stay organized and
-        manage your life.
+        Keep forgetting what you need to do? We help you remember it.
       </p>
       <p class="quote-landing"></p>
     </div>
@@ -103,9 +171,18 @@
           <input type="password" class="form-control" id="password-register" />
         </div>
         <div class="register-errors"></div>
-        <button type="submit" class="btn btn-primary mb-3" id="register-btn">
-          Submit
-        </button>
+        <div class="row">
+          <div class="col-md-auto">
+            <button type="submit" class="btn btn-primary mb-3" style="width: 120px;" id="register-btn">
+              Register
+            </button>
+          </div>
+          <div class="col-md-auto">
+            <button type="submit" class="btn btn-secondary mb-3" style="width: 120px;" id="register-cancel-btn">
+              Cancel
+            </button>
+          </div>
+        </div>
       </form>
     </div>
 
@@ -132,11 +209,20 @@
           <input type="password" class="form-control" id="password-login" />
         </div>
         <div class="login-errors"></div>
-        <button type="submit" class="btn btn-primary" id="login-btn">
-          Submit
-        </button>
-        <a href="#" id="link-to-register">Not registered?</a>
-        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        <div class="row">
+          <div class="col-md-auto">
+            <button type="submit" class="btn btn-primary" style="width: 120px;" id="login-btn">
+              Sign in
+            </button>
+          </div>
+          <div class="col-md-auto">
+            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+          </div>
+          <div class="col-md-auto">
+            <button type="button" class="btn btn-secondary" id="link-to-register">Not registered?</button>
+          </div>
+          <!-- <a href="#" id="link-to-register">Not registered?</a> -->
+        </div>
       </form>
     </div>
 
@@ -146,31 +232,14 @@
     <div class="main-page">
       <div class="container">
         <div class="row align-items-center">
-          <div class="col">
-            <div class="weather container">
-              <div class="card" style="width: 10rem">
-                <img
-                  src="https://www.dentons.com/-/media/images/website/background-images/offices/jakarta/jakarta-office.jpg"
-                  class="card-img-top"
-                  alt="weather-image"
-                />
-                <div class="card-body">
-                  <h5 class="card-title" id="weather-city"></h5>
-                  <p class="card-text" id="weather-temp"></p>
-                </div>
-              </div>
-            </div>
-
-          </div>
-          <div class="col-8">
+          <div>
             <section class="py-5 text-center container">
               <div class="row py-lg-5">
                 <div class="mx-auto">
                   <h1 class="fw-light">Hi there!</h1>
                   <p class="lead text-muted">Keep forgetting what you need to do? Put it down below!</p>
                   <p>
-                    <a href="#" class="btn btn-primary my-2">Add Todo</a>
-                    <a href="#" class="btn btn-secondary my-2">Secondary action</a>
+                    <a href="#" class="btn btn-primary my-2" id="add-todo-btn">Add Todo</a>
                   </p>
                 </div>
               </div>
@@ -180,196 +249,40 @@
         
       </div>
       
-
-      
-    
       <div class="album py-5 bg-light">
         <div class="container">
     
-          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            <div class="col">
-              <div class="card shadow-sm">
-                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-    
-                <div class="card-body">
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">✓</button>
-                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                    </div>
-                    <small class="text-muted">1 Januari 2022</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card shadow-sm">
-                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-    
-                <div class="card-body">
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">✓</button>
-                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                    </div>
-                    <small class="text-muted">1 Januari 2022</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card shadow-sm">
-                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-    
-                <div class="card-body">
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">✓</button>
-                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                    </div>
-                    <small class="text-muted">1 Januari 2022</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-    
-            <div class="col">
-              <div class="card shadow-sm">
-                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-    
-                <div class="card-body">
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">✓</button>
-                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                    </div>
-                    <small class="text-muted">1 Januari 2022</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card shadow-sm">
-                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-    
-                <div class="card-body">
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">✓</button>
-                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                    </div>
-                    <small class="text-muted">1 Januari 2022</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card shadow-sm">
-                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-    
-                <div class="card-body">
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">✓</button>
-                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                    </div>
-                    <small class="text-muted">1 Januari 2022</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-    
-            <div class="col">
-              <div class="card shadow-sm">
-                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-    
-                <div class="card-body">
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">✓</button>
-                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                    </div>
-                    <small class="text-muted">1 Januari 2022</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card shadow-sm">
-                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-    
-                <div class="card-body">
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">✓</button>
-                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                    </div>
-                    <small class="text-muted">1 Januari 2022</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card shadow-sm">
-                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-    
-                <div class="card-body">
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">✓</button>
-                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                    </div>
-                    <small class="text-muted">1 Januari 2022</small>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="todo-list">
+            <!-- disini diisi todo-->
           </div>
         </div>
       </div>
+    
+
+    <div class="container py-5">
+      <h4 class="text-center mb-5">Berita trending Indonesia</h4>
+      <div class="accordion" id="accordionNews">
+        <!-- disini dimasukkan berita-->
+      </div>
     </div>
+  </div>
 
     <!------------------------------- END OF MAIN PAGE ------------------------------->
 
+    
     <!----------------------------------- FUN FACT ----------------------------------->
+  <div class="bg-dark">
 
-    <footer class="text-muted py-5 fun-fact">
+    <footer class="text-light py-5 fun-fact container">
       <div class="row align-items-center justify-content-center">
-        <div class="col-8">
-          <div class="p-3">
-            <p class="mb-1">Fun fact
-              <blockquote class="blockquote">
-                <p class="mb-0" id="inspirational-quote"></a></p>
-              </blockquote>
-            </p>
-          </div>
+        <div class="col-12">
+          <blockquote class="blockquote">
+            <p class="mb-0 text-center" id="inspirational-quote"></p>
+          </blockquote>
         </div>
-        <div class="col">
-          <p class="mb-1">
-            <a href="#">Back to top</a>
-          </p>
-        </div>
-
-      <!-- <div class="container">
-        <p class="float-end mb-1">
-          <a href="#">Back to top</a>
-        </p>
-        <p class="mb-1">Fun fact</p>
-        <blockquote class="blockquote">
-          <p class="mb-0" id="inspirational-quote"></a></p>
-        </blockquote>
-      </div> -->
-    </footer>
-
+      </footer>
+    </div>
+      
     <!------------------------------- END OF FUN FACT ------------------------------->
 
     <script src="https://apis.google.com/js/platform.js" async defer></script>

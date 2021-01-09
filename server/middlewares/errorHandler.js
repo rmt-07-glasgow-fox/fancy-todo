@@ -18,6 +18,11 @@ function errorHandler(err, req, res, next) {
         message: "Wrong password. Please try again"
       })
 
+    case "NoToken":
+      return res.status(400).json({
+        message: "No Token - Please login"
+      })
+
     case "UnregisteredUser":
       return res.status(401).json({
         message: "Please login"

@@ -42,48 +42,18 @@ class TodoController {
   }
 
   static listTodo(req, res, next) {
-    let joke;
-    let { firstName, lastName } = nameSplit(req.user.fullName);
-    let openWeather;
 
-    const options = {
-      method: "GET",
-      url: "https://community-open-weather-map.p.rapidapi.com/weather",
-      params: {
-        q: "Jakarta, Indonesia",
-        lat: "0",
-        lon: "0",
-        id: "2172797",
-        lang: "null",
-        units: "metric",
-        mode: "",
+    Todo.findAll({
+      where: {
+        UserId: req.user.id,
       },
-      headers: {
-        "x-rapidapi-key": process.env.OPENWEATHER_API_KEY,
-        "x-rapidapi-host": "community-open-weather-map.p.rapidapi.com",
-      },
-    };
-
-    axios
-      .get(
-        `http://api.icndb.com/jokes/random?escape=javascript&firstName=${firstName}&lastName=${lastName}`
-      )
-      .then(({ data }) => {
-        joke = data.value.joke;
-        return axios.request(options);
-      })
-      .then(({ data }) => {
-        openWeather = data;
-        return Todo.findAll();
-      })
+      order: [
+        ['status', 'ASC'],
+        ['due_date', 'ASC'],
+      ]
+    })
       .then((todoList) => {
         return res.status(200).json({
-          joke,
-          openWeather : {
-            weather: openWeather.weather,
-            main: openWeather.main,
-            city: openWeather.name
-          },
           todoList,
         });
       })
