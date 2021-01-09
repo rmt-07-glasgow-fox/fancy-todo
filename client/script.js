@@ -292,8 +292,11 @@ function checkAuth() {
     if (localStorage.access_token) {
         $('#auth-page').hide();
         $('#todo-list-page').show();
-        getTodoList();
         $('#logout-btn').show();
+
+        getTodoList();
+        weatherToday()
+        getQuote()
 
     } else {
         $('#auth-page').show();
@@ -460,5 +463,3 @@ function getQuote() {
     })
 }
 
-weatherToday()
-getQuote()
