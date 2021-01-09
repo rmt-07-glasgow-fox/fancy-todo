@@ -91,6 +91,37 @@ $(document).ready(function() {
             return false;
         }
     });
+
+    $('#modal-member form').on('submit', (e) => {
+        if (!e.isDefaultPrevented()) {
+            url = `${baseUrl}/project/user`;
+            method = 'POST';
+            $.ajax({
+                url,
+                method,
+                data: $('#modal-member form').serialize(),
+                dataType: 'JSON',
+                headers: {
+                    authorization: localStorage.access_token
+                },
+                success: (data) => {
+                    toastr.success('Data Berhasil di Simpan!', 'Success Alert', { timeOut: 4000 });
+                    $('#modal-member').modal('hide');
+                    tableProjectDetailUser.ajax.reload(null, false);
+                },
+                error: (err) => {
+                    if (err.responseJSON.message === 'jwt expired') {
+                        toastr.info(`${err.responseJSON.message}`, 'session expired');
+                        $('#modal-project').modal('hide');
+                        logout()
+                    } else {
+                        err.responseJSON.message.forEach(el => toastr.warning(el, 'Warning Alert'))
+                    }
+                }
+            });
+            return false;
+        }
+    });
 });
 
 $('#btnCreate').click(function() {
@@ -140,6 +171,39 @@ const select2Movie = () => {
                         return {
                             id: item.id,
                             text: item.title
+                        };
+                    })
+                }
+            },
+            cache: true
+        }
+    });
+}
+
+const select2UserDetail = () => {
+    $('select#user_id_detail_project').select2({
+        allowClear: true,
+        dropdownParent: $("#modal-member"),
+        placeholder: 'Select Member',
+        minimumInputLength: 1,
+        ajax: {
+            url: `${baseUrl}/project/select2user`,
+            dataType: 'json',
+            headers: {
+                authorization: localStorage.access_token
+            },
+            data: function(params) {
+                return {
+                    search: $.trim(params.term),
+                };
+            },
+            processResults: function(data) {
+                data.page = data.page || 1;
+                return {
+                    results: data.map(function(item) {
+                        return {
+                            id: item.id,
+                            text: item.firstName + ' ' + item.lastName
                         };
                     })
                 }
@@ -467,7 +531,7 @@ $('#tableProject tbody').on('click', '#bDestroyProject', function() {
                         logout()
                     }
                     Swal.fire("Error deleting!", "Please try again", "error");
-                    toastr.error(err.message, 'Error Alert')
+                    toastr.error(err.responseJSON.message, 'Error Alert')
                 }
             });
         }
@@ -536,6 +600,7 @@ $('#tableProject tbody').on('click', '#bAddTodo', function() {
             $('#descriptionDetailProject').html(data.data.description)
             $('#project_id_detail_project').val(id)
             tableProjectDetailUserFetch(id);
+            select2UserDetail()
 
         },
         error: (err) => {

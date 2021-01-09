@@ -1,4 +1,5 @@
 const { User, Project, UserProject } = require('../models');
+const { Op } = require('sequelize');
 
 class ProjectController {
     static async getAll(req, res, next) {
@@ -33,6 +34,22 @@ class ProjectController {
         }
     }
 
+    static async getSelect2UserDetail(req, res, next) {
+        try {
+            const data = await User.findAll({
+                [Op.not]: [
+                    { id: req.user.id },
+                ]
+            })
+            console.log(data);
+            const filter = data.filter(item => item.fullname().includes(req.query.search))
+
+            return res.status(200).json(filter)
+        } catch (error) {
+            return next(error)
+        }
+    }
+
     static async getUserDetail(req, res, next) {
         try {
             const data = await Project.findByPk(req.params.id, {
@@ -57,6 +74,22 @@ class ProjectController {
 
             const inputUserProject = { userId: req.user.id, projectId: data.id }
             await UserProject.create(inputUserProject)
+
+            return res.status(201).json({
+                status: 'success',
+                data
+            })
+        } catch (err) {
+            return next(err)
+        }
+    }
+
+    static async storeUserProject(req, res, next) {
+        try {
+            const { project_id_detail_project, user_id_detail_project } = req.body;
+            const input = { projectId: project_id_detail_project, userId: user_id_detail_project };
+
+            const data = await UserProject.create(input);
 
             return res.status(201).json({
                 status: 'success',

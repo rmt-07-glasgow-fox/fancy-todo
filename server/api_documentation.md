@@ -13,11 +13,25 @@ _Auth Endpoint_
 
 _Todos Endpoint_
 - `GET /todos`
+- `GET /todos/movies/popular`
 - `GET /todos/:id`
 - `POST /todos`
 - `PUT /todos/:id`
 - `PATCH /todos/:id`
 - `DELETE /todos/:id`
+
+_Project Endpoint_
+- `GET /project`
+- `GET /project/select2user`
+- `GET /project/:id`
+- `GET /project/:user`
+- `POST /project`
+- `POST /project/:id/user`
+- `PUT /project/:id`
+- `PATCH /project/:id`
+- `DELETE /project/:id`
+- `DELETE /project/:id/user/:userId`
+
 
 ### POST /login
 
@@ -158,6 +172,41 @@ _Response (200)_
             "status": "<todos status>",
             "due_date": "2020-03-20T07:15:12.149Z",
         }
+    ]
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "status" : "error",
+  "message": "Internal server error"
+}
+```
+---
+### GET /todos/movies/popular
+
+> Get all todo list
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200)_
+```json
+{
+  "status" : "success",
+  "data" : 
+    [
+        ``` api from themoviedb```
     ]
 }
 ```
@@ -463,6 +512,488 @@ _Response (404 - Not Found)_
 {
   "status" : "error",
   "message": "todo not found"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "status" : "error",
+  "message": "Internal server error"
+}
+```
+
+### GET /project
+
+> Get all project list
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200)_
+```json
+{
+  "status" : "success",
+  "data" : 
+    [
+        {
+            "id": 1,
+            "title": "<project title>",
+            "description": "<project description>",
+            "status": "<project status>",
+            "ownerId": "<project owner id>",
+
+        },
+        {
+            "id": 2,
+            "title": "<project title>",
+            "description": "<project description>",
+            "status": "<project status>",
+            "ownerId": "<project owner id>",
+        }
+    ]
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "status" : "error",
+  "message": "Internal server error"
+}
+```
+---
+### GET /project/select2user
+
+> Get query search user
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200)_
+```json
+{
+  "status" : "success",
+  "data" : 
+    [
+      {
+            "id": 2,
+            "firstName": "<project title>",
+            "lastName": "<project description>",
+        } 
+    ]
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "status" : "error",
+  "message": "Internal server error"
+}
+```
+---
+### GET /project/:id
+
+> Get a project
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200)_
+```json
+{
+  "status" : "success",
+   "data": {
+        "id": 1,
+        "title": "<project title>",
+        "description": "<project description>",
+        "status": "<project status>",
+        "ownerId": "<project owner id>",
+        "createdAt": "2020-03-20T07:15:12.149Z",
+        "updatedAt": "2020-03-20T07:15:12.149Z",
+  }
+}
+```
+
+_Response (401 - Unauthorized)_
+```json
+{
+  "status" : "error",
+  "message": "unauthorized!"
+}
+```
+
+_Response (404 - Not Found)_
+```json
+{
+  "status" : "error",
+  "message": "project not found"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "status" : "error",
+  "message": "Internal server error"
+}
+```
+---
+### POST /project
+
+> Create new project
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```json
+{
+  "title": "<title to get insert into>",
+  "description": "<description to get insert into>",
+  "status": "<status to get insert into>",
+  "ownerId": "<owner id to get insert into>",
+
+}
+```
+
+_Response (201 - Created)_
+```json
+{
+"status" : "success",
+"data" : {
+  "id": "<given id by system>",
+  "title": "<posted title>",
+  "description": "<posted description>",
+  "status": "<posted status>",  
+  "ownerId": "<posted owner id >",
+  "createdAt": "2020-03-20T07:15:12.149Z",
+  "updatedAt": "2020-03-20T07:15:12.149Z",
+}
+}
+```
+
+_Response (400 - Bad Request)_
+```json
+{
+  "status" : "error",
+  "message": [
+        "Start date at least start today.",
+        "title is required",
+        "description is required",
+        "status is required",
+    ]
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "status" : "error",
+  "message": "Internal server error"
+}
+```
+
+---
+
+### POST /project/:id/user
+
+> Create new user project
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```json
+{
+  "userId": "<title to get insert into>",
+  "projectId": "<owner id to get insert into>",
+}
+```
+
+_Response (201 - Created)_
+```json
+{
+"status" : "success",
+"data" : {
+  "id": "<given id by system>",
+  "userId": "<posted user id >",
+  "projectId": "<posted project id >",
+  "createdAt": "2020-03-20T07:15:12.149Z",
+  "updatedAt": "2020-03-20T07:15:12.149Z",
+}
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "status" : "error",
+  "message": "Internal server error"
+}
+```
+
+---
+### PUT /project/:id
+
+> Update project 
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```json
+{
+  "title": "<title to get update into>",
+  "description": "<description to get update into>",
+  "status": "<status to get update into>",
+}
+```
+
+_Response (200)_
+```json
+{
+    "status" : "success",
+    "message" : "todo updated successfully",
+    "data" : {
+      "title": "<updated title>",
+      "description": "<updated description>",
+      "status": "<updated status>",
+      "createdAt": "2020-03-20T07:15:12.149Z",
+      "updatedAt": "2020-03-20T07:15:12.149Z",
+    }
+}
+```
+
+_Response (400 - Bad Request)_
+```json
+{
+  "status" : "error",
+  "message": [
+        "Start date at least start today.",
+        "title is required",
+        "description is required",
+        "status is required",
+        "due date is required"
+    ]
+}
+```
+
+_Response (401 - Unauthorized)_
+```json
+{
+  "status" : "error",
+  "message": "unauthorized!"
+}
+```
+
+_Response (404 - Not Found)_
+```json
+{
+  "status" : "error",
+  "message": "project not found"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "status" : "error",
+  "message": "Internal server error"
+}
+```
+
+---
+### PATCH /project/:id
+
+> Update status project
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```json
+{
+  "status": "<status to get insert into>",
+}
+```
+
+_Response (200)_
+```json
+{
+  "status": "success",
+  "message": "project updated successfully",
+  "data" : {
+    "status": "<updated status>",
+  }
+}
+```
+
+_Response (400 - Bad Request)_
+```json
+{
+  "status" : "error",
+  "message": [
+        "status is required",
+    ]
+}
+```
+
+_Response (401 - Unauthorized)_
+```json
+{
+  "status" : "error",
+  "message": "unauthorized!"
+}
+```
+
+_Response (404 - Not Found)_
+```json
+{
+  "status" : "error",
+  "message": "project not found"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "status" : "error",
+  "message": "Internal server error"
+}
+```
+
+---
+### DELETE /project/:id
+
+> Delete project
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200)_
+```json
+{
+  "status": "success",
+  "message": "project successfully deleted",
+}
+```
+
+_Response (401 - Unauthorized)_
+```json
+{
+  "status" : "error",
+  "message": "unauthorized!"
+}
+```
+
+_Response (404 - Not Found)_
+```json
+{
+  "status" : "error",
+  "message": "project not found"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "status" : "error",
+  "message": "Internal server error"
+}
+```
+
+---
+### DELETE /project/:id/user/:userId
+
+> Delete project member
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200)_
+```json
+{
+  "status": "success",
+  "message": "user successfully deleted",
+}
+```
+
+_Response (401 - Unauthorized)_
+```json
+{
+  "status" : "error",
+  "message": "unauthorized!"
+}
+```
+
+_Response (404 - Not Found)_
+```json
+{
+  "status" : "error",
+  "message": "user not found"
 }
 ```
 
