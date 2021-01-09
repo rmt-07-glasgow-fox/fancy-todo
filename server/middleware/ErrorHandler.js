@@ -5,9 +5,6 @@ module.exports = function (err, req, res, next) {
 	let { errorDesc } = err
 	
 	console.log(err, errorDesc);
-
-	// ini buat cek kalo error-nya itu
-	// bukan error dari server
 	switch (errorDesc) {
 		case "SequelizeValidationError":
 			statusCode = 400;

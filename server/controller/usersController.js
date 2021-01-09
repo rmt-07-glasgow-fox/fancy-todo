@@ -2,7 +2,7 @@ const { User } = require('../models')
 const {comparePassword} = require('../helpers/bcrypt')
 const jwt = require('jsonwebtoken');
 const { generateToken, verifyToken } = require('../helpers/jwt');
-const verifiyGoogle = require('../helpers/verifiyGoogleToken')
+const verifyGoogle = require('../helpers/verifyGoogleToken')
 
 class UserController {
     static register(req, res, next) {
@@ -47,6 +47,7 @@ class UserController {
         User.findAll()
             .then(user => res.status(200).json(user))
             .catch(err => next(err))
+            // .catch(next) => ini bisa juga => kalau promise aja
     }
 
     static async googleLogin(req, res, next) {
@@ -64,7 +65,7 @@ class UserController {
             if(user) {
                 let check = comparePassword(password, user.password)
                 if(check) {
-                    const token = verifyToken({id: user.id, email: user.email, }, process.env.SECRET)
+                    const token = generateToken({id: user.id, email: user.email })
                     res.status(200).json({user, token})
                 } else {
                     
@@ -74,7 +75,7 @@ class UserController {
                     email,
                     password
                 })
-                const token = generateToken({id: newUser.id, email: newUser.email, }, process.env.SECRET)
+                const token = generateToken({id: newUser.id, email: newUser.email })
                 res.status(200).json({token})
                 
             }

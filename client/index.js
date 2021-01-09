@@ -11,7 +11,8 @@ function onSignIn(googleUser) {
         }
     })
         .done(data => {
-            localStorage.access_token = data.access_token
+            localStorage.access_token = data.token
+            console.log(data, ">>>>data");
             $('#loginPage').hide()
             $('#homePage').show()
             $('#registerPage').hide() 
