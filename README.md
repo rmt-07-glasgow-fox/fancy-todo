@@ -1,23 +1,36 @@
 # fancy-todo
 ```
-Create fancy to-do app, using express, sequelize and pg
+Create fancy to-do app, using express, sequelize, jquerry, and axios
 * REST API endpoint for Todo List's CRUD operation
 * JSON formatted response
-* Getting real time data of covid19 cases in Indonesia
+* Getting real time data of covid19 cases in Globally
 ```
 
 # USAGE
 ```
 Open your text editor with Node.js in your computer and then run `npm install`
 Run `npx nodemon app.js  to start the server
+Run `live-server --host=localhost` to start the client
 ```
 
 ## Restful endpoints
 <!-- --- -->
 # URL
 ```
+Client URL : http://localhost:8080
 Server URL : http://localhost:3000
 ```
+
+## ENDPOINT LIST
+- POST /todos
+- GET /todos
+- GET /todos/:id
+- PUT /todos/:id
+- PATCH /todos/:id
+- DELETE /todos/:id
+- POST /google/googleLogin
+- POST /register
+- POST /login
 
 
 ## POST/todos
@@ -53,29 +66,21 @@ _Response (201 - Created)_
 _Response(400- bad request)_
 ```
 {
-  "Error" :  VALIDATION_ERROR
+  "Error" :  "VALIDATION_ERROR"
   "message": "Title cannot be empty, Description cannot be empty, Due date must be today or more than today, Due Date cannot be empty"
 }
 ```
-_Response(401- notLoggedIn)_
+_Response(401- not logged in)_
 ```
 {
-  "Error" :  "notLoggedIn"
+  "Error" :  "NOT_LOGGED_IN"
   "message": "please login first"
 }
 ```
-_Response(401- wrongLogin)_
-```
-{
-  "Error" :  "wrongLogin"
-  "message": "invalid email or password"
-}
-```
-
 _Response (500)_
 ```
 {
-  "Error": "internal server error",
+  "Error": "INTERNAL_SERVER_ERROR",
   "message": "internal server error"
 }
 ```
@@ -129,25 +134,18 @@ _Response (200)_
 ```
 
 
-_Response(401- notLoggedIn)_
+_Response(401- not logged in)_
 ```
 {
-  "Error" :  "notLoggedIn"
+  "Error" :  "NOT_LOGGED_IN"
   "message": "please login first"
-}
-```
-_Response(401- wrongLogin)_
-```
-{
-  "Error" :  "wrongLogin"
-  "message": "invalid email or password"
 }
 ```
 
 _Response (500)_
 ```
 {
-  "Error": "internal server error",
+  "Error": "INTERNAL_SERVER_ERROR",
   "message": "internal server error"
 }
 ```
@@ -181,24 +179,17 @@ _Response (200)_
   }
 }
 ```
-_Response(401- notLoggedIn)_
+_Response(401- not logged in)_
 ```
 {
-  "Error" :  "notLoggedIn"
+  "Error" :  "NOT_LOGGED_IN"
   "message": "please login first"
-}
-```
-_Response(401- wrongLogin)_
-```
-{
-  "Error" :  "wrongLogin"
-  "message": "invalid email or password"
 }
 ```
 _Response(404 - not found)_
 ```
 {
-  "Error": "resourceNotFound",
+  "Error": "RESOURCE_NOT_FOUND",
   "message": "not found"
 }
 ```
@@ -206,7 +197,7 @@ _Response(404 - not found)_
 _Response (500)_
 ```
 {
-  "Error": "internal server error",
+  "Error": "INTERNAL_SERVER_ERROR",
   "message": "internal server error"
 }
 ```
@@ -230,7 +221,6 @@ _Request Body_
   "title": "<new title to update>",
   "description": "<new description to update>",
   "due_date": "<new due_date to update>",
-  "status": "<new status to update>"
 }
 ```
 _Response(200)_
@@ -239,35 +229,28 @@ _Response(200)_
   "id": <given id by system>,
   "title": "<updated title>",
   "description": "<updated description>",
-  "status": "<updated status>",
+  "status": "<old status>",
   "due_date": "<updated due_date>"
 }
 ```
 _Response(400- bad request)_
 ```
 {
-  "Error" :  VALIDATION_ERROR
+  "Error" :  "VALIDATION_ERROR"
   "message": "Title cannot be empty, Description cannot be empty, Due date must be today or more than today, Due Date cannot be empty"
 }
 ```
-_Response(401- notLoggedIn)_
+_Response(401- not logged in)_
 ```
 {
-  "Error" :  "notLoggedIn"
+  "Error" :  "NOT_LOGGED_IN"
   "message": "please login first"
-}
-```
-_Response(401- wrongLogin)_
-```
-{
-  "Error" :  "wrongLogin"
-  "message": "invalid email or password"
 }
 ```
 _Response(404 - not found)_
 ```
 {
-  "Error": "resourceNotFound",
+  "Error": "RESOURCE_NOT_FOUND",
   "message": "not found"
 }
 ```
@@ -275,7 +258,7 @@ _Response(404 - not found)_
 _Response (500)_
 ```
 {
-  "Error": "internal server error",
+  "Error": "INTERNAL_SERVER_ERROR",
   "message": "internal server error"
 }
 ```
@@ -308,45 +291,25 @@ _Response(200)_
   "due_date": "<due_date>"
 }
 ```
-_Response(400- bad request)_
+
+_Response(401- not logged in)_
 ```
 {
-  "Error" :  VALIDATION_ERROR
-  "message": "Title cannot be empty, Description cannot be empty, Due date must be today or more than today, Due Date cannot be empty"
-}
-```
-_Response(401- notLoggedIn)_
-```
-{
-  "Error" :  "notLoggedIn"
+  "Error" :  "NOT_LOGGED_IN"
   "message": "please login first"
-}
-```
-_Response(401- wrongLogin)_
-```
-{
-  "Error" :  "wrongLogin"
-  "message": "invalid email or password"
-}
-```
-_Response(404 - not found)_
-```
-{
-  "Error": "resourceNotFound",
-  "message": "not found"
 }
 ```
 
 _Response (500)_
 ```
 {
-  "Error": "internal server error",
+  "Error": "INTERNAL_SERVER_ERROR",
   "message": "internal server error"
 }
 ```
 
 
-### DELETE/todos/:id
+## DELETE/todos/:id
 
 >Delete todos list by ID
 
@@ -364,32 +327,131 @@ _Response(200)_
 }
 ```
 
-_Response(401- notLoggedIn)_
+_Response(401- not logged in)_
 ```
 {
-  "Error" :  "notLoggedIn"
+  "Error" :  "NOT_LOGGED_IN"
   "message": "please login first"
-}
-```
-_Response(401- wrongLogin)_
-```
-{
-  "Error" :  "wrongLogin"
-  "message": "invalid email or password"
-}
-```
-_Response(404 - not found)_
-```
-{
-  "Error": "resourceNotFound",
-  "message": "not found"
 }
 ```
 
 _Response (500)_
 ```
 {
-  "Error": "internal server error",
+  "Error": "INTERNAL_SERVER_ERROR",
+  "message": "internal server error"
+}
+```
+
+## POST/google/googleLogin
+
+>Google Sign IN User
+
+_Request Header_
+```
+not needed
+```
+
+_Request Body_
+```
+{
+  "id_token": "id_token";
+}
+```
+
+_Response(200)_
+```
+Google's Payload
+```
+
+
+
+_Response (500)_
+```
+{
+  "Error": "INTERNAL_SERVER_ERROR",
+  "message": "internal server error"
+}
+```
+
+## POST/register
+
+>Create new user account
+
+_Request Header_
+```
+not needed
+```
+
+_Request Body_
+```
+{
+  "email": "<User's email>",
+  "password": "<User's password>"
+}
+```
+
+_Response(201)_
+```
+{
+    "id": "1",
+    "email": "someone@mail.com",
+    "password": <encrypted password>
+}
+```
+_Response(400- bad request)_
+```
+{
+    "Error" :  "VALIDATION_ERROR"
+    "message": "Invalid email format, Password must contain at least 6 characters"
+}
+```
+
+
+_Response (500)_
+```
+{
+  "Error": "INTERNAL_SERVER_ERROR",
+  "message": "internal server error"
+}
+```
+
+## POST/login
+
+>Login User
+
+_Request Header_
+```
+not needed
+```
+
+_Request Body_
+```
+{
+  "email": "<User's email>",
+  "password": "<User's password>"
+}
+```
+
+_Response(200)_
+```
+{
+  access_token: token 
+}
+```
+_Response(400- bad request)_
+```
+{
+    "Error" :  "VALIDATION_ERROR"
+    "message": "invalid email or password"
+}
+```
+
+
+_Response (500)_
+```
+{
+  "Error": "INTERNAL_SERVER_ERROR",
   "message": "internal server error"
 }
 ```

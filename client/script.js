@@ -13,7 +13,6 @@ function checkAuth() {
     $("#addForm").hide()
     getAllTodos()
     $("#showTodo").show()
-    $("#covidApiArea").show()
     
   } else {
     $("#register").show()
@@ -105,29 +104,31 @@ function onSignIn(googleUser) {
 
 //====================== API START ============================================
 function showCovidApi() {
-  $.ajax({
-    method: "GET",
-    url: `${baseUrl}/covid/cases`,
-    headers: {
-      access_token: localStorage.access_token
-    }
-  })
-    .done(response => {
-      console.log(response);
-      $("#covidApiArea").empty()
-      $("#covidApiArea").append(
-        `<h3>Global COVID cases numbers</h3>
-      <p class="m-0" id="confirmed">Confirmed: ${(response.confirmed).toLocaleString('en')} person</p>
-      <p class="m-0" id="recovered">Recovered: ${(response.recovered).toLocaleString('en')} person</p>
-      <p class="m-0" id="deaths">Deaths: ${(response.deaths).toLocaleString('en')} person</p>
-      <p>Use mask, wash hands, stay safe!</p>`
-      )
-      $("#covidApiArea").hide()
-      $("#covidApiArea").fadeIn()
+  if (localStorage.access_token) {
+    $.ajax({
+      method: "GET",
+      url: `${baseUrl}/covid/cases`,
+      headers: {
+        access_token: localStorage.access_token
+      }
     })
-    .fail(err => {
-      console.log(err);
-    })
+      .done(response => {
+        console.log(response);
+        $("#covidApiArea").empty()
+        $("#covidApiArea").append(
+          `<h3>Global COVID cases numbers</h3>
+        <p class="m-0" id="confirmed">Confirmed: ${(response.confirmed).toLocaleString('en')} person</p>
+        <p class="m-0" id="recovered">Recovered: ${(response.recovered).toLocaleString('en')} person</p>
+        <p class="m-0" id="deaths">Deaths: ${(response.deaths).toLocaleString('en')} person</p>
+        <p>Use mask, wash hands, stay safe!</p>`
+        )
+        $("#covidApiArea").hide()
+        $("#covidApiArea").fadeIn()
+      })
+      .fail(err => {
+        console.log(err);
+      })
+  }
 }
 //====================== API END ==============================================
 
@@ -370,6 +371,7 @@ function getAllTodos() {
         }
 
       });
+      showCovidApi()
     })
     .fail(err => {
 
@@ -387,8 +389,8 @@ function getAllTodos() {
 //========================Document Ready=======================================
 $(document).ready(() => {
   console.log("page reloaded");
-  showCovidApi()
-
+  
+  
   //Register
   $("#createNewUser").click((event) => {
     event.preventDefault()
@@ -396,7 +398,7 @@ $(document).ready(() => {
     var password = $("#passwordRegister").val()
     registerUser(email, password)
   })
-
+  
   //show/hide register
   $("#toLogin").click((event) => {
     event.preventDefault()
@@ -404,7 +406,7 @@ $(document).ready(() => {
       $("#login").fadeIn()
     })
   })
-
+  
   //Login
   $("#loginUser").click((event) => {
     event.preventDefault()
@@ -413,7 +415,7 @@ $(document).ready(() => {
     console.log(email, password);
     login(email, password)
   })
-
+  
   //show/hide login
   $("#toRegister").click((event) => {
     event.preventDefault()
@@ -421,7 +423,7 @@ $(document).ready(() => {
       $("#register").fadeIn()
     })
   })
-
+  
   //logout
   $("#logout").click((event) => {
     event.preventDefault()
@@ -432,18 +434,18 @@ $(document).ready(() => {
     });
     checkAuth()
   })
-
+  
   //create todo
   $("#showAddForm").click((event) => {
     event.preventDefault()
     $("#addForm").fadeIn()
   })
-
+  
   $("#hideAddForm").click((event) => {
     event.preventDefault()
     $("#addForm").fadeOut()
   })
-
+  
   $("#addTodo").click((event) => {
     event.preventDefault()
     var title = $("#title").val()
@@ -452,11 +454,12 @@ $(document).ready(() => {
     var status = false
     addTodo(title, due_date, description, status)
   })
-
+  
+  
   checkAuth()
 
-
-
+  
+  
 })
 
 
