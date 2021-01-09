@@ -32,7 +32,6 @@ class UserController {
                 })
             } else {
                 const match = comparePassword(password, user.password)
-                // console.log(comparePassword(password, user.password))
                 if (match) {
                     //jwt
                     const userDATA = {
@@ -42,7 +41,7 @@ class UserController {
                     }
                     const access_token = generateToken(userDATA)
                     res.status(200).json({
-                        access_token: access_token
+                        access_token
                     })
                 } else {
                     res.status(401).json({

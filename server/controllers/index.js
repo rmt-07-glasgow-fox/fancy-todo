@@ -79,9 +79,15 @@ class todo {
             })
             else {
                 const updateData = await todoList.update(edit, {
-                    where: { id }
+                    where: { id: id }
                 })
-                return res.status(200).json(updateData)
+                return res.status(200).json({
+                    id: id,
+                    title: edit.title,
+                    description: edit.description,
+                    status: edit.status,
+                    due_date: edit.due_date
+                })
             }
         }
         catch (err) {
@@ -103,7 +109,7 @@ class todo {
                     where: { id }
                 }, 
                 )
-                return res.status(200).json(updateData)
+                return res.status(200).json(editStatus)
             }
         }
         catch (err) {

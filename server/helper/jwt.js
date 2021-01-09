@@ -6,7 +6,7 @@ function generateToken (userData) {
 }
 
 function cekToken (token) {
-    return jwt.verify(token, SECRET_KEY)
+    return jwt.verify(token, process.env.SECRET_KEY)
 }
 
 module.exports = { generateToken, cekToken }

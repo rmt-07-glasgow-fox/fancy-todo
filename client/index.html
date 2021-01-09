@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+</head>
+<body>
+    <!--header-->
+    <button id="logout">log Out</button>
+    <button id="addTodo">Add todo</button>
+
+    <!-- form SIGN UP -->
+        <div class="form-regis">
+            <form class="register-content">
+                <h1>Sign Up</h1>
+
+                <input type="text" placeholder="Enter User Name" name="userName" id="userName" required>
+                <br>
+                <input type="text" placeholder="Enter Email" name="email" id="email-regis" required>
+                <br>
+                <input type="password" placeholder="Enter Password" name="password" id="password-regis" required>
+                <br>
+                <p>
+                    Already an Account? <a id="sent-form-signin">Sign In</a>
+                </p>
+                <button type="submit" id="regisbtn">Sign Up</button>
+            </form>
+        </div>
+
+    <!-- form SIGN IN -->
+        <div class="form-login">
+            <form class="Login-content">
+                <h1>Sign In</h1>
+
+                <input type="text" placeholder="Enter Email" name="email" id="email-login" required>
+                <br>
+                <input type="password" placeholder="Enter Password" name="password" id="password-login" required>
+                <br>
+                <p>
+                    <a id="sent-form-signup">Sign Up</a>
+                </p>
+                <button type="submit" id="loginbtn">Sign In</button>
+            </form>
+        </div>
+
+    <!-- form ADD TODOS -->
+    <div id="addFormTodos">
+        <form>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Title</label>
+                <input type="text" class="form-control" id="adding-title">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label" >Description</label>
+                <input type="text" class="form-control" id="adding-description">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label" >Date</label>
+                <input type="date" class="form-control" id="adding-date">
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="adding-status">
+                <label class="form-check-label" for="exampleCheck1">Status</label>
+            </div>
+            <button type="submit" class="btn btn-primary" id="addBtn">Submit</button>
+            <button type="submit" class="btn btn-primary" id="cancelAddBtn">Cancel</button>
+        </form>
+    </div>
+    
+    <!-- form LIST TODOS -->
+    <div class="container">
+        <div id="todos"></div>
+    </div>
+
+    <!-- UPDATE TODOS -->
+    <div id="editFormTodos">
+        <form>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Title</label>
+                <input type="text" class="form-control" id="edit-title">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label" >Description</label>
+                <input type="text" class="form-control" id="edit-description">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label" >Date</label>
+                <input type="date" class="form-control" id="edit-date">
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="edit-status">
+                <label class="form-check-label" for="exampleCheck1">Status</label>
+            </div>
+            <button type="submit" class="btn btn-primary" id="editedBtn">Submit</button>
+            <button type="submit" class="btn btn-primary" id="cancelEditBtn">Cancel</button>
+        </form>
+    </div>
+    <!-- form LIST TODOS BY "UserId" -->
+    <!-- button DELETE TODOS BY "UserId" -->
+    <!-- API-->
+    
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./script.js"></script>
+</body>
+</html>
