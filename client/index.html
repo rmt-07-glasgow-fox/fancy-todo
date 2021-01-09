@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- META -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-signin-client_id" content="880840563294-q52f5igbpervf0cej6vuo85fhla2mftm.apps.googleusercontent.com">
+
+
+  <link rel="stylesheet" href="./styles.css">
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
+  <title>Document</title>
+</head>
+<body>
+  <!-- NOTIFCIATION PAGE -->
+  <div style="font-size: x-large; text-align: center; color: darkblue;">
+    <div id="notification">all notification/errors will shown in here</div>
+  </div>
+
+  <!-- LOGIN PAGE -->
+  <div id="loginPage">
+    <div class="wrapper fadeInDown">
+      <div id="formContent">
+        <h1>Login</h1>
+        <form>
+          <input type="text" id="email" class="fadeIn second" name="email" placeholder="email">
+          <input type="text" id="password" class="fadeIn third" name="password" placeholder="password">
+          <button id="loginButton" type="submit" class="fadeIn fourth btn btn-primary">Login</button>
+          <div><br>Or login using Google:</div>
+          <div><br>
+            <div class="g-signin2 float-center" data-onsuccess="onSignIn" style="align-content: center;">googleButton</div>
+          </div> <br>
+          
+          <!-- <input type="submit" class="fadeIn fourth" value="Log In"> -->
+        </form>
+    
+        <!-- Register -->
+        <div id="formFooter">
+          <a id="register-btn" class="underlineHover" href="#">Register</a>
+        </div>
+    
+      </div>
+    </div>
+  </div>
+
+  <!-- REGISTER PAGE -->
+  <div id="registerPage">
+    <div class="wrapper fadeInDown">
+      <div id="formContent">
+        <h1>Register</h1>
+        <form>
+          <input type="text" id="emailRegister" class="fadeIn second" name="email" placeholder="email">
+          <input type="text" id="passwordRegister" class="fadeIn third" name="password" placeholder="password">
+          <button id="registerButton" type="submit" class="fadeIn fourth btn btn-primary">Register</button>
+          <!-- <input type="submit" class="fadeIn fourth" value="Log In"> -->
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOGOUT -->
+  <div class="navbar" id="top-navbar">
+    <a href="#" class="btn btn-danger" id="logout-btn"> Log out</a>
+  </div>
+
+  <!-- SHOW TODO -->
+  <div id="showTodos">
+    <!-- CREATE TODO -->
+    <div class="wrapper fadeInDown">
+      <div id="formContent">
+        <h1>Add Todo:</h1>
+        <form action="POST">
+          <input type="text" id="title" class="fadeIn second" name="title" placeholder="Title">
+          <input type="text" id="description" class="fadeIn second" name="description" placeholder="Description">
+          <input type="text" id="due_date" class="fadeIn second" name="due_date" placeholder="due_date: YYYY-MM-DD">
+          <!-- <div class="fadeIn second">
+            <label id="due_date"> Due Date</label>
+            <input type="date" id="due_date" class="fadeIn second" name="due_date" placeholder="due_date: YYYY-MM-DD">
+          </div> -->
+          <input type="text" id="status" class="fadeIn second" name="status" placeholder="status: true/false">
+          <button id="createTodo" type="submit" class="fadeIn fourth btn btn-primary">Add</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- SHOW LIST -->
+    <div class="wrapper fadeInDown">
+      <div id="formContent">
+        <h1>All Todos:</h1>
+        <h7>Friendly reminder: <br>you cannot update/delete todos that aren't yours</h7><br><br>
+        <div id="showTodosValue">
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- CREATE TODO -->
+  <!-- <div id="updateTodos">
+    <div class="wrapper fadeInDown">
+      <div id="formContent">
+        <form action="POST">
+          <input type="text" id="title" class="fadeIn second" name="title" placeholder="Title">
+          <input type="text" id="description" class="fadeIn second" name="description" placeholder="Description">
+          <input type="text" id="due_date" class="fadeIn second" name="due_date" placeholder="due_date">
+          <input type="text" id="status" class="fadeIn second" name="status" placeholder="status">
+          <button id="createTodo" type="submit" class="fadeIn fourth btn btn-primary">Add</button>
+        </form>
+      </div>
+    </div>
+  </div> -->
+  
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="./script.js"></script>
+</body>
+</html>
