@@ -17,10 +17,10 @@ const authenticate = (req,res,next) => {
         }
       })
       .catch(err => {
-        res.status(500).json({ message: err.message })
+        next(err)
       })
   } catch (err) {
-    res.status(400).json({message: err.message})
+    next(err)
   }
 }
 
@@ -31,11 +31,13 @@ const authorize = (req,res,next) => {
       }
     })
       .then(data => {
-        if(!data || data.UserId !== req.user.id) res.status(401).json({message: "Unauthorized Action"})
-        else next() 
+        // if(!data) throw new Error({name: "NotFound"})
+        if(data.UserId !== req.user.id) throw new Error ({name: "Unauthorized"})
+        else next()
       })
       .catch(err => {
-        res.status(500).json({message: err.message})
+        err.name = "Unauthorized"
+        next(err)
       })
 }
 

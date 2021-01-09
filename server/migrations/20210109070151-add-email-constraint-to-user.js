@@ -1,7 +1,5 @@
 'use strict';
 
-const { query } = require("express");
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     /**
@@ -10,14 +8,10 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    await queryInterface.addColumn('Todos','UserId', {
-      type: Sequelize.INTEGER,
-      references: {
-        model: {tableName:"Users"},
-        key: "id",
-      },
-      onUpdate: "CASCADE",
-      onDelete: "CASCADE"
+    await queryInterface.addConstraint(`Users`, {
+      fields: ['email'],
+      type: 'unique',
+      name: 'unique-email-constraint-users'
     })
   },
 
@@ -28,6 +22,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-    await queryInterface.removeColumn('Todos','UserId')
+    await queryInterface.removeConstraint('Users','unique-email-constraint-users',{})
   }
 };

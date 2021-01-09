@@ -2,25 +2,31 @@ const {Todo} = require('../models')
 const axios = require('axios').default;
 
 class TodoController {
-  static getAll(req,res) {
-    Todo.findAll()
+  static getAll(req,res,next) {
+    Todo.findAll({
+      where: {
+        UserId:req.user.id
+      }
+    })
       .then(data => {
         res.status(200).json(data)
       })
       .catch(err => {
-        res.status(500).json({message: 'INTERNAL SERVER ERROR'})
+        next(err)
       })
   }
-  static getById(req,res) {
+  static getById(req,res,next) {
     Todo.findByPk(Number(req.params.id))
       .then(data => {
-        res.status(200).json(data)
+        if(!data) throw new Error({name:"NotFound"})
+        else res.status(200).json(data)
       })
       .catch(err => {
-        res.status(404).json({message: 'NOT FOUND'})
+        err.name = "NotFound"
+        next(err)
       })
   }
-  static create(req,res) {
+  static create(req,res,next) {
     const obj = {
       title: req.body.title,
       description: req.body.description,
@@ -33,8 +39,7 @@ class TodoController {
       res.status(201).json(data)
     })
     .catch(err => {
-      if(err.errors[0].validatorName) res.status(400).json({message: `BAD REQUEST`})
-      else res.status(500).json({message: 'INTERNAL SERVER ERROR'})
+      next(err)
     })
   }
   static delete(req,res) {
@@ -45,13 +50,14 @@ class TodoController {
     }) 
       .then(data => {
         if(data == 1) res.status(200).json({message: "Todo deleted successfully"})
-        else res.status(404).json({message: "NOT FOUND"})
+        else res.status(404).json({message: "there is nothing to be deleted"})
       })
       .catch(err => {
-        res.status(500).json({message: `INTERNAL SERVER ERROR`})
+        err.name="Unauthorized"
+        next(err)
       })
   }
-  static edit(req,res) {
+  static edit(req,res,next) {
     const id = Number(req.params.id)
     let obj = {
       title: req.body.title,
@@ -71,10 +77,10 @@ class TodoController {
         res.status(200).json(data)
       })
       .catch(err => {
-        res.status(500).json({message:"INTERNAL SERVER ERROR"})
+        next(err)
       })
   }
-  static patch(req,res) {
+  static patch(req,res,next) {
     const id = Number(req.params.id)
     Todo.update({status:req.body.status}, {
       where: {
@@ -88,12 +94,12 @@ class TodoController {
         res.status(200).json(data)
       })
       .catch(err => {
-        res.status(500).json({message:"INTERNAL SERVER ERROR"})
+        next(err)
       })
   }
-  static getQuotes (req,res) {
-    let quotesApi = "https://type.fit/api/quotes"
-    axios.get(quotesApi)
+  static getQuotes (req,res,next) {
+    let quotesApiUrl = "https://type.fit/api/quotes"
+    axios.get(quotesApiUrl)
       .then(response => {
         let quotes = response.data.map(data => ({
           text: data.text,
@@ -102,7 +108,7 @@ class TodoController {
         res.status(200).json(quotes)
       })
       .catch(err => {
-        res.status(400).json()
+        next(err)
       })
   }
 }

@@ -1,0 +1,148 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-signin-client_id" content="105033085633-djjohap5d1knh5hu9qv1l7tg2ro13m2q.apps.googleusercontent.com">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+  <link rel="stylesheet" href="/assets/style.css">
+  <title>Document</title>
+</head>
+<body>
+  <!--NAV-->
+  <nav>
+    <div>
+      <h3 style="float: left; margin-left: 20px;"><a href="">Todo App</a></h3>
+      <h5><a href="" id="btn-logout" style="float: right; margin-right: 20px;;">Logout</a></h5>
+    </div>
+  </nav>
+  <br><br>
+
+  <!--QUOTES 3RD PARTY API-->
+  <div id="quotes-list">
+  </div>
+
+  <!--ERRORS-->
+  <div id="client-errors">
+  </div>
+
+  <!--LOGIN FORM-->
+  <div id="login-page">
+    <div class="card">
+      <div class="card-body">
+        <form action="" class="form-group">
+          <div class="form-group">
+            <label for="" class="col-sm-2 col-form-label">Email</label>
+            <div class="col-sm-3">
+              <input type="email" id="input-login-email" class="form-control" placeholder="enter your email address">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="" class="col-sm-2 col-form-label">Password</label>
+            <div class="col-sm-3">
+              <input type="password" id="input-login-password" class="form-control" placeholder="enter password">
+            </div>
+          </div>
+          <br>
+          <div class="form-group row">
+            <div class="col-sm-10">
+              <button type="submit" id="login-btn" class="btn btn-primary">Login</button>
+              <button class="btn btn-secondary" id="btn-register-form"><a href="">Register</a></button>
+              <br><br>
+              <div class="g-signin2" data-onsuccess="onSignIn"></div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+    <!--REGISTER FORM-->
+    <div id="register-page">
+      <div class="card">
+        <div class="card-body">
+          <form action="" class="form-group">
+            <div class="form-group">
+              <label for="" class="col-sm-2 col-form-label">Email</label>
+              <div class="col-sm-3">
+                <input type="email" id="input-register-email" class="form-control" placeholder="enter your email address">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="" class="col-sm-2 col-form-label">Password</label>
+              <div class="col-sm-3">
+                <input type="password" id="input-register-password" class="form-control" placeholder="enter password">
+              </div>
+              <p>password must be between 8-20 characters</p>
+            </div>
+            <br>
+            <div class="form-group row">
+              <div class="col-sm-10">
+                <button type="submit" id="register-btn" class="btn btn-primary">Register</button>
+                <button class="btn btn-secondary" id="btn-register-cancel">Cancel</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+<!-- SHOW ADD FORM BUTTON -->
+  <div>
+    <button class="btn btn-primary" id="btn-add-task">Add Task</button>
+  </div>
+
+<!-- ADD FORM -->
+  <div id="add-todo" class="card" style="width: 18rem;">
+    <div class="card-body">
+      <form action="">
+        <div>
+          <input type="text" id="add-title-input" class="form-control">
+        </div>
+        <div>
+          <input type="text" id="add-description-input" class="form-control">
+        </div>
+        <div>
+          <input type="date" id="add-due_date-input" class="form-control">
+        </div>
+        <br>
+        <div class="col-sm-10">
+          <button class="btn btn-primary" id="btn-add">Add</button>
+          <button class="btn btn-danger" id="btn-cancel-add">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ALL TODO LIST -->
+  <div id="todo-list">
+  </div>
+
+  <!--UPDATE FORM-->
+  <div id="update-todo" class="card" style="width: 18rem;">
+    <div class="card-body">
+      <form action="">
+        <div>
+          <input type="text" id="update-title-input" class="form-control">
+        </div>
+        <div>
+          <input type="text" id="update-description-input" class="form-control">
+        </div>
+        <div>
+          <input type="date" id="update-due_date-input" class="form-control">
+        </div>
+        <br>
+        <div class="col-sm-10">
+          <button class="btn btn-primary" id="btn-update">Update</button>
+          <button class="btn btn-danger" id="btn-cancel-update">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="./main.js"></script>
+
+</body>
+</html>
