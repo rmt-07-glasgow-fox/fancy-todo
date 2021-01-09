@@ -3,6 +3,7 @@ if(process.env.NODE_ENV === 'development') {
 }
 
 const express = require('express')
+const cors = require('cors')
 
 const router = require('./routes')
 const errorHandler = require('./middlewares/errorHandler')
@@ -10,6 +11,7 @@ const errorHandler = require('./middlewares/errorHandler')
 const PORT = process.env.PORT || 3000
 const app = express()
 
+app.use(cors())
 // json raw
 app.use(express.json())
 // body urlencoded

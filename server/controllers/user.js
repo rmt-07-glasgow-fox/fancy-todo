@@ -49,12 +49,12 @@ class Controller {
   }
 
   static loginByGoogle(req, res, next) {
+    let email
     let idToken = req.body.id_token
     const client = new OAuth2Client(GOOGLE_CLIENT_ID)
-    let email
 
     client.verifyIdToken({
-      idToken: id_token,
+      idToken,
       audience: GOOGLE_CLIENT_ID,
     })
       .then(ticket => {
