@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const projectController = require('../controllers/projectController');
-const isAuthorize = require('../middlewares/isAuthorize')
+const isAuthorize = require('../middlewares/isAuthorizeProject')
 
 router.get('/', projectController.getAll);
 router.get('/select2user', projectController.getSelect2UserDetail);

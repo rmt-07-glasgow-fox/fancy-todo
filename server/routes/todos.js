@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const todoController = require('../controllers/todoController');
-const isAuthorize = require('../middlewares/isAuthorize')
+const isAuthorize = require('../middlewares/isAuthorizeTodo')
 
 router.get('/', todoController.getAll);
 router.get('/movies/popular', todoController.getAllMovie);
