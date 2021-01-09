@@ -1,6 +1,6 @@
 const baseURL = 'http://localhost:3000'
 const todoList = []
-
+const newsList = []
 
 
 // start web
@@ -15,16 +15,18 @@ function authenticate(){
     if(localStorage.access_token) {
         $('#todos').show()
         getTodo()
+        $('#newsAPI').show()
+        getNews()
         $('#addTodo').show()
         $('#logout').show()
         $('.form-regis').hide()
         $('.form-login').hide()
         $('#addFormTodos').hide()
-        $('#editFormTodos').show()
+        $('#editFormTodos').hide()
         
     } else {
         $('.form-login').show()
-        $('#editFormTodos').show()
+        $('#editFormTodos').hide()
         $('.form-regis').hide()
         $('#todos').hide()
         $('#logout').hide()
@@ -60,16 +62,21 @@ $('#addTodo').click(function(){
     $('#addFormTodos').show()
     $('#addTodo').hide()
     $('#todos').hide()
-})
-$('#cancelAddBtn').click(function(){
-    $('#addFormTodos').hide()
-    $('#todos').show()
-})
-$('#editTodo').click(function(){
-    $('#editFormTodos').show()
-    $('#addTodo').hide()
-    $('#todos').hide()
     $('#logout').hide()
+})
+$('#cancelAddBtn').click(function(event){
+    event.preventDefault()
+    authenticate()
+})
+$('#cancelEditBtn').click(function(event){
+    event.preventDefault()
+    authenticate()
+})
+$('#editTodo').click(function(event){
+    event.preventDefault()
+    $('#editFormTodos').show()
+    $('#logout').hide()
+    $('#addTodo').hide()
 })
 
 
@@ -213,13 +220,14 @@ $('#editedBtn').click(function(event) {
 })
 
 
-// ===============  TODOS  ==================
+// ===============  FUNCTION TODOS  ==================
 
 /**                 list:
  * o> getTodo       => list get all
  * o> getOneTode    => get data by id (to edit)
  * o> update        => submit update/ edited data
  * o> deleteTodo    => Delete todo
+ * o> get News      => Display News
  * 
  */
 function getTodo() {
@@ -276,6 +284,10 @@ function getOneTodo(id) {
     })
     .done(response => {
         console.log(response)
+        
+        $('#editFormTodos').show()
+        $('#logout').hide()
+
         $('#edit-title').val(response.title)
         $('#edit-description').val(response.description)
         $('#edit-date').val(response.due_date)
@@ -289,7 +301,6 @@ function getOneTodo(id) {
 
     })
 }
-
 function deleteTodo(id){
     $.ajax({
         method: 'DELETE',
@@ -301,16 +312,55 @@ function deleteTodo(id){
     .done(response => {
         console.log(response)
         authenticate()
-        // $('#edit-title').val(response.title)
-        // $('#edit-description').val(response.description)
-        // $('#edit-date').val(response.due_date)
-        // $('#edit-status').val(response.status)
-        // $('#editedBtn').data('id', id)
     })
     .fail(err => {
         console.log(err);
     })
     .always(() => {
 
+    })
+}
+function getNews(){
+    $.ajax({
+      method: 'GET',
+      url: `${baseURL}/news`,
+      headers: {
+        access_token: localStorage.access_token
+      }
+    })
+    .done(response => {
+        console.log(response, '<=== response')
+   
+        response.map(el => {
+        $('#newsAPI').append(
+        `<li class="list-group-item">
+            ${el.title} <br> <a href="${el.url}">Read More</a>
+        </li>`
+        )
+      })
+    })
+    .fail(err => {
+      console.log(err, '<=== error')
+    })
+    .always(() => {
+      console.log('always')
+    })
+}
+function onSignIn(googleUser) {
+    var id_token = googleUser.getAuthResponse().id_token;
+    console.log(id_token);
+    $.ajax({
+        method: `POST`,
+        url: `${baseURL}/googleLogin`,
+        data: {
+            id_token
+        }
+    })
+    .done(response => {
+        const token = response.access_token;
+        localStorage.setItem("access_token", token);
+    })
+    .fail(err => {
+        console.log(err)
     })
 }
