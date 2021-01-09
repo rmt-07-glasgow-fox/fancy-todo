@@ -16,8 +16,9 @@ class TodoController {
     }
 
     static postTodos(req, res, next) {
-        const { title, description, due_date, status } = req.body
+        const { title, description, due_date } = req.body
         const UserId = req.user.id
+        const status = false
 
         Todo.create({
             title,

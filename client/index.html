@@ -82,6 +82,38 @@
                 </div>
             </div>
             <div class="row" id="todolist-page">
+                <div class="col-12" id="addTodoForm">
+                    <div class="container mt-5 mb-5">
+                        <div class="add-form-main-text">
+                            <h2>So, what are you going to achieve next?</h2>
+                        </div>
+                        <form>
+                            <div class="form-group row">
+                                <label for="addTodoTitle" class="col-sm-2 col-form-label">Title</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="addTodoTitle"
+                                        placeholder="What do you want to do?">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="addTodoDescription" class="col-sm-2 col-form-label">Description</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="addTodoDescription"
+                                        placeholder="Describe what do you want to do...">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="addTodoDueDate" class="col-sm-2 col-form-label">Due Date</label>
+                                <div class="col-sm-10">
+                                    <input type="date" class="form-control" id="addTodoDueDate">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="add-btn-confirm">Confirm</button><br><br>
+                            <div id="add-success">
+                            </div>
+                        </form>
+                    </div>
+                </div>
                 <div class="col-12" id="updateTodoForm">
                     <div class="container mt-5 mb-5">
                         <div class="update-form-main-text">
@@ -116,7 +148,7 @@
                 </div>
                 <div class="col-4 bg-warning side-bar p-0" id="col-sidebar">
                     <div class="side-bar-content mt-5 mb-5">
-                        <a href="#" class="btn btn-primary mt-4 mb-2">Add Todo</a>
+                        <a href="#" class="btn btn-primary mt-4 mb-2" id="add-btn">Add Todo</a>
                         <div class="card" style="width: 18rem;">
                             <div class="card-body">
                                 <h5 class="card-title">${element.title}</h5>

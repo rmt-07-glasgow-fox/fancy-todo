@@ -58,6 +58,7 @@ function registerMenu() {
 function afterLogin() {
     $('#main-page').hide()
     $('#content-page').show()
+    $('#addTodoForm').hide()
     $('#updateTodoForm').hide()
     $('#container-todo-list').show()
     $('#col-sidebar').show()
@@ -77,12 +78,26 @@ function formUpdateTodo(todoId) {
     $('#content-page').show()
     $('#col-sidebar').hide()
     $('#col-todolist').hide()
+    $('#addTodoForm').hide()
     $('#updateTodoForm').show()
     $('#update-btn').click((event) => {
         event.preventDefault()
         updateTodo(todoId)
     })
     $('#logout-btn').show()
+}
+
+function addTodoForm() {
+    $('#main-page').hide()
+    $('#content-page').show()
+    $('#col-sidebar').hide()
+    $('#col-todolist').hide()
+    $('#addTodoForm').show()
+    $('#updateTodoForm').hide()
+    $('#logout-btn').show()
+}
+
+function addTodo() {
 }
 
 function getTodoList() {
@@ -287,10 +302,54 @@ $(document).ready(function () {
         loginMenu()
     })
 
-
     $('#delete-btn').click((event) => {
         event.preventDefault()
         deleteTodo()
+    })
+
+    $('#add-btn').click((event) => {
+        event.preventDefault()
+        addTodoForm()
+    })
+
+    $('#add-btn-confirm').click((event) => {
+        event.preventDefault()
+        let title = $("#addTodoTitle").val()
+        let description = $("#addTodoDescription").val()
+        let due_date = $("#addTodoDueDate").val()
+        let status = false
+        $.ajax({
+            method: 'POST',
+            url: `${baseUrl}/todos`,
+            headers: {
+                access_token: localStorage.access_token
+            },
+            data: {
+                title,
+                description,
+                due_date,
+                status
+            }
+        })
+            .done(response => {
+                $('#add-success').empty()
+                if (response) {
+                    $('#add-success').append(`
+                                <div class="alert alert-success" role="alert" id="add-success">
+                                        Add success!
+                                </div>
+                                `)
+                }
+                setTimeout(() => {
+                    afterLogin()
+                }, 500)
+            })
+            .fail(err => {
+                console.log(err, ">>>> this is error from ajax addTodo")
+            })
+            .always(() => {
+                console.log("ALWAYS!")
+            })
     })
 })
 
