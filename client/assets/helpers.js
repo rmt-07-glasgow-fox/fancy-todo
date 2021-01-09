@@ -113,6 +113,8 @@ function fetchTodo() {
             </div>
             `)
         })
+        $('#createtodo').show()
+        $('#edittodo').hide()
     })
     .fail(err => {
         console.log(err)
@@ -209,7 +211,8 @@ function saveEdit () {
         }
     })
     .done(data => {
-        listpage()
+        fetchTodo()
+        // listpage()
     })
     .fail(err => {
         console.log(err);
