@@ -57,6 +57,27 @@ function register(){
     })
 }
 
+function fetchWeather() {
+    $("#weather").empty()
+    $.ajax({
+        url: "http://localhost:3000/todos/weather",
+        method: "GET",
+        headers: {
+            access_token: localStorage.getItem('access_token')
+        }
+    })
+    .done(response => {
+        $("#weather").append(`
+        <img src="${response.current.weather_icons[0]}" style="border-top-left-radius: 15px; border-bottom-left-radius: 15px;" alt="">
+        <p style="margin-left: 25px; margin-top: 20px;"><b>${response.location.region}</b> </p>
+        <p style="margin-left: 25px; margin-top: 20px;"><b>${response.current.temperature}°C</b> </p>
+        <p style="margin-left: 25px; margin-top: 20px;"><b>${response.location.localtime.slice(0,10)}</b> </p>`)
+    })
+    .fail(error => {
+        console.log(error)
+    })
+}
+
 function fetchData(){
     $("#list-todos").empty()
     $("#greeting").empty()
@@ -69,7 +90,7 @@ function fetchData(){
     })
     .done(response => {
         for(let i  = 0; i < response.length; i++){
-            $("#list-todos").append(`<div class="shadow p-3 mb-5 bg-white rounded card mx-auto mt-5" style="width: 40rem;" >
+            $("#list-todos").append(`<div class="shadow p-3 mb-5 bg-white card mx-auto mt-5 baseBlock" id="card-all-todo">
             <div id="title-todo" class="flex mx-auto" style="margin-top: 10px; margin-bottom: 10px;">
             <h5 class="card-title">${i + 1}. ${response[i].title}</h5>
             </div>
@@ -278,6 +299,8 @@ $(document).ready(function(){
 });
 
 function loginPage () {
+    $("#email-login").empty()
+    $("#password-login").empty()
     $("#login").show();
     $("#homePage").hide();
     $("#addTodo").hide();
@@ -291,6 +314,7 @@ function homePage () {
     $("#register").hide();
     $("#editTodo").hide();
     fetchData()
+    fetchWeather()
 }
 function addTodoPage () {
     $("#login").hide();
@@ -300,6 +324,10 @@ function addTodoPage () {
     $("#editTodo").hide();
 }
 function registerPage () {
+    $("#firstname-register").empty()
+    $("#lastname-register").empty()
+    $("#email-register").empty()
+    $("#password-register").empty()
     $("#login").hide();
     $("#homePage").hide();
     $("#addTodo").hide();

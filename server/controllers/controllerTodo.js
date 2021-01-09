@@ -1,6 +1,21 @@
 const { Todo,User } = require('../models')
 
+
 class ControllerTodo {
+    static getWeather (req,res,next) {
+        const axios = require('axios');
+        const params = {
+          access_key: process.env.API_KEY_WEATHER,
+          query: 'Jakarta'
+        }
+        axios.get('http://api.weatherstack.com/current', {params})
+        .then(data => {
+            return res.status(200).json(data.data)
+        })
+        .catch(error => {
+            return next(error)
+        })
+    }
 
     static createTodo(req,res,next) {
         const obj = {

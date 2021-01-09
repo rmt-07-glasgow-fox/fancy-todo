@@ -1,10 +1,18 @@
 body {
-  background-image: url('https://sorongselatan.bawaslu.go.id/wp-content/uploads/2020/08/Background-opera-speeddials-community-web-simple-backgrounds.jpg');
+  background-image: url('https://cdn.wallpaperhub.app/cloudcache/7/4/f/3/d/5/74f3d51cbec9db78da32e103de1b28538af1b76a.jpg');
   background-size: cover;
   background-repeat: repeat-y;
   height: 100%;
 }
 
+#weather {
+  width: 400px;
+  background-color: white;
+  margin-top: 20px;
+  margin-left: 90px;
+  border-radius: 15px;
+  box-shadow: 0 40px 40px rgba(0, 0, 0, 0.2);
+}
 
 #LoginPage {
     margin-top: 10%;
@@ -239,8 +247,4 @@ input[type=text]:placeholder, input[type=password]:placeholder , input[type=date
 
 #icon {
   width:60%;
-}
-
-#addTodo-btn {
-  width: 200px;
 }

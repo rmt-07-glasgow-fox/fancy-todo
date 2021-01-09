@@ -5,8 +5,8 @@ const authentication = require('../middleware/authentication')
 const authorization = require('../middleware/authorization')
 
 
-
 router.use(authentication)
+router.get("/weather", ControllerTodo.getWeather)
 router.get("/",ControllerTodo.listTodo)
 router.post("/",ControllerTodo.createTodo)
 router.get("/:id", authorization,ControllerTodo.findTodoById)
