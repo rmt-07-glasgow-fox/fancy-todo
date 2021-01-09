@@ -24,6 +24,14 @@ $("#btn-register").click(()=>{
 
 $("#btn-logout").click(()=>{
     localStorage.access_token = ''
+    if(localStorage.signGoogle){
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+        console.log('User signed out.');
+        });
+        localStorage.signGoogle = ''
+    }
+
     checkAuthentication()
 })
 
@@ -169,6 +177,19 @@ function deleteTodo(id){
     })
 }
 
+function onSignIn(googleUser) {
+    var id_token = googleUser.getAuthResponse().id_token;
+    $.ajax({
+        method:'POST',
+        url:'http://localhost:3000/googleSign',
+        data:{token:id_token},
+        success:(response)=>{
+            localStorage.access_token = response.access_token
+            localStorage.signGoogle = "yes"
+            checkAuthentication()
+        }
+    })
+}
 function login(){
     const email = $("#emailLogin").val()
     const password = $("#passwordLogin").val()

@@ -5,6 +5,7 @@ nav{
     opacity: 75%;
 }
 body{
+    z-index: -2;
     background-image: url(bg.jpg) !important;
     background-size: 1900px;
     background-repeat: no-repeat;
@@ -70,7 +71,7 @@ input{
 }
 
 .bg-img-transparent{
-    
+    z-index: -1;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.35) !important;
 }

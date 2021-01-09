@@ -5,10 +5,10 @@ module.exports = {
         const {access_token} = req.headers
         if(access_token){
             let decoded = decode(access_token)
+            console.log(decoded);
             User.findByPk(decoded.id)
             .then(result=>{
                 if(!result){
-                    // return res.status(404).json({message:'User Not Found'})
                     next({name:'NotFound', message:'User Not Found'})
                 }
                 req.userData = decoded
