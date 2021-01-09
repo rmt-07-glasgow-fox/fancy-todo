@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-signin-client_id"
+    content="141244953512-e5u3ahnvetvn26do1fm743vmni92q0bb.apps.googleusercontent.com">
+  <title>Fancytodo</title>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-5 mx-auto">
+        <div id="first">
+          <div class="myform form ">
+            <div class="logo mb-3">
+              <div class="col-md-12 text-center">
+                <h1>Login</h1>
+              </div>
+            </div>
+            <form action="" method="post" name="login" id="login-form">
+              <div>
+                <h3 id="registermessage" style="display: none; text-align: center" class="success-msg">
+                  Register Done
+                </h3>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" name="email" class="form-control" id="email_input" aria-describedby="emailHelp"
+                  placeholder="Enter email">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Password</label>
+                <input type="password" name="password" id="password_input" class="form-control"
+                  aria-describedby="emailHelp" placeholder="Enter Password">
+              </div>
+              <div class="form-group">
+                <p class="text-center">By signing up you accept our <a href="#">Terms Of Use</a></p>
+              </div>
+              <div class="col-md-12 text-center ">
+                <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Login</button>
+              </div>
+              <div class="col-md-12 ">
+                <div class="login-or">
+                  <hr class="hr-or">
+                  <span class="span-or">or</span>
+                </div>
+              </div>
+              <div class="col-md-12 mb-3">
+                <!-- <p class="text-center">
+                  <a href="javascript:void();" class="google btn mybtn"><i class="fa fa-google-plus">
+                    </i> Signup using Google
+                  </a>
+                </p> -->
+                <div class="g-signin2 float-right" data-onsuccess="onSignIn"></div>
+              </div>
+              <div class="form-group">
+                <p class="text-center">Don't have account? <a href="#" id="signup">Sign up here</a></p>
+              </div>
+            </form>
+
+          </div>
+        </div>
+        <div id="second">
+          <div class="myform form ">
+            <div class="logo mb-3">
+              <div class="col-md-12 text-center">
+                <h1>Signup</h1>
+              </div>
+            </div>
+            <form action="#" name="registration" id="register-form">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" name="email" class="form-control" id="email_register_input"
+                  aria-describedby="emailHelp" placeholder="Enter email">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Password</label>
+                <input type="password" name="password" id="password_register_input" class="form-control"
+                  aria-describedby="emailHelp" placeholder="Enter Password">
+              </div>
+              <div class="col-md-12 text-center mb-3">
+                <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Get Started For Free</button>
+              </div>
+              <div class="col-md-12 ">
+                <div class="form-group">
+                  <p class="text-center"><a href="#" id="signin">Already have an account?</a></p>
+                </div>
+              </div>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <!-- <div id="topnav">
+      <a class="active" href="/">Home</a>
+      <a id="login" style="display: block" onclick="login()">Login</a>
+      <a id="register" style="display: block" onclick="register()">Register</a>
+      <a id="logout" style="display: block;" onclick="logout()">Logout</a>
+    </div> -->
+
+    <div id="mainpage" style="display: none">
+      <h1 style="text-align: center">Your Todo List</h1>
+      <button onclick="addTodo()">Add Todo</button>
+      <table id="table" border="1">
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Due Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="tableTodo">
+        </tbody>
+      </table>
+    </div>
+
+    <div id="todoForm" style="display: none" class="modal">
+      <form class="modal-content animate" id="todo-form">
+        <div class="imgcontainer">
+          <span onclick="closeTodoForm()" class="close" title="Close Modal">&times;</span>
+        </div>
+        <div class="container">
+          <label for="title"><b>Title</b></label>
+          <input type="text" placeholder="Enter Title" name="title" id="title_input" required />
+          <label for="description"><b>Description</b></label>
+          <input type="text" placeholder="Enter Description" name="description" id="description_input" required />
+          <label for="status"><b>Status</b></label>
+          <input type="text" placeholder="Enter Status" name="status" id="status_input" required />
+          <label for="due_date"><b>Due Date</b></label>
+          <input type="date" placeholder="Enter Due Date" name="due_date" id="due_date_input" required /><br />
+          <p style="font-size: small; color: red">
+            *Due Date must grather than today
+          </p>
+          <button type="submit">Submit</button>
+        </div>
+        <div class="container" style="background-color: #f1f1f1">
+          <button type="button" onclick="closeTodoForm()" class="cancelbtn">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div id="editTodoForm" style="display: none" class="modal">
+      <form class="modal-content animate" id="edit-todo-form">
+        <div class="imgcontainer">
+          <span onclick="closeEditTodoForm()" class="close" title="Close Modal">&times;</span>
+        </div>
+        <div class="container">
+          <label for="title"><b>Title</b></label>
+          <input type="text" placeholder="Enter Title" name="title" id="edit_title_input" required />
+          <label for="description"><b>Description</b></label>
+          <input type="text" placeholder="Enter Description" name="description" id="edit_description_input" required />
+          <label for="status"><b>Status</b></label>
+          <input type="text" placeholder="Enter Status" name="status" id="edit_status_input" required />
+          <label for="due_date"><b>Due Date</b></label>
+          <input type="date" placeholder="Enter Due Date" name="due_date" id="edit_due_date_input" required /><br />
+          <p style="font-size: small; color: red">
+            *Due Date must grather than today
+          </p>
+          <button type="submit">Submit</button>
+        </div>
+        <div class="container" style="background-color: #f1f1f1">
+          <button type="button" onclick="closeEditTodoForm()" class="cancelbtn">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div id="editTodoStatusForm" style="display: none" class="modal">
+      <form class="modal-content animate" id="update-todo-form">
+        <div class="imgcontainer">
+          <span onclick="closeEditTodoStatusForm()" class="close" title="Close Modal">&times;</span>
+        </div>
+        <div class="container">
+
+
+          <label for="status"><b>Status</b></label>
+          <input type="text" placeholder="Enter Status" name="status" id="update_status_input" required />
+          <button type="submit">Submit</button>
+        </div>
+        <div class="container" style="background-color: #f1f1f1">
+          <button type="button" onclick="closeEditTodoStatusForm()" class="cancelbtn">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+    <!-- <div id="footer"><h5>Fancy Todo by glasgowporto:BA</h3></div> -->
+  </div>
+</body>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script type="text/javascript" src="./main.js"></script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+  integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+</html>
