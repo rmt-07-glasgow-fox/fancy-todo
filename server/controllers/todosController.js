@@ -14,7 +14,7 @@ class todosController {
 
     Todo.create((input))
     .then((data) => {
-      console.log(input);
+      // console.log(input);
       res.status(200).json(data)
     })
     .catch((err) => {

@@ -8,11 +8,11 @@ class usersController {
   static register(req, res) {
     let { email, password } = req.body //get
     let input = { email, password } //ready to input
-    console.log('Controller: register triggered', input);
+    // console.log('Controller: register triggered', input);
 
     User.create(input)
     .then((data) => {
-      console.log('Controller: register success', data);
+      // console.log('Controller: register success', data);
       res.status(201).json(email)
     })
     .catch((err) => {
@@ -24,13 +24,13 @@ class usersController {
 
   static login(req, res) {
     let { email, password } = req.body
-    console.log(`LOGIN`);
+    // console.log(`LOGIN`);
 
     User.findOne({where:{email:email}})
     .then((data) => {
       //check if the email exist
       if (!data) {
-        console.log('Controller: login, email not found');
+        // console.log('Controller: login, email not found');
         return res.status(404).json({message: "Invalid email/Email not found"})
       }
       //find the email and compare its password
@@ -75,7 +75,7 @@ class usersController {
       if (!user) {
         // console.log('user doesnt exist');
         let input = {email: email, password: Math.ceil(Math.random()*1000000)+'rhs'}
-        console.log(input);
+        // console.log(input);
         return User.create(input)
       } else {
         // console.log('if exist, return the user');
@@ -83,14 +83,13 @@ class usersController {
       }
     })
     .then((user) => {
-      console.log('then3');
       //generate the jwt
       const payload = {
         id: user.id,
         email: user.email
       }
       let access_token =  generateToken(payload)
-      console.log(access_token);
+      // console.log(access_token);
       return res.status(200).json({
         access_token
       })

@@ -50,7 +50,7 @@ $("#loginButton").click(function(event) {
     $('#notification').append(err.responseJSON.message)
   })
   .always(() => {
-    console.log('always');
+    // console.log('always');
   })
 })
 
@@ -109,7 +109,7 @@ $("#registerButton").click(function(event) {
     auth()
   })
   .fail(err => {
-    console.log(err);
+    // console.log(err);
     $('#notification').empty()
     $('#notification').append(err.responseJSON)
   })
