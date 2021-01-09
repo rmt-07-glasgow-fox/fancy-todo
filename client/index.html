@@ -5,7 +5,9 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
+  <!-- Google Client Id -->
+  <meta name="google-signin-client_id"
+    content="877379989129-h7bbfus5dbkav8rrssq76hkch1ljam58.apps.googleusercontent.com">
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
@@ -18,7 +20,7 @@
   <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
     <!-- navbar-light bg-light -->
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar w/ text</a>
+      <a class="navbar-brand" href="#">Fancy Todo</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
         aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -36,7 +38,7 @@
           </li>
         </ul>
         <span class="navbar-text">
-          Navbar text with an inline element
+          Try it now
         </span>
       </div>
     </div>
@@ -57,7 +59,7 @@
         <div class="container">
           <h1>FANCY TODO</h1>
         </div>
-        <div class="container">
+        <div class="container" id="weatherApi">
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Weather in <span id="cityName"></span>, <span id="countryName"></span></h5>
@@ -87,7 +89,7 @@
             </div>
             <button type="submit" class="btn btn-primary" id="login-btn">Submit</button>
             <button class="btn btn-primary" id="registerHere-btn">Register Here</button> <br> <br>
-            <button class="btn btn-primary">Google Reserved</button>
+            <div class="g-signin2" data-onsuccess="onSignIn"></div>
           </form>
         </div>
 
@@ -106,7 +108,6 @@
             </div>
             <button type="submit" class="btn btn-primary" id="register-btn">Submit</button>
             <button class="btn btn-primary" id="loginHere-btn">Login Here</button> <br> <br>
-            <button class="btn btn-primary">Google Reserved</button>
           </form>
 
         </div>
@@ -114,7 +115,7 @@
 
 
 
-        <div class="container" id="updateTodo">
+        <div class="container" id="updateTodo" style="margin-bottom: 5%;">
           <form>
             <div class="card">
               <div class="card-header">
@@ -144,7 +145,7 @@
           </form>
         </div>
 
-        <div class="container" id="createTodo">
+        <div class="container" id="createTodo" style="margin-bottom: 5%;">
           <form>
             <div class="card">
               <div class="card-header">
@@ -168,8 +169,7 @@
         </div>
 
         <!-- Jquery List Todo -->
-        <div class="container" id="todo-list">
-          <h2>list</h2>
+        <div class="container" id="todo-list" style="margin-bottom: 20%;">
         </div>
 
       </div>
@@ -177,7 +177,12 @@
   </div>
 
 
-
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.11.0/sweetalert2.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.11.0/sweetalert2.all.min.js"></script>
+  
+  <!-- Google Library -->
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
