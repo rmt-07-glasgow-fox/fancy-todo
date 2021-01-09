@@ -126,6 +126,8 @@ $('#logout-btn').click(function(event) {
   auth2.signOut().then(function () {
     console.log('User signed out.');
   });
+  $('#notification').empty()
+  $('#notification').append(`Success logout!`)
   auth()
 })
 
