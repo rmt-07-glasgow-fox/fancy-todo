@@ -88,18 +88,6 @@ class UserController {
 
         
     }
-  
-    static getUsers(req, res, next) {
-        User.findAll({
-            attributes: {
-                exclude: ['createdAt','updatedAt']
-            }
-        })
-            .then(users => {
-                res.status(200).json(users)
-            })
-            .catch(err => next(err))
-    }
 }
 
 module.exports = UserController

@@ -60,7 +60,6 @@ class TodoController {
                 })
             })
             .catch(err => {
-                console.log(err.message);
                 next(err)})
     } 
    
