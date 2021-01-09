@@ -6,11 +6,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="fancy todo list create with love">
+    <meta name="description" content="Movie todo list create with love">
     <meta name="author" content="Mochammad Trinanda Noviardy">
-    <meta name="google-signin-client_id" content="550351084184-5g9p56nc77t9sqrhi3jq3j7u43efhc9s.apps.googleusercontent.com">
+    <meta name="google-signin-client_id" content="550351084184-m280fqp1vbd1k0amluveddbvgcnus5m4.apps.googleusercontent.com">
 
-    <title>Fancy ToDo list</title>
+    <title>Movie ToDo list</title>
 
     <!-- Custom fonts for this template-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
@@ -22,7 +22,22 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" crossorigin="anonymous">
     <link type="text/css" href="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/css/dataTables.checkboxes.css" rel="stylesheet" />
-
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+        .bg-login-image {
+            background: url('assets/movie.svg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 25rem;
+        }
+        
+        .bg-register-image {
+            background: url('assets/movie2.svg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 25rem;
+        }
+    </style>
 </head>
 
 <body id="page-top">
@@ -35,7 +50,7 @@
             <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
                 <!-- Sidebar - Brand -->
                 <a class="sidebar-brand d-flex align-items-center justify-content-center" type="button" onclick="dashboardPage()">
-                    <div class="sidebar-brand-text mx-3">Fancy ToDo List Admin</div>
+                    <div class="sidebar-brand-text mx-3">Movie ToDo List Admin</div>
                 </a>
 
                 <!-- Divider -->
@@ -115,7 +130,7 @@
                     <div class="container-fluid">
 
                         <div id="dasboardContent">
-                            <div class="col-lg-6 mb-4">
+                            <div class="col-lg-4 mb-2">
 
                                 <!-- Illustrations -->
                                 <div class="card shadow mb-4">
@@ -124,9 +139,9 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="text-center">
-                                            <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="assets/dashboard.svg" alt="">
+                                            <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 12rem;" src="assets/movie.svg" alt="">
                                         </div>
-                                        <p>Welcome to Dashboard Fancy Todo List Admin</p>
+                                        <p>Welcome to Dashboard Movie Todo List Admin</p>
                                     </div>
                                 </div>
                             </div>
@@ -142,15 +157,16 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered" id="tableTodo" width="100%" cellspacing="0">
+                                        <table class="table table-bordered dt-responsive table-striped nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;" id="tableTodo">
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>Title</th>
-                                                    <th>Description</th>
-                                                    <th>Due Date</th>
-                                                    <th>Status</th>
                                                     <th>Action</th>
+                                                    <th>Status</th>
+                                                    <th>Title</th>
+                                                    <th>Movie</th>
+                                                    <!-- <th>Description</th> -->
+                                                    <th>Due Date</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -171,7 +187,7 @@
                 <footer class="sticky-footer bg-white">
                     <div class="container my-auto">
                         <div class="copyright text-center my-auto">
-                            <span>Copyright &copy; 2021 fancy todo list. create with <i class="fas fa-fw fa-heart" style="color: red;"> </i> @bossnanda </span>
+                            <span>Copyright &copy; 2021 Movie todo list. create with <i class="fas fa-fw fa-heart" style="color: red;"> </i> @bossnanda </span>
                         </div>
                     </div>
                 </footer>
@@ -225,6 +241,13 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="movieId" class="col-md-5 control-label">Movie</label>
+                            <div class="col-md-12">
+                                <select id="movieId" name="movieId" style="width: 100% "></select>
+                                <span class="help-block with-errors"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label for="description" class="col-md-5 control-label">Description</label>
                             <div class="col-md-12">
                                 <input type="text" id="description" class="form-control" placeholder="description" name="description" autofocus>
@@ -266,7 +289,7 @@
                                 <div class="col-lg-6">
                                     <div class="p-5">
                                         <div class="text-center">
-                                            <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                            <h1 class="h4 text-gray-900 mb-4">Welcome Back! <br> to Movie todo</h1>
                                         </div>
                                         <form class="user">
                                             <div class="form-group">
@@ -309,34 +332,35 @@
                             <div class="p-5">
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                                    <h1 class="h6 text-gray-900 mb-4">let's make to do list account</h1>
                                 </div>
-                                <form class="user">
-                                    <div class="form-group row">
-                                        <div class="col-sm-6 mb-3 mb-sm-0">
-                                            <input type="text" class="form-control form-control-user" id="registerFirstName" placeholder="First Name">
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <input type="text" class="form-control form-control-user" id="registerLastName" placeholder="Last Name">
-                                        </div>
+                                <form class="user"></form>
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="text" class="form-control form-control-user" id="registerFirstName" placeholder="First Name">
                                     </div>
-                                    <div class="form-group">
-                                        <input type="email" class="form-control form-control-user" id="registerEmail" placeholder="Email Address">
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control form-control-user" id="registerLastName" placeholder="Last Name">
                                     </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6 mb-3 mb-sm-0">
-                                            <input type="password" class="form-control form-control-user" id="registerPassword" placeholder="Password">
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <input type="password" class="form-control form-control-user" id="registerRepeatPassword" placeholder="Repeat Password" onChange="checkPasswordMatch();">
-                                        </div>
-                                        <div class="col-sm-12" id="checkPasswordMatch">
-                                        </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control form-control-user" id="registerEmail" placeholder="Email Address">
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="password" class="form-control form-control-user" id="registerPassword" placeholder="Password">
                                     </div>
-                                    <button disabled id="btnRegister" class="btn btn-primary btn-user btn-block">
+                                    <div class="col-sm-6">
+                                        <input type="password" class="form-control form-control-user" id="registerRepeatPassword" placeholder="Repeat Password" onChange="checkPasswordMatch();">
+                                    </div>
+                                    <div class="col-sm-12" id="checkPasswordMatch">
+                                    </div>
+                                </div>
+                                <button disabled id="btnRegister" class="btn btn-primary btn-user btn-block">
                                         Register Account
                                     </button>
-                                    <hr>
-                                    <a type="button" class="btn btn-user btn-block g-signin2" data-width="500" data-height="50" data-scope="profile email" data-theme="dark" data-longtitle="true" data-onsuccess="onSignIn"></a>
+                                <hr>
+                                <a type="button" class="btn btn-user btn-block g-signin2" data-width="500" data-height="50" data-scope="profile email" data-theme="dark" data-longtitle="true" data-onsuccess="onSignIn"></a>
                                 </form>
                                 <hr>
                                 <div class="text-center">
@@ -362,6 +386,8 @@
     <script type="text/javascript" src="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/js/dataTables.checkboxes.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
     <script src="js/myScript.js"></script>
 
 </body>

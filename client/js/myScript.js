@@ -14,6 +14,7 @@ $(document).ready(function() {
         $('#modal-todos').modal();
         $('#modal-todos form')[0].reset();
         $('.modal-title').text('Add new todos');
+        $('#movieId').empty();
         save_method = "add";
     });
 
@@ -59,12 +60,46 @@ $(document).ready(function() {
     });
 });
 
+const select2Movie = () => {
+    $('select#movieId').select2({
+        allowClear: true,
+        dropdownParent: $("#modal-todos"),
+        placeholder: 'Select Movie',
+        minimumInputLength: 1,
+        ajax: {
+            url: `${baseUrl}/todos/movies/popular`,
+            dataType: 'json',
+            headers: {
+                authorization: localStorage.access_token
+            },
+            data: function(params) {
+                return {
+                    search: $.trim(params.term),
+                    page: params.page || 1
+                };
+            },
+            processResults: function(data) {
+                data.page = data.page || 1;
+                return {
+                    results: data.results.map(function(item) {
+                        return {
+                            id: item.id,
+                            text: item.title
+                        };
+                    })
+                }
+            },
+            cache: true
+        }
+    });
+}
+
 const tableTodosFetch = () => {
     tableTodo = $('#tableTodo').DataTable({
         destroy: true,
         searchable: true,
         processing: true,
-        async: false,
+        responsive: true,
         order: [],
         language: {
             "processing": '<div class="spinner-border text-info m-2" role="status"><span class="sr-only"></span></div></br><div>Tunggu Sebentar yaa...</div>',
@@ -87,12 +122,16 @@ const tableTodosFetch = () => {
         },
         columns: [
             { data: 'id', name: 'id', visible: false, searchable: false },
-            { data: "title" },
-            { data: "description" },
             {
-                data: "due_date",
-                render: function(data) {
-                    return formatDate(data)
+                data: 'action',
+                name: 'action',
+                orderable: false,
+                searchable: false,
+                render: function(data, type, row) {
+                    return `<div class="input-group-btn">
+                            ${(row['status'] === true) ? '' : '<button class="btn btn-sm btn-warning" id="bedit"><i class="fa fa-pencil-alt"></i></button>'}
+                            <button class="btn btn-sm btn-danger"  id="bdestroy"><i class="fa fa-trash"></i></button> 
+                            <button class="btn btn-sm btn-info"  id="bIsDone"> ${(row['status'] === true) ? '<i class="fa fa-times"></i> On Going' : '<i class="fa fa-paper-plane"></i> Done'}</button>  </div>`
                 }
             },
             {
@@ -105,15 +144,16 @@ const tableTodosFetch = () => {
                     }
                 }
             },
+            { data: "title" },
+            { data: "movieName" },
+            // { data: "description" },
             {
-                data: 'action',
-                name: 'action',
-                orderable: false,
-                searchable: false,
-                render: function(data, type, row) {
-                    return `<div class="input-group-btn"><button class="btn btn-warning" id="bedit"><i class="fa fa-pencil-alt"></i></button><button class="btn btn-danger" style="margin-left:5px" id="bdestroy"><i class="fa fa-trash"></i></button> <button class="btn btn-info" style="margin-left:5px" id="bIsDone"> ${(row['status'] === true) ? 'make on going' : 'make done'}</button>  </div>`
+                data: "due_date",
+                render: function(data) {
+                    return formatDate(data)
                 }
             },
+
         ],
     });
 
@@ -161,11 +201,11 @@ $('#tableTodo tbody').on('click', '#bedit', function() {
     $('#title').val(data.title);
     $('#description').val(data.description);
     $('#due_date').val(dateConvert);
+    $('select#movieId').select2('trigger', 'select', { 'data': { 'id': data.movieId, 'text': data.movieName } });
 })
 
 $('#tableTodo tbody').on('click', '#bdestroy', function() {
     const id = tableTodo.row($(this).parents('tr')).data().id;
-    const title = tableTodo.row($(this).parents('tr')).data().title;
 
     Swal.fire({
         title: 'Are you sure?',
@@ -220,7 +260,7 @@ const registerPage = () => {
     $("#checkPasswordMatch").html("");
     $('#dashboardPage').hide();
     $('#loginPage').hide();
-    $('#registerPage').slideDown();
+    $('#registerPage').show();
     $(document.body).addClass('bg-gradient-primary');
 }
 
@@ -232,7 +272,7 @@ const loginPage = () => {
         $('#loginEmail').val('')
         $('#loginPassword').val('')
         $('#dashboardPage').hide();
-        $('#loginPage').slideDown();
+        $('#loginPage').show();
         $('#registerPage').hide();
         $(document.body).addClass('bg-gradient-primary');
     }
@@ -243,6 +283,7 @@ const todoPage = () => {
         $('#todoContent').show();
         $('#dasboardContent').hide();
         tableTodosFetch()
+        select2Movie()
     } else {
         $('#loginEmail').val('')
         $('#loginPassword').val('')
