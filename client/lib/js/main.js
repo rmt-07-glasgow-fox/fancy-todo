@@ -1,6 +1,5 @@
 const baseUrl = "http://localhost:3000"
 
-// $('#register-form').hide();
 $("#signup").click(function () {
   $("#first").fadeOut("fast", function () {
     $("#second").fadeIn("fast");
@@ -413,6 +412,8 @@ function closeEditTodoStatusForm() {
 
 $(document).ready(function () {
   loggedOut();
+  $('#topnav').hide();
+  // logout();
 
 
   $('#loginForm').on('submit', function (e) {
