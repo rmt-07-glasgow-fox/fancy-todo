@@ -1,8 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-const { list } = require('../controllers/project');
+const requireToken = require('../helpers/requireToken');
 
-router.get('/', list);
+const { list, create } = require('../controllers/project');
+
+router.get('/', requireToken, list);
+router.post('/', requireToken, create);
 
 module.exports = router;

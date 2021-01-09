@@ -46,7 +46,10 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="#">Todos</a>
+            <a class="nav-link" onclick="todosPage()" href="#">Todos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" onclick="projectsPage()" href="#">Projects</a>
           </li>
         </ul>
         <ul class="navbar-nav ml-auto">
@@ -66,9 +69,6 @@
               class="dropdown-menu dropdown-menu-right"
               aria-labelledby="navbarDropdown"
             >
-              <a class="dropdown-item" href="#"
-                ><i class="fa fa-cog" aria-hidden="true"></i> Setting</a
-              >
               <a class="dropdown-item" onclick="logout()" href="#"
                 ><i class="fa fa-sign-out"></i> Logout</a
               >
@@ -234,7 +234,7 @@
 
     <section id="dashboard">
       <div class="container">
-        <div class="row mt-5">
+        <div class="row mt-5" id="todos">
           <div class="col">
             <h2 id="hello"></h2>
             <div id="clock">loading ...</div>
@@ -295,6 +295,100 @@
             </div>
             <hr />
             <div id="todoList"></div>
+          </div>
+        </div>
+        <div class="row mt-5" id="projects">
+          <div class="col">
+            <h2 id="hello"></h2>
+            <div id="clock1">loading ...</div>
+            <button
+              class="btn btn-primary w-50 mt-3"
+              onclick="showProjectForm()"
+            >
+              Add Project
+            </button>
+            <div class="card mt-2" id="projectForm">
+              <div class="card-body">
+                <form onsubmit="addProject(event)">
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="nameProject"
+                      placeholder="Enter Name Project"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-primary w-25">
+                      Add
+                    </button>
+                    <button
+                      type="button"
+                      onclick="hideProjectForm()"
+                      class="btn btn-danger w-25"
+                    >
+                      Close
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <table class="table table-striped mt-3">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Project</th>
+                </tr>
+              </thead>
+              <tbody id="projectList"></tbody>
+            </table>
+          </div>
+          <div class="col-8">
+            <h3>Project Todos:</h3>
+            <div class="mb-3">
+              <button class="btn btn-primary w-25" onclick="showTodoForm()">
+                Add Project Todo
+              </button>
+            </div>
+            <div class="card" id="todoForm">
+              <div class="card-body">
+                <form onsubmit="addProjectTodo(event)">
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="titleTodo"
+                      placeholder="Enter Title"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <input type="date" class="form-control" id="dateTodo" />
+                  </div>
+                  <div class="form-group">
+                    <textarea
+                      class="form-control"
+                      rows="5"
+                      id="descriptionTodo"
+                      placeholder="Enter Description"
+                    ></textarea>
+                  </div>
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-primary w-25">
+                      Add
+                    </button>
+                    <button
+                      type="button"
+                      onclick="hideProjectTodoForm()"
+                      class="btn btn-danger w-25"
+                    >
+                      Close
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <hr />
+            <div id="projectTodoList"></div>
           </div>
         </div>
       </div>

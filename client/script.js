@@ -54,18 +54,47 @@ const dashboardPage = () => {
   if (!localStorage.getItem('accessToken')) {
     loginPage();
   } else {
-    $(document).attr('title', 'Dashboard | Fancy Todo');
     $('#auth').hide();
     $('#navbar').show();
     $('#dashboard').show();
-    $('#todoForm').hide();
-    $('#hello').text('Hi, ' + localStorage.getItem('fullName'));
-    $('#navbarDropdown').text(localStorage.getItem('fullName'));
-    listTodo();
-    listHolidays();
-    $('#editFormTodo').hide();
-    month();
+    todosPage();
   }
+};
+
+const todosPage = () => {
+  if (!localStorage.getItem('accessToken')) {
+    loginPage();
+  } else {
+    $(document).attr('title', 'Dashboard | Todos');
+    showTodo();
+  }
+};
+
+const projectsPage = () => {
+  if (!localStorage.getItem('accessToken')) {
+    loginPage();
+  } else {
+    $(document).attr('title', 'Dashboard | Projects');
+    showProjects();
+  }
+};
+
+showTodo = () => {
+  $('#todos').show();
+  $('#todoForm').hide();
+  $('#hello').text('Hi, ' + localStorage.getItem('fullName'));
+  $('#navbarDropdown').text(localStorage.getItem('fullName'));
+  listTodo();
+  // listHolidays();
+  $('#editFormTodo').hide();
+  // month();
+  $('#projects').hide();
+};
+
+showProjects = () => {
+  $('#todos').hide();
+  $('#projects').show();
+  $('#projectForm').hide();
 };
 
 const showTodoForm = () => {
@@ -74,6 +103,14 @@ const showTodoForm = () => {
 
 const hideTodoForm = () => {
   $('#todoForm').hide();
+};
+
+const showProjectForm = () => {
+  $('#projectForm').show();
+};
+
+const hideProjectForm = () => {
+  $('#projectForm').hide();
 };
 
 const showEditTodo = (id) => {
@@ -312,6 +349,40 @@ const deleteTodo = (id) => {
     });
 };
 
+const addProject = (e) => {
+  e.preventDefault();
+
+  const name = $('#nameProject').val();
+  const status = false;
+
+  $.ajax({
+    url: url + '/projects',
+    method: 'POST',
+    data: {
+      name: name,
+      status: status,
+    },
+    headers: {
+      authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+    },
+  })
+    .done((response) => {
+      const template = alertTemplate('success', 'Project has been created');
+      $(template).appendTo('#alert');
+      // listTodo();
+    })
+    .fail((err) => {
+      err.responseJSON.map((e) => {
+        const template = alertTemplate('error', e.message);
+        $(template).appendTo('#alert');
+      });
+    })
+    .always(() => {
+      $('#nameProject').val('');
+      hideProjectForm();
+    });
+};
+
 const register = (e) => {
   e.preventDefault();
   const firstName = $('#firstNameRegister').val();
@@ -485,6 +556,7 @@ const month = () => {
 
 const clock = () => {
   $('#clock').html(moment().format('DD MMMM YYYY, HH:mm:ss'));
+  $('#clock1').html(moment().format('DD MMMM YYYY, HH:mm:ss'));
 };
 
 setInterval(clock, 1000);
