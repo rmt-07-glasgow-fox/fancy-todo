@@ -9,7 +9,7 @@ async function authUser(req, res, next) {
 
     try {
 
-        if( !accessToken ) {
+        if( !access_token ) {
             throw {
                 status : 401,
                 message : 'Please Login First'
