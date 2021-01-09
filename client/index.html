@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="601224271421-tnv9fd3smqv4gkhsrichoucvjj3of53l.apps.googleusercontent.com">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+    <title>Fancy Todo</title>
+</head>
+<body>
+    <!-- nav -->
+            <nav class="navbar navbar-expand-md bg-light sticky-top">
+                <a class="navbar-brand text-dark" href="#">Fancy Todo</a>
+                <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <button class="btn btn-danger" id="logout-btn">logout</button>
+                  </li>
+                </ul>
+              </nav>
+      <!-- nav -->
+
+      <!--register-->
+      <div class="row bg-light" style="height: 90vh;" id="welcome" >
+        <div class="col-sm-1"></div>
+        <div class="col-sm-5">
+            <h1>Fancy Todo</h1>
+            <p>"We must use time wisely and forever realize that the time is always ripe to do right".<br>-Nelson Mandela</p>
+        </div>
+        <div class="col-sm-5" >
+            <div class="card bg-light" id="signUp">
+                <article class="card-body mx-auto" style="max-width: 400px;">
+                    <h4 class="card-title mt-3 text-center">Create Account</h4>
+                    <p class="text-center">Get started with your free account</p>
+                    
+                    <form>
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                         </div>
+                        <input name="" class="form-control" placeholder="username" type="text" id="regusername">
+                    </div> <!-- form-group// -->
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                         </div>
+                        <input name="" class="form-control" placeholder="Email address" type="email" id="regemail">
+                    </div> <!-- form-group// -->
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                        </div>
+                        <input class="form-control" placeholder="Create password" type="password" id="regpassword">
+                    </div> <!-- form-group// -->                                 
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block" id="reg-btn"> Create Account  </button>
+                    </div> <!-- form-group// -->      
+                    <p class="text-center">Have an account? <a href="" id="signin-link">SignIn</a> </p>                                                                 
+                </form>
+                </article>
+            </div>
+            <!-- end register-->
+            <!--login-->
+            <div class="card bg-light" id="signIn">
+                <article class="card-body mx-auto" style="max-width: 400px;">
+                    <h4 class="card-title mt-3 text-center">SignIn</h4>
+                    <form>
+                    <div class="form-group input-group">
+                    </div> <!-- form-group// -->
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                        </div>
+                        <input name="" class="form-control" placeholder="Email address" type="email" id="email">
+                    </div> <!-- form-group// -->
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                        </div>
+                        <input class="form-control" placeholder="password" type="password" id="password">
+                    </div> <!-- form-group// -->                                 
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block" id="login-btn"> submit  </button>
+                    </div> <!-- form-group// -->      
+                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                    <p class="text-center">Don't have an account? <a href="" id="signup-link">SignUp</a> </p>                                                                 
+                </form>
+                </article>
+            </div>
+          <!--login-->
+        <div class="col-sm-1"></div>
+      </div>
+    </div>
+     
+      <!--fancy todo -->
+    <div class="row bg-light" id="todos" style="height: 90vh;">
+      <div class="col-sm-1"></div>  
+      <!--weather-->
+      <div class="col-sm-3">
+        <h1>Hai</h1>
+        <h4>Berikut perkiraan cuaca hari ini</h4>
+        <div id="weather"></div><br>
+      </div>
+      <!--weather-->
+      <div class="col-sm-7">
+          <!--todo add form -->
+          <h1>Here Your Task</h1>
+          <button class="btn btn-primary" id="btn-view-add">add task</button>
+          <hr>
+          <form action="" id="form-add">
+            <div class="row">
+                <div class="col-md">
+                  <input name="" class="form-control" placeholder="title" type="text" id="title-add">
+                </div>
+                <div class="col-md">
+                  <input name="" class="form-control" type="date" id="date-add">
+                </div>
+            </div>
+            <br>
+            <div>
+                <textarea name="" class="form-control" placeholder="Description" cols="20" rows="2" id="desc-add"></textarea>
+            </div>
+            <p>date must be grather than today</p>
+            <button type="submit" class="btn btn-primary" id="add-todo">add</button>
+            <button type="cancel" class="btn btn-danger" id="cancel-add">cancel</button>
+            </form>
+          <!--todo add form -->
+          <!--todo edit form -->
+          <div class="row card-body mx-auto" id="form-edit">
+            <div class="col-md-1 bg-dark checkbox">
+                <br><br><br><br><br>
+                <!-- <input type="checkbox" id="check-edit-todo"> -->
+            </div>
+            <div class="col-md-11 bg-white">
+                <br>
+                <form action="">
+                    <div class="row">
+                        <div class="col-md">
+                          <input name="" class="form-control"id="title-edit-todo" type="text">
+                        </div>
+                        <div class="col-md">
+                          <input name="" class="form-control" type="date" id="date-edit-todo">
+                        </div>
+                    </div>
+                    <br>
+                    <div>
+                        <textarea name="" class="form-control" cols="20" rows="2" id="desc-edit-todo"></textarea>
+                    </div>
+                    <p id="date-alert">date must be grather than today</p>
+                    <button type="submit" class="btn btn-success" id="update-btn">edit</button>
+                    <button type="cancel" class="btn btn-danger" id="cancel-btn">cancel</button>
+                  </form>
+                  <br>
+            </div>
+            </div>
+            <br>
+          <!--todo edit form -->
+          <!--todo list -->
+          <div id="view-todo">
+            
+          </div>
+          <br>
+          <!--todo list -->
+     </div>
+      <div class="col-sm-1">
+      </div>
+    </div>
+      <!--fancy todo -->
+      <script src="https://apis.google.com/js/platform.js" async defer></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="./main.js"></script>
+</body>
+</html>

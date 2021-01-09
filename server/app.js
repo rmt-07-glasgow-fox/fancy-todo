@@ -3,13 +3,14 @@ require('dotenv').config()
 const express = require('express')
 const app = express()
 const PORT = 3000
+const cors = require('cors')
 const todoRoute = require("./routes/todoRoute")
 const userRoute = require("./routes/authRoute")
 const { authenticate } = require('./middlewares/auth')
 const { errorHandler } = require('./middlewares/errorHandler')
 
+app.use(cors())
 app.use(express.urlencoded({extended:true}))
-
 app.use("/",userRoute)
 app.use(authenticate)
 app.use("/",todoRoute)

@@ -8,20 +8,20 @@ function authenticate (req,res,next) {
      User.findOne({ where : { email: decoded.email}})
      .then (find => {
          if(!find) {
-             next({code: 401, origin: 'authenticate'})
+             next ({code: 401, origin: 'authenticate'})
          } else {
             //  req.user = find
              req.user = {id: find.id}
              next()
          }
-     }).catch(err => {
-         next({code: 500})
      })
-    }catch(err){
+     .catch(err => {
+         next ({code: 500})
+     })
+    } catch(err) {
         next({ code: 404, msg: err.message })
     }
  }
-
 
 function authorize (req, res, next) {
     Todo.findOne({where : { id: req.params.id}})

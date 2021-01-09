@@ -38,6 +38,7 @@ class TodoController {
             res.status(201).json(data)
         })
         .catch(err => {
+            // console.log(err)
             next({code: 500})
         })
     }
