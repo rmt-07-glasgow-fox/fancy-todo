@@ -1,4 +1,4 @@
-const { Todo } = require('../models')
+const { Todo, User } = require('../models')
 
 class TodoController {
   static readTodo(req, res, next) {
@@ -36,8 +36,14 @@ class TodoController {
   static getTodoById(req, res, next) {
     const todoId = +req.params.id
 
-    Todo.findByPk(todoId, { attributes: { exclude: ['createdAt', 'updatedAt'] } })
+    Todo.findByPk(todoId, { 
+      attributes: { 
+        exclude: ['createdAt', 'updatedAt'] 
+      },
+      include: User
+    })
       .then(data => {
+        console.log(data)
         if (data) {
           res.status(200).json(data)
         } else {

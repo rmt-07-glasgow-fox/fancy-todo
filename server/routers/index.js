@@ -5,7 +5,7 @@ const weatherRouter = require('./weatherRouter')
 const { authenticate } = require('../middlewares/auth')
 
 
-router.use(authRouter)
+router.use('/users', authRouter)
 router.use(authenticate)
 router.use('/weather', weatherRouter)
 router.use('/todos', todoRouter)
