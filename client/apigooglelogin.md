@@ -1,2 +1,0 @@
-1005501449202-75837aem8g5hbo5eo5l2n085c9b57hgo.apps.googleusercontent.com
-2e-sq8tthqYfp2BpKPSbXPAL

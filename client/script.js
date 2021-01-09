@@ -71,15 +71,19 @@ function myFunction(){
         checkAuth()
     })
 
+    $("#cancel").click(function(){
+        $(document).empty()
+            $(document).ready(myFunction())
+    })
+
     $("#create-task-btn").click(function(){
         $("#create-task").show()
         $("#create-task-btn").hide()
         $("#my-signin").hide()
         $("#my-signup").hide()
-        $("#my-task").hide()
+        $("#my-task").show()
         $("#logout-btn").show()
         $("#update-task").hide()
-        $("#my-todo").hide()
     })
 
     $("#create-task-form-btn").click(function(event){
@@ -102,7 +106,8 @@ function myFunction(){
             headers: {access_token: localStorage.getItem('access_token')}     
         })
         .done(response => {
-            checkAuth()
+            $(document).empty()
+            $(document).ready(myFunction())
         })
         .fail(err => {
             console.log("GAGAL")
@@ -122,6 +127,7 @@ function checkAuth(){
         $("#logout-btn").show()
         $("#create-task").hide()
         $("#update-task").hide()
+        $("#my-weather").show()
     } else {
         $("#my-signin").show()
         $("#my-signup").hide()
@@ -130,6 +136,7 @@ function checkAuth(){
         $("#read-task").hide()
         $("#update-task").hide()
         $("#create-task").hide()
+        $("#my-weather").hide()
     }
 }
 
@@ -143,6 +150,7 @@ function getDataToDo(){
     .done(response => {
         console.log("DATA BERHASIL DIPEROLEH")
         readTodo(response)
+        
     })
     .fail(err => {
         console.log("GAGAL")
@@ -164,7 +172,7 @@ function getWeather(){
         let weather = response.contentWeather
         $("#my-weather").empty()
         $('#my-weather').append(`<h3> Cuaca Hari Ini </h3>
-        <table class="table table-bordered" style="text-align: center;">
+        <table class="table table-dark table-bordered" style="text-align: center;">
         <thead class="thead-dark">
             <tr>
             <th scope="col">Location</th>
@@ -195,7 +203,8 @@ function readTodo(response){
     console.log(toDoList)
     $("#my-todo").empty()
     toDoList.forEach(el => {
-        $('#my-todo').append(`<div class="card shadow p-3 mb-5 bg-white rounded" style="width: 75rem;">
+        $('#my-todo').append(`<div class="col-6 d-flex align-items-stretch">
+        <div class="card shadow p-3 mb-5 bg-white rounded card-news" style="width: 40rem;">
         <div class="card-body">
           <h5 class="card-title">${el.title}</h5>
           <p class="card-text">${el.description}</p>
@@ -203,7 +212,9 @@ function readTodo(response){
           <p class="card-text">Status: ${el.status}</p>
           <button class="btn btn-primary edit-btn" onclick="editToDo(${el.id})">Edit</button>
           <button class="btn btn-danger dark delete-btn" onclick="deleteToDo(${el.id})">Delete</button>
-          <button class="btn btn-success dark delete-btn" onclick="patchToDo(${el.id})">Update Status</button>
+          <button class="btn btn-warning dark delete-btn" onclick="patchToDoBacklog(${el.id})">Update Status to Backlog</button>
+          <button class="btn btn-success dark delete-btn" onclick="patchToDo(${el.id})">Update Status to Complete</button>
+        </div>
         </div>
       </div>`)
     })
@@ -219,6 +230,8 @@ function deleteToDo(num){
     })
     .done(response => {
         console.log("DATA BERHASIL DIHAPUS")
+        $(document).empty()
+        $(document).ready(myFunction())
     })
     .fail(err => {
         console.log("GAGAL")
@@ -248,11 +261,10 @@ function editToDo(num){
             headers: {access_token: localStorage.getItem('access_token')}     
         })
         .done(response => {
-            console.log("DATA BERHASIL DIEDIT")
+            $(document).empty()
+            $(document).ready(myFunction())
         })
         .fail(err => {
-            console.log("GAGAL")
-            console.log(err)
         })
         .always(() => {
             console.log("always RUN")
@@ -260,7 +272,7 @@ function editToDo(num){
     })  
 }
 
-function patchToDo(num){
+function patchToDoBacklog(num){
     let status = "false"
 
     $.ajax({
@@ -270,16 +282,35 @@ function patchToDo(num){
         headers: {access_token: localStorage.getItem('access_token')}     
     })
     .done(response => {
-        console.log("DATA BERHASIL DIPATCH")
         $(document).empty()
         $(document).ready(myFunction())
     })
     .fail(err => {
-        console.log("GAGAL")
         console.log(err)
     })
     .always(() => {
-        console.log("always RUN")
+        console.log("RUN")
+    })   
+}
+
+function patchToDo(num){
+    let status = "true"
+
+    $.ajax({
+        method: 'PATCH',
+        url: `${baseUrl}/todos/${+num}`,
+        data: {status},
+        headers: {access_token: localStorage.getItem('access_token')}     
+    })
+    .done(response => {
+        $(document).empty()
+        $(document).ready(myFunction())
+    })
+    .fail(err => {
+        console.log(err)
+    })
+    .always(() => {
+        console.log("RUN")
     })   
 }
 
@@ -290,7 +321,6 @@ function onSignIn(googleUser) {
     // console.log('Image URL: ' + profile.getImageUrl());
     // console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
     var id_token = googleUser.getAuthResponse().id_token;
-    console.log(id_token)
 
     $.ajax({
         method: 'POST',
@@ -298,7 +328,6 @@ function onSignIn(googleUser) {
         data: {id_token},
     })
     .done(response => {
-        console.log(response)
         localStorage.setItem('access_token',response.access_token)
         checkAuth()
     })

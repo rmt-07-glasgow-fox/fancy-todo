@@ -95,11 +95,20 @@
 <br>
 <!-- Akhir Button Log Out -->
 
+<!-- API WEATHER -->
+<div class="container container-body d-flex justify-content-center">
+  <div class="col-6">
+      <div id="my-weather" style="text-align: center;"></div><br>
+    </div>
+  </div>
+</div>
+<!-- API WEATHER -->
+
 <!-- Create Project -->
 <section id="create-task">
   <div class="container container-body">
     <div class="row">
-      <div class="col-4">
+      <div class="col-12">
         <div class="row" id="create-todo">
           <h3 style="text-align: center;">Create Task</h3>
           <form>
@@ -113,7 +122,8 @@
               <label for="task-due-date">Due Date</label>
               <input type="date" class="form-control" id="task-due-date">
             </div>
-            <button type="submit" id="create-task-form-btn" class="btn btn-warning">Create Task</button>
+            <button type="submit" id="create-task-form-btn" class="btn btn-warning" style="display: flex; float: right;">Create Task</button>
+            <button id="cancel" class="btn btn-danger">Cancel</button>
           </form>
         </div>
       </div>
@@ -122,29 +132,11 @@
 </section>
 <!--Akhir Create Project -->
 
-<!-- Read Project -->
-<section id="read-task">
-  <div class="container container-body d-flex justify-content-center">
-    <div class="row">
-      <div class="col-12 ">
-        <!-- API WEATHER -->
-        <div id="my-weather"></div><br>
-        <!-- API WEATHER -->
-        <!-- Button Create -->
-        <button id="create-task-btn" class="btn btn-warning ">Create Task</button>
-        <!-- Akhir Button Create -->
-        <div id="my-todo"></div>
-      </div>
-    </div>
-  </div>
-</section>
-<!--Akhir Read Project -->
-
 <!-- Edit Project -->
 <section id="update-task">
   <div class="container container-body">
     <div class="row">
-      <div class="col-4">
+      <div class="col-12">
         <div class="row" id="update-todo">
           <h3 style="text-align: center;">Update Task</h3>
           <form>
@@ -158,7 +150,8 @@
               <label for="task-due-date-update">Due Date</label>
               <input type="date" class="form-control" id="task-due-date-update">
             </div>
-            <button type="submit" id="update-task-form-btn" class="btn btn-warning">Update Task</button>
+            <button type="submit" id="update-task-form-btn" class="btn btn-warning" style="display: flex; float: right;">Update Task</button>
+            <button id="cancel" class="btn btn-danger">Cancel</button>
           </form>
         </div>
       </div>
@@ -167,10 +160,22 @@
 </section>
 <!--Akhir Edit Project -->
 
+<!-- Button Create -->
+  <div class="container container-body d-flex justify-content-center">
+        <div class="row"> 
+          <button id="create-task-btn" class="btn btn-warning">Create Task</button>
+        </div>
+  </div>
+  
+<!-- Akhir Button Create -->
 
-
-
-
+<!-- Read Project -->
+<section id="read-task">
+  <div class="container container-body d-flex justify-content-center">
+        <div class="row" id="my-todo"></div>
+  </div>
+</section>
+<!--Akhir Read Project -->
 
 <!-- Option 1: Bootstrap Bundle with Popper -->
 <script src="https://apis.google.com/js/platform.js" async defer></script>
