@@ -4,9 +4,13 @@ const {
 } = require('sequelize');
 
 const {
-  hashPassword
+  hashPassword }
   = require('../helpers/bcrypt')
-}
+
+const {
+  generateToken }
+  = require('../helpers/jwt') 
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -41,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'User',
-    hooks = {
+    hooks : {
       beforeCreate: (user,options)  => {
         user.password = hashPassword(user,password)
       }

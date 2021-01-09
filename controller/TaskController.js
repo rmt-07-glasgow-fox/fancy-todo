@@ -72,14 +72,6 @@ class TaskController {
 
     }
 
-    static login(req,res){
-        
-    }
-
-    static postLogin(req,res){
-        
-    }
-
     static deleteTodo(req,res){
         const id = req.params.id
         console.log(req.params)

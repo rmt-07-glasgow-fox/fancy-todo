@@ -1,5 +1,5 @@
-const { user } = require('./models')
-const {comparePassword} = require('./helpers/bcrypt')
+const { user } = require('../models')
+const {comparePassword} = require('../helpers/bcrypt')
 
 class UserController{
     static register (req, res){
@@ -13,7 +13,7 @@ class UserController{
                 id : user.id,
                 email: user.email
         }
-            return res.status(201).json(user)
+            return res.status(201).json(response)
         })
         .catch (err => {
             return res.status(400).json(user)
@@ -22,8 +22,8 @@ class UserController{
 
     static async login(req, res) {
         try {
-            const { email, password }
-            const user = user.findOne({
+            const { email, password } = req.body
+            const user = await user.findOne({
                 where: {
                     email : email
                 }
