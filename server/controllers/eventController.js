@@ -11,7 +11,11 @@ class EventController{
         .catch(next)
     }
     static showAllEvent(req,res,next){
-        Event.findAll()
+        Event.findAll({
+            where:{
+                UserId:req.userData.id
+            }
+        })
         .then(result=>{
             result.forEach(element => {
                 // console.log(element.dataValues); 
