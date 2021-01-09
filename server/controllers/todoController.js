@@ -5,7 +5,7 @@ class TodoController {
     const newTodo = {
       title: req.body.title,
       description: req.body.description,
-      status: req.body.status,
+      status: req.body.status || false,
       due_date: req.body.due_date,
       user_id: req.user.id
     }
@@ -17,7 +17,11 @@ class TodoController {
     })
   }
   static getAllToDos(req, res, next) {
-    Todo.findAll()
+    Todo.findAll({
+      where: {
+        user_id: req.user.id
+      }
+    })
     .then((result) => {
       res.status(200).json(result)
     }).catch((err) => {

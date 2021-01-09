@@ -9,17 +9,18 @@ function authenticate(req, res, next) {
     })
     .then((find) => {
       if(!find){
-        res.status(401).json({ message: 'Please login first'})
+        next({ name: 'needlogin'})
       } else {
         req.user = find
         next()
       }
     }).catch((err) => {
-      res.status(500).json({ message: err.message })
+      next(err)
     })
   }
   catch(err) {
-    res.status(400).json({ message: err.message })
+    next({ name: 'needlogin'})
+
   }
 }
 
@@ -29,13 +30,13 @@ function authorize(req, res, next) {
   })
   .then(data => {
     if(!data || data.user_id !== req.user.id) {
-      res.status(401).json({ message: "You don't have access"})
+      next({ name: 'needAccess' })
     } else {
       next()
     }
   })
   .catch(err => {
-    res.status(500).json({ message: err.message })
+    next(err)
   })
 }
 
