@@ -65,7 +65,6 @@ $('#register-btn').click(function(event){
     $('#emailRegister').val('')
     $('#passwordRegister').val('')
     checkAuth()
-    console.log(response);
   })
   .fail(err => {
     console.log(err, '<=== error')
