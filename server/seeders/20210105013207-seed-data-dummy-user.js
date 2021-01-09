@@ -7,7 +7,7 @@ module.exports = {
       name: 'Romi Zaki Ferdiyanto',
       username: 'romizaki',
       email: 'rzferdiyanto@gmail.com',
-      password: '$2a$10$Hczp/OTlgs/J8oZZ7sQe1e52ty9J0VBR2tij2dzSYzVJSrrKD7ds.',
+      password: '12345678',
       status: true,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -16,7 +16,7 @@ module.exports = {
         name: 'Jose Mourinho',
         username: 'josemou',
         email: 'greedymons@gmail.com',
-        password: '$2a$10$Hczp/OTlgs/J8oZZ7sQe1e52ty9J0VBR2tij2dzSYzVJSrrKD7ds.',
+        password: '12345678',
         status: true,
         createdAt: new Date(),
         updatedAt: new Date()
