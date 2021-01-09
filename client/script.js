@@ -292,6 +292,7 @@ function onSignIn(googleUser) {
   }
 
 function checkOut() {
+    
     $("#sign-up").hide()
     $('#add-todo').hide('fast')
     $('#edit-todo').hide('fast')
@@ -300,10 +301,32 @@ function checkOut() {
         $("#todo").show('fast',()=>{
             findTodo()
         })
+        $('#news').hide()
         $('#btn-sign-out').show()
     } else {
         $("#sign-in").show('fast')
         $("#todo").hide('fast')
         $('#btn-sign-out').hide()
+        getNews()
     }
+}
+
+function getNews() {
+    $.ajax({
+        method: "GET",
+        url: `${local_host}/news`
+    })
+    .done(res=>{
+      console.log(res);
+      res.forEach(e=>{
+        $('#news').append(`
+        <h5>${e.summary}</h5>
+        <a href="${e.link}">Go to original link</a><br><br><br>
+        
+      `)
+      })
+    })
+    .fail(err=>{
+      console.log(err);
+    })
 }

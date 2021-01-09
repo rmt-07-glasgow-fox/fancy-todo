@@ -1,6 +1,7 @@
 const {User} = require('../models')
 const {Bcrypt} = require('../helper/bcrypt')
 const {generateToken} = require('../helper/webToken')
+const axios = require('axios').default
 
 class UserController{
     static signUp(req,res,next){
@@ -90,6 +91,26 @@ class UserController{
         .catch(err=>{
             res.status(500)
         })
+    }
+
+    static getNews(req,res,next){
+        const options = {
+                method: 'GET',
+                url: 'https://apidojo-yahoo-finance-v1.p.rapidapi.com/news/list',
+                params: {category: 'generalnews', region: 'US'},
+                headers: {
+                'x-rapidapi-key': 'dfbdd7fbd9mshe00a75467674f9bp1c5c61jsn4b416ce1a4fb',
+                'x-rapidapi-host': 'apidojo-yahoo-finance-v1.p.rapidapi.com'
+                }
+            };
+            
+        axios.request(options)
+        .then(response=>{
+        console.log(response.data.items.result)
+            res.status(200).json(response.data.items.result)
+        }).catch(err=>{
+          res.status(500).json(err)
+        });
     }
 }
 
