@@ -306,7 +306,7 @@ function doneTodo(id, status) {
             readTodo()
         })
         .fail(err => {
-            cconsole.log(err.responseJSON.message);
+            console.log(err.responseJSON.message);
             $('#alert').empty()
             $('#alert').append(`
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
