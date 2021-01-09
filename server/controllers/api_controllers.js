@@ -1,11 +1,11 @@
 const axios = require('axios')
 
 class ApiController {
-    static getHolidays(req, res, next) {
-        axios.get('https://calendarific.com/api/v2/id?api_key=')
-        .then(data => {
-            console.log(data)
-            res.send('masuk')
+    static getNews(req, res, next) {
+        axios.get('http://newsapi.org/v2/top-headlines?country=id&apiKey=67d9ee672bb34baeb86ce111851fa3eb')
+        .then(news => {
+            // console.log(news.data.articles)
+            res.status(200).json(news.data.articles)
         })
         .catch(err => {
             console.log(err)

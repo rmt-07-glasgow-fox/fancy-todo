@@ -59,42 +59,49 @@
         <div class="g-signin2" data-onsuccess="onSignIn" style="margin-left: 30px;"></div>
         <!-- end login -->
         <!-- todos list -->
-        
-            <div id="todos" style="display: none;">
-                <div id="add-todos" style="margin-left: 20px;">
-                    <button class="rounded" id="to-add-form">Add New Task</button>
-                </div><br>
-                <div id="todos-list">
+        <div class="row">
+            <div class="col-md-6" >
+                <div id="todos" style="display: none;">
+                    <div id="add-todos" style="margin-left: 20px;">
+                        <button class="rounded" id="to-add-form">Add New Task</button>
+                    </div><br>
+                    <div id="todos-list">
+                        
+                    </div>
                     
                 </div>
-                
+                <!-- end todos list -->
+                <!-- add todo -->
+                <div id="add-task-form" style="display: none; margin-left: 30px;">
+                    <form action="">
+                        <label for="title">Title</label><br>
+                        <input type="text" name="" id="title"><br><br>
+                        <label for="due-date">Due Date</label><br>
+                        <input type="date" name="" id="due_date"><br><br>
+                        <label for="description">Description</label><br>
+                        <input type="text" name="" id="description"><br><br>
+                        <button type="submit" class="rounded" id="add-task-btn">Add</button>
+                    </form>
+                </div>
+                <!-- end add todo -->
+                <div id="edit-task-form" style="display: none; margin-left: 30px;">
+                    <form action="">
+                        <label for="title">Title</label><br>
+                        <input type="text" name="" id="title-edit"><br><br>
+                        <label for="due-date">Due Date</label><br>
+                        <input type="date" name="" id="due_date-edit"><br><br>
+                        <label for="description">Description</label><br>
+                        <input type="text" name="" id="description-edit"><br><br>
+                        <button type="submit" class="rounded" id="edit-task-btn">Confirm Edit</button>
+                    </form>
+                </div>
             </div>
-            <!-- end todos list -->
-            <!-- add todo -->
-            <div id="add-task-form" style="display: none; margin-left: 30px;">
-                <form action="">
-                    <label for="title">Title</label><br>
-                    <input type="text" name="" id="title"><br><br>
-                    <label for="due-date">Due Date</label><br>
-                    <input type="date" name="" id="due_date"><br><br>
-                    <label for="description">Description</label><br>
-                    <input type="text" name="" id="description"><br><br>
-                    <button type="submit" class="rounded" id="add-task-btn">Add</button>
-                </form>
+            <div class="col-md-6">
+                <div id="news" style="display: none;">
+    
+                </div>
             </div>
-            <!-- end add todo -->
-            <div id="edit-task-form" style="display: none; margin-left: 30px;">
-                <form action="">
-                    <label for="title">Title</label><br>
-                    <input type="text" name="" id="title-edit"><br><br>
-                    <label for="due-date">Due Date</label><br>
-                    <input type="date" name="" id="due_date-edit"><br><br>
-                    <label for="description">Description</label><br>
-                    <input type="text" name="" id="description-edit"><br><br>
-                    <button type="submit" class="rounded" id="edit-task-btn">Confirm Edit</button>
-                </form>
-            </div>
-
+        </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

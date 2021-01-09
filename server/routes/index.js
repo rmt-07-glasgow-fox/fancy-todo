@@ -7,8 +7,8 @@ const todosRoutes = require('./todos')
 router.post('/register', UserController.register)
 router.post('/login', UserController.login)
 router.post('/googleLogin', UserController.googleLogin)
-router.get('/holidays', ApiController.getHolidays)
 router.use(authenticate)
+router.get('/news', ApiController.getNews)
 router.use('/todos', todosRoutes)
 
 

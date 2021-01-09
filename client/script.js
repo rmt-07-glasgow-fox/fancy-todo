@@ -83,6 +83,7 @@ function logout() {
     localStorage.clear()
     $('#todos').hide()
     $('#logout').hide()
+    $('#news').hide()
     $('#add-task-form').hide()
     $('#edit-task-form').hide()
     $('.login').show()
@@ -103,8 +104,10 @@ function dashBoard() {
     $('#loginForm').hide()
     $('.login').hide()
     $('#logout').show()
+    $('#news').show()
     $('.g-signin2').hide()
     todosList()
+    getNews()
 }
 
 function todosList() {
@@ -278,6 +281,36 @@ function changeStatus(taskId, status) {
     .fail(err => {
         console.log(err)
     })
+}
+
+function getNews() {
+    $.ajax({
+        url: `${baseUrl}/news`,
+        method: 'GET',
+        headers: {
+          access_token: localStorage.getItem('access_token'),
+        },
+      })
+        .done((response) => {
+          console.log('masuk news')
+          console.log(response)
+          $('#news').empty();
+          response.map(data => {
+            $(`
+            <div class="card w-75 mb-5">
+              <img class="card-img-top" src="${data.urlToImage}" alt="Card image cap">
+              <div class="card-body">
+                <h5 class="card-title">${data.title}</h5>
+                <p class="card-text">${data.description}</p>
+                <a href="${data.url}" target="_blank" class="btn btn-primary float-right">Baca selengkapnya</a>
+              </div>
+            </div>
+            `).appendTo('#news');
+          });
+        })
+        .fail(err => {
+          console.log(err)
+        })
 }
 
 
