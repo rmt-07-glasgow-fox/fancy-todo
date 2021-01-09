@@ -22,8 +22,13 @@ $(document).ready(function(){
     })
 
     $("#logout").on("click", function(e) {
-        // e.preventDefault()
+        e.preventDefault()
         logout()
+    })
+
+    $("#save").on("click", function(e) {
+        e.preventDefault()
+        saveEdit()
     })
 })
   

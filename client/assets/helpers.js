@@ -17,6 +17,8 @@ function listpage () {
     $('#navSignup').hide()
     $('#navLogin').hide()
     fetchTodo()
+    weather()
+    videos()
 }
 
 function loginpage() {
@@ -62,6 +64,9 @@ function signup() {
     .fail(err => {
         console.log(err)
     })
+    .always(() => {
+        $('#registerForm').trigger('reset')
+    })
 }
 
 function login() {
@@ -78,6 +83,9 @@ function login() {
     })
     .fail(err => {
         console.log(err)
+    })
+    .always(() => {
+        $('#loginForm').trigger('reset')
     })
 }
 
@@ -100,7 +108,7 @@ function fetchTodo() {
                 </div>
                 <div class="card-body">${element.description}</div>
                 <div class="card-footer"> ${element.due_date} <br>
-                <button onclick="editpage(${element.id})"> Edit </button> <button onclick="deleteTodo(${element.id})"> Delete </button> 
+                <button class="btn btn-dark" onclick="editpage(${element.id})"> Edit </button> <button class="btn btn-dark" onclick="deleteTodo(${element.id})"> Delete </button> 
                 </div>
             </div>
             `)
@@ -134,6 +142,9 @@ function createTodo() {
     .fail(err => {
         console.log(err)
     })
+    .always(() => {
+        $('#createForm').trigger('reset')
+    })
 }
 
 function deleteTodo(id) {
@@ -153,7 +164,12 @@ function deleteTodo(id) {
 }
 
 function logout() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
     localStorage.clear()
+    homepage()
 }
 
 function fetchTodoByid(id) {
@@ -166,8 +182,6 @@ function fetchTodoByid(id) {
     })
     .done(data => {
         editData = data
-        console.log(data.due_date);
-        // console.log(data.due_date.getDate());
 
         let title = $('#titleEdit').val(data.title)
         let description = $('#descriptionEdit').val(data.description)
@@ -183,7 +197,7 @@ function saveEdit () {
     let description = $('#descriptionEdit').val()
     let due_date = $('#dueDateEdit').val()
     $.ajax({
-        method: 'POST',
+        method: 'PUT',
         url: `http://localhost:3000/todos/${editData.id}`, 
         headers: {
             access_token: localStorage.getItem('access_token')
@@ -195,9 +209,77 @@ function saveEdit () {
         }
     })
     .done(data => {
-        console.log(data);
+        listpage()
     })
     .fail(err => {
         console.log(err);
+    })
+    .always(() => {
+        $('#editForm').trigger('reset')
+    })
+}
+
+function weather () {
+    $.ajax({
+        method: 'GET',
+        url: 'http://localhost:3000/weather'
+    })
+    .done(data => {
+        $("#weather").empty()
+        data.forEach(element => {
+            $("#weather").append(`
+            <li class="list-group-item list-group-item-warning">
+            <div class="card my-3 border" style="width: 15rem;">
+                <div class="card-header"> ${element.applicable_date} </div>
+                <div class="card-body"> ${element.weather_state_name} </div>
+                <div class="card-footer"> Min: ${element.min_temp} <br>
+                Max: ${element.max_temp} <br>
+                </div>
+            </div>
+            </li>
+            `)
+        })
+    })
+    .fail(err => {
+        console.log(err)
+    })
+}
+
+function onSignIn(googleUser) {
+    var tokenGoogle = googleUser.getAuthResponse().id_token;
+    $.ajax({
+        url : 'http://localhost:3000/google',
+        method : 'POST',
+        data : {
+            tokenGoogle
+        }
+    })
+    .done(result => {
+        localStorage.setItem('access_token', result.access_token)
+        listpage()
+    })
+    .fail(err => {
+        console.log(err);
+    })
+}
+
+function videos () {
+    $.ajax({
+        method: 'GET',
+        url: 'http://localhost:3000/videos'
+    })
+    .done(data => {
+        $("#mv").empty()
+        data.forEach(element => {
+            element.strMusicVid = element.strMusicVid.replace('watch?v=', 'embed/')
+            $("#mv").append(`
+            <li class="list-group-item list-group-item-warning">
+                <iframe width="330" height="185" src="${element.strMusicVid}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </li>
+            `)
+        })
+    })
+    .fail(err => {
+        console.log(err)
     })
 }

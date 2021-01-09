@@ -16,6 +16,15 @@
   flex-wrap: wrap;
 }
 
+/* #weather {
+  display: flex; 
+  align-items: center; 
+  justify-items: center; 
+  justify-content: space-evenly; 
+  color: black;
+  flex-wrap: wrap;
+} */
+
 #container {
     background:#D4AF37;
     color: white; 

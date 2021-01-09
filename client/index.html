@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <title>Document</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta name="google-signin-client_id" content="787087558897-pqkrcgh6vhnhqbu30vefh8ifsifjf4na.apps.googleusercontent.com">
 </head>
 <body style="background: black;">
     <thead>
@@ -70,10 +71,14 @@
             <h1> List To Do </h1>
         </div>
         <div id="listToDo" class="container pt-3 my-3 border" style="background: #D4AF37; color: white; text-align: center;" >
+            <div>
+                <h2> Weather </h2>
+                <ul class="list-group list-group-horizontal overflow-auto" id="weather">  </ul>
+            </div>
             <div id="listfeature">
                 <div class="card my-3 border" id="createtodo">
                     <div class="card-header">Create To Do</div>
-                    <form>
+                    <form id="createForm">
                         <div class="form-group">
                             <label for="title">Title:</label>
                             <input type="text" class="form-control" placeholder="Enter title" id="titleCreate">
@@ -92,7 +97,7 @@
                 </div>
                 <div class="card my-3 border" id="edittodo">
                     <div class="card-header">Edit To Do</div>
-                    <form>
+                    <form id="editForm">
                         <div class="form-group">
                             <label for="title">Title:</label>
                             <input type="text" class="form-control" placeholder="Enter title" id="titleEdit">
@@ -106,35 +111,21 @@
                             <input type="date" class="form-control" id="dueDateEdit">
                         </div>
                         <br>
-                        <button type="submit" class="btn btn-dark">Save</button>
+                        <button type="submit" class="btn btn-dark" id="save">Save</button>
                     </form> <br>
-                </div>
-                <div>
-                    <div class="card my-3 border">
-                        <div class="card-header"> Date </div>
-                        <div class="card-body"> Cuaca </div>
-                        <div class="card-footer">Temperature</div>
-                    </div>
                 </div>
             </div> 
             <div id="listTodo">
-                <div class="card my-3 border">
-                    <div class="card-header">
-                        <input type="checkbox" name="status" id="status" class="form-check-input">
-                        To do name
-                    </div>
-                    <div class="card-body">Description</div>
-                    <div class="card-footer">Due date</div>
-                </div>
-                <div>
-                    <div class="card my-3 border">
-                        <div class="card-header"> Date </div>
-                        <div class="card-body"> Cuaca </div>
-                        <div class="card-footer">Temperature</div>
-                    </div>
-                </div>
             </div><br>
         </div>
+    </div>
+
+    <div id="container" class="container pt-3 my-3 border" >
+        <h1> Music Video </h1>
+    </div>
+    <div id="container" class="container pt-3 my-3 border" >
+        <ul class="list-group list-group-horizontal overflow-auto" id="mv">  
+        </ul>
     </div>
 
     <div id="signin" >
@@ -142,7 +133,7 @@
             <h1> Sign In </h1>
         </div>
         <div id="container" class="container pt-3 my-3 border" >
-            <form>
+            <form id="loginForm">
                 <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" class="form-control" placeholder="Enter email" id="emailSignin">
@@ -153,6 +144,8 @@
                 </div> <br>
                 <button type="click" class="btn btn-dark" id="login">Sign In</button>
             </form> <br>
+            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+            <br>
         </div>
     </div>
 
@@ -161,7 +154,7 @@
             <h1> Sign Up </h1>
         </div>
         <div id="container" class="container pt-3 my-3 border" >
-            <form>
+            <form id="registerForm">
                 <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" class="form-control" placeholder="Enter email" id="emailSignup">
@@ -172,9 +165,11 @@
                 </div> <br>
                 <button type="submit" class="btn btn-dark" id="signup">Sign Up</button>
             </form> <br>
+            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+            <br>
         </div>
     </div>
-
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="./assets/helpers.js"></script>
     <script src="./assets/main.js"></script> 
 </body>
