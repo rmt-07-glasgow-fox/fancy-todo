@@ -120,7 +120,9 @@ function getTodoList() {
                                     <div class="row">
                                         <div class="col-2 mt-5 mb-5">
                                             <label>
-                                                <input type="checkbox" ${isChecked}/>
+                                                <input id="check-status-Todo" name="acceptRules" type="checkbox" ${isChecked}>
+                                                <div id="checkbox-value"></div>
+                                                <div id="checkbox-id"><p hidden>${element.id}</p></div>
                                             </label>
                                         </div>
                                         <div class="col-10">
@@ -143,6 +145,29 @@ function getTodoList() {
         .always(() => {
             console.log("ALWAYS!")
         })
+}
+
+function checkStatus(todoId, status) {
+    $.ajax({
+        method: 'PATCH',
+        url: `${baseUrl}/todos/${todoId}`,
+        headers: {
+            access_token: localStorage.access_token
+        },
+        data: {
+            status
+        }
+    })
+        .done(response => {
+            console.log(">>>>>", response)
+        })
+        .fail(err => {
+            console.log(err, ">>>> this is error from ajax updateTodo")
+        })
+        .always(() => {
+            console.log("ALWAYS!")
+        })
+
 }
 
 function deleteTodo(todoId) {
@@ -351,6 +376,21 @@ $(document).ready(function () {
                 console.log("ALWAYS!")
             })
     })
+
+    $('#checkbox-value').text($('#check-status-Todo').val())
+    const idCard = $('#checkbox-id').val()
+
+    $("#check-status-Todo").on('change', function () {
+        if ($(this).is(':checked')) {
+            $(this).attr('value', 'true')
+            checkStatus(idCard, 'true')
+        } else {
+            $(this).attr('value', 'false')
+            checkStatus(idCard, 'false')
+        }
+
+        $('#checkbox-value').text($('#check-status-Todo').val());
+    });
 })
 
 
