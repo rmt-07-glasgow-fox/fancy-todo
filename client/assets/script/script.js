@@ -1,72 +1,82 @@
 const baseUrl = 'http://localhost:3000'
+const btn_register = $('.btn-register')
+const btn_login = $('.btn-login')
+const btn_logout = $('.btn-logout')
+const btn_add_todo = $('#btn-add-todo')
+const btn_cancel_add = $('#cancel-add')
+const btn_cancel_edit = $('#cancel-edit')
+const page_home = $('#home')
+const page_register = $('#register')
+const page_login = $('#login')
+const page_todo = $('#todo')
+const modal_add = $('#modal-add')
+const modal_edit = $('#modal-edit')
+const search_task = $("#search-task")
 let dataTodo = []
 
 $(document).ready(function () {
   checkLogin()
 })
 
-function checkLogin(){
-  if (localStorage.getItem('access_token')) {
-    if (localStorage.getItem('username')){
-      let username = localStorage.getItem('username')
-      $('#user-account').text(username)
-    } else {
-      $('#user-account').text("")
-    }
-    todoPage()
-  } else {
-    loginPage()
-  }
-}
-
-$('.btn-register').click(function () {
+btn_register.click(function () {
   registerPage()
 })
 
-$('.btn-login').click(function () {
+btn_login.click(function () {
   loginPage()
 })
 
-$('.btn-logout').on('click', function () {
+btn_logout.on('click', function () {
   logout()
 })
 
-$('#btn-add-todo').on('click', function () {
-  $('#modal-add').show()
+btn_add_todo.on('click', function () {
+  modal_add.show()
 })
 
-$('#cancel-add').on('click', function () {
-  $('#modal-add').hide()
+btn_cancel_add.on('click', function () {
+  modal_add.hide()
 })
 
-$('#cancel-edit').on('click', function () {
-  $('#modal-edit').hide()
+btn_cancel_edit.on('click', function () {
+  modal_edit.hide()
 })
 
-$("#search-task").on("keyup", function () {
+search_task.on("keyup", function () {
   var value = $(this).val().toLowerCase();
   $(".todo").filter(function () {
       $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
   });
 });
 
+function checkLogin(){
+  if (localStorage.getItem('access_token')) {
+    let username = localStorage.getItem('username')
+    $('#user-account').text(username)
+    todoPage()
+  } else {
+    $('#user-account').text("")
+    loginPage()
+  }
+}
+
 function hideAll() {
-  $('.btn-register').hide()
-  $('.btn-logout').hide()
-  $('.btn-login').hide()
-  $('#home').hide()
-  $('#register').hide()
-  $('#login').hide()
-  $('#todo').hide()
-  $('#modal-add').hide()
-  $('#modal-edit').hide()
+  btn_register.hide()
+  btn_login.hide()
+  btn_logout.hide()
+  page_home.hide()
+  page_register.hide()
+  page_login.hide()
+  page_todo.hide()
+  modal_add.hide()
+  modal_edit.hide()
 }
 
 function registerPage() {
   hideAll()
-  $('#home').show()
-  $('#register').show()
-  $('.btn-login').show()
+  page_home.show()
+  page_register.show()
+  btn_login.show()
 
   $('#form-register').on('submit', function (event) {
     event.preventDefault()
@@ -75,32 +85,36 @@ function registerPage() {
       username: $('#username').val(),
       password: $('#password').val()
     }
-    $.ajax({
-        method: 'POST',
-        url: `${baseUrl}/register`,
-        data
-      })
-      .done(() => {
-        $('#form-register').trigger('reset')
-        loginPage()
-      })
-      .fail(xhr => {
-        Swal.fire({
-          title: 'Something Error!',
-          text: xhr.responseJSON.message[0],
-          icon: 'error',
-          confirmButtonText: 'Ok'
-        })
-      })
+    handleRegister(data)
+  })
+}
+
+function handleRegister(data){
+  $.ajax({
+    method: 'POST',
+    url: `${baseUrl}/register`,
+    data
+  })
+  .done(() => {
+    $('#form-register').trigger('reset')
+    loginPage()
+  })
+  .fail(xhr => {
+    Swal.fire({
+      title: 'Something Error!',
+      text: xhr.responseJSON.message[0],
+      icon: 'error',
+      confirmButtonText: 'Ok'
+    })
   })
 }
 
 
 function loginPage() {
   hideAll()
-  $('.btn-register').show()
-  $('#home').show()
-  $('#login').show()
+  btn_register.show()
+  page_home.show()
+  page_login.show()
 
   $('#form-login').on('submit', function (event) {
     event.preventDefault()
@@ -108,27 +122,31 @@ function loginPage() {
       email: $('#email-login').val(),
       password: $('#password-login').val()
     }
-    $.ajax({
-        method: 'POST',
-        url: `${baseUrl}/login`,
-        data
-      })
-      .done(res => {
-        console.log(res, 'login');
-        localStorage.setItem('username', res.username)
-        localStorage.setItem('access_token', res.access_token)
-        $('#form-login').trigger('reset')
-        checkLogin()
-      })
-      .fail(xhr => {
-        $('#password-login').val('')
-        Swal.fire({
-          title: 'Something Error!',
-          text: xhr.responseJSON.message,
-          icon: 'error',
-          confirmButtonText: 'Ok'
-        })
-      })
+    handleLogin(data)
+  })
+}
+
+function handleLogin(data){
+  $.ajax({
+    method: 'POST',
+    url: `${baseUrl}/login`,
+    data
+  })
+  .done(res => {
+    console.log(res, 'login');
+    localStorage.setItem('username', res.username)
+    localStorage.setItem('access_token', res.access_token)
+    $('#form-login').trigger('reset')
+    checkLogin()
+  })
+  .fail(xhr => {
+    $('#password-login').val('')
+    Swal.fire({
+      title: 'Something Error!',
+      text: xhr.responseJSON.message,
+      icon: 'error',
+      confirmButtonText: 'Ok'
+    })
   })
 }
 
@@ -164,15 +182,23 @@ function logout() {
   auth2.signOut().then(function () {
     console.log('User signed out.')
   });
-  $('#user-account').text('')
   checkLogin()
 }
 
 function todoPage() {
   hideAll()
-  $('.btn-logout').show()
-  $('#todo').show()
-
+  btn_logout.show()
+  page_todo.show()
+  $('#submit-add').click(function (event) {
+    event.preventDefault()
+    let data = {
+      title : $('#add-title').val(),
+      description: $('#add-description').val(),
+      due_date: $('#add-date').val(),
+      status : false
+    }
+    handleAddTodo(data)
+  })
   getWeather()
   getTodo()
 }
@@ -211,6 +237,7 @@ function getTodo() {
                 <p class="card-text overflow-hidden mt-1" style="max-height: 3rem;">${data.description}</p>
                 <div class="d-flex justify-content-between text-muted position-relative">
                   <small class="text-muted">${data.due_date.slice(0,10)}</small>
+                  <small><a class="edit text-decoration-none text-success position-absolute" style="right: -.4rem;"  type="button" onclick="editTodo(${data.id})">edit</a></small>
                 </div>
               </div>
             </div>
@@ -258,40 +285,29 @@ function getTodo() {
   })
 }
 
-$('#submit-add').click(function (event) {
-  event.preventDefault()
-  console.log('submit');
-  let title = $('#add-title').val()
-  let description = $('#add-description').val()
-  let due_date = $('#add-date').val()
-  let status = false
+function handleAddTodo(data){
   $.ajax({
-      method: 'POST',
-      url: `${baseUrl}/todos`,
-      headers: {
-        access_token: localStorage.getItem('access_token')
-      },
-      data: {
-        title,
-        description,
-        due_date,
-        status
-      }
+    method: 'POST',
+    url: `${baseUrl}/todos`,
+    headers: {
+      access_token: localStorage.getItem('access_token')
+    },
+    data
+  })
+  .done(() => {
+    $('#form-add').trigger('reset')
+    checkLogin()
+  })
+  .fail(xhr => {
+    console.log(xhr);
+    Swal.fire({
+      title: 'Something Error!',
+      text: xhr.responseJSON.message[0],
+      icon: 'error',
+      confirmButtonText: 'Ok'
     })
-    .done(() => {
-      $('#form-add').trigger('reset')
-      checkLogin()
-    })
-    .fail(xhr => {
-      console.log(xhr);
-      Swal.fire({
-        title: 'Something Error!',
-        text: xhr.responseJSON.message[0],
-        icon: 'error',
-        confirmButtonText: 'Ok'
-      })
-    })
-})
+  })
+}
 
 function editTodo(id) {
   $.ajax({
@@ -302,10 +318,11 @@ function editTodo(id) {
     }
   })
   .done(res => {
+    console.log(res.status);
     $('#modal-edit').show()
     $('#edit-title').val(res.title)
     $('#edit-description').val(res.description)
-    $('#edit-date').val(dateFormat(res.due_date))
+    $('#edit-date').val(res.due_date.slice(0,10))
     $(`input[name="edit-status"][value="${res.status}"]`).prop('checked', true)
     handleEdit(res.id)
   })
@@ -376,6 +393,22 @@ function patchTodo(id) {
 }
 
 function deleteTodo(id) {
+  Swal.fire({
+    title: 'Are you sure?',
+    text: 'You will not be able to recover this imaginary file!',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, delete it!',
+    cancelButtonText: 'No, keep it'
+  })
+  .then(result => {
+    if (result.value) {
+      handleDelete(id)
+    }
+  })
+}
+
+function handleDelete(id){
   $.ajax({
       method: 'DELETE',
       url: `${baseUrl}/todos/${id}`,
@@ -405,7 +438,6 @@ function getWeather(){
     }
   })
   .done(res => {
-    console.log(res);
     $('#weather').empty()
     $('#weather').append(
       `
@@ -413,18 +445,18 @@ function getWeather(){
       <small class="text-warning">${new Date().toLocaleString()}</small>
       <h4 class="card-title">${res.name}</h4>
       <div>
-        <img src="http://openweathermap.org/img/wn/${res.weather[0].icon}@2x.png" "alt="">
-        <span class="fs-1 text-muted">${(res.main.temp).toFixed()}&deg C</span>
+        <img src="http://openweathermap.org/img/wn/${res.icon}@2x.png" "alt="">
+        <span class="fs-1 text-muted">${(res.temp).toFixed()}&deg C</span>
       </div>
-      <p>Feel like ${res.main.feels_like}&deg C, ${res.weather[0].description}</p><hr>
+      <p>Feel like ${res.feels_like}&deg C, ${res.description}</p><hr>
       <small>pressure:</small>
-      <small class="text-muted">${res.main.pressure}hPa </small>
+      <small class="text-muted">${res.pressure}hPa </small>
       <small>humidity:</small>
-      <small class="text-muted">${res.main.humidity}%</small><br>
+      <small class="text-muted">${res.humidity}%</small><br>
       <small>visibility:</small>
       <small class="text-muted">${res.visibility / 1000}km</small>
       <small>max-temp:</small>
-      <small class="text-muted">${res.main.temp_max}&deg C</small>
+      <small class="text-muted">${res.temp_max}&deg C</small>
     </div>
       `
     )

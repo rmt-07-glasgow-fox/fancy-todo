@@ -76,6 +76,13 @@ _Response (400)_
 
 > Get all todo list
 
+_Request Headers_
+```
+{
+  "access_token": "<user access token>"
+}
+```
+
 _Request Body_
 ```
 not needed
@@ -122,6 +129,13 @@ _Response (500 - Bad Request)_
 
 > Create new todo
 
+_Request Headers_
+```
+{
+  "access_token": "<user access token>"
+}
+```
+
 _Request Body_
 ```
 {
@@ -166,6 +180,13 @@ _Response (500 - Bad Request)_
 
 > Get todo by id
 
+_Request Headers_
+```
+{
+  "access_token": "<user access token>"
+}
+```
+
 _Request Params_
 ```
 id = [integer]
@@ -199,6 +220,13 @@ _Response (500 - Bad Request)_
 ### PUT http://localhost:3000/todos/:id
 
 > Edit todo value
+
+_Request Headers_
+```
+{
+  "access_token": "<user access token>"
+}
+```
 
 _Request Params_
 ```
@@ -254,6 +282,13 @@ _Response (500 - Bad Request)_
 
 > Edit todo value
 
+_Request Headers_
+```
+{
+  "access_token": "<user access token>"
+}
+```
+
 _Request Params_
 ```
 id = [integer]
@@ -301,6 +336,13 @@ _Response (500 - Bad Request)_
 
 > Delete todo value
 
+_Request Headers_
+```
+{
+  "access_token": "<user access token>"
+}
+```
+
 _Request Params_
 ```
 id = [integer]
@@ -327,5 +369,36 @@ _Response (500 - Bad Request)_
 ```
 {
   "message": "Internal Server Error"
+}
+```
+### GET http://localhost:3000/todos/weather
+
+> Get weather from third API
+
+_Request Headers_
+```
+{
+  "access_token": "<user access token>"
+}
+```
+
+_Response (200 - OK)_
+```
+{
+  "name": "Jakarta",
+  "icon": "03d",
+  "temp": 31.26,
+  "feels_like": 32.36,
+  "description": "scattered clouds",
+  "pressure": 1008,
+  "humidity": 58,
+  "visibility": 7000,
+  "temp_max": 32
+}
+```
+_Response (404 - Not Found)_
+```
+{
+  "message": "Data not found"
 }
 ```

@@ -10,10 +10,23 @@ class ApiController {
             url: url,
         })
         .then(result => {
-            res.status(200).json(result.data)
+            let value = {
+                name: result.data.name,
+                icon: result.data.weather[0].icon,
+                temp: result.data.main.temp,
+                feels_like: result.data.main.feels_like,
+                description: result.data.weather[0].description,
+                pressure: result.data.main.pressure,
+                humidity: result.data.main.humidity,
+                visibility: result.data.visibility,
+                temp_max: result.data.main.temp_max
+            }
+            res.status(200).json(value)
         })
         .catch(err => {
-            next(err)
+            next({
+                status: 404
+            })
         })
     }
 }
