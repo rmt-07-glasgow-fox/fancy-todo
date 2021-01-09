@@ -50,7 +50,7 @@ class UserController{
                     })
                 } else{
                     next({
-                        status: 400,
+                        status: 401,
                         errors: [
                             { message: "Invalid Email/Password" }
                         ]
