@@ -13,7 +13,7 @@ class UserController {
             const dataUser = await User.create(payload)
             res.status(201).json({email: dataUser.email, id: dataUser.id})
             
-        } catch (error) {   
+        } catch (error) {
             next(error)
             
         }

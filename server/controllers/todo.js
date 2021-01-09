@@ -36,8 +36,7 @@ class TodoController{
             }
             else{
                 if(dataTodo){
-                    console.log(dataTodo)
-                    const data = await Todo.findOne({where: {UserId: req.loggedInUser.id}, returning: true})
+                    const data = await Todo.findOne({where: {UserId: req.loggedInUser.id, id: req.params.id}, returning: true})
                     res.status(200).json(data)
                 }
                 else{
@@ -68,8 +67,7 @@ class TodoController{
         const payload = {
             status: req.body.status
         }
-        console.log(req.loggedInUser)
-
+        console.log('masuk bos', "<><><><><")
         try {
             const dataModify = await Todo.update(payload, {where: {id: req.params.id}, returning: true})
             if(dataModify){
