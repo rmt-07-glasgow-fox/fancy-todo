@@ -3,7 +3,7 @@ const {User,Todo} = require('../models')
 
 function authentication(req,res,next) {
     try {
-        const decoded = decode.decodeToken(req.headers.token)
+        const decoded = decode.decodeToken(req.headers.accesstoken)
         User.findOne({where:{id:decoded.id}})
         .then(data=>{
             if (data) {
@@ -24,9 +24,12 @@ function authentication(req,res,next) {
 }
 
 function authorization(req,res,next) {
-    Todo.findOne({where:{id:req.params.id}})
+    Todo.findOne({include:{model:User},where:{id:req.params.id}})
     .then(todo=>{
-        if (todo && todo.UserId == req.user.id) {
+        const decoded = decode.decodeToken(req.headers.accesstoken)
+        let idToken = decoded.id
+        let idUser = todo.Users[0].id
+        if (todo && idToken == idUser) {
             next()
         } else {
             next(err = {name: 'notFound'})

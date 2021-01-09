@@ -1,17 +1,27 @@
-const {Todo} = require('../models')
+const {Todo,User,UserTodo} = require('../models')
+const decode = require('../helper/webToken')
 
 class todoController{
     static postTodo(req,res,next){
+        let lastTodo
         const todoObj = {
             "title": req.body.title,
             "description": req.body.description,
             "status": req.body.status,
-            "due_date": req.body.due_date,
-            "UserId": req.user.id
+            "due_date": req.body.due_date
         }
         Todo.create(todoObj)
         .then(data=>{
-            res.status(201).json(data)
+            lastTodo = data
+            return Todo.findOne({order: [ [ 'createdAt', 'DESC' ]]})
+        })
+        .then(data=>{
+            let UserId = decode.decodeToken(req.headers.accesstoken).id
+            let TodoId = data.id
+            return UserTodo.create({UserId,TodoId})
+        })
+        .then(()=>{
+            res.status(201).json(lastTodo)
         })
         .catch(err=>{
             next(err)
@@ -19,7 +29,8 @@ class todoController{
     }
 
     static getTodos(req,res,next){
-        Todo.findAll({where:{UserId:req.user.id}})
+        let UserId = decode.decodeToken(req.headers.accesstoken).id
+        Todo.findAll({include:{model:User,where:{id:UserId}}})
         .then(data=>{
             res.status(200).json(data)
         })
@@ -65,10 +76,8 @@ class todoController{
 
     static patchTodo(req,res,next){
         const id = req.params.id
-        const todoObj = {
-            "status": req.body.status
-        }
-        Todo.update(todoObj,{where:{id: id}})
+        let status = req.body.status
+        Todo.update({status},{where:{id: id}})
         .then(data=>{
             if (data[0]==1) {
                 return Todo.findByPk(id)
@@ -89,10 +98,13 @@ class todoController{
         Todo.destroy({where:{id: id}})
         .then(data=>{
             if (data==1) {
-                res.status(200).json({message: 'todo success to delete'})
+                return UserTodo.destroy({where:{TodoId: id}})
             } else {
                 next({name: 'notFound'})
             }
+        })
+        .then(()=>{
+            res.status(200).json({message: 'todo success to delete'})
         })
         .catch(err=>{
             next(err)

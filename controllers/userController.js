@@ -22,6 +22,7 @@ class UserController{
             email: req.body.email,
             password: req.body.password
         }
+
         User.findOne({where: {email: user.email}})
         .then(data=>{
             if (data) {
@@ -41,6 +42,53 @@ class UserController{
         })
         .catch(err=>{
             next(err)
+        })
+    }
+
+    static oAuth(req,res,next){
+        let user = {
+            email: req.body.email,
+            password: req.body.password + 'qwerty123456789zxcvbnm'
+        }
+
+        User.findOne({where: {email: user.email}})
+        .then(data=>{
+            if (data) {
+                if (Bcrypt.comparePassword(user.password,data.password)) {
+                    const payload = {
+                        id: data.id,
+                        email: data.email
+                    }
+                    const accessToken = generateToken(payload)
+                    res.status(200).json({accessToken: accessToken})
+                } else {
+                    next({name: 'unauthorized'})
+                }
+            } else {
+                return User.create(user)
+            }
+        })
+        .then(data=>{
+            return User.findOne({where: {email: user.email}})
+        })
+        .then(data=>{
+            if (data) {
+                if (Bcrypt.comparePassword(user.password,data.password)) {
+                    const payload = {
+                        id: data.id,
+                        email: data.email
+                    }
+                    const accessToken = generateToken(payload)
+                    res.status(200).json({accessToken: accessToken})
+                } else {
+                    next({name: 'unauthorized'})
+                }
+            } else {
+                next({name: 'unauthorized'})
+            }
+        })
+        .catch(err=>{
+            res.status(500)
         })
     }
 }

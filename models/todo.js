@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Todo.belongsTo(models.User)
+      Todo.belongsToMany(models.User,{through:models.UserTodo})
     }
   };
   Todo.init({
@@ -47,15 +47,15 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    UserId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate:{
-        notEmpty: {
-          msg: 'UserId empty'
-        }
-      }
-    },
+    // UserId: {
+    //   type: DataTypes.INTEGER,
+    //   allowNull: false,
+    //   validate:{
+    //     notEmpty: {
+    //       msg: 'UserId empty'
+    //     }
+    //   }
+    // },
   }, {
     sequelize,
     modelName: 'Todo',
