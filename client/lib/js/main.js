@@ -21,14 +21,12 @@ $("#signin").click(function () {
 $(function () {
   $("form[name='login']").validate({
       rules: {
-
         email: {
           required: true,
           email: true
         },
         password: {
           required: true,
-
         }
       },
       messages: {
@@ -36,9 +34,7 @@ $(function () {
 
         password: {
           required: "Please enter password",
-
         }
-
       },
       submitHandler: function (form) {
         form.submit();
@@ -95,7 +91,6 @@ $(function () {
       },
       email: "Please enter a valid email address"
     },
-
     submitHandler: function (form) {
       form.submit();
     }
@@ -203,8 +198,8 @@ function createTodo() {
   const title = $('#title_input').val();
   const description = $('#description_input').val();
   const status = $('#status_input').val();
-  const due_date = $('#due_date_input').val();
-  console.log(title, description, status, due_date);
+  const dueDate = $('#dueDate_input').val();
+  console.log(title, description, status, dueDate);
   $.ajax({
       url: 'https://localhost:3000/todos',
       method: 'POST',
@@ -215,7 +210,7 @@ function createTodo() {
         title,
         description,
         status,
-        due_date,
+        dueDate,
       },
     })
     .done((response) => {
@@ -230,7 +225,7 @@ function createTodo() {
       $('#title_input').val('');
       $('#description_input').val('');
       $('#status_input').val('');
-      $('#due_date_input').val('');
+      $('#dueDate_input').val('');
     });
 }
 
@@ -270,7 +265,7 @@ function fetchTodo() {
             <td>${response && response[i] ? response[i].status : ''}</td>
             <td>${
 							response && response[i]
-								? new Date(response[i].due_date).toLocaleDateString('en-US')
+								? new Date(response[i].dueDate).toLocaleDateString('en-US')
 								: ''
 						}</td>
             <td>
@@ -360,7 +355,7 @@ function editTodo(id) {
       $('#edit_title_input').val(response.title);
       $('#edit_description_input').val(response.description);
       $('#edit_status_input').val(response.status);
-      $('#edit_due_date_input').val(formatDate(response.due_date));
+      $('#edit_dueDate_input').val(formatDate(response.dueDate));
     })
     .fail((err) => {
       console.log(err);
@@ -373,7 +368,7 @@ function editTodoSuccess() {
   const title = $('#edit_title_input').val();
   const description = $('#edit_description_input').val();
   const status = $('#edit_status_input').val();
-  const due_date = $('#edit_due_date_input').val();
+  const dueDate = $('#edit_dueDate_input').val();
   const id = $('#editTodoForm').attr('data-id');
   $.ajax({
       url: 'http://localhost:3000/todos/' + id,
@@ -385,7 +380,7 @@ function editTodoSuccess() {
         title,
         description,
         status,
-        due_date,
+        dueDate,
       },
     })
     .done((response) => {

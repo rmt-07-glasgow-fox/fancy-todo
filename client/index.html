@@ -8,7 +8,6 @@
     content="141244953512-e5u3ahnvetvn26do1fm743vmni92q0bb.apps.googleusercontent.com">
   <title>Fancytodo</title>
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-
 </head>
 
 <body>
@@ -18,6 +17,9 @@
         <div id="first">
           <div class="myform form ">
             <div class="logo mb-3">
+
+              <!-- LOGIN -->
+
               <div class="col-md-12 text-center">
                 <h1>Login</h1>
               </div>
@@ -51,14 +53,12 @@
                 </div>
               </div>
               <div class="col-md-12 mb-3">
-                <!-- <p class="text-center">
-                  <a href="javascript:void();" class="google btn mybtn"><i class="fa fa-google-plus">
-                    </i> Signup using Google
-                  </a>
-                </p> -->
                 <div class="g-signin2 float-right" data-onsuccess="onSignIn"></div>
               </div>
               <div class="form-group">
+
+                <!-- REGISTER -->
+
                 <p class="text-center">Don't have account? <a href="#" id="signup">Sign up here</a></p>
               </div>
             </form>
@@ -84,7 +84,7 @@
                   aria-describedby="emailHelp" placeholder="Enter Password">
               </div>
               <div class="col-md-12 text-center mb-3">
-                <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Get Started For Free</button>
+                <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Let's join us</button>
               </div>
               <div class="col-md-12 ">
                 <div class="form-group">
@@ -104,6 +104,8 @@
       <a id="register" style="display: block" onclick="register()">Register</a>
       <a id="logout" style="display: block;" onclick="logout()">Logout</a>
     </div> -->
+
+    <!-- MAIN PAGE -->
 
     <div id="mainpage" style="display: none">
       <h1 style="text-align: center">Your Todo List</h1>
@@ -151,6 +153,8 @@
       </form>
     </div>
 
+    <!-- EDIT TODO -->
+
     <div id="editTodoForm" style="display: none" class="modal">
       <form class="modal-content animate" id="edit-todo-form">
         <div class="imgcontainer">
@@ -178,6 +182,8 @@
       </form>
     </div>
 
+    <!-- EDIT STATUS TODO -->
+
     <div id="editTodoStatusForm" style="display: none" class="modal">
       <form class="modal-content animate" id="update-todo-form">
         <div class="imgcontainer">
@@ -199,16 +205,17 @@
     </div>
     <!-- <div id="footer"><h5>Fancy Todo by glasgowporto:BA</h3></div> -->
   </div>
+
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <script type="text/javascript" src="/lib/js/main.js"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+  <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 </body>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-<script type="text/javascript" src="./lib/js/main.js"></script>
-<script src="https://apis.google.com/js/platform.js" async defer></script>
-
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
-<link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
-<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
-  integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
 </html>
