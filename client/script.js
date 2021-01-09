@@ -333,12 +333,7 @@ const listProjectTodo = (id) => {
                     data.due_date
                   ).format('DD MMMM YYYY')}</h6>
                   <p class="card-text">${data.description}</p>
-                  <a href="#" onclick="showEditTodo(${
-                    data.id
-                  })" class="card-link" id="editTodo"><i class="fa fa-edit" aria-hidden="true"></i> Edit</a>
-                  <a href="#" data-todoid="${
-                    data.id
-                  }" data-toggle="modal" data-target="#modalConfirmDelete" class="card-link text-red" id="deleteTodo"><i class="fa fa-trash" aria-hidden="true"></i> Hapus</a>
+                  
               </div>
             </div>
             <div id="editFormTodo-${data.id}"></div>
