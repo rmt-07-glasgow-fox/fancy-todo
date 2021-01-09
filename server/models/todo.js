@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
           // let newDate = (new Date()).toString()
           console.log(dateInput, dateNow);
           if (dateInput < dateNow) {
-            console.log(`Date must be greater than today!`);
+            // console.log(`Date must be greater than today!`);
             throw new Error(`Date must be greater than today!`)
           }
         }

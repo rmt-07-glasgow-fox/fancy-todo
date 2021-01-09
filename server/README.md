@@ -34,7 +34,7 @@ _Request Body_
 {
   "title": <string>,
   "description": <string>,
-  "due_date": <date>,
+  "due_date": <date YYYY-MM-DD>,
   "status": <boolean>
 }
 ```
@@ -44,7 +44,7 @@ _Response (201 - Created)_
 {
   "title": <string>,
   "description": <string>,
-  "due_date": <date>,
+  "due_date": <date YYYY-MM-DD>,
   "status": <boolean>
 }
 ```
@@ -85,13 +85,22 @@ _Request Body_
 _Response (200)_
 ```
 {
-  "Todo": [
+  [
     {
       "title": <string>,
       "description": <string>,
-      "due_date": <date>,
+      "due_date": <date YYYY-MM-DD>,
       "status": <boolean>
     }
+  ],
+  [
+    {
+      "title": <string>,
+      "description": <string>,
+      "due_date": <date YYYY-MM-DD>,
+      "status": <boolean>
+    }
+  ],
 }
 ```
 
@@ -136,13 +145,10 @@ _Request Body_
 _Response (200)_
 ```
 {
-  "Todo": [
-    {
-      "title": <string>,
-      "description": <string>,
-      "due_date": <date>,
-      "status": <boolean>
-    }
+  "title": <string>,
+  "description": <string>,
+  "due_date": <date YYYY-MM-DD>,
+  "status": <boolean>
 }
 ```
 
@@ -177,7 +183,7 @@ _Request Body_
 {
   "title": <string>,
   "description": <string>,
-  "due_date": <date>,
+  "due_date": <date YYYY-MM-DD>,
   "status": <boolean>
 }
 ```
@@ -185,7 +191,10 @@ _Request Body_
 _Response (200)_
 ```
 {
-  message: todo created
+  "title": <string>,
+  "description": <string>,
+  "due_date": <date YYYY-MM-DD>,
+  "status": <boolean>
 }
 ```
 
@@ -227,7 +236,10 @@ _Request Body_
 _Response (200)_
 ```
 {
-  message: todo edited
+  "title": <string>,
+  "description": <string>,
+  "due_date": <date YYYY-MM-DD>,
+  "status": <boolean>
 }
 ```
 
@@ -246,7 +258,7 @@ _Response (500)_
 ```
 
 
-### DELETE/todos/:id
+## DELETE/todos/:id
 
 >Delete todo  by ID
 
@@ -264,7 +276,7 @@ _Request Body_
 _Response (200)_
 ```
 {
-  message: todo deleted
+  message: todo success to delete
 }
 ```
 
@@ -272,6 +284,79 @@ _Response(401- authentication)_
 ```
 {
   message: 'You are not logged in!'
+}
+```
+
+_Response (500)_
+```
+{
+  message:"Internal error"
+}
+```
+
+
+## POST/register
+>Create a new account
+
+_Request Header_
+```
+```
+
+_Request Body_
+```
+{
+  email: <string>
+  password: <string>
+}
+```
+
+_Response (201)_
+```
+{
+  email: email
+}
+```
+
+_Response(400- authentication)_
+```
+{
+  err
+}
+```
+
+_Response (500)_
+```
+{
+  message:"Internal error"
+}
+```
+
+## POST/login
+>Login
+
+_Request Header_
+```
+```
+
+_Request Body_
+```
+{
+  email: <string>
+  password: <string>
+}
+```
+
+_Response (200)_
+```
+{
+  access_token: access_token
+}
+```
+
+_Response(400)_
+```
+{
+  err
 }
 ```
 
