@@ -1,8 +1,17 @@
+.body {
+  background-image: url('pexels-jessica-lewis-583846.jpg');
+}
+
 .container {
   width: 30%;
   margin-top: 9%;
   box-shadow: 0 3px 20px rgba(0,0,0,0.3);
   padding: 40px;
+}
+
+.register-form {
+  width: 30%;
+  margin-left: 150px;;
 }
 
 button-login {
@@ -33,3 +42,53 @@ button-login {
 .add-todo-btn {
   margin-bottom: 10px;
 }
+
+.sign-out {
+  margin: 0;
+}
+
+.add-task {
+  float: left
+}
+
+
+
+.container-fancy-todo {
+  width: 960px;
+  /* background-color: grey; */
+  margin: 0 auto;
+  margin-top: 50px;
+  margin-left: 400px;
+  /* border: 5px solid red; */
+}
+
+#add-task-page {
+  float: left;
+}
+
+.weather-fancy {
+  float: left;
+  padding-left: 10px;
+  margin-left: 10px;
+}
+
+.card {
+  border: none
+}
+
+.card-text {
+  margin-top: 15px;
+}
+
+.list-group {
+  border: none;
+  width: 400px;
+}
+
+.update-btn {
+  background-color: black;
+}
+
+.g-signin2 {
+  margin-bottom: 15px;
+} 
