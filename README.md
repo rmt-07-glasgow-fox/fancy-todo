@@ -3,6 +3,11 @@
 # API Documentation
 ---
 
+### LOGIN PAGE
+![Clean Blog Preview](https://raw.githubusercontent.com/rmt-07-glasgow-fox/fancy-todo/6e9baec3f5937a0a906e0629c2a1d38f6322aabe/client/assets/page-login.png)
+
+### MAIN PAGE
+![Clean Blog Preview](https://raw.githubusercontent.com/rmt-07-glasgow-fox/fancy-todo/6e9baec3f5937a0a906e0629c2a1d38f6322aabe/client/assets/page-main.png)
 
 SETTING IN SERVER
 ```
