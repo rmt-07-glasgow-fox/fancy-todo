@@ -95,7 +95,7 @@ class Controller {
     }
 
     static googleLogin(req, res, next) {
-        const client = new OAuth2Client(process.env.CLIENT_ID);
+        const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
         let payload
         
