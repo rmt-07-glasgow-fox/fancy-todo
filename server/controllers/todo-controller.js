@@ -18,7 +18,7 @@ class TodoController{
             const opt = {
                 title: req.body.title,
                 description: req.body.description,
-                status: req.body.status,
+                status: 'uncheck',
                 dueDate: req.body.dueDate,
                 userId: req.user.id
             }
