@@ -3,7 +3,24 @@ let baseUrl = 'http://localhost:3000'
 $(document).ready(function(){
   auth()
   $('#registerPage').hide()
-}); 
+});
+
+function auth() {
+  //check whether a token exist
+  if (localStorage.access_token) {
+    $('#loginPage').hide()
+    $('#registerPage').hide()
+    $('#logout-btn').show()
+    showTodos()
+    $('#showTodos').show()
+    
+  }
+  else {
+    $("#loginPage").show()
+    $('#logout-btn').hide()
+    $('#showTodos').hide()
+  }
+}
 
 // *** LOGIN ***
 $("#loginButton").click(function(event) {
@@ -35,6 +52,32 @@ $("#loginButton").click(function(event) {
     console.log('always');
   })
 })
+
+// *** GOOGLE LOGIN ***
+function onSignIn(googleUser) {
+  var id_token = googleUser.getAuthResponse().id_token;
+  var id_token = googleUser.getAuthResponse().id_token;
+  $.ajax({
+    method: "POST",
+    url: `${baseUrl}/loginGoogle`,
+    data: { id_token }
+  })
+  .done(response => {
+    // console.log(response);
+    localStorage.setItem("access_token", response.access_token)
+    auth()
+  })
+  .fail((xhr, status) => {
+
+  })
+
+  // var profile = googleUser.getBasicProfile();
+  // console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+  // console.log('Name: ' + profile.getName());
+  // console.log('Image URL: ' + profile.getImageUrl());
+  // console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+}
+
 
 // *** REGISTER ***
 $('#register-btn').click(function(event) {
@@ -79,23 +122,6 @@ $('#logout-btn').click(function(event) {
   localStorage.clear()
   auth()
 })
-
-function auth() {
-  //check whether a token exist
-  if (localStorage.access_token) {
-    $('#loginPage').hide()
-    $('#registerPage').hide()
-    $('#logout-btn').show()
-    showTodos()
-    $('#showTodos').show()
-    
-  }
-  else {
-    $("#loginPage").show()
-    $('#logout-btn').hide()
-    $('#showTodos').hide()
-  }
-}
 
 // ******************** CRUD ********************
 
