@@ -2,6 +2,11 @@
 A simple todo apps, created using node.js, express, sequelize, postgres.
 
 
+## URL
+Client: http://localhost:8080
+Server: http://localhost:3000
+
+
 ## How to use this site to its fullest?
 - Please give permission to location access, so the Weather API can detect your location. 
 - Double click cards to update the status to done, or not yet done.
