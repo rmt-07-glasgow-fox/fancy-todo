@@ -37,7 +37,7 @@ function authorization(){
     }
 }
 
-$('#btn-sign-up').on('click', function(){
+$('#btn-sign-up').on('click', function(event){
     event.preventDefault()
     $('#signin-form').show()
     $('#login-form').hide()
@@ -50,6 +50,7 @@ $('#btn-sign-up').on('click', function(){
     $("#login-button").hide()
     $("#btn-login").show()
     $("#btn-sign-up").hide()
+    $("#error").empty()
 })
 
 $('#btn-login').on('click', function(event){
@@ -63,6 +64,7 @@ $('#btn-login').on('click', function(event){
     $("#register-button").hide()
     $("#btn-login").hide()
     $("#btn-sign-up").show()
+    $("#error").empty()
 })
 
 
@@ -94,10 +96,10 @@ $("#register").on('click',function(event){
         authorization()
     })
     .fail(error => {
-        $("#signup-error").empty()
+        $("#error").empty()
         error.responseJSON.Errors.forEach(el =>{
-            $("#signup-error").append(`
-            <h5>${el}<h5>
+            $("#error").append(`
+            <h5 style="color: red;">${el}<h5>
             `)
         })
     })
@@ -124,12 +126,12 @@ $('#login').on('click', function(event){
         authorization()
     })
     .fail(function(error){
-        console.log(error)
-        $("#login-error").empty()
-        $("#login-error").append(`<h5>${error.responseJSON.message}<h5>`)
+        $("#error").empty()
+        $("#error").append(`<h5 style="color: red;">${error.responseJSON.message}<h5>`)
     })
     .always(function(){
-        console.log('always')
+        $("#email").val('')
+        $("#password").val('')
     })
 })
 
