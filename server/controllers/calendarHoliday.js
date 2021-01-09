@@ -13,7 +13,13 @@ class Controller {
         })
         .then(response => {
             let holidayList = response.data.response.holidays
-            res.status(200).json(holidayList)
+            let holiday = holidayList.map(el => {
+                const date = el.date.iso
+                const { name, description } = el
+                
+                return { name, description, date}
+            })
+            res.status(200).json(holiday)
         })
         .catch(err => next(err))
     }

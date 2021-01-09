@@ -11,15 +11,34 @@ function register() {
     User.register(email, password, name)
         .done(response => {
             console.log(response);
+            login(email, password)
             $('#email').val('')
             $('#password').val('')
             $('#name').val('')
             $('#passwordCon').val('')
+            console.log(email, password);
+            $('#alert').empty()
+            $('#alert').append(`
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+               <strong>WARNING!</strong> Register berhasil! Silahkan login!
+               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+               </button>
+             </div>
+             `)
 
-            login(email, password)
         })
         .fail(err => {
             console.log(err.responseJSON.message);
+            $('#alert').empty()
+            $('#alert').append(`
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+               <strong>WARNING!</strong> ${err.responseJSON.message}
+               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+               </button>
+             </div>
+             `)
         })
         .always(() => {
             hideLoading()
@@ -51,6 +70,15 @@ function login() {
         })
         .fail(err => {
             console.log(err.responseJSON.message);
+            $('#alert').empty()
+            $('#alert').append(`
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+               <strong>WARNING!</strong> ${err.responseJSON.message}
+               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+               </button>
+             </div>
+             `)
         })
         .always(() => {
             hideLoading()
@@ -68,8 +96,17 @@ function onSignIn(googleUser) {
             localStorage.access_token = response.access_token
             //auth()
         })
-        .fail((xhr, status) => {
-            console.log(status,'<<<<<<<<<<<<<<');
+        .fail((err) => {
+            console.log(err.responseJSON.message);
+            $('#alert').empty()
+            $('#alert').append(`
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+               <strong>WARNING!</strong> ${err}
+               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+               </button>
+             </div>
+             `)
         })
         .always(() => {
             hideLoading()
@@ -88,7 +125,41 @@ function logout() {
     hideLoading()
     //auth()
 }
+/** API */
+function getHolidays() {
+    API.getHolidayDate()
+        .done((response) => {
+            console.log(response);
+            $("#listHoliday").empty()
 
+            response.forEach(el => {
+                $("#listTodo").append(`
+                <div class="col-sm-9 p-1">
+                    <div class="card">
+                        ${el.date} - ${el.name}
+                    </div>
+                </div>
+                `)
+            });
+
+            
+        })
+        .fail((err) => {
+            console.log(err.responseJSON.message);
+            $('#alert').empty()
+            $('#alert').append(`
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+               <strong>WARNING!</strong> ${err.responseJSON.message}
+               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+               </button>
+             </div>
+             `)
+        })
+        .always(() => {
+
+        })
+}
 /** TODO */
 
 function readTodo() {
@@ -98,22 +169,25 @@ function readTodo() {
         .done(response => {
             console.log(response);
             $("#listTodo").empty()
+            
             response.forEach(el => {
                 console.log(localStorage.email , el.User.email);
                 let due_date = new Date(el.due_date).toISOString().slice(0, 10)
                 $('#listTodo').append(`
-                <div class="card bg-light mb-3" style="max-width: 18rem;">
-                    ${localStorage.email === el.User.email ?
-                        `<div class="card-header text-white bg-primary">Me</div>` : 
-                        `<div class="card-header text-white bg-danger">${el.User.name}</div>`}
-                    <div class="card-body">
-                        <h5 class="card-title">${el.title}</h5>
-                        <p class="card-text">${el.description}</p>
-                        <p class="card-text text-danger">${due_date}</p>
-                        <div>
-                            <button type="button" class="btn btn-warning btn-sm btnLoad" onClick="doneTodo(${el.id}, ${el.status})">${el.status ? 'CANCEL' : 'DONE'}</button>
-                            <button type="button" class="btn btn-primary btn-sm"  onClick="readOneTodo(${el.id})">UPDATE</button>
-                            <button type="button" class="btn btn-danger btn-sm" onClick="deleteTodo(${el.id})">DELETE</button>
+                <div class="col-md-4">
+                    <div class="card bg-light mb-3" style="max-width: 18rem;">
+                        ${localStorage.email === el.User.email ?
+                            `<div class="card-header text-white bg-primary">Me</div>` : 
+                            `<div class="card-header text-white bg-danger">${el.User.name}</div>`}
+                        <div class="card-body">
+                            <h5 class="card-title">${el.title}</h5>
+                            <p class="card-text">${el.description}</p>
+                            <p class="card-text text-danger">${due_date}</p>
+                            <div>
+                                <button type="button" class="btn btn-warning btn-sm btnLoad" onClick="doneTodo(${el.id}, ${el.status})">${el.status ? 'CANCEL' : 'DONE'}</button>
+                                <button type="button" class="btn btn-primary btn-sm"  onClick="readOneTodo(${el.id})">UPDATE</button>
+                                <button type="button" class="btn btn-danger btn-sm" onClick="deleteTodo(${el.id})">DELETE</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -121,8 +195,16 @@ function readTodo() {
             });
         })
         .fail(err => {
-            
-            console.log(err);
+            console.log(err.responseJSON.message);
+            $('#alert').empty()
+            $('#alert').append(`
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+               <strong>WARNING!</strong> ${err.responseJSON.message}
+               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+               </button>
+             </div>
+             `)
         })
         .always(() => {
             hideLoading()
@@ -143,7 +225,16 @@ function readOneTodo(id) {
             showEdit(true)
         })
         .fail(err => {
-            console.log(err);
+            console.log(err.responseJSON.message);
+            $('#alert').empty()
+            $('#alert').append(`
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+               <strong>WARNING!</strong> ${err.responseJSON.message}
+               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+               </button>
+             </div>
+             `)
         })
         .always(() => {
             hideLoading()
@@ -163,7 +254,16 @@ function createTodo() {
             readTodo()
         })
         .fail(err => {
-            console.log(err);
+            console.log(err.responseJSON.message);
+            $('#alert').empty()
+            $('#alert').append(`
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+               <strong>WARNING!</strong> ${err.responseJSON.message}
+               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+               </button>
+             </div>
+             `)
         })
         .always(() => {
             hideLoading()
@@ -183,7 +283,16 @@ function updateTodo() {
             readTodo()
         })
         .fail(err => {
-            console.log(err);
+            console.log(err.responseJSON.message);
+            $('#alert').empty()
+            $('#alert').append(`
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+               <strong>WARNING!</strong> ${err.responseJSON.message}
+               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+               </button>
+             </div>
+             `)
         })
         .always(() => {
             hideLoading()
@@ -197,7 +306,16 @@ function doneTodo(id, status) {
             readTodo()
         })
         .fail(err => {
-            console.log(err);
+            cconsole.log(err.responseJSON.message);
+            $('#alert').empty()
+            $('#alert').append(`
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+               <strong>WARNING!</strong> ${err.responseJSON.message}
+               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+               </button>
+             </div>
+             `)
         })
         .always(() => {
             hideLoading()
@@ -211,7 +329,16 @@ function deleteTodo(id) {
             readTodo()
         })
         .fail(err => {
-            console.log(err);
+            console.log(err.responseJSON.message);
+            $('#alert').empty()
+            $('#alert').append(`
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+               <strong>WARNING!</strong> ${err.responseJSON.message}
+               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+               </button>
+             </div>
+             `)
         })
         .always(() => {
             hideLoading()

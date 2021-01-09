@@ -92,3 +92,15 @@ class Todo {
         })
     }
 }
+
+class API {
+    static getHolidayDate() {
+        return $.ajax({
+            method: "GET",
+            url: `${baseUrl}/holidays`,
+            headers:{
+                access_token: localStorage.access_token
+            }
+        })
+    }
+}

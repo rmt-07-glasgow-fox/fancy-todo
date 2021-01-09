@@ -1,4 +1,4 @@
-const { Todo } = require('../models')
+const { Todo, User } = require('../models')
 
 class Controller {
     static create(req, res, next) {
@@ -15,7 +15,9 @@ class Controller {
 
     static findAll(req, res, next) {
         Todo
-            .findAll()
+            .findAll({
+                include: User,
+            })
             .then(todoList => res.status(200).json(todoList))
             .catch(err => next(err))
     }

@@ -4,7 +4,8 @@ $(document).ready(function () {
     $('#body').removeClass('d-none')
     $('.modal').modal('show');
     if (localStorage.access_token) {
-        readTodo()        
+        readTodo()
+        getHolidays()       
     }
     reload()
     // Detect browser for css purpose
@@ -48,8 +49,6 @@ $(document).ready(function () {
           `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...`
         );
     });
-
-    // scroll to element
 
     hideLoading()
 

@@ -7,9 +7,9 @@ const authentication = require('../middlewares/authentication')
 const errorHandler = require('../middlewares/errorHandler')
 
 route.get('/', Controller.home)
-route.use(api)
 route.use('/', auth)
 route.use(authentication)
+route.use(api)
 route.use('/todos', todos)
 
 route.use(errorHandler)
