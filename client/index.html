@@ -61,7 +61,16 @@
         </div>
     </div>
 
-    <div class="container-fluid col-sm-3 float-left mt-5" id="widgetWeather">
+    <div class="container-fluid m-0 p-0" id="widgetWeather">
+        <div class="d-flex bd-highlight bg-light">
+        <div class="p-2 flex-fill bd-highlight text-center" id="mainWeather"></div>
+        <div class="p-2 flex-fill bd-highlight text-center" id="descriptionWeather"></div>
+        <div class="p-2 flex-fill bd-highlight text-center" id="tempWeather"></div>
+        </div>
+    </div>
+    
+
+    <!-- <div class="container-fluid d-inline-flex col-sm-3 mt-5" id="widgetWeather">
         <div class="card bg-dark text-white">
             <img src="./widget.jpg" class="card-img" alt="...">
             <div class="card-img-overlay">
@@ -71,13 +80,14 @@
                 <p class="card-text" id="tempWeather"></p>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- card-todo-list -->
-    <div class="container-fluid mt-5" id="todo-list-data">
+    <div class="container mt-5">
+        <div class="row" id="todo-list-data">
         <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addModal">Add</button>
-        <div class="row">
-
+        
+            <input type="hidden" id="hiddenUserId">
         </div>
     </div>
     <!-- modal -->
@@ -127,6 +137,9 @@
                 </div>
                 <div class="modal-body">
                     <form>
+                        <input type="hidden" id="hiddenId">
+
+
                         <div class="form-group">
                             <label for="title" class="col-form-label">Title:</label>
                             <input type="text" class="form-control" id="title">

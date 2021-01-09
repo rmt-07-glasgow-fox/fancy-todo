@@ -58,14 +58,15 @@ class TodoController{
     }
 
     static async updateTodo(req, res){
-        try{
-            const id = +req.params.id
+        const id = +req.params.id
             const opt = {
                 title: req.body.title,
                 description: req.body.description,
-                status: req.body.status,
                 dueDate: req.body.dueDate
             }
+
+        try {
+            console.log(id)
 
             const result = await Todo.update(opt, {
                 where: {
@@ -82,10 +83,10 @@ class TodoController{
     }
 
     static async updateTodoPatch(req, res){
-        try{
+        try {
             const id = +req.params.id
             const status = {
-                status: req.body.status
+                status: 'checked'
             }
 
             const result = await Todo.update(status, {

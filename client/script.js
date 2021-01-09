@@ -9,6 +9,7 @@ function checkAuth(){
   if(localStorage.access_token){
     afterLogin()
     getTodoList()
+    getWeather()
   }else{
     beforeLogin()
   }
@@ -203,6 +204,7 @@ function editTodo(id){
   })
   .done(response => {
     console.log(response, '<=== response')
+    $('#hiddenId').val(response.id)
     $('#title').val(response.title)
     $('#date').val(response.dueDate)
     $('#description').val(response.description)
@@ -217,14 +219,14 @@ function editTodo(id){
 }
 
 function updateTodo(){
-  event.preventDefault()
   const title = $('#title').val()
   const description = $('#description').val()
   const dueDate = $('#date').val()
+  const hiddenId = $('#hiddenId').val()
 
   $.ajax({
     method: 'PUT',
-    url: `${baseUrl}`,
+    url: `${baseUrl}/todos/${hiddenId}`,
     headers: {
       access_token: localStorage.access_token
     },
@@ -282,6 +284,7 @@ function updateStatus(id){
 }
 
 function getWeather(){
+  console.log('test weather')
   $.ajax({
     method: 'GET',
     url: `${baseUrl}/api`,
@@ -290,10 +293,10 @@ function getWeather(){
     }
   })
   .done(response => {
-    console.log(response)
-    $('#mainWeather').text(response.weather[0].main)
-    $('#descriptionWeather').text(response.weather[0].description)
-    $('#tempWeather').text(Math.round((response.main.temp-273)*10)/10 + "°C")
+    
+    $('#mainWeather').text('Main:' + ' ' + response.weather[0].main)
+    $('#descriptionWeather').text('Description:' + ' ' + response.weather[0].description)
+    $('#tempWeather').text('Temp:' + ' ' + Math.round((response.main.temp-273)*10)/10 + "°C")
   })
   .fail(err => {
     console.log(err, '<=== error')

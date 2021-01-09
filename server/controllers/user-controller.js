@@ -118,6 +118,10 @@ class UserController{
             })
         }
     }
+
+    static async findUser(){
+        
+    }
 }
 
 module.exports = UserController
