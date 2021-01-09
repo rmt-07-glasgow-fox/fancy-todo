@@ -1,6 +1,7 @@
 const { User } = require("../models")
 const { compare } = require("../helpers/hashPassword.js")
 const { makeToken } = require("../helpers/jwt.js")
+const { OAuth2Client } = require('google-auth-library');
 
 class userController {
 
@@ -42,8 +43,8 @@ class userController {
                         email: user.email
                     }
 
-                    const accesToken = makeToken(payload)
-                    res.status(200).json({ accesToken })
+                    const access_token = makeToken(payload)
+                    res.status(200).json({ access_token })
                 } else {
                     next({
                         message: "invalid email / password",
@@ -62,6 +63,52 @@ class userController {
 
 
 
+    }
+
+    static googleLogin(req, res, next) {
+        const { id_token } = req.body
+        const client = new OAuth2Client(process.env.CLIENT_GOOGLE_ID);
+        let email
+        client.verifyIdToken({
+            idToken: id_token,
+            audience: process.env.CLIENT_GOOGLE_ID,
+        })
+            .then(ticket => {
+                const payload = ticket.getPayload();
+                email = payload.email
+
+                return User.findOne({
+                    where: {
+                        email
+                    }
+                })
+            })
+            .then(data => {
+                if (!data) {
+                    return User.create({
+                        email,
+                        password: Math.random() * 1000 + 'random google'
+                    })
+                } else {
+                    return data
+                }
+            })
+            .then(user => {
+                const payload = {
+                    id: user.id,
+                    email: user.email
+                }
+
+                const access_token = makeToken(payload)
+                res.status(200).json({ access_token })
+            })
+            .catch(err => {
+                next({
+                    message: err.message,
+                    code: 500,
+                    from: 'google login'
+                })
+            })
     }
 
 }

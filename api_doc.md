@@ -2,21 +2,25 @@
 
 ## POST /todos
 - Request body: 
+    ```json
     {
-        "title": ,
-        "description": ,
-        "status": ,
-        "due_date": 
+        "title": "",
+        "description": "",
+        "status": "",
+        "due_date": ""
     }.
+    ```
 - Response (accepted) :
     status code => 201,
+    ```json
     {
-        "id": ,
-        "title": ,
-        "description": ,
-        "status": ,
-        "due_date": 
+        "id": "",
+        "title": "",
+        "description": "",
+        "status": "",
+        "due_date": ""
     }.
+    ```
 - Response (fail validation) :
     status code => 400,
     {
@@ -45,18 +49,20 @@
     
 - Response (fail) : 
     status code => 404,
-    [
+    {
         "error not found"
-    ].
+    }.
 
 ## PUT /todos/:id
 - Request body :
+    ```json
     {
         "title": ,
         "description": ,
         "status": ,
         "due_date": 
     }.
+    ```
 - Response (accepted) : 
     status code => 200,
     {
@@ -77,9 +83,11 @@
 
 ## PATCH /todos/:id
 - Request body :
+    ```
     {
-        "status": 
+        "status": ""
     }.
+    ```
 - Response (accepted) :
     status code => 200,
     {

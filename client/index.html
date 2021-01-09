@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-signin-client_id"
+        content="531883454165-cu99ivk1h83dn7q7m8juu9tu7j9ru5ma.apps.googleusercontent.com">
+    <title>Fancy Todo</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./script.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+
+<body class="container" style="background: url(https://i.pinimg.com/originals/d2/96/f1/d296f1832a0bd062b6971c19feb73047.jpg);">
+    <nav class="navbar navbar-expand-sm bg-light justify-content-center">
+        <h2 class="font-weight-bold">Fancy Todo</h2>
+        <button style="margin-left: 10px;" class="btn btn-outline-danger" id="btn-logout">Log Out</button>
+    </nav>
+    <div class="jumbotron bg-dark text-light">
+        <h5>
+            Fancy Todo is a task management app to help you stay organized and manage your day-to-day.
+            You can use Fancy Todo to make shopping lists, take notes, plan an event to increase your productivity and
+            focus on what matters to you.
+            Fancy Todo makes it easy to stay organized and manage your life.
+        </h5>
+    </div>
+    <div id="sign-up" class="text-light"> 
+        <h1>Sign Up</h1>
+        <form id="form-signup">
+            <div>
+                <label for="email">Email address:</label>
+                <input type="email" id="SUemail" required placeholder="Enter email">
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="SUpassword" required placeholder="Password">
+            </div>
+            <div>
+                <label for="password">Repeat Password:</label>
+                <input type="password" placeholder="Confirm Password" required>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary" id="btn-signup">Sign Up</button>
+                <a href="#" onclick="signIn(event)">I have an Account</a><br>
+                <p>or</p>
+                <div class="g-signin2" data-onsuccess="onSignIn"></div>
+
+            </div>
+        </form>
+    </div>
+    <div id="sign-in" class="text-light">
+        <h1>Sign In</h1>
+        <form id="form-signin" >
+            <div>
+                <label for="SIemail">Email address:</label>
+                <input type="email" id="SIemail" required placeholder="Enter email">
+            </div>
+            <div>
+                <label for="SIpassword">Password:</label>
+                <input type="password" id="SIpassword" required placeholder="Password">
+            </div>
+            <div>
+                <button class="btn btn-primary " type="submit">Sign In</button>
+                <a href="#" onclick="signUp(event)">Don't have an Account?</a>
+                <p>or</p>
+                <div class="g-signin2" data-onsuccess="onSignIn"></div>
+            </div>
+        </form>
+    </div>
+    <div id="weather" class="" style="background: lightslategray; margin-right: 900px;">
+        <h2>Cuaca hari ini:</h2>
+        <div id="weather-dtl"  style="margin-left: 50px;">
+
+        </div>
+    </div>
+    <div id="called">
+    </div>
+    <div id="all-down" style="text-align: center;" class="container jumbotron ">
+        <div id="task">
+            <h1>Here Your Task:</h1>
+            <button class="btn btn-primary" id="btn-add-todo">Add Todo</button>
+        </div>
+        <div id="add-task">
+            <form id="form-add-task" class="form-inline" style="margin-top: 20px; margin-left: 185px;">
+                <div style="margin-right: 5px;">
+                    <input type="text" class="form-control" id="todo" placeholder="Todo.." required>
+                </div>
+                <div style="margin-right: 5px;">
+                    <input type="date" class="form-control" id="date" required>
+                </div>
+                <div style="margin-right: 5px;">
+                    <input type="text" class="form-control" id="desc" placeholder="Description here.." required>
+                </div>
+                <div style="margin-left: 5px;">
+                    <button class="btn btn-outline-primary" type="submit">Add</button>
+                    <button class="btn btn-outline-danger" id="btn-cancel">Cancel</button>
+                </div>
+            </form>
+        </div>
+        <div id="edit-task">
+
+
+        </div>
+
+        <div id="list-todo" style="margin: 20px 200px 20px 200px;" class="">
+            <!--  -->
+
+        </div>
+    </div>
+
+</body>
+
+</html>

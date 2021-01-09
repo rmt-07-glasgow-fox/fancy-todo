@@ -7,7 +7,7 @@ class todosController {
         const newTodo = {
             title: req.body.title,
             description: req.body.description,
-            status: req.body.status,
+            status: req.body.status ? req.body.status : "belum",
             due_date: req.body.due_date,
             UserId: req.user.id
         }
@@ -37,17 +37,23 @@ class todosController {
     }
 
     static getTodo(req, res, next) {
-        let todo
+        let todo = []
         Todo.findAll()
             .then(data => {
-                todo = data
+                data.forEach(el => {
+                    if(el.UserId == req.user.id) {
+                        todo.push(el)
+                    }
+                });
                 let url = process.env.WEATHER_JKT
                 return axios.get(url)
+
             })
             .then(response => {
                 res.status(200).json({ data: todo, weather: response.data })
             })
             .catch(err => {
+                console.log(err)
                 next({
                     message: err.message,
                     code: 500,
