@@ -8,6 +8,8 @@ route.use(authentication)
 
 route.get('/todos', Controller.showAllTodos)
 route.post('/todos', Controller.createTodos)
+route.get('/numberFact', Controller.numberFact)
+route.get('/randomQuote', Controller.randomQuote)
 
 // authorization
 route.get('/todos/:id', authorization, Controller.showById)

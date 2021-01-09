@@ -1,3 +1,4 @@
+const axios = require('axios')
 const { Todo } = require('../models')
 const formatDate = require('../helpers/format-date')
 
@@ -22,16 +23,14 @@ class Controller {
 
     static createTodos(req, res, next) {
         const todo = {
-            title: req.headers.title,
-            description: req.headers.description,
+            title: req.body.title,
+            description: req.body.description,
             status: 'undone',
-            due_date: formatDate(req.headers.due_date),
+            due_date: formatDate(req.body.due_date),
             user_id: req.userId,
             createdAt: new Date(),
             updatedAt: new Date()
         }
-
-        console.log(todo)
 
         Todo.create(todo)
             .then(data => {
@@ -96,6 +95,7 @@ class Controller {
             .then(data => {
                 if (!data) {
                     //res.status(404).json({ message: 'todo item not found' })
+
                     next({
                         message: 'Item not found',
                         code: 404,
@@ -106,11 +106,7 @@ class Controller {
                 const todo = {
                     title: req.body.title,
                     description: req.body.description,
-                    status: req.body.status,
-                    due_date: req.body.due_date,
-                    user_id: req.userId,
-                    createdAt: new Date(),
-                    updatedAt: new Date()
+                    due_date: req.body.due_date
                 }
 
                 return Todo.update(todo, {
@@ -161,13 +157,7 @@ class Controller {
                 }
 
                 const todo = {
-                    title: data.title,
-                    description: data.description,
-                    status: req.body.status,
-                    due_date: data.due_date,
-                    user_id: req.userId,
-                    createdAt: new Date(),
-                    updatedAt: new Date()
+                    status: 'done'
                 }
 
                 return Todo.update(todo, {
@@ -231,6 +221,40 @@ class Controller {
                     code: 500,
                     from: 'Controller Todo: delete todos'
                 })
+            })
+    }
+
+    static numberFact(req, res, next) {
+        const id = req.headers.id
+
+        let apiURL = `http://numbersapi.com/${id}/math`
+
+        axios.get(apiURL)
+            .then(response => {
+                console.log(response.data)
+                res.status(200).json({ data: response.data })
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
+    static randomQuote(req, res, next) {
+        const id = +req.headers.id
+
+        let apiURL = `https://api.adviceslip.com/advice/${id}`
+
+        axios.get(apiURL)
+            .then(response => {
+                const end = response.data.length - 2
+                const msg = response.data.substring(32, end)
+            
+                console.log(msg)
+
+                res.status(200).json({ data: msg })
+            })
+            .catch(err => {
+                console.log(err)
             })
     }
 }
