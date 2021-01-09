@@ -5,6 +5,16 @@ const {OAuth2Client} = require('google-auth-library');
 
 
 class AuthConroller {
+      static getUser(req, res, next) {
+            let id = req.params.id
+
+            User.findByPk(id)
+                  .then(data => {
+                        res.status(200).json(data)
+                  }).catch(err => next(err))
+                  
+      }
+
       static register(req, res) {
             const newUser = { email: req.body.email, password: req.body.password }
 

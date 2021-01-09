@@ -3,7 +3,7 @@ const { User, Todo } = require('../models')
 class TodoController {
       static showTodo(req, res, next) {
             
-            Todo.findAll()
+            Todo.findAll({order: ["due_date"]})
                   .then(data => {
                         res.status(200).json(data)
                   })
@@ -51,7 +51,7 @@ class TodoController {
 
       }
 
-      static edit(req, res) {
+      static edit(req, res, next) {
             const editedTodo = {
                   title: req.body.title,
                   description: req.body.description,
@@ -63,7 +63,11 @@ class TodoController {
 
             Todo.update(editedTodo, {where: {id}})
                   .then(data => {
-                        res.status(200).json(data, {message: "todo has updated"})
+                        // res.status(200).json(data)
+                        return Todo.findByPk(id)
+                  })
+                  .then(todo => {
+                        res.status(200).json(todo)
                   })
                   .catch(err => {
                         if (err.name == "SequelizeValidationError") next({name: "SequelizeValidationError"})
@@ -81,7 +85,10 @@ class TodoController {
 
             Todo.update(status, {where: {id}})
                   .then(data => {
-                        res.status(200).json(data)
+                       return Todo.findByPk(id)
+                  })
+                  .then(todo => {
+                        res.status(200).json(todo)
                   })
                   .catch(err => {
                         if (err.name == "SequelizeValidationError") next({name: "SequelizeValidationError"})
@@ -95,8 +102,8 @@ class TodoController {
       static delete(req, res) {
             const id = req.params.id
             Todo.destroy({where: {id}}) 
-                  .then(() => {
-                        res.status(200).json({message: "success deleted"})
+                  .then(data => {
+                        res.status(200).json("success delete")
                   })
                   .catch(err => {
                         if (err.name == "SequelizeValidationError") next({name: "SequelizeValidationError"})

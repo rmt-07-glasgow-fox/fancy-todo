@@ -9,6 +9,7 @@ function checkAuth(){
             $(".card-todo").show()
             $("#logout-btn").show()
             $("#nologin").hide()
+            $(".register-page").hide()
             
 
       } else {
@@ -26,6 +27,7 @@ function contentInit() {
       $(".card-todo").hide()
       $(".register-page").hide()
       $(".add-page").hide()
+      $(".update-page").hide()
 }
 
 $(document).ready(function(){
@@ -33,6 +35,13 @@ $(document).ready(function(){
       getTodos()
       checkAuth()
       
+      $("#home").click(function(){
+            checkAuth()
+            $(".add-page").hide()
+            $(".update-page").hide()
+
+            
+      })
 
       $(".register-link").click(function() {
             $(".login-page").hide()
@@ -58,6 +67,39 @@ $(document).ready(function(){
       $(".add-btn").click(function(){
             $(".add-page").show()
             $(".card-todo").hide()
+      })
+
+      // $("#update-btn").click(function(){
+      //       // event.preventDefault()
+      //       $(".update-page").show()
+      //       $(".card-todo").hide()
+
+      // })
+
+      $("#register-submit").click(function(event){
+            event.preventDefault()
+            let email = $("#email-register").val()
+            let password = $("#password-register").val()
+            console.log(email, password, "<<<");
+      
+            $.ajax({
+                  method: 'POST',
+                  url: `${baseUrl}/register`,
+                  data: { email, password }
+            })
+            .done(response => {
+                  checkAuth()
+                  getTodos()
+                  alert("berhasil terdaftar")
+            })
+            .fail(err => {
+                  console.log(err, 'err');
+            })
+            .always(() => {
+                  console.log('always');
+                  $("#email-register").val('')
+                  $("#password-register").val('')
+            })
       })
     
       //log in
@@ -87,14 +129,13 @@ $(document).ready(function(){
             })
       })
 
-      //create todo
+      //create todos
       $("#add-submit").click(function(event){
             event.preventDefault()
 
-            let title = $("#title").val()
-            let description = $("#description").val()
-            let due_date = $("#due_date").val()
-            console.log(title);
+            let title = $("#title-create").val()
+            let description = $("#description-create").val()
+            let due_date = ($("#due_date").val())
 
             $.ajax({
                   method: "POST",
@@ -105,6 +146,7 @@ $(document).ready(function(){
             }).done(response => {
                   $(".add-page").hide()
                   checkAuth()
+                  getTodos()
             }).fail(err => {
                   console.log(err);
             }).always(()=> {
@@ -112,34 +154,35 @@ $(document).ready(function(){
             })
       })
 
-      $("#add-submit").click(function(event){
+
+      //update todos
+      $("#update-submit").click(function(event){
             event.preventDefault()
+            let title = $("#title-update").val()
+            let description = $("#description-update").val()
+            let due_date = $("#due_date-update").val()
 
-            let title = $("#title").val()
-            let description = $("#description").val()
-            let due_date = $("#due_date").val()
-            console.log(title);
-
+            let id = $("#update-btn").data("id")
+            console.log(id);
             $.ajax({
-                  method: "POST",
-                  url: `${baseUrl}/todos`,
+                  method: "PUT",
+                  url: `${baseUrl}/todos/${id}`,
                   headers: { access_token: localStorage.access_token },
                   data: { title, description, due_date }
 
             }).done(response => {
-                  $(".add-page").hide()
+                  $(".update-page").hide()
                   checkAuth()
+                  getTodos()
+
             }).fail(err => {
-                  console.log(err);
-            }).always(()=> {
-                  console.log("always");
+                  alert(err)
             })
       })
 
 })
 
-
-
+//google log in
 function onSignIn(googleUser) {
       let id_token = googleUser.getAuthResponse().id_token;
 
@@ -160,6 +203,7 @@ function onSignIn(googleUser) {
       })
     }
 
+// google sign out
 function signOut() {
       var auth2 = gapi.auth2.getAuthInstance();
       auth2.signOut().then(function () {
@@ -168,6 +212,7 @@ function signOut() {
       checkAuth()
 }
 
+//read todo
 function getTodos() {
       $.ajax({
             method: "GET",
@@ -177,14 +222,15 @@ function getTodos() {
       .done(response => {
             let todoList = response
             $("#todo").empty()
-           
+            const options ={weekday: "short", year: "numeric", month: "short", day: "numeric"}
             todoList.forEach(element => {
+                  let date = new Date(element.due_date).toLocaleDateString("en-EN", options)
                 $("#todo").append(`
             <div class="card border-primary mb-3" style="max-width: 20rem; margin-top: 10px; margin-bottom: 10px;">
                 <div class="card-header d-flex w-100 justify-content-between">
-                  <input type="checkbox" style="margin: 5px;" name="status" value="true" onclick=updateStatus()>
+                  <input type="checkbox" style="margin: 5px;" id="update-status" name="status" value="true" onclick=updateStatus(${element.id})>
                   <h5>Todo</h5>
-                  <small>${element.due_date}</small>
+                  <small>${date}</small>
                 </div>
                 <div class="card-header ">
                   <h4 class="card-title" id="title" name="title" >${element.title}</h4>
@@ -192,8 +238,8 @@ function getTodos() {
                   
                 </div>
                   <div  class="card-header " style="border-top: brown;">
-                    <button type="button" class="btn btn-primary btn-sm" onclick="updateTodo(${element.id})">Update</button>
-                    <button type="button" class="btn btn-primary btn-sm" onclick="updateTodo(${element.id})">Delete</button>
+                    <button type="button" class="btn btn-primary btn-sm" id="update-btn" onclick="getTodo(${element.id})">Update</button>
+                    <button type="button" class="btn btn-primary btn-sm" id="delete-btn" onclick="deleteTodo(${element.id})">Delete</button>
                   </div>
                 </div>
             </div>`)  
@@ -206,10 +252,83 @@ function getTodos() {
       .always(() => {
             console.log('always');
       })
-
-
       
 }
 
+//read one todo
+function getTodo(id){
+      
+      $.ajax({
+            method: "GET",
+            url: `${baseUrl}/todos/${id}`,
+            headers: { access_token: localStorage.access_token }
+            
+      }).done(response => {
+            $("#title-update").val(response.title)
+            $("#description-update").val(response.description)
+            $("#due_date-update").val(response.due_date)
+
+            $(".update-page").show()
+            $(".card-todo").hide()
+
+            $("#update-btn").data("id", id)
+
+
+            
+      }).fail(err => {
+            alert(err.responseJSON.message)
+      })
+
+
+}
+
+//delete Todo
+function deleteTodo(id){
+            
+      $.ajax({
+            method: "DELETE",
+            url: `${baseUrl}/todos/${id}`,
+            headers: { access_token: localStorage.access_token },
+
+      }).done(response => {
+            alert("berhasil dihapus")
+            checkAuth()
+            getTodos()
+      }).fail(err => {
+            console.log(err);
+            alert(err.responseJSON.message)
+      })
+}
+
+//update status
+function updateStatus(id){
+      let status;
+      if ($('#update-status').is(":checked")) {
+            status = false
+      } else {
+            status = true
+      }
+
+      console.log($('#update-status').is(":checked"));
+
+      $.ajax({
+            method: "PATCH",
+            url: `${baseUrl}/todos/${id}`,
+            headers: { access_token: localStorage.access_token },
+            data: { status }
+      })
+      .done(response => {
+            if (status === true){ 
+                 $('#update-status').is(":checked")
+            } else {
+                  !$('#update-status').is(":checked")
+            }
+            checkAuth()
+            getTodos()
+      })
+      .fail(err => {
+            alert(err.responseJSON.message)
+      })
+}
 
 
