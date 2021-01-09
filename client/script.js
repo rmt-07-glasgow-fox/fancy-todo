@@ -141,7 +141,17 @@ function deleteTodo(todoId) {
     })
         .done(response => {
             console.log(response, ">>>> this is response from ajax deletetodo")
-
+            $('#delete-success').empty()
+            if (response) {
+                $('#delete-success').append(`
+                                <div class="alert alert-success" role="alert" id="delete-success">
+                                        ${response.message}
+                                </div>
+                                `)
+            }
+            setTimeout(() => {
+                afterLogin()
+            }, 500)
         })
         .fail(err => {
             console.log(err, ">>>> this is error from ajax deleteTodo")
@@ -281,7 +291,6 @@ $(document).ready(function () {
     $('#delete-btn').click((event) => {
         event.preventDefault()
         deleteTodo()
-        afterLogin()
     })
 })
 
