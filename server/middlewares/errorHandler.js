@@ -14,6 +14,12 @@ module.exports = (err, req, res, next) => {
       res.status(403).json({ message: 'Not Authorized' })
       break
 
+    case 'Wrong Email':
+    case 'Wrong Password':
+      res.status(400).json({ message: 'Wrong email/password' })
+      break
+
+    case 'SequelizeUniqueConstraintError':
     case 'SequelizeValidationError':
       res.status(400).json({
         message: 'Validation Error',
