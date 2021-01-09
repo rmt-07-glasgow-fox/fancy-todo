@@ -218,3 +218,5 @@ function deleteTodo(id) {
     $('#notification').append(`${err.statusText}`)
   })
 }
+
+// *** UPDATE TODO ***
