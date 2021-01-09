@@ -16,7 +16,7 @@ class TodosController {
       console.log('CREATE MASUK CONTROLLER', todo);
       return res.status(201).json(todo)
     } catch(error) {
-      console.log('OH ERROR PAS CREATE YA', error.name);
+      console.log('OH ERROR PAS CREATE YA', todoObj, error.name);
       next(error)
     }
   }
