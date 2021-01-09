@@ -4,8 +4,8 @@
 
 Open endpoints require no Authentication.
 
-* [Login](login.md) : `POST /api/login/`
-* [Register](register.md) : `POST /api/register/` 
+* [Login](login.md) : `POST /api/users/login/`
+* [Register](register.md) : `POST /api/users/register/`
 
 ## Endpoints that require Authentication
 
@@ -18,8 +18,8 @@ request. A Token can be acquired from the Login view above.
 Each endpoint manipulates or displays information related to the User whose
 Token is provided with the request:
 
-* [Show info](user/get.md) : `GET /api/user/`
-* `<TBD>` [Update info](user/put.md) : `PUT /api/user/`
+* [Show info](user/get.md) : `GET /api/users/`
+* `<TBD>` [Update info](user/put.md) : `PUT /api/users/`
 
 ### Todo related
 
@@ -114,7 +114,7 @@ Used to collect a Token for a registered User.
 
 ```json
 {
-    "message": "Email is Invalid"
+    "message": "Email does not exist"
 }
 ```
 
@@ -198,20 +198,6 @@ Provide email of Account to be created.
 
 ### Or
 
-**Condition** : If fields are missed.
-
-**Code** : `400 BAD REQUEST`
-
-**Content example**
-
-```json
-{
-    "messages": "All Fields is Required"
-}
-```
-
-### Or
-
 **Condition** : If email field is missed.
 
 **Code** : `400 BAD REQUEST`
@@ -221,6 +207,20 @@ Provide email of Account to be created.
 ```json
 {
     "messages": "Email is Required"
+}
+```
+
+### Or
+
+**Condition** : If email is not like email format.
+
+**Code** : `400 BAD REQUEST`
+
+**Content example**
+
+```json
+{
+    "messages": "Email Must Be Email Format"
 }
 ```
 
@@ -238,12 +238,26 @@ Provide email of Account to be created.
 }
 ```
 
+### Or
+
+**Condition** : If password length less than 6.
+
+**Code** : `400 BAD REQUEST`
+
+**Content example**
+
+```json
+{
+    "messages": "Password at least 6 characters"
+}
+```
+
 # Show Current User 
 
 Get the details of the currently Authenticated User along with basic
 subscription information.
 
-**URL** : `/api/user/`
+**URL** : `/api/users/`
 
 **Method** : `GET`
 
@@ -271,7 +285,7 @@ email address and name information.
 
 Allow the Authenticated User to update their details.
 
-**URL** : `/api/user/`
+**URL** : `/api/users/`
 
 **Method** : `PUT`
 

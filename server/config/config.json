@@ -2,7 +2,7 @@
   "development": {
     "username": "andrianm28",
     "password": "",
-    "database": "fancy-todo",
+    "database": "db_fancy-todo",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
