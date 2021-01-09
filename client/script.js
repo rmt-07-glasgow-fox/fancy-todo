@@ -174,6 +174,7 @@ function checkboxChange(id, status){
       } else {
         $(`#checkBox-${todoId}`).prop("checked", true);
       }
+      getTodoList();
     })
     .fail(err => {
       Swal.fire({
