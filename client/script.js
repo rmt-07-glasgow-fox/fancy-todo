@@ -82,16 +82,27 @@ function getTodoList() {
             let todoList = response
 
             todoList.forEach(element => {
+                const isChecked = element.status === true ? "checked" : ""
                 $('#todo-list').append(`
-                <div class="card col-8" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">${element.title}</h5>
-                        <p class="card-text">${element.description}</p>
-                        <p class="card-text">${element.due_date}</p>
-                        <a href="#" class="btn btn-primary">Update</a>
-                        <a href="#" class="btn btn-danger">Delete</a>
-                    </div>
-                </div>            
+                                            <div class="card col-12 border-dark mt-3 mb-5" style="width: 18rem;">
+                                <div class="card-header">${element.title}</div>
+                                    <div class="row">
+                                        <div class="col-2 mt-5 mb-5">
+                                            <label>
+                                                <input type="checkbox" ${isChecked}/>
+                                            </label>
+                                        </div>
+                                        <div class="col-10">
+                                            <div class="card-body text-dark text-justify">
+                                                <p class="card-text">${element.description}</p>
+                                                <p class="card-text">Due: ${element.due_date}</p>
+                                                <a href="#" class="btn btn-primary">Update</a>
+                                                <a href="#" class="btn btn-danger">Delete</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+
 `)
             })
         })
@@ -123,7 +134,6 @@ $(document).ready(function () {
                 checkAuth()
             })
             .fail((jqXHR, textStatus, error) => {
-                console.log(jqXHR.responseJSON.messages)
                 let errMessagesRegister = jqXHR.responseJSON.messages
                 $('#register-errors').empty()
 
@@ -159,7 +169,6 @@ $(document).ready(function () {
                 checkAuth()
             })
             .fail((jqXHR, textStatus, error) => {
-                console.log(jqXHR.responseJSON.messages)
                 let errMessagesLogin = jqXHR.responseJSON.messages
                 $('#login-errors').empty()
 
