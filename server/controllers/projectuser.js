@@ -5,10 +5,7 @@ exports.listProject = async (req, res, next) => {
     const userId = req.user.id;
     const projectUser = await ProjectUser.findAll({
       where: { UserId: userId },
-      include: [
-        Project,
-        // { model: User, attributes: { exclude: ['password'] } },
-      ],
+      include: [Project],
     });
     return res.status(200).json(projectUser);
   } catch (error) {

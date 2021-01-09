@@ -10,6 +10,19 @@ exports.list = async (req, res, next) => {
   }
 };
 
+exports.listByProject = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const projectId = req.params.idProject;
+    const todos = await Todo.findAll({
+      where: { UserId: userId, ProjectId: projectId },
+    });
+    return res.status(200).json(todos);
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.create = async (req, res, next) => {
   const body = {
     title: req.body.title,
@@ -17,6 +30,7 @@ exports.create = async (req, res, next) => {
     status: req.body.status,
     due_date: req.body.due_date,
     UserId: req.user.id,
+    ProjectId: req.body.ProjectId,
   };
 
   try {

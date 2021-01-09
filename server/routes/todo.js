@@ -4,6 +4,7 @@ const requireToken = require('../helpers/requireToken');
 
 const {
   list,
+  listByProject,
   create,
   detail,
   update,
@@ -12,6 +13,7 @@ const {
 } = require('../controllers/todo');
 
 router.get('/', requireToken, list);
+router.get('/project/:idProject', requireToken, listByProject);
 router.post('/', requireToken, create);
 router.get('/:id', requireToken, detail);
 router.put('/:id', requireToken, update);
