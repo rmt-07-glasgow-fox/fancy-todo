@@ -1,0 +1,455 @@
+/*//////////////////////////////////////////////////////////////////
+[ FONT ]*/
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700;900&display=swap');
+
+/*//////////////////////////////////////////////////////////////////
+[ RESTYLE TAG ]*/
+
+* {
+	margin: 0px; 
+	padding: 0px; 
+	box-sizing: border-box;
+}
+
+body, html {
+	height: 100%;
+	font-family: Montserrat, sans-serif;
+}
+
+/*---------------------------------------------*/
+a {
+	font-family: Montserrat;
+	font-size: 14px;
+	line-height: 1.7;
+	color: #666666;
+	margin: 0px;
+	transition: all 0.4s;
+}
+
+a:focus {
+	outline: none !important;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+/*---------------------------------------------*/
+h1,h2,h3,h4,h5,h6 {
+	margin: 0px;
+}
+
+p {
+	font-family: Montserrat;
+	font-size: 14px;
+	line-height: 1.7;
+	color: #666666;
+	margin: 0px;
+}
+
+ul, li {
+	margin: 0px;
+	list-style-type: none;
+}
+
+
+/*---------------------------------------------*/
+input {
+	outline: none;
+	border: none;
+}
+
+textarea {
+  outline: none;
+  border: none;
+}
+
+textarea:focus, input:focus {
+  border-color: transparent !important;
+}
+
+/*---------------------------------------------*/
+button {
+	outline: none !important;
+	border: none;
+	background: transparent;
+}
+
+button:hover {
+	cursor: pointer;
+}
+
+iframe {
+	border: none !important;
+}
+
+/*//////////////////////////////////////////////////////////////////
+[ Utility ]*/
+.txt1 {
+  font-family: Montserrat;
+  font-size: 15px;
+  line-height: 1.4;
+  color: #999999;
+}
+
+.txt2 {
+  font-family: Montserrat;
+  font-size: 15px;
+  line-height: 1.4;
+  color:#0089ED;
+}
+
+.hov1:hover {
+  text-decoration: underline;
+}
+
+/*//////////////////////////////////////////////////////////////////
+[ login ]*/
+
+.limiter {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.container-login100 {
+  width: 100%;  
+  min-height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  /* padding: 15px; */
+}
+
+.container-dashboard100 {
+  width: 100%;  
+  min-height: 100vh;
+  /* display: flex;
+  flex-wrap: wrap; */
+  justify-content: center;
+  align-items: center;
+  /* padding: 15px; */
+}
+
+.container-body-content100 {
+  width: 100%;  
+  /* min-height: 100vh; */
+  /* display: flex; */
+  /* flex-wrap: wrap; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* padding: 15px; */
+  padding-bottom:40px;
+}
+
+.landing-bg{
+  background-image: url("/images/img_stmzu_yeroblu.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.dashboard-bg{
+  background-image: url("/images/img_stmzu_yeroblu.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.wrap-login100 {
+  width: 360px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  border-radius: 8px;
+  overflow: hidden;
+
+  box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+}
+
+.wrap-add-task100 {
+  width: auto;
+  background: rgba(30, 30, 30, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  border-radius: 8px;
+  overflow: hidden;
+
+  box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+}
+
+.wrap-edit-task100 {
+  width: auto;
+  background: rgba(255, 204, 18, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  border-radius: 8px;
+  overflow: hidden;
+
+  box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+}
+
+.wrap-todo-card100 {
+  width: 22.8vw;
+  height: 210px;
+  /* margin-left: 1.5vw;
+  margin-right: 2vw; */
+  background: rgba(88, 172, 255, 0.5);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  border-radius: 8px;
+  overflow: hidden;
+
+  box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+}
+
+
+/*==================================================================
+[ Form ]*/
+
+.login100-form {
+  width: 100%;
+}
+
+.login100-form-title {
+  display: block;
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: 5px;
+  color: #0089ED;
+  line-height: .5;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/*------------------------------------------------------------------
+[ Input ]*/
+
+.wrap-input100 {
+  width: 100%;
+  position: relative;
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+}
+
+.wrap-input100.rs1 {
+  border-top: none;
+}
+
+.input100 {
+  display: block;
+  width: 100%;
+  background: transparent;
+  font-family: Montserrat;
+  font-size: 15px;
+  color: #666666;
+  line-height: 1.2;
+}
+
+/*---------------------------------------------*/
+input.input100 {
+  height: 68px;
+  padding: 0 25px 0 25px;
+}
+
+/*------------------------------------------------------------------
+[ Button ]*/
+.container-login100-form-btn {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.login100{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  width: 100%;
+  height: 48px;
+  font-family: Montserrat;
+  font-size: 14px;
+  font-size: 14px;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.btn-landing{
+  letter-spacing: 2px;
+  font-weight: 600;
+}
+
+.btn-primary{
+  background-color: #0089ED;
+}
+
+.btn-primary:hover{
+  background-color: #1f7bbd;
+  border: thin solid#1f7bbd ;
+}
+
+/*------------------------------------------------------------------
+[ Separator ]*/
+
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color:#0089ED;
+}
+.separator::before, .separator::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #999999;
+}
+.separator::before {
+  margin-right: 1em;
+}
+.separator::after {
+  margin-left: 1em;
+}
+
+/*------------------------------------------------------------------
+[ Navbar ]*/
+
+@media screen and (min-width:280px) {
+  .navbar-margin{
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
+
+@media screen and (min-width:320px) {
+  .navbar-margin{
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
+@media screen and (min-width:411px) {
+  .navbar-margin{
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+}
+
+@media screen and (min-width:720px) {
+  .navbar-margin{
+    padding-left: 64px;
+    padding-right: 64px;
+  }
+}
+
+.navbar{
+  height: 72px;
+}
+
+.navbar-color {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(16px);
+
+  /* overflow: hidden; */
+
+  box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+}
+
+.profPic{
+  width: 36px;
+  height: 36px;
+  margin-right: 16px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.profPic:hover{
+  border-color: #FFCC12;
+}
+
+/*------------------------------------------------------------------
+[ Add Task Form ]*/
+
+.add-task{
+  background-color:transparent;
+  color:#E8EAED; 
+  scrollbar-width: none;
+}
+
+.edit-task{
+  background-color:transparent;
+  color:#1E1E1E; 
+  scrollbar-width: none;
+}
+
+.text-box{
+  resize: none;
+  overflow: hidden;
+}
+
+.add-task::-webkit-scrollbar{
+  display:none
+}
+
+.add-task::placeholder{
+  color: #a9aeb3
+}
+
+.form{
+  display: grid;
+  width: auto;
+}
+
+input[text=text]{
+  width:inherit
+}
+
+.add-task-cancel{
+  color:#FF4138;
+  transition: color 0.3s ease-in-out;
+}
+
+.add-task-cancel:hover{
+  color:#B3251E;
+  cursor: pointer;
+}
+
+.add-task-submit{
+  color:#34F758;
+  transition: color 0.3s ease-in-out;
+}
+
+.add-task-submit:hover{
+  color:#1EB33A;
+  cursor: pointer;
+}
+
+.add-task-bot{
+  color:#1E1E1E;
+  transition: color 0.3s ease-in-out;
+}
+
+.add-task-bot:hover{
+  color:#313131;
+  cursor: pointer;
+}
+
+.todo-title{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* number of lines to show */
+  -webkit-box-orient: vertical;
+}
+
+.todo-description{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* number of lines to show */
+  -webkit-box-orient: vertical;
+}

@@ -63,6 +63,61 @@ _Response (400)_
 }
 ```
 
+### POST /glogin
+_Request Header_
+```
+  not needed
+```
+
+_Request Body_
+```json
+{
+  "id_token": "id_token";
+}
+```
+
+_Response (201)_
+```json
+Payload from Google
+```
+
+_Response (500)_
+```json
+{
+  "message": "Error 500: Internal Server Error"
+}
+```
+
+### GET /getuser
+_Request Header_
+```
+  "access_token": "access_token"
+```
+
+_Request Body_
+```json
+{
+  "id": "id from decoded access_token"
+}
+```
+
+_Response (200)_
+```json
+{
+  "id": "Your ID",
+  "email": "Your Email",
+  "name": "Your Name"
+}
+```
+
+_Response (500)_
+```json
+{
+  "message": "Error 500: Internal Server Error"
+}
+```
+
+
 ### POST /todos
 
 _Request Header_
@@ -105,6 +160,7 @@ _Response (500)_
   "message": "Error 500: Internal Server Error"
 }
 ```
+
 
 ### GET /todos
 

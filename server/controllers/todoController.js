@@ -20,7 +20,7 @@ class TodoController {
 
   static async getTodo(req, res, next) {
     try {
-      const todo = await Todo.findAll({ order: [['due_date', 'ASC']] });
+      const todo = await Todo.findAll({ where: { UserId: req.user.id }, order: [['due_date', 'ASC']] });
 
       return res.status(200).json(todo);
     } catch (err) {

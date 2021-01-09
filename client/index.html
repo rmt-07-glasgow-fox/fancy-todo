@@ -1,123 +1,275 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-<!--Import Google Icon Font-->
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<title>Risuto</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- Bootstrap V5 -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-<!-- Home Made Style -->
-<link rel="stylesheet" href="css/styles.css">
-
-<!--Let browser know website is optimized for mobile-->
-<meta name="viewport" content="width=device-width, initial-scale=1.0">  
-  <title>Document</title>
+	<!--===============================================================================================-->
+	<meta name="google-signin-client_id"
+		content="25069710585-2229tdamv883dq3pr43p2k98374ajlp3.apps.googleusercontent.com">
+	<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+	<!--===============================================================================================-->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+		integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+		integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<!--===============================================================================================-->
 </head>
+
 <body>
-<div class="row no-gutters" style="height: 100%;">
-  <div class="col no-gutters">
-    <div class="leftSide">
-      
-      <img class="logo" src="/client/images/img_logo_bgL.png" alt="logo">
-      <br>
-      <p style="color: #161616; margin-top: 4vh;">Listing what <b style="color:#6F6AB1">anime</b> you gonna watch is never been this easy.</p>
-      <img src="/client/images/img_cinema.png" width="600vw" alt="illust">
-      <p style="color: #161616; font-weight: 600; margin-top: 5vh;">Powered by: <img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/MyAnimeList_Logo.png" width="32vw" alt="My Anime List"></p> 
-      
-    </div>
-  </div>
-  <div class="col no-gutters">
-    <div class="rightSide">
 
-      <!-- Login form -->
+	<!-- landing-page -->
+	<div id="landing-page">
+		<div class="limiter">
+			<div class="container-login100 landing-bg p-t-15 p-r-15 p-b-15 p-l-15">
 
-      <div id="loginForm">
-        <h1>Login</h1>
-        <p style="color:#aeaeae">Are you new? <a id="toRegister" href="" class="createAcc">Create Account!</a></p>
-      
-        <form>
-          
-          <label for="email">Email</label>
-          <input type="email" class="form-control w-100" name="email" id="emailLogin" placeholder="johndoe@mail.com"><br>
-          
-          <label for="password">Password</label>
-          <input type="password" class="form-control w-100" name="password" id="passwordLogin" placeholder="Password">
+				<div class="wrap-login100 p-l-55 p-r-55 p-t-40 p-b-36">
 
-          <div class="form-check" style=" margin-top: 12px">
-            <input class="form-check-input" name="showPass" type="checkbox" id="defaultCheck1">
-            <label class="form-check-label" style="font-weight: 400; font-size: 14px; margin-left: 12px;" for="defaultCheck1">
-              Show Password
-            </label>
-          </div>
+					<!-- login-form -->
+					<div id="login-form">
+						<form class="login100-form validate-form">
+							<img src="/images/img_logo.png" class="login100-form p-b-28 p-r-64 p-l-64" alt="">
+							<span class="login100-form-title p-b-28">
+								Login
+							</span>
 
-          <hr style="margin: 24px 0; border:thin solid #161616" >
-          <input type="submit" style="font-weight: 600; letter-spacing: 2px;" class="btn btn-primary w-100 btn-lg" id="loginBtn" value="LOGIN">
-        </form>
+							<div class="wrap-input100 validate-input">
+								<input id="email-login" class="input100" type="text" name="email" placeholder="Email">
+							</div>
 
-        <div class="row" style="margin: 24px 0 ;">
-          <div class="col">
-            <hr style="border:thin solid #161616"/>
-          </div>
-          <div class="col" style="text-align: center; margin: 4px -64px; font-weight: 500; color:#aeaeae">
-            Or
-          </div>
-          <div class="col">
-            <hr style="border:thin solid #161616"/>
-          </div>
-        </div>
+							<div class="wrap-input100 rs1 validate-input">
+								<input id="password-login" class="input100" type="password" name="pass" placeholder="Password">
+							</div>
 
-        <button class="btn btn-primary btn-lg w-100">Sign in with google</button>
-      </div>
+							<div class="container-login100-form-btn m-t-20">
+								<button class="btn btn-primary btn-landing login100 text-up">
+									Login
+								</button>
+							</div>
 
-      <!-- Register form -->
+							<div class="text-center p-t-12 p-b-8">
+								<span class="txt1">
+									Create an account?
+								</span>
 
-      <div id="registerForm">
-        <h1>Register</h1>
-        <p style="color:#aeaeae">Already have account? <a id="toLogin" href="" class="createAcc">Login!</a></p>
+								<a id="to-register" href="" class="txt2 hov1">
+									Register
+								</a>
+							</div>
 
-        <form action="#" method="POST">
-          <label for="name">Name</label>
-          <input type="text" class="form-control w-100" name="name" id="name" placeholder="John Doe"><br>
-          
-          <label for="email">Email</label>
-          <input type="email" class="form-control w-100" name="email" id="email" placeholder="johndoe@mail.com"><br>
-          
-          <label for="password">Password</label>
-          <div class="row">
-            <div class="col">
-                <input type="password" class="form-control w-100" style="width: 50%;" name="password" id="password" placeholder="Password">
-              </div>
+							<div class="separator">
+								or
+							</div>
 
-              <div class="col">
-                <input type="password" class="form-control w-100" style="width: 50%;" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password">
-              </div>
-          </div> <br>
+							<div class="g-signin2 p-t-16" style="width:auto;" data-onsuccess="onSignIn" data-longtitle="true"></div>
 
-          <input id="registerSubmit" type="submit" style="font-weight: 600; letter-spacing: 2px;" class="btn btn-primary w-100 btn-lg" value="REGISTER">
-        </form>
+						</form>
+					</div>
+					<!-- login-form// -->
+
+					<!-- register-form -->
+					<div id="register-form">
+						<form class="login100-form validate-form">
+							<img src="/images/img_logo.png" class="login100-form p-b-28 p-r-64 p-l-64" alt="">
+							<span class="login100-form-title p-b-28">
+								Register
+							</span>
+
+							<div class="wrap-input100 validate-input">
+								<input id="name-register" class="input100" type="text" name="name" placeholder="Name">
+							</div>
+
+							<div class="wrap-input100 rs1 validate-input">
+								<input id="email-register" class="input100" type="text" name="email" placeholder="Email">
+							</div>
+
+							<div class="wrap-input100 rs1 validate-input">
+								<input id="password-register" class="input100" type="password" name="pass" placeholder="Password">
+							</div>
+
+							<div class="container-login100-form-btn m-t-20">
+								<button class="btn btn-primary btn-landing login100 text-up">
+									Register
+								</button>
+							</div>
+
+							<div class="text-center p-t-12 p-b-8">
+								<span class="txt1">
+									Already have an account?
+								</span>
+
+								<a id="to-login" href="" class="txt2 hov1">
+									Login
+								</a>
+							</div>
+
+						</form>
+
+						<div class="separator p-t-6">×</div>
+					</div>
+					<!-- register-form// -->
+
+					<!-- copyright-section -->
+					<div class="text-center p-t-12">
+						<span class="txt1">
+							BG illust by
+						</span>
+
+						<a href="https://pixiv.me/stmzu" target="_blank" class="txt2 hov1">
+							stmzu@pixiv
+						</a>
+					</div>
+
+					<div class="text-center p-t-12">
+						<span class="txt1">
+							Code by
+						</span>
+
+						<a href="https://github.com/ralfarios" target="_blank" class="txt2 hov1">
+							Ralfarios@github
+						</a>
+					</div>
+					<!-- copyright-section// -->
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!-- landing-page// -->
+
+	<!-- dashboard-page -->
+	<div id="dashboard-page">
+		<div class="container-dashboard100 dashboard-bg">
+
+			<!-- navbar -->
+			<nav class="navbar navbar-light sticky-top navbar-color navbar-margin">
+				<a class="navbar-brand">
+					<img src="/images/img_logo.png" height="24" class="d-inline-block align-middle" style="margin-top: -3px;"
+						alt="" loading="lazy">
+				</a>
+
+				<!-- user-info -->
+				<div id="user-info">
+					<div class="dropdown">
+
+						<!-- user-photo -->
+						<button type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false"></button>
+						<!-- user-photo// -->
+
+						<!-- user-name-email -->
+						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+							<div id="user-name-email"></div>
+							<div class="dropdown-divider"></div>
+							<a id="logout-btn" class="dropdown-item" href="">Logout</a>
+						</div>
+						<!-- user-name-email// -->
+
+					</div>
+				</div>
+				<!-- user-info// -->
+			</nav>
+			<!-- navbar// -->
+
+			<!-- body-content -->
+			<div id="body-content">
+				<div class="container-body-content100">
+					<div class="container">
+
+						<!-- add-task-minimized -->
+						<div id="add-task-minimized">
+							<div class="wrap-add-task100 m-t-40 m-l-40 m-r-40">
+								<form class="form p-t-16 p-b-16">
+									<input id="title-minimized" class="add-task m-t-12 m-l-32 m-r-32 m-b-12"
+										style="font-weight: 600; cursor: pointer;" type="text" placeholder="Take a note here..." disabled>
+								</form>
+							</div>
+						</div>
+						<!-- add-task-minimized// -->
+
+						<!-- add-task-expanded -->
+						<div id="add-task-expanded">
+							<div class="wrap-add-task100 m-t-40 m-l-40 m-r-40">
+								<div id="todoForm">
+									<form class="form p-t-16 p-b-16">
+										<input id="title" class="add-task m-t-12 m-l-32 m-r-32 m-b-12" style="font-weight: 600;" type="text"
+											placeholder="Title">
+
+										<hr style="margin:0" />
+
+										<input id="description" class="add-task text-box m-t-12 m-r-32 m-l-32" type="text"
+											placeholder="Take a note (max 32 char)" maxlength="32">
+
+										<input id="due_date" class="add-task m-l-32 m-t-24" style="width:160px;" type="date">
+
+										<div id="add-task-button" class="m-l-28 m-t-24 m-b-18">
+
+											<!-- <button id="add-task-cancel" class="btn btn-dark btn-add-task text-up" style="font-size: 100% ;letter-spacing: 2px;font-weight: 600;"  >Cancel</button> -->
+											<span style="font-size: 0.5rem;">
+												<i id="add-task-cancel" class="fas fa-times-circle fa-3x add-task-cancel"></i>
+												<button type="submit" class="fa-3x m-l-32 add-task-submit">
+													<i class="fa fa-check-circle"></i>
+												</button>
+											</span>
+											<!-- <input id="add-task-submit" class="btn btn-dark btn-add-task text-up" style="font-size: 100% ;letter-spacing: 2px;font-weight: 600;" type="submit" value="Submit"> -->
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+						<!-- add-task-expanded// -->
+
+						<!-- edit-task-expanded -->
+						<div id="edit-task-expanded">
+
+						</div>
+						<!-- edit-task-expanded// -->
+
+						<!-- todo-field -->
+
+						<div id="todo-field" style="margin-left:40px; margin-right: 40px; margin-bottom: 20px;display:flex; flex-wrap: wrap; justify-content: space-between;
+						align-items: center;">
 
 
-        <div class="row" style="margin: 12px 0 ;">
-          <div class="col">
-            <hr style="border:thin solid #161616"/>
-          </div>
-          <div class="col" style="text-align: center; margin: 4px -64px; font-weight: 500; color:#aeaeae">
-            Or
-          </div>
-          <div class="col">
-            <hr style="border:thin solid #161616"/>
-          </div>
-        </div>
+						</div>
 
-        <button class="btn btn-primary btn-lg w-100">Sign in with google</button>
 
-      </div>
-    </div>
-  </div>
-</div>
-  <!-- JQuery -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="/client/script/app.js"></script>
+						<!-- todo-field// -->
+
+					</div>
+				</div>
+			</div>
+			<!-- body-content// -->
+
+		</div>
+	</div>
+	<!-- dashboard-page// -->
+
+	<!--===============================================================================================-->
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
+	<!--===============================================================================================-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+		integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+		crossorigin="anonymous"></script>
+	<!--===============================================================================================-->
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+		integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
+		integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
+		crossorigin="anonymous"></script>
+	<!--===============================================================================================-->
+	<script src="/script/app.js"></script>
+	<!--===============================================================================================-->
+
 </body>
+
 </html>
