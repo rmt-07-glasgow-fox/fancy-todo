@@ -10,6 +10,7 @@
 * PUT /todos/:id
 * PATCH /todos/:id
 * DELETE /todos/:id
+* GET /holidays
 ```
 &nbsp;
 ## RESTfull endpoints
@@ -270,6 +271,39 @@ _Response (404 - Not Found)_
 ```
 {
   "message": "Data Not Found"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+  "message": "Internal Server Error"
+}
+```
+
+---
+
+### GET /holidays
+> Delete Data Todo By Id
+
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200)_
+```
+{
+    "name": "New Year's Day",
+    "description": "New Year’s Day is the first day of the year, or January 1, in the Gregorian calendar.",
+    "date": "2021-01-01"
 }
 ```
 
