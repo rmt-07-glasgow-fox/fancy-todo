@@ -32,7 +32,6 @@ class TodoController {
                         })
                   })
                   .catch(err => {
-                        if (err.name == "SequelizeValidationError") next({name: "SequelizeValidationError"})
                         next(err)
                   })
       }
@@ -63,15 +62,13 @@ class TodoController {
 
             Todo.update(editedTodo, {where: {id}})
                   .then(data => {
-                        // res.status(200).json(data)
+                        res.status(200).json(data)
                         return Todo.findByPk(id)
                   })
                   .then(todo => {
                         res.status(200).json(todo)
                   })
                   .catch(err => {
-                        if (err.name == "SequelizeValidationError") next({name: "SequelizeValidationError"})
-                        if (err.name == "SourceNotFound") next({name: "SourceNotFound"})
                         next(err)
                   }) 
       }
@@ -91,8 +88,8 @@ class TodoController {
                         res.status(200).json(todo)
                   })
                   .catch(err => {
-                        if (err.name == "SequelizeValidationError") next({name: "SequelizeValidationError"})
-                        if (err.name == "SourceNotFound") next({name: "SourceNotFound"})
+                        // if (err.name == "SequelizeValidationError") next({name: "SequelizeValidationError"})
+                        // if (err.name == "SourceNotFound") next({name: "SourceNotFound"})
                         next(err)
             
                   })
@@ -107,7 +104,7 @@ class TodoController {
                   })
                   .catch(err => {
                         if (err.name == "SequelizeValidationError") next({name: "SequelizeValidationError"})
-                        if (err.name == "SourceNotFound") next({name: "SourceNotFound"})
+                        // if (err.name == "SourceNotFound") next({name: "SourceNotFound"})
                         next(err)
                   })
       }

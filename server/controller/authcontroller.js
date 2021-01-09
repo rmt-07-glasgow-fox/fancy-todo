@@ -5,28 +5,19 @@ const {OAuth2Client} = require('google-auth-library');
 
 
 class AuthConroller {
-      static getUser(req, res, next) {
-            let id = req.params.id
 
-            User.findByPk(id)
-                  .then(data => {
-                        res.status(200).json(data)
-                  }).catch(err => next(err))
-                  
-      }
-
-      static register(req, res) {
+      static register(req, res, next) {
             const newUser = { email: req.body.email, password: req.body.password }
 
             User.create(newUser)
                   .then(data => {
                         res.status(201).json(data)
                   }).catch(err => {
-                        res.status(500).json(err)
+                        next(err)
                   })
       }
 
-      static async login(req, res) {
+      static async login(req, res, next) {
             try{
                   const userLogin = {
                         email: req.body.email,
@@ -41,12 +32,14 @@ class AuthConroller {
                         const access_token = tokenGenerate(payLoad)
                         return res.status(200).json({ access_token })
                   } else {
+                        // return res.status(401).json({message:"invalid email/password"})
                         return res.status(401).json({message:"invalid email/password"})
                   }
                   
                   
             } catch(err) { 
-                  res.status(401).json(err)
+                  // res.status(401).json(err)
+                  next(err)
             }
 
 

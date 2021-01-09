@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
         isToday(value){
           const currentDate = new Date()
           if(value <= currentDate ){
-            throw new Error("cannot do it today")
+            throw new Error("cannot do it today or before")
           }
         }
       }

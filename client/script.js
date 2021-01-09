@@ -32,15 +32,19 @@ function contentInit() {
 
 $(document).ready(function(){
       contentInit()
-      getTodos()
+      
       checkAuth()
       
       $("#home").click(function(){
             checkAuth()
             $(".add-page").hide()
-            $(".update-page").hide()
+            $(".update-page").hide()   
+      })
 
-            
+      $("#fancy-todo").click(function(){
+            checkAuth()
+            $(".add-page").hide()
+            $(".update-page").hide()   
       })
 
       $(".register-link").click(function() {
@@ -69,13 +73,7 @@ $(document).ready(function(){
             $(".card-todo").hide()
       })
 
-      // $("#update-btn").click(function(){
-      //       // event.preventDefault()
-      //       $(".update-page").show()
-      //       $(".card-todo").hide()
-
-      // })
-
+      //register
       $("#register-submit").click(function(event){
             event.preventDefault()
             let email = $("#email-register").val()
@@ -93,7 +91,7 @@ $(document).ready(function(){
                   alert("berhasil terdaftar")
             })
             .fail(err => {
-                  console.log(err, 'err');
+                  alert(err.responseJSON.message)
             })
             .always(() => {
                   console.log('always');
@@ -121,7 +119,7 @@ $(document).ready(function(){
                   getTodos()
             })
             .fail(err => {
-                  console.log(err, 'err');
+                  alert(err.responseJSON.message)
             })
             .always(() => {
                   console.log('always');
@@ -148,7 +146,7 @@ $(document).ready(function(){
                   checkAuth()
                   getTodos()
             }).fail(err => {
-                  console.log(err);
+                  alert(err.responseJSON)
             }).always(()=> {
                   console.log("always");
             })
@@ -176,7 +174,8 @@ $(document).ready(function(){
                   getTodos()
 
             }).fail(err => {
-                  alert(err)
+                  alert(err.responseJSON)
+                  // console.log(err);
             })
       })
 
@@ -199,7 +198,7 @@ function onSignIn(googleUser) {
             getTodos()
       })
       .fail(err => {
-            console.log(err);
+            alert(err.responseJSON.message)
       })
     }
 
@@ -226,9 +225,9 @@ function getTodos() {
             todoList.forEach(element => {
                   let date = new Date(element.due_date).toLocaleDateString("en-EN", options)
                 $("#todo").append(`
-            <div class="card border-primary mb-3" style="max-width: 20rem; margin-top: 10px; margin-bottom: 10px;">
+            <div class="column-card card border-primary mb-3" style="max-width: 20rem; margin-top: 10px; margin-bottom: 10px;">
                 <div class="card-header d-flex w-100 justify-content-between">
-                  <input type="checkbox" style="margin: 5px;" id="update-status" name="status" value="true" onclick=updateStatus(${element.id})>
+                  <input type="checkbox" style="margin: 5px;" id="update-status" name="status" onclick=updateStatus(${element.id})>
                   <h5>Todo</h5>
                   <small>${date}</small>
                 </div>
@@ -247,7 +246,7 @@ function getTodos() {
             });
       })
       .fail(err => {
-            console.log(err);
+            alert(err.responseJSON.message)
       })
       .always(() => {
             console.log('always');
@@ -303,14 +302,13 @@ function deleteTodo(id){
 //update status
 function updateStatus(id){
       let status;
-      if ($('#update-status').is(":checked")) {
-            status = false
-      } else {
+      if($("input:checked").val()){
             status = true
+      } else {
+            status = false
       }
-
-      console.log($('#update-status').is(":checked"));
-
+  
+      console.log(status);
       $.ajax({
             method: "PATCH",
             url: `${baseUrl}/todos/${id}`,
@@ -318,16 +316,12 @@ function updateStatus(id){
             data: { status }
       })
       .done(response => {
-            if (status === true){ 
-                 $('#update-status').is(":checked")
-            } else {
-                  !$('#update-status').is(":checked")
-            }
-            checkAuth()
-            getTodos()
+
       })
       .fail(err => {
             alert(err.responseJSON.message)
+            checkAuth()
+            getTodos()
       })
 }
 
