@@ -46,9 +46,27 @@ module.exports = (sequelize, DataTypes) => {
                     msg: 'due date is required'
                 },
                 isNotYesterday(value) {
-                    if (value < new Date()) {
+                    let d = new Date();
+                    d.setHours(0, 0, 0, 0);
+                    if (value < d) {
                         throw new Error('Start date at least start today.');
                     }
+                }
+            }
+        },
+        movieId: {
+            type: DataTypes.INTEGER,
+            validate: {
+                notEmpty: {
+                    msg: 'movie is required'
+                }
+            }
+        },
+        movieName: {
+            type: DataTypes.STRING,
+            validate: {
+                notEmpty: {
+                    msg: 'movie name is required'
                 }
             }
         },

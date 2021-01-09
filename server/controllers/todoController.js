@@ -1,4 +1,5 @@
 const { Todo } = require('../models');
+const axios = require('axios');
 
 class TodoController {
     static async getAll(req, res, next) {
@@ -17,6 +18,17 @@ class TodoController {
             })
         } catch (err) {
             return next(err)
+        }
+    }
+
+    static async getAllMovie(req, res, next) {
+        try {
+            let url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.MOVIE_KEY}&language=en-US&query=${req.query.search}`
+            const movie = await axios.get(url);
+
+            return res.status(200).json(movie.data)
+        } catch (error) {
+            next(error)
         }
     }
 
@@ -39,8 +51,10 @@ class TodoController {
 
     static async store(req, res, next) {
         try {
-            const { title, description, status, due_date } = req.body;
-            const input = { title, description, status, due_date, userId: req.user.id };
+            const { title, description, status, due_date, movieId } = req.body;
+            const movieName = await TodoController.findMovie(movieId);
+
+            const input = { title, description, status, due_date, movieId, movieName, userId: req.user.id };
             const data = await Todo.create(input);
 
             return res.status(201).json({
@@ -56,8 +70,10 @@ class TodoController {
     static async update(req, res, next) {
         try {
             const id = req.params.id;
-            const { title, description, status, due_date } = req.body;
-            const input = { title, description, status, due_date };
+            const { title, description, status, due_date, movieId } = req.body;
+            const movieName = await TodoController.findMovie(movieId);
+
+            const input = { title, description, status, due_date, movieId, movieName };
 
             const data = await Todo.findByPk(id, {
                 attributes: { exclude: ['createdAt', 'updatedAt'] }
@@ -119,6 +135,16 @@ class TodoController {
 
         } catch (err) {
             return next(err)
+        }
+    }
+
+    static async findMovie(movieId) {
+        try {
+            const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.MOVIE_KEY}&language=en-US`
+            const movie = await axios.get(url);
+            return movie.data.title
+        } catch (error) {
+            next(error)
         }
     }
 }

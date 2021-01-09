@@ -29,6 +29,8 @@ class AuthController {
 
             const access_token = generateToken(payload);
 
+            console.log(access_token, '<<<< sini nanda');
+
             return res.status(200).json({
                 status: 'success',
                 message: 'login succesfully',
@@ -44,6 +46,7 @@ class AuthController {
     static async loginGoogle(req, res, next) {
         const { id_token } = req.body;
         const client = new OAuth2Client(process.env.GOOGLE_ID_TOKEN);
+
         async function verify() {
             const ticket = await client.verifyIdToken({
                 idToken: id_token,
@@ -51,12 +54,16 @@ class AuthController {
             });
             const payload = ticket.getPayload();
             const email = payload.email;
+            const firstName = payload.given_name;
+            const lastName = payload.family_name;
 
             let checkUser;
             checkUser = await User.findOne({ where: { email } });
 
             if (!checkUser) {
                 checkUser = await User.create({
+                    firstName,
+                    lastName,
                     email,
                     password: Math.random() * 1000 + ' google random password rahasia'
                 })
@@ -72,7 +79,7 @@ class AuthController {
             return res.status(201).json({
                 status: 'success',
                 message: 'login succesfully',
-                fullname: user.fullname(),
+                fullname: checkUser.fullname(),
                 access_token
             })
         }
