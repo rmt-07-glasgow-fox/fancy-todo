@@ -2,9 +2,13 @@ const errorHandler = (err, req, res, next) => {
   if(err){
     switch (err.status) {
       case 400:
+        let errors = []
+        err.data.errors.forEach(error => {
+          errors.push(error.message)
+        })
         res.status(400).json({
           message: 'Invalid access token',
-          data: err.data
+          data: errors
         })
         break;
       case 401:

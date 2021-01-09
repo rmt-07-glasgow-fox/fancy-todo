@@ -17,13 +17,9 @@ class UserController {
       })
       .catch(err => {
         if(err.errors){
-          let errors = []
-          err.errors.forEach(error => {
-            errors.push(error.message)
-          })
           next({
             status: 400,
-            data: errors
+            data: err
           })
         }
         next({
