@@ -17,21 +17,21 @@ module.exports = (sequelize, DataTypes) => {
   Todo.init({
     title: {
       type: DataTypes.STRING,
-      // validate: {
-      //   allowNull: false
-      // }
+      validate: {
+        notEmpty: true
+      }
     },
     description: {
       type: DataTypes.STRING,
-      // validate: {
-      //   allowNull: false
-      // }
+      validate: {
+        notEmpty: true
+      }
     },
     status: DataTypes.STRING,
     due_date: {
       type:  DataTypes.DATE,
-      //masih bingung
-      // validate: {
+      validate: {
+        notEmpty: true,
       //   notToday (value) {
       //     let today = new Date ()
       //     if(value.getFullYear() >= today.getFullYear()){
@@ -47,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
       //     }
           
       //   }
-      // }
+      }
     },
     userId: DataTypes.INTEGER
   }, {

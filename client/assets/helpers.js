@@ -100,6 +100,7 @@ function fetchTodo() {
     .done(data => {
         $("#listTodo").empty()
         data.forEach(element => {
+            element.due_date = element.due_date.replace('T00:00:00.000Z', '')
             $("#listTodo").append(`
             <div class="card my-3 border">
                 <div class="card-header">
@@ -107,7 +108,7 @@ function fetchTodo() {
                     ${element.title}
                 </div>
                 <div class="card-body">${element.description}</div>
-                <div class="card-footer"> ${element.due_date} <br>
+                <div class="card-footer"> ${element.due_date} <br> <br>
                 <button class="btn btn-dark" onclick="editpage(${element.id})"> Edit </button> <button class="btn btn-dark" onclick="deleteTodo(${element.id})"> Delete </button> 
                 </div>
             </div>
@@ -184,7 +185,7 @@ function fetchTodoByid(id) {
     })
     .done(data => {
         editData = data
-
+        data.due_date = data.due_date.replace('T00:00:00.000Z', '')
         let title = $('#titleEdit').val(data.title)
         let description = $('#descriptionEdit').val(data.description)
         let due_date = $('#dueDateEdit').val(data.due_date)
