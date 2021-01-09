@@ -2,7 +2,7 @@
 
 const baseUrl = 'http://localhost:3000'
 
-class Ajax {
+class User {
     static login(email, password) {
         return $.ajax({
             method: 'POST',
@@ -26,7 +26,9 @@ class Ajax {
             data: { email, password, name }
         })
     }
+}
 
+class Todo {
     static createTodo(title, description, status, due_date) {
         return $.ajax({
             method: "POST",

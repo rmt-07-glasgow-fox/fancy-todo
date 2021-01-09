@@ -1,4 +1,4 @@
-
+/** GOOGLE BUTTON SET */
 function onFailure(error) {
     console.log(error);
     alert(error)
@@ -23,3 +23,4 @@ function renderButton() {
         'onfailure': onFailure
     });
 }
+

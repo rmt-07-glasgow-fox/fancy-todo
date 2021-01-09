@@ -1,131 +1,118 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <title>Listed</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="google-signin-client_id" content="150670312701-l30t46525oh8a1i1lj4osktquvshkgfp.apps.googleusercontent.com">
-    <!-- LIBRARY -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <!-- STYLING -->
-    <link rel="stylesheet" href="assets/css/style.css">
-    <title>Fancy Todo</title>
-</head>
-<body>
-    <!-- Navbar -->
-    <nav id="navbar" class="navbar fixed-top navbar-expand-lg navbar-light bg-light shadow p-3">
-        <div class="container-fluid">
-            <a id="home-button" class="navbar-brand" href="">Fancy Todo</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                </ul>
-                <ul class="navbar-nav">
-                    <button class="btn btn-sm" style="font-weight: bold; font-size: 12px;" type="" disabled>Already have account? </button>
-                    <button id="to-login-button" class="btn me-3 text-success" style="font-weight: bold;" type="button">Login</button>
-                    <button id="to-register-button" class="btn btn-success" type="button">GET STARTED</button>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Home -->
-    <section class="bg pb-md-8" id="landing-page">
-        
-    </section>
-
-    <!-- Form Login -->
-    <section id="login-section" class="h-100">
-        <div class="h-100 d-flex align-items-center justify-content-center">
-            <div class="card text-center" style="max-width: 540px;" >
-                <div class="card-header">
-                    <h5 class="card-title">LogIn</h5>
-                </div>
-                <div class="card-body">
-                    <form>
-                        <div class="mb-2">
-                            <label for="email-login" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="email-login" aria-describedby="emailHelp">
-                            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-                        </div>
-                        <div class="mb-2">
-                            <label for="password-login" class="form-label mt-3">Password</label>
-                            <input type="password" class="form-control" id="password-login">
-                        </div>
-                        <button id="login-button" type="submit" class="btn btn-primary mt-3">Login</button>
-                        <div class="form-text mt-3">Don't have account yet? <a id="to-register-button-2" href="">Sign Up</a></div>
-                        <div class="form-text mt-3">or</div>
-                        <div id="my-signin2" class="g-signin2 btn mt-3" data-onsuccess="onSignIn"></div>
-                        <!-- <div class="g-signin2 btn" data-onsuccess="onSignIn"></div> -->
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
     
-    <!-- Form Register -->
-    <section id="register-section" class="h-100">
-        <div class="h-100 d-flex align-items-center justify-content-center">
-            <div class="card text-center" style="max-width: 540px;" >
-                <div class="card-header">
-                    <h5 class="card-title">Sign Up</h5>
-                </div>
-                <div class="card-body">
-                    <form>
-                        <div class="mb-2">
-                          <label for="name-register" class="form-label mt-3">Name</label>
-                          <input type="name" class="form-control" id="name-register">
-                        </div>
-                        <div class="row mt-4 mb-1">
-                          <div class="col-md-6">
-                              <label for="email-register" class="form-label">Email address</label>
-                              <input type="email" class="form-control" id="email-register" aria-describedby="emailHelp">
-                              <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
-                          </div>
-                          <div class="col-md-6">
-                              <label for="password-register" class="form-label">Password</label>
-                              <input type="password" class="form-control" id="password-register">
-                          </div>
-                        </div>
-                        <button id="register-button"  type="submit" class="btn btn-primary mt-4">Sign Up</button>
-                        <div id="" class="form-text mt-3">Already have account? <a id="to-login-button-2" href="">Login</a></div>
-                        <div class="form-text mt-3">or</div>
-                        <div id="my-signin3" class="g-signin2 btn mt-3" data-onsuccess="onSignIn"></div>
-                        <!-- <div class="g-signin2 btn" data-onsuccess="onSignIn"></div> -->
-                    </form>
-                </div>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/style.css">
+  </head>
+  <body>
+   
+   <div class="container">
+      <section id="formHolder">
+
+         <div class="row">
+
+            <!-- Brand Box -->
+            <div class="col-sm-12 col-md-6 brand">
+               <a href="#" class="logo">LiSted <span>.</span></a>
+   
+               <div class="heading">
+                  <h2>To do</h2>
+                  <br>
+                  <p>Your Right Path</p>
+               </div>
+   
+               <div class="success-msg">
+                  <p>Yeay! You In</p>
+                  <a href="#" class="switch"></a>
+               </div>
             </div>
-        </div>
-    </section>
+   
+   
+            <!-- Form Box -->
+            <div class="col-sm-9 col-md-6 form">
+   
+               <!-- Login Form -->
+               <div class="login form-peice switched">
+                  <form class="login-form" action="#" method="post">
+                     <div class="form-group">
+                        <label for="loginEmail">Email Adderss</label>
+                        <input type="email" name="loginEmail" id="loginEmail" required>
+                     </div>
+   
+                     <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" name="loginPassword" id="loginPassword" required>
+                     </div>
+   
+                     <div class="CTA">
+                        <button class="btn btn-sm" type="button" onclick="login()">Login</button>
+                        <a href="#" class="switch">I'm New</a>
+                        <div class="form-text mt-3 d-flex justify-content-center">-- or --</div>
+                        <div id="my-signin2" class="g-signin2 btn mt-3 d-flex justify-content-center" data-onsuccess="onSignIn"></div>
+                     </div>
+                  </form>
+               </div><!-- End Login Form -->
+   
+   
+               <!-- Signup Form -->
+               <div class="signup form-peice">
+                  <form class="signup-form" action="#" method="post">
+   
+                     <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" name="username" id="name" class="name">
+                        <span class="error"></span>
+                     </div>
+   
+                     <div class="form-group">
+                        <label for="email">Email Adderss</label>
+                        <input type="email" name="emailAdress" id="email" class="email">
+                        <span class="error"></span>
+                     </div>
+   
+                     <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password" class="pass">
+                        <span class="error"></span>
+                     </div>
+   
+                     <div class="CTA">
+                        <button class="btn btn-sm" type="button" onclick="register()">Register</button>
+                        <a href="#" class="switch">I have an account</a>
+                        
+                        <div class="form-text mt-3 d-flex justify-content-center">-- or--</div>
+                        <div id="my-signin3" class="g-signin2 mt-3 d-flex justify-content-center" data-onsuccess="onSignIn"></div>
+                     </div>
+                  </form>
+               </div><!-- End Signup Form -->
+            </div>
+         </div>
 
-    <section id="logged">
-      <header class="navbar navbar-light sticky-top flex-md-nowrap bg-light p-0 shadow">
-        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Fancy Todo</a>
-        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
-        <ul class="navbar-nav px-3">
-          <li class="nav-item text-nowrap">
-            <button id="logout-button" class="btn" >Sign out</button>
-          </li>
-        </ul>
-      </header>
-      
-    </section>
+      </section>
+   </div>
 
-    <!-- LIBRARY JS -->
-    <script src="./assets/js/googleButton.js"></script>
-    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    
+    
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-    <!-- SCRIPT AJAX -->
-    <script src="./assets/js/main.js"></script>
-    <script src="./assets/js/ajax.js"></script>
-    <script src="./assets/js/authFunctions.js"></script>
-    <script src="./assets/js/todoFunctions.js"></script>
-    <script src="./assets/js/todo.js"></script>
-</body>
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
+    <!-- Optional JavaScript -->
+    <script src="assets/js/script.js"></script>
+    <script src="assets/js/functions.js"></script>
+    <!-- jQuery API -->
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/api-functions.js"></script>
+    
+  </body>
 </html>
