@@ -292,7 +292,9 @@ _Request Body_
   "title": "<title to get insert into>",
   "description": "<description to get insert into>",
   "status": "<status to get insert into>",
-  "due_date": "<due date to get insert into>"
+  "due_date": "<due date to get insert into>",
+  "movieId": "<movieId to get insert into>",
+  "movieName": "<movieName date to get insert into>"
 }
 ```
 
@@ -306,6 +308,8 @@ _Response (201 - Created)_
   "description": "<posted description>",
   "status": "<posted status>",
   "due_date": "<posted due_date>",
+  "movieId": "<posted movie id>",
+  "movieName": "<posted movie name>",
   "createdAt": "2020-03-20T07:15:12.149Z",
   "updatedAt": "2020-03-20T07:15:12.149Z",
 }
@@ -352,7 +356,9 @@ _Request Body_
   "title": "<title to get update into>",
   "description": "<description to get update into>",
   "status": "<status to get update into>",
-  "due_date": "<due date to get update into>"
+  "due_date": "<due date to get update into>",
+  "movieId": "<movieId to get insert into>",
+  "movieName": "<movieName date to get insert into>"
 }
 ```
 
@@ -366,6 +372,8 @@ _Response (200)_
       "description": "<updated description>",
       "status": "<updated status>",
       "due_date": "<updated due_date>",
+      "movieId": "<updated movieId>",
+      "movieName": "<updated movieName>"
       "createdAt": "2020-03-20T07:15:12.149Z",
       "updatedAt": "2020-03-20T07:15:12.149Z",
     }
