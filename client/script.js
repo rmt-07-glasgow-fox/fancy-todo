@@ -109,15 +109,21 @@ function todosList() {
         headers: {
             access_token: localStorage.getItem('access_token')
         }
-    })
+    }) 
     .done(response => {
         // console.log(response)
         $('#todos').show()
         $('#todos-list').empty()
         response.map(task => {
+            let checkbox = ""
+            if (task.status === true) {
+                checkbox = "checked"
+            }
+            
             $(`
                 <div class="card" style="width: 50rem;">
                     <div class="card-body" id="cardBody">
+                        <input type="checkbox" name="" id="status" onclick="changeStatus(${task.id}, ${task.status})" ${checkbox}>
                         <h5 class="card-title">${task.title}</h5>
                         <h7 class="card-subtitle">${task.due_date}</h7><br><br>
                         <p class="card-text">${task.description}</p>
@@ -236,6 +242,33 @@ function edit(event, taskId) {
         $('#edit-task-form').hide()
         todosList()
         $('#todos').show()
+    })
+    .fail(err => {
+        console.log(err)
+    })
+}
+
+function changeStatus(taskId, status) {
+    console.log('masuk edit status')
+    let newStatus = ''
+    if (status == true) {
+        newStatus = false
+    } else {
+        newStatus = true
+    }
+    $.ajax({
+        method: 'PATCH',
+        url: `${baseUrl}/todos/${taskId}`,
+        headers: {
+            access_token: localStorage.getItem('access_token')
+        },
+        data: {
+            status: newStatus
+        }
+    })
+    .done(response => {
+        console.log(response)
+        todosList()
     })
     .fail(err => {
         console.log(err)

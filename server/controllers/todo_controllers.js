@@ -8,7 +8,8 @@ class TodoController {
             },
             attributes: {
                 exclude: [ 'createdAt', 'updatedAt']
-            }
+            },
+            order: [['status', 'DESC']]
         })
         .then(data => {
             res.status(200).json(data)
