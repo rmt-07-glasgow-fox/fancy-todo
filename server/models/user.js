@@ -17,26 +17,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   User.init({
-    username: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: {
-        args: true,
-        msg: 'username already registered'
-      },
-      validate: {
-        notEmpty: {
-          args: true,
-          msg: "username can't be empty"
-        }
-      }
-    },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: {
         args: true,
-        msg: 'username already registered'
+        msg: 'email already registered'
       },
       validate: {
         isEmail: {
@@ -45,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         notEmpty: {
           args: true,
-          msg: "username can't be empty"
+          msg: "email can't be empty"
         }
       }
     },

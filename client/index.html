@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="8648248464-lkehe4id1k6uu9peot0qq5spqa6glifm.apps.googleusercontent.com">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <title>Fancy To-Do</title>
+</head>
+<body>
+    <!-- nav bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Fancy To-Do</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+            </ul>        
+          </div>
+          <button type="button" class="btn btn-primary" id="logout-btn">Logout</button>
+        </div>
+    </nav>
+    <!-- End nav bar -->
+      <!-- H -->
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-4 col-sm-4 col-xs-12"></div>
+          <div class="col-md-4 col-sm-4 col-xs-12">
+
+            <!-- Register Form -->
+            <div class="register">
+              <h4>Register</h4>
+              <form>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email address</label>
+                  <input type="email" class="form-control" id="regemail" placeholder="Enter your email address">
+                </div>
+                <div class="mb-3">
+                  <label for="password" class="form-label">Password</label>
+                  <input type="password" class="form-control" id="regpassword" placeholder="Enter your password">
+                </div>
+                <button type="submit" class="btn btn-primary" id="register-btn">Register</button>
+                <button type="button" class="btn btn-primary" id="show-login-btn">Already have an account?</button>
+              </form>
+            </div>
+            <!-- End Register Form -->
+
+            <!-- Login Form -->
+            <div class="login">
+              <h4>Login</h4>
+              <form>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email address</label>
+                  <input type="email" class="form-control" id="email" placeholder="Enter your email address">
+                </div>
+                <div class="mb-3">
+                  <label for="password" class="form-label">Password</label>
+                  <input type="password" class="form-control" id="password" placeholder="Enter your password">
+                </div>
+                <button type="submit" class="btn btn-primary" id="login-btn">Login</button>
+                <button type="button" class="btn btn-primary" id="show-register-btn">I dont have an account</button>
+                <div class="g-signin2" data-onsuccess="onSignIn"></div> 
+              </form>
+            </div>
+            <!-- End Login Form -->
+          </div>
+        </div>
+      </div>
+      <!-- End H -->
+
+      <!-- Main Page -->
+        <div class="todoList">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-1"></div>
+              <!-- API -->
+              <div class="col-3"><h1>API</h1></div>
+              <!-- End API -->
+              <!-- TO DO -->
+              <div class="col-7">
+
+              </div>
+              <!-- End TO DO -->
+              <div class="col-1"></div>
+            </div>
+          </div>
+        </div>
+      <!-- End Main Page -->
+      <!-- script -->
+      <script src="https://apis.google.com/js/platform.js" async defer></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="./js/script.js"></script>
+</body>
+</html>

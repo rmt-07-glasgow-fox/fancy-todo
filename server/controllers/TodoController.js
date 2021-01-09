@@ -27,7 +27,7 @@ class TodoController {
 
     static selectTodo(req, res, next) {
         let id = +req.params.id
-        console.log('hai');
+
         Todo.findByPk(id)
         .then(todo => {
             console.log(todo);
