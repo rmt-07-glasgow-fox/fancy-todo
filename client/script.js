@@ -93,16 +93,18 @@ showTodo = () => {
   $('#hello').text('Hi, ' + localStorage.getItem('fullName'));
   $('#navbarDropdown').text(localStorage.getItem('fullName'));
   listTodo();
-  // listHolidays();
+  listHolidays();
   $('#editFormTodo').hide();
-  // month();
+  month();
   $('#projects').hide();
 };
 
 showProjects = () => {
   $('#todos').hide();
   $('#projects').show();
-  $('#projectForm').hide();
+  hideProjectContent();
+  hideProjectForm();
+  hideProjectTodoForm();
   listProject();
 };
 
@@ -114,12 +116,30 @@ const hideTodoForm = () => {
   $('#todoForm').hide();
 };
 
+showProjectContent = (id) => {
+  $('#projectContent').show();
+  $('#pProjectIdTodo').val(id);
+  listProjectTodo(id);
+};
+
+hideProjectContent = () => {
+  $('#projectContent').hide();
+};
+
 const showProjectForm = () => {
   $('#projectForm').show();
 };
 
 const hideProjectForm = () => {
   $('#projectForm').hide();
+};
+
+const showProjectTodoForm = () => {
+  $('#projectTodoForm').show();
+};
+
+const hideProjectTodoForm = () => {
+  $('#projectTodoForm').hide();
 };
 
 const showEditTodo = (id) => {
@@ -131,7 +151,6 @@ const showEditTodo = (id) => {
     },
   })
     .done((response) => {
-      console.log(response.due_date);
       $(`#todoCardBody-${id}`).hide();
       $(`#editFormTodo-${id}`).empty();
 
@@ -176,13 +195,23 @@ const hideEditTodo = (id) => {
   $(`#todoCardBody-${id}`).show();
 };
 
-const addTodo = (e) => {
+const addTodo = (e, idProject) => {
   e.preventDefault();
 
-  const title = $('#titleTodo').val();
-  const due_date = $('#dateTodo').val();
-  const description = $('#descriptionTodo').val();
-  const status = false;
+  let title, due_date, description, status, ProjectId;
+
+  if (idProject === 0) {
+    title = $('#titleTodo').val();
+    due_date = $('#dateTodo').val();
+    description = $('#descriptionTodo').val();
+    status = false;
+  } else {
+    title = $('#pTitleTodo').val();
+    due_date = $('#pDateTodo').val();
+    description = $('#pDescriptionTodo').val();
+    status = false;
+    ProjectId = $('#pProjectIdTodo').val();
+  }
 
   $.ajax({
     url: url + '/todos',
@@ -192,6 +221,7 @@ const addTodo = (e) => {
       due_date: due_date,
       description: description,
       status: status,
+      ProjectId: ProjectId,
     },
     headers: {
       authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -200,7 +230,11 @@ const addTodo = (e) => {
     .done((response) => {
       const template = alertTemplate('success', 'Your Todo has been added');
       $(template).appendTo('#alert');
-      listTodo();
+      if (idProject === 0) {
+        listTodo();
+      } else {
+        listProjectTodo(ProjectId);
+      }
     })
     .fail((err) => {
       err.responseJSON.map((e) => {
@@ -269,6 +303,59 @@ const listTodo = () => {
     .always(() => {});
 };
 
+const listProjectTodo = (id) => {
+  $.ajax({
+    url: url + '/todos/project/' + id,
+    method: 'GET',
+    headers: {
+      authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+    },
+  })
+    .done((response) => {
+      $('#projectTodoList').empty();
+      response.map((data) => {
+        $(`
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+                <input type="checkbox" id="status-${
+                  data.id
+                }" onclick="changeStatusTodo(${data.id}, ${!data.status})" ${
+          data.status ? 'checked' : ''
+        }>
+            </div>
+          </div>
+          <div class="card" style="width: 40rem">
+            <div class="card-body" id="todoCardBody-${data.id}">
+              <div id="todoCardValue-${data.id}">
+                  <h5 class="card-title">${data.title}</h5>
+                  <h6 class="card-subtitle mb-2 text-muted"><i class="fa fa-calendar" aria-hidden="true"></i> ${moment(
+                    data.due_date
+                  ).format('DD MMMM YYYY')}</h6>
+                  <p class="card-text">${data.description}</p>
+                  <a href="#" onclick="showEditTodo(${
+                    data.id
+                  })" class="card-link" id="editTodo"><i class="fa fa-edit" aria-hidden="true"></i> Edit</a>
+                  <a href="#" data-todoid="${
+                    data.id
+                  }" data-toggle="modal" data-target="#modalConfirmDelete" class="card-link text-red" id="deleteTodo"><i class="fa fa-trash" aria-hidden="true"></i> Hapus</a>
+              </div>
+            </div>
+            <div id="editFormTodo-${data.id}"></div>
+          </div>
+        </div>
+        `).appendTo('#projectTodoList');
+      });
+    })
+    .fail((err) => {
+      err.responseJSON.map((e) => {
+        const template = alertTemplate('error', e.message);
+        $(template).appendTo('#alert');
+      });
+    })
+    .always(() => {});
+};
+
 const editTodo = (e, id) => {
   e.preventDefault();
 
@@ -294,7 +381,6 @@ const editTodo = (e, id) => {
       listTodo();
     })
     .fail((err) => {
-      console.log(err);
       err.responseJSON.map((e) => {
         const template = alertTemplate('error', e.message);
         $(template).appendTo('#alert');
@@ -328,7 +414,6 @@ const changeStatusTodo = (id, value) => {
       listTodo();
     })
     .fail((err) => {
-      console.log(err);
       err.responseJSON.map((e) => {
         const template = alertTemplate('error', e.message);
         $(template).appendTo('#alert');
@@ -401,7 +486,6 @@ const listProject = () => {
     },
   })
     .done((response) => {
-      console.log(response);
       $('#projectList').empty();
       response.map((data, index) => {
         $(`
@@ -411,7 +495,7 @@ const listProject = () => {
           <td>
             <button
             class="btn btn-primary"
-            onclick="showDetailProject(${data.id})"
+            onclick="showProjectContent(${data.id})"
             >
               <i class="fa fa-eye"></i>
             </button>
@@ -571,9 +655,7 @@ const quote = () => {
       $('#quote').text(`"${data.content}"`);
       $('#author').text(`- ${data.author}`);
     })
-    .fail((err) => {
-      console.log(err);
-    });
+    .fail((err) => {});
 };
 
 const listHolidays = () => {

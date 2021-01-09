@@ -258,7 +258,7 @@
             </div>
             <div class="card" id="todoForm">
               <div class="card-body">
-                <form onsubmit="addTodo(event)">
+                <form onsubmit="addTodo(event, 0)">
                   <div class="form-group">
                     <input
                       type="text"
@@ -344,32 +344,36 @@
               <tbody id="projectList"></tbody>
             </table>
           </div>
-          <div class="col-8">
+          <div class="col-8" id="projectContent">
             <h3>Project Todos:</h3>
             <div class="mb-3">
-              <button class="btn btn-primary w-25" onclick="showTodoForm()">
+              <button
+                class="btn btn-primary w-25"
+                onclick="showProjectTodoForm()"
+              >
                 Add Project Todo
               </button>
             </div>
-            <div class="card" id="todoForm">
+            <div class="card" id="projectTodoForm">
               <div class="card-body">
-                <form onsubmit="addProjectTodo(event)">
+                <form onsubmit="addTodo(event, 1)">
+                  <input type="hidden" id="pProjectIdTodo" />
                   <div class="form-group">
                     <input
                       type="text"
                       class="form-control"
-                      id="titleTodo"
+                      id="pTitleTodo"
                       placeholder="Enter Title"
                     />
                   </div>
                   <div class="form-group">
-                    <input type="date" class="form-control" id="dateTodo" />
+                    <input type="date" class="form-control" id="pDateTodo" />
                   </div>
                   <div class="form-group">
                     <textarea
                       class="form-control"
                       rows="5"
-                      id="descriptionTodo"
+                      id="pDescriptionTodo"
                       placeholder="Enter Description"
                     ></textarea>
                   </div>
