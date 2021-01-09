@@ -40,7 +40,7 @@
                 <input type="password" id="password-register" name="password"><br><br>
                 <label for="password">Confirm Password</label><br>
                 <input type="password" id="password-register-confirm" name="password"><br><br>
-                <button type="submit" id="register-btn">Register</button>
+                <button type="submit" class="rounded" id="register-btn">Register</button>
             </form>
         </div>
         <!-- end register -->
@@ -52,16 +52,48 @@
                 <input type="text" id="email" name="email"><br><br>
                 <label for="passwotd">Password</label><br>
                 <input type="password" id="password" name="password"><br><br>
-                <button type="submit" id="login-btn">Login</button>
+                <button type="submit" class="rounded" id="login-btn">Login</button>
             </form>
         </div><br><br>
         <div class="g-signin2" data-onsuccess="onSignIn"></div>
         <!-- end login -->
-        <div class="row">
-            <div id="todos">
+        <!-- todos list -->
+        
+            <div id="todos" style="display: none;">
+                <div id="add-todos">
+                    <button class="rounded" id="to-add-form">Add New Task</button>
+                </div>
+                <div id="todos-list">
+                    
+                </div>
                 
             </div>
-        </div>
+            <!-- end todos list -->
+            <!-- add todo -->
+            <div id="add-task-form" style="display: none;">
+                <form action="">
+                    <label for="title">Title</label><br>
+                    <input type="text" name="" id="title"><br><br>
+                    <label for="due-date">Due Date</label><br>
+                    <input type="date" name="" id="due_date"><br><br>
+                    <label for="description">Description</label><br>
+                    <input type="text" name="" id="description"><br><br>
+                    <button type="submit" class="rounded" id="add-task-btn">Add</button>
+                </form>
+            </div>
+            <!-- end add todo -->
+            <div id="edit-task-form" style="display: none;">
+                <form action="">
+                    <label for="title">Title</label><br>
+                    <input type="text" name="" id="title-edit"><br><br>
+                    <label for="due-date">Due Date</label><br>
+                    <input type="date" name="" id="due_date-edit"><br><br>
+                    <label for="description">Description</label><br>
+                    <input type="text" name="" id="description-edit"><br><br>
+                    <button type="submit" class="rounded" id="edit-task-btn">Confirm Edit</button>
+                </form>
+            </div>
+        
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

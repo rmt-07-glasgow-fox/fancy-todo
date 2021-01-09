@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     status: DataTypes.BOOLEAN,
     due_date: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       validate: {
         checkDate(date) {
           let due_date = date
@@ -41,6 +41,11 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'cascade'
     }
   }, {
+    hooks: {
+      beforeCreate(todo, options) {
+        todo.status = false
+      }
+    },
     sequelize,
     modelName: 'Todo',
   });
