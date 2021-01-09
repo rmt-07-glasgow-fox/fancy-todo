@@ -2,7 +2,7 @@ const router = require('express').Router()
 const { TodoController } = require('../controllers/')
 const { authorize } = require('../middlewares/auth')
 
-router.get('/', TodoController.getTodos)
+router.get('/', TodoController.apiTime)
 router.post('/', TodoController.createTodo)
 router.use('/:id', authorize)
 router.get('/:id', TodoController.getTodoById)

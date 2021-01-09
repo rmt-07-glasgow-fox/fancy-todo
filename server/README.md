@@ -2,7 +2,7 @@
 Fancy Todo is an web application to manage todo list. This app has : 
 * RESTful endpoint for asset's CRUD operation
 * JSON formatted response
-* 
+* Track Location of User with local time
 
 &nbsp;
 

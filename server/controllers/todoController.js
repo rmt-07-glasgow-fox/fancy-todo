@@ -1,4 +1,5 @@
 const { Todo } = require('../models')
+const axios = require('axios')
 
 class TodoController {
   static async getTodos(req, res, next) {
@@ -98,6 +99,26 @@ class TodoController {
       }
       await Todo.destroy({where: { id }})
       return res.status(200).json({message: 'todo success to delete'})
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  static async apiTime(req, res, next) {
+    try {
+      const apiTime = await axios.get('http://worldtimeapi.org/api/timezone/Asia/Jakarta')
+      const ipUser = apiTime.data.client_ip
+      const apiLocation = await axios.get(`http://ip-api.com/json/${ipUser}`)
+      const apiData = {
+        ip: apiTime.data.client_ip,
+        country: apiLocation.data.country,
+        region: apiLocation.data.regionName,
+        city: apiLocation.data.city,
+        timezone: apiTime.data.timezone,
+        dateTime: apiTime.data.datetime,
+        zone: apiTime.data.abbreviation
+      }
+      return res.status(200).json(apiData)
     } catch (err) {
       next(err)
     }
