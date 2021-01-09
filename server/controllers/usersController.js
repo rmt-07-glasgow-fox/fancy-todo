@@ -11,11 +11,14 @@ class usersController {
     console.log('Controller: register triggered', input);
 
     User.create(input)
-    .then(() => {
+    .then((data) => {
+      console.log('Controller: register success', data);
       res.status(201).json(email)
     })
     .catch((err) => {
-      res.status(400).json(err)
+      // console.log('Controller: register error', err);
+      // next(err)
+      res.status(400).json(err.message)
     })
   }
 
@@ -27,7 +30,8 @@ class usersController {
     .then((data) => {
       //check if the email exist
       if (!data) {
-        return res.status(400).json("Invalid email")
+        console.log('Controller: login, email not found');
+        return res.status(404).json({message: "Invalid email/Email not found"})
       }
       //find the email and compare its password
       let isPassValid = comparePassword(password, data.password)
@@ -38,7 +42,7 @@ class usersController {
         let access_token = generateToken(payload)
         return res.status(200).json({access_token:access_token})
       }
-      return res.status(400).json("Invalid password")
+      return res.status(400).json({message: "Invalid password"})
     })
     .catch((err) => {
       res.status(400).json(err)

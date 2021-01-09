@@ -46,7 +46,8 @@ $("#loginButton").click(function(event) {
   })
   .fail(err => {
     console.log(err);
-    $('#notification').append(`Password Invalid`)
+    $('#notification').empty()
+    $('#notification').append(err.responseJSON.message)
   })
   .always(() => {
     console.log('always');
@@ -109,7 +110,8 @@ $("#registerButton").click(function(event) {
   })
   .fail(err => {
     console.log(err);
-    $('#notification').append(`Password Invalid`)
+    $('#notification').empty()
+    $('#notification').append(err.responseJSON)
   })
   .always(() => {
     console.log('always');
@@ -120,6 +122,10 @@ $("#registerButton").click(function(event) {
 $('#logout-btn').click(function(event) {
   event.preventDefault()
   localStorage.clear()
+  const auth2 = gapi.auth2.getAuthInstance();
+  auth2.signOut().then(function () {
+    console.log('User signed out.');
+  });
   auth()
 })
 
@@ -180,9 +186,13 @@ $('#createTodo').click(function(event) {
   })
   .done(response => {
     console.log(`Success addTodo:`, response);
+    $('#notification').empty()
+    $('#notification').append(`Success add todo`)
     auth()
   })
   .fail(err => {
+    $('#notification').empty()
+    $('#notification').append(err.responseJSON.message)
   })
   auth()
 })
@@ -197,6 +207,8 @@ function deleteTodo(id) {
     },
   })
   .done(response => {
+    $('#notification').empty()
+    $('#notification').append(`Success delete todo`)
     auth()
   })
   .fail(err => {

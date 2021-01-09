@@ -12,13 +12,14 @@ function errorsHandler (err, req, res, next) {
   if (err) {
     switch(err.name) {
       case "SequelizeValidationError":
-        res.status(401).json(err.message)
+        console.log('SequelizeValidationError',err);
+        res.status(401).json(err)
         break;
       case "SequelizeUniqueConstraintError":
-        res.status(401).json(err.message)
+        res.status(401).json(err)
         break;
       default:
-        res.status(500).json(err.message)
+        res.status(500).json(err)
     } 
   }
 }
