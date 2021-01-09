@@ -27,12 +27,12 @@ class Controller{
 
     static todoShow(req, res, next){
         let temp
-
-        let weatherApi = `http://api.openweathermap.org/data/2.5/weather?q=Jakarta,id&APPID=${process.env.Weather_API}`
+        
+        let weatherApi = `http://api.weatherstack.com/current?access_key=${process.env.Weather_API}&query=jakarta`
         axios.get(weatherApi)
         .then(response =>{
             temp = response.data
-            return Todo.findAll()
+            return Todo.findAll({where: {userId: req.user.id}})
         })
         .then(data =>{
             return res.status(200).json({
@@ -45,10 +45,10 @@ class Controller{
     }
 
     static todoById(req, res, next){
-        let id = req.params.id
+        let id = +req.params.id
         let temp 
         let weather = process.env.Weather_API
-        let weatherApi = `http://api.openweathermap.org/data/2.5/weather?q=Jakarta,id&APPID=${weather}`
+        let weatherApi = `http://api.weatherstack.com/current?access_key=${process.env.Weather_API}&query=jakarta`
         axios.get(weatherApi)
         .then(response =>{
             //console.log(data)
@@ -56,11 +56,13 @@ class Controller{
            return Todo.findByPk(id)
         })
         .then(data =>{
+            //console.log(data)
             return res.status(200).json({
                 todos: data, weather:temp
             })
         })
         .catch(err =>{
+            //console.log(err)
             //console.log(err)
             next(err)
         })

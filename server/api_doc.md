@@ -2,55 +2,315 @@
 ----
     Membuat website untuk mencatat hal - hal menarik untuk dilakukan
 
+&nbsp;
+
 * **URL**
-    http://localhost:3000/
+    http://localhost:3000
   <_The URL Structure (path only, no root url)_>
+
+
 
 * **List Endpoint**
   
+  &nbsp;
   
+## POST /todos
+_Request Header_
+```
+{
+  not needed
+}
+```
+_Request Body_
+```
+{
+  "title": "<title to get insert into>",
+  "description": "<description to get insert into>",
+  "status": "<status to get insert into>",
+  "due_date": "<due_date to get insert into>",
+  "userId": "<automatically inserted by user id>"
+}
+```
+_Response (201 - OK)_
+```
+{
+  "id": "<give id by system>",
+  "title": "<posted title>",
+  "description": "<posted description>",
+  "status": "<posted status>",
+  "due_date": "<posted due_date>",
+  "userId": "<automatically inserted by user id>"
+}
+```
+_Response (400 - Bad Request)_
+```
+{
+  Error message from SequelizeValdationError
+}
+```
+_Response (500 - Internal Server Error)_
+```
+{
+  "message": "error from the server"
+}
+```
+&nbsp;
+## GET /todos
+_Request Header_
+```
+{
+  not needed
+}
+```
+_Request Body_
+```
+not needed
+```
+_Response (200 - OK)_
+```
+[
+  {
+  "id": "<give id by system>",
+  "title": "<posted title>",
+  "description": "<posted description>",
+  "status": "<posted status>",
+  "due_date": "<posted due_date>",
+  "userId": "<automatically inserted by user id>"
+  }
+]
+```
+_Response (500 - Internal Server Error)_
+```
+{
+  "message": "error from the server"
+}
+```
+&nbsp;
+## GET /todos:id
+_Request Header_
+```
+{
+  not needed
+}
+```
+_Request Params_
+```
+{
+  "id": "<depend on user login id>"
+}
+```
+_Response (200 - OK)_
+```
+[
+  {
+  "id": "<give id by system>",
+  "title": "<posted title>",
+  "description": "<posted description>",
+  "status": "<posted status>",
+  "due_date": "<posted due_date>",
+  "userId": "<automatically inserted by user id>"
+  }
+]
+```
+_Response (404 - Resource Not Found)_
+```
+{
+  "message": "resource not found"
+}
+```
+_Response (500 - Internal Server Error)_
+```
+{
+  "message": "error from the server"
+}
+```
+&nbsp;
+## PUT /todos/:id
+_Request Header_
+```
+{
+  not needed
+}
+```
+_Request Params_
+```
+{
+  "id": "<depend on user login id>"
+}
+```
+_Request Body_
+```
+{
+  "title": "<title to get insert into>",
+  "description": "<description to get insert into>",
+  "status": "<status to get insert into>",
+  "due_date": "<due_date to get insert into>",
+}
+```
+_Response (200 - OK)_
+```
+{
+"id": "<give id by system>",
+"title": "<posted title>",
+"description": "<posted description>",
+"status": "<posted status>",
+"due_date": "<posted due_date>",
+"userId": "<automatically inserted by user id>"
+}
+```
+_Response (401 - accessDenied)_
+```
+{
+  "message": "no access for this action"
+}
+```
+_Response (400 - Bad Request)_
+```
+{
+  Error message from SequelizeValdationError
+}
+```
+_Response (500 - Internal Server Error)_
+```
+{
+  "message": "error from the server"
+}
+```
+&nbsp;
+## PATCH /todos/:id
+_Request Header_
+```
+{
+  not needed
+}
+```
+_Request Params_
+```
+{
+  "id": "<depend on user login id>"
+}
+```
+_Request Body_
+```
+{
+  "status": "<status to get insert into>"
+}
+```
+_Response (200 - OK)_
+```
+{
+"id": "<give id by system>",
+"title": "<posted title>",
+"description": "<posted description>",
+"status": "<posted status>",
+"due_date": "<posted due_date>",
+"userId": "<automatically inserted by user id>"
+}
+```
+_Response (401 - accessDenied)_
+```
+{
+  "message": "no access for this action"
+}
+```
+_Response (400 - Bad Request)_
+```
+{
+  Error message from SequelizeValdationError
+}
+```
+_Response (500 - Internal Server Error)_
+```
+{
+  "message": "error from the server"
+}
+```
+&nbsp;
+## DELETE /todos/:id
+_Request Header_
+```
+{
+  not needed
+}
+```
+_Request Params_
+```
+{
+  "id": "<depend on user login id>"
+}
+```
+_Response (200 - OK)_
+```
+{
+  "message": "todo success to delete"
+}
+```
+&nbsp;
+## POST /register
+_Request Header_
+```
+{
+  not needed
+}
+```
+_Request Body_
+```
+{
+  "email": "<email to get insert into>",
+  "fullName": "<full name to get insert into>"
+  "password": "<password to get insert into>"
+}
+```
+_Response (200 - OK)_
+```
+{
+  "id": <given id by system>,
+  "email": "<posted email>"
+}
+```
+_Response (400 - Bad Request)_
+```
+{
+  Error message from SequelizeValdationError
+}
+```
+_Response (500 - Internal Server Error)_
+```
+{
+  "message": "error from the server"
+}
+```
+&nbsp;
+## POST /login
+_Request Header_
+```
+{
+  not needed
+}
+```
 
-  `GET/todos` | `POST` | `DELETE` | `PUT`
-  
-*  **URL Params**
-
-   <_If URL params exist, specify them in accordance with name mentioned in URL section. Separate into optional and required. Document data constraints._> 
-
-   **Required:**
- 
-   `id=[integer]`
-
-   **Optional:**
- 
-   `photo_id=[alphanumeric]`
-
-* **Data Params**
-
-  <_If making a post request, what should the body payload look like? URL Params rules apply here too._>
-
-* **Success Response:**
-  
-  <_What should the status code be on success and is there any returned data? This is useful when people need to to know what their callbacks should expect!_>
-
-  * **Code:** 200 <br />
-    **Content:** `{ id : 12 }`
- 
-* **Error Response:**
-
-  <_Most endpoints will have many ways they can fail. From unauthorized access, to wrongful parameters etc. All of those should be liste d here. It might seem repetitive, but it helps prevent assumptions from being made where they should be._>
-
-  * **Code:** 401 UNAUTHORIZED <br />
-    **Content:** `{ error : "Log in" }`
-
-  OR
-
-  * **Code:** 422 UNPROCESSABLE ENTRY <br />
-    **Content:** `{ error : "Email Invalid" }`
-
-* **Sample Call:**
-
-  <_Just a sample call to your endpoint in a runnable format ($.ajax call or a curl request) - this makes life easier and more predictable._> 
-
-* **Notes:**
-
-  <_This is where all uncertainties, commentary, discussion etc. can go. I recommend timestamping and identifying oneself when leaving comments here._> 
+_Request Body_
+```
+{
+  "email": "<email to get insert into>",
+  "password": "<password to get insert into>"
+}
+```
+_Response (200 - OK)_
+```
+{
+  "access_token": "<access_token>"
+}
+```
+_Response (400 - Bad Request)_
+```
+{
+  Error message from SequelizeValdationError
+}
+```
+_Response (500 - Internal Server Error)_
+```
+{
+  "message": "error from the server"
+}
+```
