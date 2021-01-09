@@ -16,14 +16,14 @@ class TodosController {
       console.log('CREATE MASUK CONTROLLER', todo);
       return res.status(201).json(todo)
     } catch(error) {
-      console.log('OH ERROR PAS CREATE YA', error);
+      console.log('OH ERROR PAS CREATE YA', error.name);
       next(error)
     }
   }
 
   static async index(req, res, next) {
     try {
-      let todos = await Todo.findAll()
+      let todos = await Todo.findAll({where: {UserId: req.currentUser.id}})
       return res.status(200).json(todos)
     } catch (error) {
       next({name: 'cantRetrieve'})

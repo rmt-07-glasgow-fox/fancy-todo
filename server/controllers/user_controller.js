@@ -21,7 +21,8 @@ class UserController {
         let msg = error.errors.map((err) => err.message)
         return res.status(400).json(msg)
       } else {
-        return res.status(500).json('Internal server error')
+        // return res.status(500).json('Internal server error')
+        next({name: 'internalError'})
       }
     }
   }

@@ -6,7 +6,7 @@ const authentication = async (req, res, next) =>  {
   try {
     let decoded = cekToken(req.headers.access_token)
     let user = await User.findOne({where: {email: decoded.email}})
-    
+
     if (!user) {
       next({name: 'loginFirst'})
     } else {
@@ -38,9 +38,11 @@ const authorize = async (req, res, next) => {
   try {
     let todo = await Todo.findOne({where: {id: id}})
 
-    if (!todo || todo.UserId != req.currentUser.id) {
+    if (todo.UserId != req.currentUser.id) {
       // res.status(401).json({msg: 'You do not have permission'})
       next({name: 'notAuthorize'})
+    } else if (!todo) {
+      next({name: 'notFound'})
     } else {
       next()
     }
