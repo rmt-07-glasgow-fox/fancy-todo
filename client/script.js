@@ -87,11 +87,6 @@ function myFunction(){
     })
 
     $("#create-task-form-btn").click(function(event){
-        
-        $("#create-task").hide()
-        $("#create-task-btn").hide()
-
-
         event.preventDefault()
         let title = $('#task-title').val()
         let description = $('#task-description').val()
@@ -108,6 +103,7 @@ function myFunction(){
         .done(response => {
             $(document).empty()
             $(document).ready(myFunction())
+            $("#create-task-btn").show()
         })
         .fail(err => {
             console.log("GAGAL")
