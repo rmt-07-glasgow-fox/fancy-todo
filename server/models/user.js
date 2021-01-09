@@ -18,6 +18,9 @@ module.exports = (sequelize, DataTypes) => {
     username: {
       type: DataTypes.STRING,
       validate: {
+        notEmpty: {
+          msg: "Username must be filled"
+        },
         len: {
           args: [6],
           msg: "Username minimum 6 characters"
@@ -28,6 +31,9 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       validate: {
+        notEmpty: {
+          msg: "Email must be filled"
+        },
         isEmail: {
           msg: "Email not valid"
         }
@@ -37,6 +43,9 @@ module.exports = (sequelize, DataTypes) => {
     password: {
       type: DataTypes.STRING,
       validate: {
+        notEmpty: {
+          msg: "Password must be filled"
+        },
         len: {
           args: [6],
           msg: "Password minimum 6 characters"

@@ -2,13 +2,15 @@ function errorHandler(err, req, res, next) {
     if (err) {
         switch (err.status) {
             case 400:
-                let errMsg = []
-                err.errors.forEach(error => {
-                    errMsg.push(error.message)
-                });
-                res.status(400).json({
-                    message: errMsg
-                })
+                if (err.errors){
+                    let errMsg = []
+                    err.errors.forEach(error => {
+                        errMsg.push(error.message)
+                    });
+                    res.status(400).json({
+                        message: errMsg
+                    })
+                }
                 break;
             case 401:
                 if(err.message){

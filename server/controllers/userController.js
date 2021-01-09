@@ -44,7 +44,10 @@ class UserController{
                         username: data.username,
                         email: data.email
                     })
-                    res.status(200).json({access_token})
+                    res.status(200).json({
+                        access_token,
+                        username: data.username
+                    })
                 } else{
                     next({
                         status: 400,
@@ -105,7 +108,10 @@ class UserController{
                 email: data.email
             })
             console.log(access_token, 'ini access token');
-            res.status(200).json({access_token})
+            res.status(200).json({
+                access_token,
+                username: data.username
+            })
         })
         .catch(err => {
             next(err)

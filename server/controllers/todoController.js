@@ -1,11 +1,16 @@
-const {Todo} = require('../models')
+const { Todo, User } = require('../models')
 
 class TodoController{
     static getTodos(req, res, next){
         Todo.findAll({
+            include:{
+                model: User,
+                attributes: ['username']
+            },
             order:[['due_date', 'ASC']]
         })
         .then(data => {
+            console.log(data);
             res.status(200).json(data)
         })
         .catch(err => {

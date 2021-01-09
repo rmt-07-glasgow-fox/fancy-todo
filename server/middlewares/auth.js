@@ -4,7 +4,6 @@ const { checkToken } = require('../helpers')
 function authenticate(req, res, next){
     try {
         let decode = checkToken(req.headers.access_token)
-        // console.log(decode);
         User.findOne({
             where: {
                 email: decode.email
@@ -35,14 +34,18 @@ function authorized(req, res, next){
     const userId = req.userData.id
     Todo.findByPk(todoId)
     .then(data => {
-        if(data.UserId == userId){
-            next()
+        if (data){
+            if(data.UserId == userId){
+                next()
+            } else {
+                next({status: 401})
+            }
         } else {
-            next({status: 401})
+            next({status: 404})
         }
     })
     .catch(err => {
-        next({status: 401})
+        next(err)
     })
 }
 
