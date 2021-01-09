@@ -29,7 +29,7 @@ $(document).ready(() => {
 
 const loginPage = () => {
   if (localStorage.getItem('accessToken')) {
-    dahsboardPage();
+    dashboardPage();
   } else {
     $(document).attr('title', 'Login | Fancy Todo');
     $('#auth').show();
@@ -42,7 +42,7 @@ const loginPage = () => {
 
 const registerPage = () => {
   if (localStorage.getItem('accessToken')) {
-    dahsboardPage();
+    dashboardPage();
   } else {
     $(document).attr('title', 'Register | Fancy Todo');
     $('#register').show();
@@ -50,7 +50,7 @@ const registerPage = () => {
   }
 };
 
-const dahsboardPage = () => {
+const dashboardPage = () => {
   if (!localStorage.getItem('accessToken')) {
     loginPage();
   } else {
@@ -368,7 +368,7 @@ const login = (e) => {
         'fullName',
         `${response.firstName} ${response.lastName}`
       );
-      dahsboardPage();
+      dashboardPage();
     })
     .fail((err) => {
       const template = alertTemplate('error', err.responseJSON.error);
@@ -380,10 +380,37 @@ const login = (e) => {
     });
 };
 
+function onSignIn(googleUser) {
+  const idToken = googleUser.getAuthResponse().id_token;
+  $.ajax({
+    method: 'POST',
+    url: `${url}/users/google`,
+    data: { idToken },
+  })
+    .done((response) => {
+      localStorage.setItem('accessToken', response.accessToken);
+      localStorage.setItem(
+        'fullName',
+        `${response.firstName} ${response.lastName}`
+      );
+      dashboardPage();
+    })
+    .fail((xhr, status, error) => {
+      const template = alertTemplate('error', status);
+      $(template).appendTo('#alert');
+    });
+}
+
 const logout = () => {
   localStorage.clear();
 
+  logoutGoogle();
   loginPage();
+};
+
+const logoutGoogle = () => {
+  var auth2 = gapi.auth2.getAuthInstance();
+  auth2.signOut().then(function () {});
 };
 
 const quote = () => {

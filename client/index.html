@@ -3,6 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="google-signin-client_id"
+      content="91595174323-mat8h260qmvtq1ndrv9f7read9fvlucr.apps.googleusercontent.com"
+    />
     <title>Fancy Todo</title>
     <link
       rel="stylesheet"
@@ -20,6 +24,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="script.js"></script>
     <link rel="stylesheet" href="style.css" />
   </head>
@@ -152,8 +157,11 @@
                   </div>
                 </form>
 
-                Already have an account?
-                <a href="#" onclick="loginPage()"> Login here</a>
+                <hr />
+                <div class="mt-2">
+                  Already have an account?
+                  <a href="#" onclick="loginPage()"> Login here</a>
+                </div>
               </div>
             </div>
 
@@ -201,9 +209,22 @@
                     </button>
                   </div>
                 </form>
+                <div class="d-flex justify-content-center">
+                  <p>Login with Social Media</p>
+                </div>
+                <div class="d-flex justify-content-center">
+                  <div
+                    class="g-signin2"
+                    data-onsuccess="onSignIn"
+                    data-longtitle="true"
+                  ></div>
+                </div>
 
-                Don't have an account?
-                <a href="#" onclick="registerPage()"> Register here</a>
+                <hr />
+                <div class="mt-2">
+                  Don't have an account?
+                  <a href="#" onclick="registerPage()"> Register here</a>
+                </div>
               </div>
             </div>
           </div>
