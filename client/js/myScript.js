@@ -250,6 +250,7 @@ const tableTodosFetch = () => {
                     return `<div class="input-group-btn">
                             ${(row['status'] === true) ? '' : '<button class="btn btn-sm btn-warning" id="bEdit"><i class="fa fa-pencil-alt"></i></button>'}
                             <button class="btn btn-sm btn-danger"  id="bDestroy"><i class="fa fa-trash"></i></button> 
+                            <button class="btn btn-sm btn-success"  id="bDetail"><i class="fa fa-eye"></i></button> 
                             <button class="btn btn-sm btn-info"  id="bIsDone"> ${(row['status'] === true) ? '<i class="fa fa-times"></i> On Going' : '<i class="fa fa-paper-plane"></i> Done'}</button>  </div>`
                 }
             },
@@ -410,6 +411,37 @@ $('#tableTodo tbody').on('click', '#bIsDone', function() {
     });
 });
 
+$('#tableTodo tbody').on('click', '#bDetail', function() {
+    const id = tableTodo.row($(this).parents('tr')).data().id;
+
+    $.ajax({
+        type: "GET",
+        url: `${baseUrl}/todos/${id}`,
+        headers: {
+            authorization: localStorage.access_token
+        },
+        success: (data) => {
+            let date = new Date(data.data.due_date)
+            let dateConvert = date.toISOString().split('T')[0]
+
+            $('#modal-todos-detail').modal('show')
+            $('#title-detail').val(data.data.title)
+            $('#movieId-detail').val(data.data.movieName)
+            $('#description-detail').val(data.data.description)
+            $('#due_date-detail').val(dateConvert);
+
+
+        },
+        error: (err) => {
+            if (err.responseJSON.message === 'jwt expired') {
+                toastr.info(`${err.responseJSON.message}`, 'session expired');
+                logout()
+            }
+            toastr.error(err.message, 'Error Alert')
+        }
+    });
+});
+
 $('#tableProject tbody').on('click', '#bIsDoneProject', function() {
     const id = tableProject.row($(this).parents('tr')).data().id;
     const status = tableProject.row($(this).parents('tr')).data().status;
@@ -434,6 +466,8 @@ $('#tableProject tbody').on('click', '#bIsDoneProject', function() {
         }
     });
 });
+
+
 
 // EDIT DATATABLES
 $('#tableTodo tbody').on('click', '#bEdit', function() {
