@@ -2,29 +2,18 @@ const axios = require('axios')
 
 class Controller {
     static weather(req, res, next) {
-        const access_key = process.env.WEATHERSTACK_API
-        let city = req.body.city
-        let weatherAPI = `http://api.weatherstack.com/current?access_key=${access_key}&query=${city}`
+        const apiKey = process.env.WEATHER_API_KEY
+        let weatherAPI = `http://api.openweathermap.org/data/2.5/weather?q=Jakarta&appid=${apiKey}&units=metric`
         axios.get(weatherAPI)
         .then(response => {
-            if (city) {
-                const location = {
-                    city: response.data.location.name,
-                    country: response.data.location.country,
-                    region: response.data.location.region,
-                }
-                const weather = {
-                    temperature: response.data.current.temperature,
-                    weather_icons: response.data.current.weather_icons,
-                    weather_descriptions: response.data.current.weather_descriptions,
-                    wind_speed: response.data.current.wind_speed,
-                    wind_degree: response.data.current.wind_degree,
-                    wind_direction: response.data.current.wind_dir
-                }
-                res.status(200).json({ location, weather })
-            } else {
-                throw { name: "invalidQuery"}
-            }
+            let result = [{
+                city: response.data.name,
+                description: response.data.weather[0].description,
+                icon: response.data.weather[0].icon,
+                temp: response.data.main.temp
+            }]
+            console.log(result);
+            res.status(200).json(result[0])
         })
         .catch(err => {
             next(err)

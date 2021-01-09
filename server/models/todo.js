@@ -92,7 +92,7 @@ module.exports = (sequelize, DataTypes) => {
         if(mm<10) {
             mm=`0${mm}`;
         } 
-        instance.due_date = `${dd}/${mm}/${yyyy}`
+        instance.due_date = `${mm}/${dd}/${yyyy}`
       }
     },
     sequelize,

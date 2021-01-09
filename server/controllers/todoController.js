@@ -16,7 +16,6 @@ class Controller {
                 let { due_date } = el
                 el.dataValues.due_date = due_date.toLocaleString("en-ID", options)
             });
-            console.log(data);
             res.status(200).json(data);
         })
         .catch(err => {
@@ -35,23 +34,18 @@ class Controller {
         Todo.create(input)
         .then(data => {
             let {id, title, description, status, due_date, UserId} = data
-            const options = { 
-                month: '2-digit', 
-                day: '2-digit',
-                year: 'numeric', 
-            };
             let output = {
                 id,
                 title,
                 description,
                 status,
-                due_date: due_date.toLocaleString("en-ID", options),
+                due_date,
                 UserId
             }
             res.status(201).json(output)
         })
         .catch(err => {
-            next(err)
+            res.status(500).json(err)
         })
     }
 
@@ -89,13 +83,6 @@ class Controller {
             if (data[0] === 0) {
                 throw ({ name: "resourceNotFound"})
             } else {
-                const options = { 
-                    month: '2-digit', 
-                    day: '2-digit',
-                    year: 'numeric', 
-                };
-                data[1][0].dataValues.due_date = data[1][0].dataValues.due_date.toLocaleString("en-ID", options)
-                console.log(data[1]);
                 res.status(200).json(data[1])
             }
         })
@@ -107,7 +94,7 @@ class Controller {
     static editStatus(req, res, next) {
         let { status } = req.body
         let { id }= req.params
-        Todo.update({status: Boolean(status)}, {
+        Todo.update({status: status}, {
             where: {id},
             returning: true
         })
