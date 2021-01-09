@@ -23,12 +23,10 @@ class ControllerUser {
 
     static async signin(req, res, next){
         try {
-            console.log("DIA MASUK ROUTING SIGNIN")
             const {email, password} = req.body
             const user = await User.findOne({
                 where: {email}
             })
-            console.log(user,">>>>>>>INI JAWABAN USER")
             if(!user){
                 next({name: "Invalid Email/Password"})
                 
