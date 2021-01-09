@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="471519075673-efc4k064e3qcbditt4e85dm3pqirusds.apps.googleusercontent.com">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container-fluid container-height">
+        <div class="row">
+            <!--kondisi logout-->
+            <div class="col-4 side-bar p-0 kondisi-log-out" > <!---->
+                <div class="side-bar-content">
+                    <div class="side-bar-header mt-5 mb-5">
+                        <h3 class="headers-text">&#916 TODO UI</h3>
+                        <div class="side-bar-nav">
+                            <h4 class="nav-side">With Todo List, you can Make your routine task.</h4>
+                            <p class="nav-side"></p>
+                            <p class="nav-side"></p>
+                            <p class="nav-side"></p>
+                            <p class="nav-side"></p>
+                            <p class="nav-side"></p>
+                            <p class="nav-side"></p>
+                            <p class="nav-side"></p>
+                            <p class="nav-side"></p>
+                            <p class="nav-side"></p>
+                            <p class="nav-side"></p>
+                            <p class="nav-side"></p>
+                            <p class="nav-side"></p>
+                            <p class="nav-side"></p>
+                        </div>
+                        <div class="side-bar-footer ">
+                            <img src="https://i.ibb.co/nkHhGjV/w.png" alt="" srcset="" >
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--kondisi signIn-->
+            <div class="col-4 side-bar p-0 kondisi-sign-in "  style="background-color: #C3CCCE" > <!---->
+                <div class="side-bar-content">
+                    <div class="side-bar-header mt-5 mb-5">
+                        <h3 class="headers-text" style="color: black;">&#916 TODO UI</h3>
+                        <div class="side-bar-nav">
+                            <h4 class="nav-side" style="color: cornsilk;">With Tod you can Make your routine task.</h4>
+                            <p class="nav-side"></p>
+                            <p class="nav-side"></p>
+                            <p class="nav-side"></p>
+                            <p class="nav-side"></p>
+                            <p class="nav-side"></p>
+                            <p class="nav-side"></p>
+                            <p class="nav-side"></p>
+                            <p class="nav-side"></p>
+                            <p class="nav-side"></p>
+                            <p class="nav-side"></p>
+                            <p class="nav-side"></p>
+                            <p class="nav-side"></p>
+                            <p class="nav-side"></p>
+                        </div>
+                        <div class="side-bar-footer ">
+                            <img src="https://i.ibb.co/Xkx6DXq/w.png" alt="" srcset="" >
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--kondisi logIn-->
+            <div class="col-4 side-bar p-0 kondisi-log-in" > <!---->
+                <div class="side-bar-content">
+                    <div class="side-bar-header mt-5 mb-5">
+                        <h3 class="headers-text">&#916 TODO UI</h3>
+                        <div class="side-bar-nav">
+                            <h4 class="nav-side">With Todo List you can Make your routine task.</h4>
+                            <p class="nav-side-login"></p>
+                            <p class="nav-side-login" id="overview" onclick="getTodo()">Overview</p>
+                            <p class="nav-side-login" id="today" onclick="getStatusToday()">Today</p>
+                            <p class="nav-side-login" id="important" onclick="getStatusImportant()">Important</p>
+                            <p class="nav-side-login" id="schedule" onclick="getStatusNotClear()"">Scheduled</p>
+                            <p class="nav-side-login" id="done" onclick="getStatusClear()">Done</p>
+                            <p class="nav-side-login" onclick="project()">Project</p>
+                        </div>
+                        <div class="side-bar-footer ">
+                            <img src="https://i.ibb.co/nkHhGjV/w.png" alt="" srcset="" >
+                        </div>
+
+                        <div class="alert alert-success nav-side-login-jokes " style="float: inline-start;" role="alert">
+                            
+                          </div>
+                        
+
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!--kondisi logOut-->
+            <div class="col-8 main-container kondisi-log-out" >
+                <div class="row"></div>
+                    <div class="sign-in-page-form"> 
+                            <div class="auth-nav">
+                                <label>Already a member ? </label>
+                                <label class="sign-in-atuh">sign in</label>
+                            </div>
+                    </div>
+                    <div class="register-page-form">
+                        <main>
+                            <div class="auth-content">
+                              <br><br><br>
+
+                              <h2>Sign up &#916TODO UI</h2>
+                              <br><br><br>
+                              
+                        
+                              <div class="form-field">
+                                <fieldset class="user_email"><label for="user_email">Email</label><input class="text-input" type="text" placeholder="type your email" name="user[email]" id="user_email-register"></fieldset>
+                              </div>
+                        
+                              <div class="form-field">
+                                <fieldset class="user_password"><label for="user_password">Password</label><input class="text-input" placeholder="type your password" type="password" name="user[password]" id="user_password-register"></fieldset>
+                              </div>
+                              <br>
+                        
+                              <div class="form-btns">
+                                <input type="submit" name="commit" value="Create Account" class="button btn-primary" onclick="registerUser()" data-disable-with="Create Account">
+                              </div>
+                        
+                                <p class="auth-link-mobile">
+                                  Already a member? <a class="sign-in-atuh" >Sign In</a>
+                                </p>
+                            </div>
+                        </main>
+                    </div>   
+            </div>
+
+
+            <!--kondisi signIn-->
+            <div class="col-8 main-container kondisi-sign-in" >
+                <div class="row"></div>
+                    <div class="sign-in-page-form"> 
+                            <div class="auth-nav">
+                                <label>Not a member ? </label>
+                                <label class="sign-up-atuh">sign up now</label>
+                            </div>
+                    </div>
+                    <div class="register-page-form">
+                        <main>
+                            <div class="auth-content">
+                              <br><br><br>
+                              <h2>Sign in &#916TODO UI</h2>
+                              <br><br><br>
+                              <div class="g-signin2 " style="" data-onsuccess="onSignIn"></div>
+
+                              <hr class="divider">
+
+                              <div class="form-field">
+                                <fieldset class="user_email"><label for="user_email">Email</label><input class="text-input" type="text" placeholder="type your email"  id="email-login"></fieldset>
+                              </div>
+                        
+                              <div class="form-field">
+                                <fieldset class="user_password"><label for="user_password">Password</label><input class="text-input" placeholder="type your password" type="password"  id="password-login"></fieldset>
+                              </div>
+                              <br>
+                              <div class="form-btns">
+                                <input type="submit" name="commit" value="Sign In" class="button btn-primary" id="login-btn" onclick="loginUser()"">
+                              </div>
+
+                              
+                            </div>
+                        </main>
+                    </div>   
+            </div>
+
+
+            <!--kondisi login-->
+            <div class="col-8 main-container kondisi-log-in " >
+                <div class="sign-in-page-form"> 
+                    <div class="auth-nav " > 
+                        <p class="log-out-bn" id="log-out-bn">Log Out</p>
+                        </div>
+                </div> 
+                <div class="container" style="flex-direction: row; ">
+                <div class="row">
+                    <div class="col col-5 bg-light">
+                        <h4 class="mt-2 p-0"style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-style: inherit;">Todo</h4>
+                        <h5 style="color: black; text-shadow: blue ; font-family: monospace;" class="font-add" onclick="addTodos()">Add</h5>
+                        <hr>
+                        <div class="overflow-scroll" style="height: 800px;"id="append-todos">
+                            <!-- append here-->
+                        </div>
+
+                    </div>
+                    <div class="col col-7 overflow-auto" style="background-color: ivory;" id="append-item">
+                        <!-- append here-->
+                        <div class="box-body mt-2">
+                            <h3 class="box-title" name="title">See what you can achieve!</h5>
+                            <h6 class="box-subtitle mb-2 text-muted" name="description">Task management, time tracking and billing for freelancers, consultants and teams.</h6> 
+                                
+                           
+                        </div>
+                       
+                    </div>
+                    
+                </div>
+                </div>
+            </div>
+
+             <!--kondisi Project-->
+            <div class="col-4 side-bar p-0 kondisi-project" > <!---->
+                <div class="side-bar-content">
+                    <div class="side-bar-header mt-5 mb-5">
+                        <h3 class="headers-text">&#916 TODO UI</h3>
+                        <div class="side-bar-nav">
+                            <h4 class="nav-side">With Todo List you can Make your routine task.</h4>
+                            <p class="nav-side-login"></p>
+                            <p class="nav-side-login" id="overview" onclick="getTodo()">Overview</p>
+                            <p class="nav-side-login" id="today" onclick="getStatusToday()">Today</p>
+                            <p class="nav-side-login" id="important" onclick="getStatusImportant()">Important</p>
+                            <p class="nav-side-login" id="schedule" onclick="getStatusNotClear()"">Scheduled</p>
+                            <p class="nav-side-login" id="done" onclick="getStatusClear()">Done</p>
+                            <p class="nav-side-login" onclick="project()">Project</p>
+                        </div>
+                        <div class="side-bar-footer ">
+                            <img src="https://i.ibb.co/nkHhGjV/w.png" alt="" srcset="" >
+                        </div>
+                        <div class="alert alert-success nav-side-login-jokes " style="float: inline-start;" role="alert">
+                          </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROJECT TIME -->
+            <div class="col-8 main-container kondisi-project " >
+                <div class="sign-in-page-form"> 
+                    <div class="auth-nav " > 
+                        <p class="log-out-bn" id="log-out-bn">Log Out</p>
+                        </div>
+                </div> 
+                <div class="container" style="flex-direction: row; ">
+                <div class="row">
+                    <div class="col col-5 bg-light">
+                        <h4 class="mt-2 p-0"style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-style: inherit;">Project</h4>
+                        <h5 style="color: black; text-shadow: blue ; font-family: monospace;" class="font-add" onclick="addProject()">Add Project</h5>
+                        <hr>
+                        <div class="overflow-scroll" style="height: 800px;"id="append-todos-project">
+                            <!-- append here-->
+                        </div>
+
+                    </div>
+                    <div class="col col-7 overflow-auto" style="background-color: ivory;" id="append-item-project">
+                        <!-- append here-->
+                        <div class="box-body mt-2">
+                            <h3 class="box-title" name="title">See what you can achieve!</h5>
+                            <h6 class="box-subtitle mb-2 text-muted" name="description">Task management, time tracking and billing for freelancers, consultants and teams.</h6> 
+                                
+                        </div>
+                       
+                    </div>
+                    
+                </div>
+                </div>
+            </div>
+
+
+        </div>
+    
+
+    </div>    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--      -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -280,3 +280,100 @@ Fancy todo is a Todo List web app
 
   * **Code:** 500 INTERNAL SERVER ERROR <br />
     **Content:** `{ error messages }`
+
+
+**Login User**
+----
+  Login json data by specific email Password.
+
+* **URL**
+
+  /login
+
+* **Method:**
+
+  `POST`
+  
+*  **URL Params**
+
+   **Required:**
+ 
+  ```
+    {
+        "email": "<input email>",
+        "password": "<input password>",
+    }
+  ```
+
+
+* **Data Params**
+
+  None
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ``` json
+    {
+        message: 'success'
+    }
+ 
+* **Error Response:**
+
+  * **Code:** 401 BAD REQUEST <br />
+    **Content:** `{ message : "invalid password" }`
+
+  OR
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ error messages }`
+
+
+**register User**
+----
+  register json data by specific email Password.
+
+* **URL**
+
+  /register
+
+* **Method:**
+
+  `POST`
+  
+*  **URL Params**
+
+   **Required:**
+ 
+  ```
+    {
+        "email": "<input email>",
+        "password": "<input password>",
+    }
+  ```
+
+
+* **Data Params**
+
+  None
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ``` json
+    {
+        message: 'success'
+    }
+ 
+* **Error Response:**
+
+  * **Code:** 401 BAD REQUEST <br />
+    **Content:** `{ message : "invalid password" }`
+
+  OR
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ error messages }`
+

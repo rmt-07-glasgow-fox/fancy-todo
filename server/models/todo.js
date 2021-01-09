@@ -56,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
           msg: "status is not confirmed"
         },
         isClear(value) {
-          if (value !== 'clear' && value !== 'not_clear') {
+          if (value !== 'clear' && value !== 'not_clear' && value !== "important") {
             throw new Error('status must be clear or not_clear')
           }
         }

@@ -1,6 +1,9 @@
 const { Todo } = require('../models/index')
 
 class ControllerTodos{
+    
+
+
     static findTodos(req, res, next) {
         Todo.findAll({
             where: {
@@ -15,10 +18,11 @@ class ControllerTodos{
         })
     }
     static insert(req, res, next) {
+        console.log(req.body);
         let obj = {
             title:req.body.title,
             description:req.body.description,
-            status:req.body.status,
+            status:req.body.status||"not_clear",
             due_date:req.body.due_date,
             userId: req.user.id
         }
@@ -120,6 +124,25 @@ class ControllerTodos{
             next(err)
         })
     }
+
+    static findStatus(req, res, next) {
+        // console.log(req);
+        Todo.findAll({
+            where: {
+                status: req.headers.status,
+                userId: +req.user.id
+            }
+        })
+        .then(data => {
+            res.status(200).json(data)
+        })
+        .catch(err => {
+            next(err)
+        })
+    }
+
+
+
 }
 
 module.exports = ControllerTodos
