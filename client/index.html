@@ -71,11 +71,18 @@
                     Master
                 </div>
 
-                <!-- Nav Item - Category -->
+                <!-- Nav Item - Todo -->
                 <li class="nav-item">
                     <a class="nav-link" type="button" onclick="todoPage()">
                         <i class="fas fa-fw fa-list-alt"></i>
                         <span>Todo</span></a>
+                </li>
+
+                <!-- Nav Item - Project Todo -->
+                <li class="nav-item">
+                    <a class="nav-link" type="button" onclick="projectTodoPage()">
+                        <i class="fas fa-fw fa-users"></i>
+                        <span>Project Todo</span></a>
                 </li>
 
                 <!-- Divider -->
@@ -177,6 +184,34 @@
                             </div>
                         </div>
 
+                        <div id="projectTodoContent">
+                            <h1 class="h3 mb-4 text-gray-800">My Project Todo List</h1>
+                            <!-- DataTales Example -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <a type="button" id="btnCreateProject" class="btn btn-primary"> <i class="fa fa-plus-circle"></i> Add Project</a>
+                                    <a type="button" onclick="refreshTableProject()" class="btn btn-secondary"> <i class="fa fa-sun"></i> Refresh</a>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered dt-responsive table-striped nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;" id="tableProject">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Action</th>
+                                                    <th>Status</th>
+                                                    <th>Title</th>
+                                                    <th>Movie</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <!-- /.container-fluid -->
 
@@ -223,6 +258,7 @@
     </div>
     <!-- END OF DASHBOARD PAGE -->
 
+    <!-- MODAL ADD TODO -->
     <div class="modal fade" id="modal-todos" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -273,6 +309,46 @@
             </div>
         </div>
     </div>
+    <!-- END MODAL TODO -->
+
+    <!-- MODAL ADD PROJECT -->
+    <div class="modal fade" id="modal-project" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form>
+                    <div class="modal-header">
+                        <h4 class="modal-title"></h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true"> &times;</span> </button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="id_project" name="id_project">
+                        <div class="form-group">
+                            <label for="title_project" class="col-md-5 control-label">Title<span class="text-danger">*</span></label>
+                            <div class="col-md-12">
+                                <input type="text" id="title_project" class="form-control" placeholder="title" name="title_project" autofocus>
+                                <span class="help-block with-errors"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description_project" class="col-md-5 control-label">Description</label>
+                            <div class="col-md-12">
+                                <input type="text" id="description_project" class="form-control" placeholder="description" name="description_project" autofocus>
+                                <span class="help-block with-errors"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">
+                        <span class='glyphicon glyphicon-check'></span> Simpan</button>
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">
+                        <span class='glyphicon glyphicon-remove'></span> Batal
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- END MODAL PROJECT -->
 
 
     <!-- LOGIN PAGE -->

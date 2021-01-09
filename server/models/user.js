@@ -13,7 +13,9 @@ module.exports = (sequelize, DataTypes) => {
          * The `models/index` file will call this method automatically.
          */
         static associate(models) {
+            User.hasOne(models.Project, { as: 'projectOwner', foreignKey: 'ownerId' })
             User.hasMany(models.Todo, { as: 'todo', foreignKey: 'userId' })
+            User.belongsToMany(models.Project, { as: 'project', foreignKey: 'userId', through: models.UserProject })
         }
 
         fullname() {

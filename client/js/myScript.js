@@ -1,5 +1,5 @@
 const baseUrl = 'http://localhost:3000'
-let tableTodo, save_method, method;
+let tableTodo, tableProject, save_method, method;
 
 $(document).ready(function() {
     if (localStorage.access_token) {
@@ -9,14 +9,6 @@ $(document).ready(function() {
         loginPage()
     }
     $("#registerPassword, #registerRepeatPassword").keyup(checkPasswordMatch);
-
-    $('#btnCreate').click(function() {
-        $('#modal-todos').modal();
-        $('#modal-todos form')[0].reset();
-        $('.modal-title').text('Add new todos');
-        $('#movieId').empty();
-        save_method = "add";
-    });
 
     $('#modal-todos form').on('submit', (e) => {
         if (!e.isDefaultPrevented()) {
@@ -58,6 +50,62 @@ $(document).ready(function() {
             return false;
         }
     });
+
+    $('#modal-project form').on('submit', (e) => {
+        if (!e.isDefaultPrevented()) {
+            var id = $('#id_project').val();
+            if (save_method == "add") {
+                url = `${baseUrl}/project`;
+                method = 'POST';
+            } else {
+                url = `${baseUrl}/project/${id}`;
+                method = 'PUT';
+            }
+            $.ajax({
+                url,
+                method,
+                data: $('#modal-project form').serialize(),
+                dataType: 'JSON',
+                headers: {
+                    authorization: localStorage.access_token
+                },
+                success: (data) => {
+                    if (save_method == "add") {
+                        toastr.success('Data Berhasil di Simpan!', 'Success Alert', { timeOut: 4000 });
+                    } else {
+                        toastr.success('Data Berhasil di update!', 'Success Alert', { timeOut: 4000 });
+                    }
+                    $('#modal-project').modal('hide');
+                    tableProject.ajax.reload(null, false);
+                },
+                error: (err) => {
+                    if (err.responseJSON.message === 'jwt expired') {
+                        toastr.info(`${err.responseJSON.message}`, 'session expired');
+                        $('#modal-project').modal('hide');
+                        logout()
+                    } else {
+                        err.responseJSON.message.forEach(el => toastr.warning(el, 'Warning Alert'))
+                    }
+                }
+            });
+            return false;
+        }
+    });
+});
+
+$('#btnCreate').click(function() {
+    $('#modal-todos').modal();
+    $('#modal-todos form')[0].reset();
+    $('.modal-title').text('Add new todos');
+    $('#movieId').empty();
+    save_method = "add";
+});
+
+$('#btnCreateProject').click(function() {
+    $('#modal-project').modal();
+    $('#modal-project form')[0].reset();
+    $('.modal-title').text('Add new project');
+    save_method = "add";
 });
 
 const select2Movie = () => {
@@ -129,8 +177,8 @@ const tableTodosFetch = () => {
                 searchable: false,
                 render: function(data, type, row) {
                     return `<div class="input-group-btn">
-                            ${(row['status'] === true) ? '' : '<button class="btn btn-sm btn-warning" id="bedit"><i class="fa fa-pencil-alt"></i></button>'}
-                            <button class="btn btn-sm btn-danger"  id="bdestroy"><i class="fa fa-trash"></i></button> 
+                            ${(row['status'] === true) ? '' : '<button class="btn btn-sm btn-warning" id="bEdit"><i class="fa fa-pencil-alt"></i></button>'}
+                            <button class="btn btn-sm btn-danger"  id="bDestroy"><i class="fa fa-trash"></i></button> 
                             <button class="btn btn-sm btn-info"  id="bIsDone"> ${(row['status'] === true) ? '<i class="fa fa-times"></i> On Going' : '<i class="fa fa-paper-plane"></i> Done'}</button>  </div>`
                 }
             },
@@ -156,7 +204,62 @@ const tableTodosFetch = () => {
 
         ],
     });
+}
 
+const tableGroupTodosFetch = () => {
+    tableProject = $('#tableProject').DataTable({
+        destroy: true,
+        searchable: true,
+        processing: true,
+        responsive: true,
+        order: [],
+        language: {
+            "processing": '<div class="spinner-border text-info m-2" role="status"><span class="sr-only"></span></div></br><div>Tunggu Sebentar yaa...</div>',
+        },
+        "drawCallback": function() {
+            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+        },
+        ajax: {
+            method: 'GET',
+            url: `${baseUrl}/project`,
+            headers: {
+                authorization: localStorage.getItem('access_token')
+            },
+            error: (err) => {
+                if (err.responseJSON.message === 'jwt expired') {
+                    toastr.info(`${err.responseJSON.message}`, 'session expired');
+                    logout()
+                }
+            }
+        },
+        columns: [
+            { data: 'id', name: 'id', visible: false, searchable: false },
+            {
+                data: 'action',
+                name: 'action',
+                orderable: false,
+                searchable: false,
+                render: function(data, type, row) {
+                    return `<div class="input-group-btn">
+                            ${(row['status'] === true) ? '' : '<button class="btn btn-sm btn-warning" id="bEditProject"><i class="fa fa-pencil-alt"></i></button>'}
+                            <button class="btn btn-sm btn-danger"  id="bDestroyProject"><i class="fa fa-trash"></i></button> 
+                            <button class="btn btn-sm btn-info"  id="bIsDoneProject"> ${(row['status'] === true) ? '<i class="fa fa-times"></i> On Going' : '<i class="fa fa-paper-plane"></i> Done'}</button>  </div>`
+                }
+            },
+            {
+                data: 'status',
+                render: function(data) {
+                    if (data === true) {
+                        return 'Done'
+                    } else {
+                        return 'On Going'
+                    }
+                }
+            },
+            { data: "title" },
+            { data: "description" },
+        ],
+    });
 }
 
 const formatDate = (dateString) => {
@@ -189,7 +292,8 @@ $('#tableTodo tbody').on('click', '#bIsDone', function() {
     });
 });
 
-$('#tableTodo tbody').on('click', '#bedit', function() {
+// EDIT DATATABLES
+$('#tableTodo tbody').on('click', '#bEdit', function() {
     const data = tableTodo.row($(this).parents('tr')).data();
     let date = new Date(data.due_date)
     let dateConvert = date.toISOString().split('T')[0]
@@ -204,7 +308,20 @@ $('#tableTodo tbody').on('click', '#bedit', function() {
     $('select#movieId').select2('trigger', 'select', { 'data': { 'id': data.movieId, 'text': data.movieName } });
 })
 
-$('#tableTodo tbody').on('click', '#bdestroy', function() {
+$('#tableProject tbody').on('click', '#bEditProject', function() {
+    const data = tableProject.row($(this).parents('tr')).data();
+    console.log(data);
+    save_method = "edit";
+    $('#modal-project form')[0].reset();
+    $('#modal-project').modal('show');
+    $('.modal-title').text('Edit data todo');
+    $('#id_project').val(data.id);
+    $('#title_project').val(data.title);
+    $('#description_project').val(data.description);
+})
+
+// DESTROY DATATABLES
+$('#tableTodo tbody').on('click', '#bDestroy', function() {
     const id = tableTodo.row($(this).parents('tr')).data().id;
 
     Swal.fire({
@@ -241,10 +358,48 @@ $('#tableTodo tbody').on('click', '#bdestroy', function() {
     })
 });
 
+$('#tableProject tbody').on('click', '#bDestroyProject', function() {
+    const id = tableProject.row($(this).parents('tr')).data().id;
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.value) {
+            $.ajax({
+                type: "DELETE",
+                url: `${baseUrl}/project/${id}`,
+                headers: {
+                    authorization: localStorage.access_token
+                },
+                success: (data) => {
+                    Swal.fire("Done!", "Data Berhasil di hapus!", "success");
+                    toastr.success(data.message, 'Success Alert')
+                    tableProject.ajax.reload()
+                },
+                error: (err) => {
+                    if (err.responseJSON.message === 'jwt expired') {
+                        toastr.info(`${err.responseJSON.message}`, 'session expired');
+                        logout()
+                    }
+                    Swal.fire("Error deleting!", "Please try again", "error");
+                    toastr.error(err.message, 'Error Alert')
+                }
+            });
+        }
+    })
+});
+
 const dashboardPage = () => {
     $('#dashboardPage').show();
     $('#dasboardContent').show();
     $('#todoContent').hide();
+    $('#projectTodoContent').hide();
     $('#loginPage').hide();
     $('#registerPage').hide();
     $('span#fullname').html(localStorage.fullname)
@@ -282,13 +437,31 @@ const todoPage = () => {
     if (localStorage.access_token) {
         $('#todoContent').show();
         $('#dasboardContent').hide();
+        $('#projectTodoContent').hide();
         tableTodosFetch()
         select2Movie()
     } else {
         $('#loginEmail').val('')
         $('#loginPassword').val('')
         $('#dashboardPage').hide();
-        $('#loginPage').slideDown();
+        $('#loginPage').show();
+        $('#registerPage').hide();
+        $(document.body).addClass('bg-gradient-primary');
+    }
+}
+
+const projectTodoPage = () => {
+    if (localStorage.access_token) {
+        $('#todoContent').hide();
+        $('#dasboardContent').hide();
+        $('#projectTodoContent').show();
+        tableGroupTodosFetch()
+        select2Movie()
+    } else {
+        $('#loginEmail').val('')
+        $('#loginPassword').val('')
+        $('#dashboardPage').hide();
+        $('#loginPage').show();
         $('#registerPage').hide();
         $(document.body).addClass('bg-gradient-primary');
     }
