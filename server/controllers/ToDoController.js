@@ -22,6 +22,7 @@ class ToDoController {
     let todoList;
 
     ToDo.findAll({
+      where: {UserId: req.user.id},
       order: [['id', 'ASC']],
       attributes: { exclude: ['createdAt', 'updatedAt'] },
     })
@@ -76,6 +77,7 @@ class ToDoController {
   static patchStatus(req, res, next) {
     const id = +req.params.id;
     const status = { status: req.body.status };
+    console.log(status)
 
     ToDo.update(status, { where: { id }, returning: true, plain: true })
       .then((todo) => {

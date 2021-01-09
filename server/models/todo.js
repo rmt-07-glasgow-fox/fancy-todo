@@ -36,6 +36,11 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'ToDo',
+      hooks: {
+        beforeCreate: (instance, options) => {
+          if (!instance.status) instance.status = false
+        }
+      }
     }
   );
   return ToDo;
