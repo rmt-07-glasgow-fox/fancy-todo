@@ -50,7 +50,7 @@ class UserController {
 
         const access_token = generateToken(payload)
         console.log("USER YG SEDANG LOGIN", user.email);
-        return res.status(200).json({access_token})
+        return res.status(200).json({access_token, email: user.email})
 
       } else {
         next({name: 'errorAuth'})

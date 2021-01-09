@@ -14,7 +14,8 @@
 <body>
   <nav id="#navbar-todolist" class="navbar navbar-expand-lg navbar-light bg-light shadow">
     <div class="container-fluid">
-      <a href="#" class="navbar-brand text-info">Mah Todo</a>
+      <a href="javascript:void(0)" class="navbar-brand text-info">Mah Todo</a>
+      <p class="text-info" id="hi-currentuser"></p>
       <h3 class="navbar-brand text-info" id="weatherbit-text">WEATHERBIT</h3>
       <button id="btn-logout" class="btn btn-danger">Logout</button>
     </div>
@@ -40,7 +41,8 @@
                 <input type="password" name="password" id="password" class="form-control">
               </div>
               <div class="form-group">
-                <button type="submit" id="login-btn" class="btn btn-info btn-md">Submit</button>
+                <button type="submit" id="login-btn" class="btn btn-info btn-md">Login</button>
+                <button type="submit" id="register-btn" class="btn btn-info btn-md" style="float: right;">Register</button>
               </div>
               <div class="g-signin2" data-onsuccess="onSignIn"></div>
             </form>
@@ -51,6 +53,36 @@
     </div>
   </div>
   <!-- FORM LOGIN -->
+
+  <!-- FORM REGISTER -->
+  <div id="register-user">
+    <div class="container">
+      <div id="login-row" class="row justify-content-center align-items-center">
+        <div id="login-column" class="col-md-6">
+          <div id="login-box" class="col-md-12">
+
+            <form>
+              <h3 class="text-center text-info">Register</h3>
+              <div class="form-group">
+                <label class="text-info">Email</label>
+                <input type="email" name="email" id="register-email" class="form-control">
+              </div>
+              <div class="form-group">
+                <label class="text-info">Password</label>
+                <input type="password" name="password" id="register-password" class="form-control">
+              </div>
+              <div class="form-group">
+                <button type="submit" id="register-submit" class="btn btn-info btn-md">Submit</button>
+                <a href="javascript:void(0)" class="text-info" id="back-to-login">Back</a>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- FORM REGISTER -->
 
   <!-- TODO LIST -->
   <a href="#" id="new-todo-form">New Todo</a>

@@ -1,5 +1,8 @@
 let baseUrl = "http://localhost:3000"
 let todos = []
+let currentUser
+// let isLogin = true
+// let isRegister = false
 
 $(document).ready(function() {
   getWeatherbit()
@@ -24,7 +27,7 @@ $("#login-btn").click(function(event) {
   })
   .done((result) => {
     localStorage.setItem('access_token', result.access_token)
-
+    currentUser = result
     checkAuth()
   })
   .fail((error) => {
@@ -106,6 +109,39 @@ $("#btn-create").click(function(event) {
   onCreate(title, description, status, duedate)
 })
 
+$("#register-btn").click(function(event) {
+  event.preventDefault()
+  $("#login-todolist").hide()
+  $("#register-user").show()
+})
+
+$("#register-submit").click(function(event) {
+  event.preventDefault()
+  let email = $("#register-email").val()
+  let password = $("#register-password").val()
+
+  $.ajax({
+    method: 'post',
+    url: `${baseUrl}/signup`,
+    data: {email, password}
+  })
+  .done((user) => {
+    $("#register-user").hide()
+    $("#login-todolist").show()
+  })
+  .fail((error) => {
+    console.log(error);
+  })
+  .always(() => {
+
+  })
+})
+
+$("#back-to-login").click(function() {
+  $("#register-user").hide()
+  $("#login-todolist").show()
+})
+
 
 
 
@@ -121,11 +157,9 @@ function getWeatherbit() {
     url: `${baseUrl}/weather`
   })
   .done((weather) => {
-    console.log(weather, "SUKSES GET watheer");
     $("#weatherbit-text").text(weather.city_name + ', ' + weather.temp + ' degree, ' + weather.description)
   })
   .fail((error) => {
-    console.log(error, "EROR Weatherbit");
   })
   .always(() => {
 
@@ -144,6 +178,8 @@ function checkAuth() {
     $("#form-new").hide()
     $("#detail-todo").hide()
     $("#new-todo-form").show()
+    $("#register-user").hide()
+    $("#hi-currentuser").text('Hi, ' + currentUser.email)
 
   } else {
     console.log('LOGIN GAGAL');
@@ -155,6 +191,8 @@ function checkAuth() {
     $("#form-new").hide()
     $("#detail-todo").hide()
     $("#new-todo-form").hide()
+    $("#register-user").hide()
+    $("#hi-currentuser").text()
   }
 }
 
@@ -243,6 +281,7 @@ function onSignIn(googleUser) {
   })
   .done((data) => {
     localStorage.setItem("access_token", data.access_token);
+    currentUser = data
     checkAuth()
   })
   .fail((error) => {
