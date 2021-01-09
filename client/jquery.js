@@ -16,6 +16,7 @@ function authorization(){
         $(".todo-list").show()
         $("#welcome-page").hide()
         $('#error-add').empty()
+        $("#function-holidays").hide()
     } else {
         $('.nav').hide()
         $('#login-form').hide()
@@ -312,7 +313,8 @@ $("#edit-todo").on('click', function(event){
     })
 })
 
-$("#btn-cancel-add-todo").click(function(){
+$("#btn-cancel-add-todo").on('click', function(event){
+    event.preventDefault()
     authorization()
     $('#title').val('')
     $('#description').val('')
@@ -323,3 +325,41 @@ $("#btn-delete-todo").on('click',function(){
     deleteTodo()
 })
 
+$("#show-holidays").on('click', function(){
+    $("#main-todo").hide()
+    $("#function-holidays").show()
+    getHolidays()
+    $("#show-holidays").hide()
+})
+
+
+function getHolidays(){
+    $.ajax({
+        method : 'GET',
+        url : `${baseUrl}/calendar`,
+        headers : {
+            access_token : localStorage.access_token
+        }
+    })
+    .done(response => {
+        $("#holidays").empty()
+        $("#holidays").show()
+        response.holidays.forEach(el => {
+            $("#holidays").append(`
+            <h5>${el.name}<h5>
+            <h5>${el.date.iso}<h5>
+            `)
+        })
+        
+    })
+    .fail(error => {
+
+    })
+}
+
+$("#hide-holidays").on('click', function(){
+    $("#main-todo").show()
+    $("#holidays").hide()
+    $("#function-holidays").hide()
+    $("#show-holidays").show()
+})
