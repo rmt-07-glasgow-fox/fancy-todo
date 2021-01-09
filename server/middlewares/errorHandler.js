@@ -5,7 +5,7 @@ function errorHandler (err, req, res, next) {
         } else if (err.name === 'notFound') {
             res.status(404).json({message: "not found"})
         } else {
-            res.status(500).json({message: "internal server error"})
+            res.status(500).json({err})
         }
     } 
 }

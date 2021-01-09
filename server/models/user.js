@@ -25,6 +25,9 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: {
           msg: "email required"
         }
+      },
+      unique: {
+        msg: "Validation error: email must be unique"
       }
     },
     password: {

@@ -1,6 +1,6 @@
 const router = require("express").Router()
 const foodController = require("../controllers/foodController")
 
-router.post("/", foodController.getFoodRecommendation)
+router.get("/", foodController.getFoodRecommendation)
 
 module.exports = router

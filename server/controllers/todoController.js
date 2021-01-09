@@ -14,7 +14,7 @@ class todoController {
     }
 
     static showTodos(req, res, next) {
-        Todo.findAll()
+        Todo.findAll({order: [['due_date', 'ASC']]})
         .then(todos => res.status(200).json(todos))
         .catch(err => next(err))
     }
@@ -31,6 +31,7 @@ class todoController {
     }
 
     static updateTodo(req, res) {
+        const {title, description, due_date} = req.body
         let data = {title, description, due_date}
         Todo.update(data, {where: {id: +req.params.id}})
         .then(data => {

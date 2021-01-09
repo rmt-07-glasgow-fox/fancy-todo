@@ -5,11 +5,12 @@ const APP_KEY = process.env.APP_KEY
 
 class foodController {
     static getFoodRecommendation(req,res) {
-        const diet = req.body.diet
+        const diet = req.query.diet
         let foodUrl = `https://api.edamam.com/search?q=&app_id=${APP_ID}&app_key=${APP_KEY}&diet=${diet}`
         axios.get(foodUrl)
         .then(response => {
-            let foodRecommendation = response.data.hits.map(el => {
+            console.log(response)
+            let foodRecommendation = response.data.hits.map(el => {  //destructure el.recipe
                 return {
                     image: el.recipe.image,
                     recipe: el.recipe.label,

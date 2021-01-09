@@ -1,7 +1,5 @@
-# Fancy Todo App Server
-Fancy Todo App is an application to manage your activities. This app has : 
-* RESTful endpoint for todo's CRUD operation
-* JSON formatted response
+# Fancy ToEat App Server
+Fancy Todo App is an application to manage your meal plan and control your party's meal plan.
 
 &nbsp;
 
@@ -29,10 +27,10 @@ _Request Header_
 _Request Body_
 ```
 {
-  "title": "<name to get insert into>",
-  "description": "<description to get insert into>",
-  "status": "<status to get insert into>",
-  "due_date": "<due date to get insert into>"
+  "title": string,
+  "description": string,
+  "status": string,
+  "due_date": date
 }
 ```
 
@@ -82,16 +80,7 @@ _Response (200 - OK)_
 ```
 [
   {
-    "id": 1,
-    "title": "<todo title>",
-    "description": "<todo description>",
-    "status": "<todo status>",
-    "due_date": "<todo due_date>",
-    "createdAt": "<todo createdAt)>",
-    "updatedAt": "<todo updatedAt)>",
-  },
-  {
-    "id": 2,
+    "id": <given by sistem>,
     "title": "<todo title>",
     "description": "<todo description>",
     "status": "<todo status>",
@@ -122,7 +111,7 @@ _Request Header_
 
 _Request Params_
 ```
-{ id: <posted id>}
+{ id: integer}
 ```
 
 _Request Body_
@@ -170,10 +159,10 @@ _Request Params_
 _Request Body_
 ```
 {
-  "title": "<name to get insert into>",
-  "description": "<description to get insert into>",
-  "status": "<status to get insert into>",
-  "due_date": "<due date to get insert into>"
+  "title": string,
+  "description": description,
+  "status": string,
+  "due_date": date
 }
 ```
 
@@ -222,7 +211,7 @@ _Request Header_
 ```
 _Request Params_
 ```
-{ id: <posted id>}
+{ id: integer}
 ```
 
 _Request Body_
@@ -277,7 +266,7 @@ _Request Header_
 ```
 _Request Params_
 ```
-{ id: <posted id>}
+{ id: integer}
 ```
 
 _Request Body_
@@ -318,8 +307,8 @@ _Request Header_
 _Request Body_
 ```
 {
-  "email": "<email to get insert into>",
-  "password": "<password to get insert into>"
+  "email": string,
+  "password": string
 }
 ```
 
@@ -352,8 +341,8 @@ _Request Header_
 _Request Body_
 ```
 {
-  "email": "<email to get insert into>",
-  "password": "<password to get insert into>"
+  "email": string,
+  "password": string
 }
 ```
 
