@@ -1,9 +1,17 @@
+if(process.env.NODE_ENV == 'development'){
+  require("dotenv").config()
+}
+
+console.log(process.env.NODE_ENV, '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<')
+
 const express = require('express')
 const app = express()
 const port = 3000
 const router = require('./routes/index')
 const { errorHandlers } = require('./middlewares/errorHandlers')
+const cors = require('cors')
 
+app.use(cors())
 app.use(express.urlencoded({extended:true}))
 app.use(router)
 ///////// errorHandlers harus dipasang setelaah router
