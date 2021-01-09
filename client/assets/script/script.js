@@ -78,7 +78,7 @@ function registerPage() {
   page_register.show()
   btn_login.show()
 
-  $('#form-register').on('submit', function (event) {
+  $('#submit-register').off('click').on('click', function (event) {
     event.preventDefault()
     data = {
       email: $('#email').val(),
@@ -100,6 +100,7 @@ function handleRegister(data){
     loginPage()
   })
   .fail(xhr => {
+    $('#password').val('')
     Swal.fire({
       title: 'Something Error!',
       text: xhr.responseJSON.message[0],
@@ -116,7 +117,7 @@ function loginPage() {
   page_home.show()
   page_login.show()
 
-  $('#form-login').on('submit', function (event) {
+  $('#submit-login').off('click').on('click', function (event) {
     event.preventDefault()
     data = {
       email: $('#email-login').val(),
@@ -133,7 +134,6 @@ function handleLogin(data){
     data
   })
   .done(res => {
-    console.log(res, 'login');
     localStorage.setItem('username', res.username)
     localStorage.setItem('access_token', res.access_token)
     $('#form-login').trigger('reset')
@@ -318,7 +318,6 @@ function editTodo(id) {
     }
   })
   .done(res => {
-    console.log(res.status);
     $('#modal-edit').show()
     $('#edit-title').val(res.title)
     $('#edit-description').val(res.description)
@@ -442,22 +441,22 @@ function getWeather(){
     $('#weather').append(
       `
       <div class="card-body">
-      <small class="text-warning">${new Date().toLocaleString()}</small>
-      <h4 class="card-title">${res.name}</h4>
-      <div>
-        <img src="http://openweathermap.org/img/wn/${res.icon}@2x.png" "alt="">
-        <span class="fs-1 text-muted">${(res.temp).toFixed()}&deg C</span>
+        <small class="text-warning">${new Date().toLocaleString()}</small>
+        <h4 class="card-title">${res.name}</h4>
+        <div>
+          <img src="http://openweathermap.org/img/wn/${res.icon}@2x.png" "alt="">
+          <span class="fs-1 text-muted">${(res.temp).toFixed()}&deg C</span>
+        </div>
+        <p>Feel like ${res.feels_like}&deg C, ${res.description}</p><hr>
+        <small>pressure:</small>
+        <small class="text-muted">${res.pressure}hPa </small>
+        <small>humidity:</small>
+        <small class="text-muted">${res.humidity}%</small><br>
+        <small>visibility:</small>
+        <small class="text-muted">${res.visibility / 1000}km</small>
+        <small>max-temp:</small>
+        <small class="text-muted">${res.temp_max}&deg C</small>
       </div>
-      <p>Feel like ${res.feels_like}&deg C, ${res.description}</p><hr>
-      <small>pressure:</small>
-      <small class="text-muted">${res.pressure}hPa </small>
-      <small>humidity:</small>
-      <small class="text-muted">${res.humidity}%</small><br>
-      <small>visibility:</small>
-      <small class="text-muted">${res.visibility / 1000}km</small>
-      <small>max-temp:</small>
-      <small class="text-muted">${res.temp_max}&deg C</small>
-    </div>
       `
     )
   })
