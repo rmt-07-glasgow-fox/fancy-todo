@@ -41,17 +41,17 @@ function loadTodo () {
             }
 
             data.forEach(e => {
-                e.dueDate = dateFormat(e.dueDate);
+                e.due_date = dateFormat(e.due_date);
                 $('#todo-data').append(`
                     <div id="todo-card">
                         <div id="todo-content">
                             <h3 id="todo-title">${e.title}</h3>
-                            <p id="todo-desc">${e.description} ${e.dueDate}</p>
+                            <p id="todo-desc">${e.description} ${e.due_date}</p>
                             <p>${e.status}</p>
                         </div>
                         <div id="card-btn">
                             <a id="status-card-btn" onClick="updateStatusTodo(${e.id},'${e.status}')">Status</a>
-                            <a id="update-card-btn" onClick="updateTodo(${e.id},'${e.title}','${e.description}','${e.status}','${e.dueDate}')">Update</a>
+                            <a id="update-card-btn" onClick="updateTodo(${e.id},'${e.title}','${e.description}','${e.status}','${e.due_date}')">Update</a>
                             <a id="delete-card-btn" onClick="deleteTodo(${e.id})">Delete</a>
                         </div>
                     </div>
@@ -151,7 +151,7 @@ function addTodo () {
             title: $('#todo-form-title').val(),
             description: $('#todo-form-desc').val(),
             status: "unfinished",
-            dueDate: $('#todo-form-date').val()
+            due_date: $('#todo-form-date').val()
         }
     })
         .done(() => {
@@ -193,12 +193,12 @@ function updateStatusTodo (updateStatusId, status) {
         });
 }
 
-function updateTodo (updateId, title, description, status, dueDate) {
+function updateTodo (updateId, title, description, status, due_date) {
     $('#add-todo').hide();
     $('#update-todo').show();
     $('#todo-update-title').val(title);
     $('#todo-update-desc').val(description);
-    $('#todo-update-date').val(dueDate);
+    $('#todo-update-date').val(due_date);
     $('#update-todo-btn').prop('dataId', updateId);
     $('#update-todo-btn').prop('dataStatus', status);
     $('#update-todo-err').html('');
@@ -219,7 +219,7 @@ function confirmUpdate () {
             title: $('#todo-update-title').val(),
             description: $('#todo-update-desc').val(),
             status: updateStatus,
-            dueDate: $('#todo-update-date').val()
+            due_date: $('#todo-update-date').val()
         }
     })
         .done(() => {

@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    dueDate: {
+    due_date: {
       type: DataTypes.STRING,
       validate: {
         notEmpty: {

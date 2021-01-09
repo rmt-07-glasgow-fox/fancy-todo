@@ -1,207 +1,266 @@
-# Fancy Todo
-###  Route
- - **POST /todos**
+# Fancy Todos
 
-	* Request:
-		* Url:
-			`/todos`
-		* Body:
-			```
-			{
-				"title": <string>,
-				"description": <string>,
-				"status": <finished or unfinished>
-				"dueDate": <date>
-			}
-			```
+**A simple todo list app. Millions people rely on this app with their task list, reminder, planner, and more. Be an organized and punctual person. Keep things practical before they become confusing and forgotten.**
 
-	* Response:
-		* Success:
-			```
-			{
-				"id": <int>
-				"title": <string>,
-				"description": <string>,
-				"status": <finished or unfinished>
-				"dueDate": <date>
-			}
-			
-		* Validation Error:
-		
-			The msg is based on the request body value
-			```
-			{
-				"name": "Validation Error",
-				"msg": [
-					"Status must be 'finished' or 'unfinished'!!!",
-					"Title required!!!",
-					"Status required!!!",
-					"Due date required!!!",
-					"Invalid date!!!",
-					"Date already passed!!!"
-				]
-			}
-		* Server Error: 
-			`"Server Error"`
+### Env:
 
-- **GET /todos**
-	* Request:
-		* Url:
-			`/todos`
-	* Response:
-		* Success:
-			
-			Example:
-			```
-			[
-				{
-					"id": 1,
-					"title": "Mengerjakan tugas",
-					"description": "Challenge project fancy todo",
-					"status": "unfinished",
-					"dueDate": "2021-01-09T00:00:00.000Z"
-				},
-				{
-					"id": 2,
-					"title": "Membaca dokumentasi",
-					"description": "Tentang API",
-					"status": "unfinished",
-					"dueDate": "2021-01-05T00:00:00.000Z"
-				}
-			]
-		* Server Error:
-			`"Server Error"`
+ - SECRET_KEY
+ - GOOGLE_AUTH_KEY
+ - API_KEY
 
-- **GET /todos/:id**
-	* Request:
-		* Url:
-			`/todos/<todo id>`
-	* Response:
-		* Success:
+### Error response type:
 
-			Example: `/todos/1` ( Data with id 1 is available )
-			```
-			{
-				"id": 1,
-				"title": "Mengerjakan tugas",
-				"description": "Challenge project fancy todo",
-				"status": "unfinished",
-				"dueDate": "2021-01-09T00:00:00.000Z"
-			}
-		* Not Found:
+ - Status: 400 *Bad request*
+	 
+	```
+	{
+		"name":"Validation error",
+		"msg": [Error list...]
+	}
+	```
 
-				Example: `/todos/5` ( There is no data with id 5 )
-				
-				{
-					"msg": "Cannot found data with id 5"
-				}
-		* Server Error: 
-			`"Server Error"`
+ - Status: 401 *Unauthorized*
 
-- **PUT /todos/:id**
-	* Request:
-		* Url:
-			`/todos/<todo id>`
-		* Body:
-			```
-			{
-				"id": <int>
-				"title": <string>,
-				"description": <string>,
-				"status": <finished or unfinished>
-				"dueDate": <date>
-			}
-	* Response:
-		* Success:
+	```
+	{
+		"msg":"Access failed!!!"
+	}
+	```
+	
+	or
 
-			Example: Update data with id 4
-			```
-			{
-				"id": 4,
-				"title": "Menonton youtube",
-				"description": "Tentang API",
-				"status": "unfinished",
-				"dueDate": "2021-01-05T00:00:00.000Z"
-			}
-		* Validation Error:
+	```
+	{
+		"msg":"You must logged in!!!"
+	}
+	```
 
-			The msg is based on the request body value
-			```
-			{
-				"name": "Validation Error",
-				"msg": [
-					"Status must be 'finished' or 'unfinished'!!!",
-					"Title required!!!",
-					"Status required!!!",
-					"Due date required!!!",
-					"Invalid date!!!",
-					"Date already passed!!!"
-				]
-			}
-		* Not Found:
+ - Status: 404 *Not found*
+	 
+	```
+	{
+		"msg":"Data with id <id> not found!!!"
+	}
+	```
 
-			Example: `/todos/6` ( There is no data with id 6 )
-			```
-			{
-				"msg": "Data with id 6 not found"
-			}
-		* Server Error:
-			`"Server Error"`
-- **PATCH /todos/:id**
-	* Request:
-		* Url:
-			`/todos/<todo id>`
-		* Body:
-			```
-			{
-				"status": <finished or unfinished>
-			}
-	* Response:
-		* Success:
+ - Status: 500 *Server error*
+	 
+	```
+	"Server Error"
+	```
 
-			Example: Data with id 4, only the update status
-			```
-			{
-				"id": 4,
-				"title": "Menonton youtube",
-				"description": "Tentang API",
-				"status": <finished or unfinished>,
-				"dueDate": "2021-01-05T00:00:00.000Z"
-			}
-		* Validation Error:
+## Routes
 
-			The msg is based on the request body value
-			```
-			{
-				"name": "Validation Error",
-				"msg": [
-					"Status must be 'finished' or 'unfinished'!!!",
-					"Status required!!!"
-				]
-			}
-		* Not Found:
-
-			Example: `/todos/6` ( There is no data with id 6 )
-			```
-			{
-				"msg":"Data with id 6 not found"
-			}
-		* Server Error:
-			`"Server Error"`
-
-- **DELETE /todos/:id**
-	* Request:
-		* Url:
-			`/todos/<todo id>`
-	* Response:
-		* Success:
-			`Todo succes to delete`
-		* Not Found:
-        
-			Example: `/todos/6` ( There is no data with id 6 )
-			```
-			{
-				"msg":"Data with id 6 not found"
-			}
-		* Server Error:
-			`"Server Error"`
+ - **POST** /signIn
+ 
+	> req.body
+	```
+	{
+		"email":<string>,
+		"password":<string>
+	}
+	```
+	> Success
+	```
+	{
+		"id":<int>,
+		"email":<string>
+	}
+	```
+	> Error 400 and 500
+	
+ - **POST** /signUp
+	> req.body
+	```
+	{
+		"email":<string>,
+		"password":<string>
+	}
+	```
+	> Success
+	```
+	{
+		"token":<string>
+	}
+	```
+	> Error 400 and 500
+ - **POST** /googleLogin
+	 > req.body
+	```
+	{
+		token_id: <googleToken>
+	}
+	``` 
+	> Success
+	```
+	{
+		"token":<jwt>
+	}
+	```
+	> Error 500
+ - **POST** /todos
+	 > req.headers
+	```
+	{
+		"token":<jwt>
+	}
+	```
+	 > req.body
+	```
+	{
+		"title":<string>,
+		"description":<string>,
+		"status":<finished or unfinished>,
+		"due-date":<string>
+	}
+	```
+	> Success
+	```
+	{
+		"id":<int>,
+		"title":<string>,
+		"description":<string>,
+		"status":<finished or unfinished>,
+		"due-date":<string>
+	}
+	```
+	> Error 400 and 500
+ - **GET** /todos
+	 > req.headers
+	```
+	{
+		"token":<jwt>
+	}
+	```
+	 > Success
+	 ```
+	[{
+		"id":<int>,
+		"title":<string>,
+		"description":<string>,
+		"status":<finished or unfinished>,
+		"due-date":<string>
+	}, ...]
+	```
+	> Error 401 and 500
+ - **GET** /todos/:id
+	 > req.headers
+	```
+	{
+		"token":<jwt>
+	}
+	```
+	> Success
+	```
+	{
+		"id":<int>,
+		"title":<string>,
+		"description":<string>,
+		"status":<finished or unfinished>,
+		"due-date":<string>
+	}
+	```
+	> Error 401, 404, and 500
+ - **PUT** /todos/:id
+	 > req.headers
+	```
+	{
+		"token":<jwt>
+	}
+	```
+	> req.body
+	```
+	{
+		"id":<int>,
+		"title":<string>,
+		"description":<string>,
+		"status":<finished or unfinished>,
+		"due-date":<string>
+	}
+	```
+	> Success
+	```
+	{
+		"id":<int>,
+		"title":<string>,
+		"description":<string>,
+		"status":<finished or unfinished>,
+		"due-date":<string>
+	}
+	```
+	> Error 400, 401, 404, and 500
+ - **PATCH** /todos/:id
+	 > req.headers
+	```
+	{
+		"token":<jwt>
+	}
+	```
+	> req.body
+	```
+	{
+		"status":<finished or unfinished>
+	}
+	```
+	> Success
+	```
+	{
+		"id":<int>,
+		"title":<string>,
+		"description":<string>,
+		"status":<finished or unfinished>,
+		"due-date":<string>
+	}
+	```
+	> Error 400, 401, 404, and 500
+ - **DELETE** /todos/:id
+	 > req.headers
+	```
+	{
+		"token":<jwt>
+	}
+	```
+	> Success
+	```
+	"todo success to delete"
+	```
+	> Error 401, 404, and 500
+ - **POST** /movies/find
+	 > req.headers
+	```
+	{
+		"token":<jwt>
+	}
+	```
+	> req.body
+	```
+	{
+		"search":<string>
+	}
+	```
+	> Succes
+	```
+	[{ ... }, Array of movie...]
+	```
+ - **GET** /movies
+	 > req.headers
+	```
+	{
+		"token":<jwt>
+	}
+	```
+	> Succes
+	```
+	[{ ... }, Array of movie...]
+	```
+ - **GET** /movies/topRated
+	 > req.headers
+	```
+	{
+		"token":<jwt>
+	}
+	```
+	> Succes
+	```
+	[{ ... }, Array of movie...]
+	```

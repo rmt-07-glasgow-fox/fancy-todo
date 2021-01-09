@@ -22,7 +22,7 @@ class todosController {
                 title: req.body.title,
                 description: req.body.description,
                 status: req.body.status,
-                dueDate: req.body.dueDate,
+                due_date: req.body.due_date,
                 userId: data.id
             };
 
@@ -33,7 +33,7 @@ class todosController {
                 title: data.title,
                 description: data.description,
                 status: data.status,
-                dueDate: data.dueDate
+                due_date: data.due_date
             };
 
             return res.status(201).json(data);
@@ -59,7 +59,7 @@ class todosController {
                 title: data.title,
                 description: data.description,
                 status: data.status,
-                dueDate: data.dueDate,
+                due_date: data.due_date,
                 userId: data.userId
             };
 
@@ -75,7 +75,7 @@ class todosController {
                 title: req.body.title,
                 description: req.body.description,
                 status: req.body.status,
-                dueDate: req.body.dueDate
+                due_date: req.body.due_date
             }, {
                 where: { id: req.params.id }
             });
@@ -91,7 +91,7 @@ class todosController {
                 title: data.title,
                 description: data.description,
                 status: data.status,
-                dueDate: data.dueDate
+                due_date: data.due_date
             };
 
             return res.status(200).json(data);
@@ -125,7 +125,7 @@ class todosController {
                 title: data.title,
                 description: data.description,
                 status: data.status,
-                dueDate: data.dueDate
+                due_date: data.due_date
             };
 
             return res.status(200).json(data);
