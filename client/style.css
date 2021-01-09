@@ -197,38 +197,3 @@ a {
 .card img {
   width: 200px;
 }
-
-/* 
-$(`#sub-container-todolist`).append(`
-<div class="card" style="width: 18rem;">
-<div class="card-body">
-  <h5 class="card-title">${e.title}</h5>
-  <p class="card-text">${e.description}</p>
-  <p class="card-due-date">${date}</p>
-  <div class="buttons">
-  <button type="submit" class="btn btn-info" id="update-status" onclick="todoDone(${e.id}, true)" value="${e.status}">DONE</button>
-  <button type="submit" class="btn btn-warning" id="delete-todo" onclick="deleteToDo(${e.id})">DELETE</button>
-  <button type="submit" class="btn btn-success" id="update-todo" onclick="updateToDo(${e.id})">EDIT</button>
-  </div>
-</div>
-</div>
-`)
-}
-})
-
-topNews = response.topNews
-$('#sub-container-news').empty()
-
-topNews.forEach(e => {
-$('#sub-container-news').append(`
-<div class="card" style="width: 18rem;">
-<a class="news-link" href="${e.url}">
-<div class="card-body">
-  <img class="news-image" src="${e.urlToImage}" width="250" height="250">
-  <h5 class="news-title card-title">${e.title}</h5>
-  <h6 class="news-source card-subtitle mb-2 text-muted">${e.source}</h6>
-  <p class="card-text">${e.description}</p>
-</div>
-</a>
-</div>
-`) */
