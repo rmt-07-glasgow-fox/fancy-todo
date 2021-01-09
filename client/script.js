@@ -50,7 +50,7 @@ $('#register-btn').click(function(event){
         login()
     })
     .fail(err => {
-        console.log(err, '>>>>>>> this is error')
+        console.log(err.responseJSON)
         let errMessage = err.responseJSON.message
         console.log(errMessage);
         // Swal.fire({

@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const todosRouters = require('./todos')
 const authRouters = require('./auth')
+const covidRouters = require('./covid')
 const {authentication} = require('../middlewares/middlewares')
 
 router.get('/', (req, res) => {
@@ -9,6 +10,7 @@ router.get('/', (req, res) => {
     });
 })
 
+router.use('/covid', covidRouters)
 router.use(authRouters)
 router.use(authentication)
 router.use('/todos', todosRouters)
