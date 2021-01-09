@@ -26,6 +26,23 @@ function login(){
     })
 }
 
+function onSignIn(googleUser) {
+    var id_token = googleUser.getAuthResponse().id_token;
+    $.ajax({
+        url: 'http://localhost:3000/users/googleLogin',
+        method: 'POST',
+        data: {
+            id_token
+        } 
+    })
+    .done(response => {
+        
+    })
+    .fail((xhr,textstatus) => {
+        
+    }) 
+}
+
 function register(){
     const firstname = $("#firstname-register").val()
     const lastname = $("#lastname-register").val()

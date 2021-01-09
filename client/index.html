@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="975646920427-qikkdpjopdt2ef2257duldj9141doodf.apps.googleusercontent.com">
     <title>Document</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
@@ -10,6 +11,7 @@
     <link rel="stylesheet" href="button.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="index.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 <body> 
 
@@ -24,6 +26,8 @@
             <input type="password" id="password-login" class="fadeIn third" name="login" placeholder="password" required>
             <input type="submit" class="fadeIn fourth">
           </form>
+          <p>or</p>
+          <div style="margin-left: 36%; margin-top: 20px; margin-bottom:20px;" class="g-signin2" data-onsuccess="onSignIn"></div>
           <div id="error-login" style="color: red;">
 
           </div>
@@ -38,6 +42,7 @@
         <div id="formContent">
           <div class="fadeIn first">
             <img src="https://to-do-cdn.microsoft.com/static-assets/c87265a87f887380a04cf21925a56539b29364b51ae53e089c3ee2b2180148c6/icons/logo.png" width="150" height="120" style="margin-top: 10px" class="d-inline-block align-top" alt="" loading="lazy">
+            <h3>Register</h3>
           </div>
           <form id="form-register">
             <input type="text" id="firstname-register" class="fadeIn second" name="register" placeholder="First Name" required>

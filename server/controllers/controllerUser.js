@@ -1,6 +1,7 @@
 const { User } = require('../models')
 const { compare } = require('../helper/bcrypt')
 const { generateToken } = require('../helper/jwt')
+const { OAuth2Client } = require('google-auth-library');
 
 
 class ControllerUser {
@@ -24,6 +25,25 @@ class ControllerUser {
         .catch(error => {
             next(error)
         })
+    }
+
+    static googleLogin(req,res,next){
+        const client = new OAuth2Client(process.env.GOOGLE_CLIENT_KEY);
+        const id_token = req.body.id_token
+        
+        async function verify() {
+            const ticket = await client.verifyIdToken({
+                idToken: id_token,
+                audience: process.env.GOOGLE_CLIENT_KEY
+            })
+            .then(ticket => {
+                const payload = ticket.getPayload();
+                console.log(payload)
+            })
+            .catch(error => {
+                next(error)
+            })
+        }
     }
 
     static login(req,res,next){
