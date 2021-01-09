@@ -13,8 +13,8 @@ function checkAuth() {
     $("#addForm").hide()
     getAllTodos()
     $("#showTodo").show()
-    showCovidApi()
     $("#covidApiArea").show()
+    
   } else {
     $("#register").show()
     $("#login").hide()
@@ -29,12 +29,7 @@ function checkAuth() {
 
 //======================Register, Login, Logout Start==========================
 //register
-$("#createNewUser").click((event)=> {
-  event.preventDefault()
-  var email = $("#emailRegister").val()
-  var password = $("#passwordRegister").val()
-  console.log(email, password);
-
+function registerUser(email, password) {
   $.ajax({
     method: "POST",
     url: `${baseUrl}/register`,
@@ -43,23 +38,23 @@ $("#createNewUser").click((event)=> {
       password
     }
   })
-  .done(response => {
-    console.log(response, "ini res");
-    login(email, password)
-  })
-  .fail(err => {
-    console.log(err, "ini err");
-  })
-  .always(() => {
-    $("#emailRegister").val("")
-    $("#passwordRegister").val("")
-  })
-})
-$("#toLogin").click((event)=> {
-  event.preventDefault()
-  $("#register").hide()
-  $("#login").show()
-})
+    .done(response => {
+      console.log(response, "ini res");
+      login(email, password)
+    })
+    .fail(err => {
+      let msg = err.responseJSON[0].message
+      console.log(msg);
+      Swal.fire({
+        icon: 'error',
+        text: msg
+      })
+    })
+    .always(() => {
+      $("#emailRegister").val("")
+      $("#passwordRegister").val("")
+    })
+}
 
 //login
 function login(email, password) {
@@ -71,31 +66,23 @@ function login(email, password) {
       password
     }
   })
-  .done(response => {
-    localStorage.setItem("access_token", response.access_token)
-    checkAuth()
-  })
-  .fail(err => {
-    console.log(err, "ini err");
-  })
-  .always(() => {
-    $("#emailLogin").val("")
-    $("#passwordLogin").val("")
-  })
+    .done(response => {
+      localStorage.setItem("access_token", response.access_token)
+      checkAuth()
+    })
+    .fail(err => {
+      let msg = err.responseJSON.message
+      console.log(err);
+      Swal.fire({
+        icon: 'error',
+        text: msg
+      })
+    })
+    .always(() => {
+      $("#emailLogin").val("")
+      $("#passwordLogin").val("")
+    })
 }
-
-$("#loginUser").click((event)=> {
-  event.preventDefault()
-  var email = $("#emailLogin").val()
-  var password = $("#passwordLogin").val()
-  console.log(email, password);
-  login(email, password)
-})
-$("#toRegister").click((event)=> {
-  event.preventDefault()
-  $("#login").hide()
-  $("#register").show()
-})
 
 //google login
 function onSignIn(googleUser) {
@@ -105,26 +92,14 @@ function onSignIn(googleUser) {
     url: `${baseUrl}/googleLogin`,
     data: { id_token }
   })
-  .done(response => {
-    localStorage.setItem("access_token", response.access_token)
-    checkAuth()
-  })
-  .fail((xhr, status) => {
+    .done(response => {
+      localStorage.setItem("access_token", response.access_token)
+      checkAuth()
+    })
+    .fail((xhr, status) => {
 
-  })
+    })
 }
-
-//logout
-$("#logout").click((event) => {
-  event.preventDefault()
-  localStorage.clear()
-  const auth2 = gapi.auth2.getAuthInstance();
-  auth2.signOut().then(function () {
-    console.log('User signed out.');
-  });
-  checkAuth()
-})
-
 //======================Register, Login, Logout End============================
 
 
@@ -137,41 +112,29 @@ function showCovidApi() {
       access_token: localStorage.access_token
     }
   })
-  .done(response => {
-    console.log(response);
-    $("#covidApiArea").empty()
-    $("#covidApiArea").append(
-      `<h3>Indonesia COVID cases</h3>
-      <p id="confirmed">Confirmed: ${response.confirmed} person</p>
-      <p id="recovered">Recovered: ${response.recovered} person</p>
-      <p id="deaths">Deaths: ${response.deaths} person</p>
-      <p>Stay safe</p>`
-    )
-  })
-  .fail(err => {
-    console.log(err);
-  })
+    .done(response => {
+      console.log(response);
+      $("#covidApiArea").empty()
+      $("#covidApiArea").append(
+        `<h3>Global COVID cases numbers</h3>
+      <p class="m-0" id="confirmed">Confirmed: ${(response.confirmed).toLocaleString('en')} person</p>
+      <p class="m-0" id="recovered">Recovered: ${(response.recovered).toLocaleString('en')} person</p>
+      <p class="m-0" id="deaths">Deaths: ${(response.deaths).toLocaleString('en')} person</p>
+      <p>Use mask, wash hands, stay safe!</p>`
+      )
+      $("#covidApiArea").hide()
+      $("#covidApiArea").fadeIn()
+    })
+    .fail(err => {
+      console.log(err);
+    })
 }
 //====================== API END ==============================================
 
 
 
 //====================== CRUD START ===========================================
-//create todo
-$("#showAddForm").click((event) => {
-  event.preventDefault
-  $("#addForm").show()
-})
-$("#hideAddForm").click((event) => {
-  event.preventDefault
-  $("#addForm").hide()
-})
-$("#addTodo").click((event) => {
-  event.preventDefault
-  var title = $("#title").val()
-  var due_date = $("#due_date").val()
-  var description = $("#description").val()
-  var status = false
+function addTodo(title, due_date, description, status) {
   $.ajax({
     method: "POST",
     url: `${baseUrl}/todos`,
@@ -185,18 +148,30 @@ $("#addTodo").click((event) => {
       status
     }
   })
-  .done(response => {
-    console.log(response);
-  })
-  .fail(err => {
-    console.log(err);
-  })
-  .always(() => {
-    $("#title").val("")
-    $("#due_date").val("")
-    $("#description").val("")
-  })
-})
+    .done(response => {
+      console.log(response);
+      Swal.fire({
+        icon: 'success',
+        text: "Todo created!"
+      })
+      $("#addForm").fadeOut(500, () => {
+        checkAuth()
+      })
+    })
+    .fail(err => {
+      let msg = err.responseJSON[0].message
+      console.log(msg);
+      Swal.fire({
+        icon: 'error',
+        text: msg
+      })
+    })
+    .always(() => {
+      $("#title").val("")
+      $("#due_date").val("")
+      $("#description").val("")
+    })
+}
 
 //delete todo
 function deleteTodo(id) {
@@ -207,12 +182,41 @@ function deleteTodo(id) {
       access_token: localStorage.access_token
     }
   })
-  .done(response => {
-    getAllTodos()
+    .done(response => {
+      getAllTodos()
+    })
+    .fail(err => {
+      console.log(err);
+    })
+}
+
+//patch todo status
+function patchStatus(id) {
+  var status
+  console.log($(`#checkboxStatus${id}`).val());
+  if ($(`#checkboxStatus${id}`).val() == "false") {
+    status = true
+  } else {
+    status = false
+  }
+
+  $.ajax({
+    method: "PATCH",
+    url: `${baseUrl}/todos/${id}`,
+    headers: {
+      access_token: localStorage.access_token
+    },
+    data: {
+      status
+    }
   })
-  .fail(err => {
-    console.log(err);
-  })
+    .done(response => {
+      getAllTodos()
+      console.log(response);
+    })
+    .fail(err => {
+      console.log(err);
+    })
 }
 
 //update todo
@@ -232,16 +236,39 @@ function updateOneTodo(id) {
       description,
     }
   })
-  .done(response => {
-  })
-  .fail(err => {
-    console.log(title, due_date, description);
-    console.log(err);
+    .done(response => {
+      Swal.fire({
+        icon: 'success',
+        text: "Todo updated!"
+      })
+      $(`#showTodoDetail${id}`).fadeOut(() => {
+        checkAuth()
+      })
+    })
+    .fail(err => {
+      console.log(title, due_date, description);
+      console.log(err);
+      let msg = err.responseJSON[0].message
+      Swal.fire({
+        icon: 'error',
+        text: msg
+      })
+    })
+}
+
+//hide update form
+function showUpdateForm(id) {
+  $(`#showTodoDetail${id}`).fadeIn()
+}
+function hideUpdateForm(id) {
+  $(`#showTodoDetail${id}`).fadeOut(() => {
+    checkAuth()
   })
 }
 
 //get one todo
 function getOneTodo(id) {
+
   $.ajax({
     method: "GET",
     url: `${baseUrl}/todos/${id}`,
@@ -249,26 +276,32 @@ function getOneTodo(id) {
       access_token: localStorage.access_token
     },
   })
-  .done(response => {
-    console.log(response);
-    $(`#showTodoDetail${response.id}`).empty()
-    $(`#showTodoDetail${response.id}`).append(`<div id="showTodoDetail${response.id}">
+    .done(response => {
+      console.log(response);
+      
+
+      $(`#showTodoDetail${response.id}`).empty()
+      $(`#showTodoDetail${response.id}`).append(`<div class="card  p-3" style="width: 400px; id="showTodoDetail${response.id}">
         <form action="">
-          <input type="text" id="title${response.id}" name="title" placeholder="Title" value="${response.title}">
-          <input type="date" id="due_date${response.id}" name="due_date" value="${(response.due_date).split('T')[0]}"><br><br>
-          <input type="text" id="description${response.id}" name="description" placeholder="What's the detail?" value="${response.description}"><br><br>
-          <button id="updateTodos" onclick="updateOneTodo(${response.id})" >Update</button>
-          <button id="deleteTodos" onclick="">cancel</button>
+        <input type="text" id="title${response.id}" name="title" placeholder="Title" value="${response.title}">
+        <input type="date" id="due_date${response.id}" name="due_date" value="${(response.due_date).split('T')[0]}"><br><br>
+        <textarea style="width: 375px;" class="form-control" id="description${response.id}" name="description" rows="4" >${response.description}</textarea>
+        <br>
+        <button class="btn btn-primary" type="button" id="updateTodos" onclick="updateOneTodo(${response.id})" >Update</button>
+        <button class="btn" type="button" id="cancelUpdate" onclick="hideUpdateForm(${response.id})">cancel</button>
         </form>
-      </div>`)
-  })
-  .fail(err => {
-    console.log(err);
-  })
+        </div>`)
+        $(`#showTodoDetail${id}`).hide()
+        showUpdateForm(id)
+    })
+    .fail(err => {
+      console.log(err);
+    })
 }
 
 //get all todo
 function getAllTodos() {
+  
   $.ajax({
     method: "GET",
     url: `${baseUrl}/todos`,
@@ -276,26 +309,74 @@ function getAllTodos() {
       access_token: localStorage.access_token
     }
   })
-  .done(response => {
-    todoList = response
-    $("#showTodo").empty()
-    todoList.forEach(element => {
-      $("#showTodo").append(`<div id="showTodoDetail${element.id}">
-        <div>${element.status}</div>
-        <h3 id="showTitle">${element.title}</h3>
-        <p id="showDate">${(element.due_date).split('T')[0]}</p>
-        <p id="showDescription">${element.description}</p>
-        <button id="updateTodos" onclick="getOneTodo(${element.id})" type="submit">Update</button>
-        <button id="deleteTodos" onclick="deleteTodo(${element.id})" type="submit">Delete</button>
-      </div>`)
-    });
-  })
-  .fail(err => {
+    .done(response => {
+      todoList = response
+      $("#showTodo").empty()
+      todoList.forEach(element => {
+        if (element.status === true) {
+          $("#showTodo").append(`
+          <div id="showTodoDetail${element.id}">
+            <div class="card m-3 p-1" style="width: 400px;">
+              <div class="row g-0">
+              <div class="col-md-1" style="display: grid;">
+                <input checked value="${JSON.parse(element.status)}" onclick="patchStatus(${element.id})" type="checkbox" id="checkboxStatus${element.id}" style="margin: auto;">
+              </div>
+              <div class="col-md-11">
+                <div class="card-body">
+                  <h4 class="card-title">
+                  ${element.title}
+                  </h4>
+                  <h6 class="card-text">
+                  ${(element.due_date).split('T')[0]}
+                  </h6>
+                  <p class="card-text">
+                  ${element.description}
+                  </p>
+                  <button class="btn" id="updateTodos" onclick="getOneTodo(${element.id})" type="submit">Update</button>
+                  <button class="btn btn-danger" id="deleteTodos" onclick="deleteTodo(${element.id})" type="submit">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        `)
+        } else {
+          $("#showTodo").append(`
+          <div id="showTodoDetail${element.id}">
+            <div class="card m-3 p-1" style="width: 400px;">
+              <div class="row g-0">
+              <div class="col-md-1" style="display: grid;">
+                <input value="${element.status}" onclick="patchStatus(${element.id})" type="checkbox" id="checkboxStatus${element.id}" style="margin: auto;">
+              </div>
+              <div class="col-md-11">
+                <div class="card-body">
+                  <h4 class="card-title">
+                  ${element.title}
+                  </h4>
+                  <h6 class="card-text">
+                  ${(element.due_date).split('T')[0]}
+                  </h6>
+                  <p class="card-text">
+                  ${element.description}
+                  </p>
+                  <button class="btn" id="updateTodos" onclick="getOneTodo(${element.id})" type="submit">Update</button>
+                  <button class="btn btn-danger id="deleteTodos" onclick="deleteTodo(${element.id})" type="submit">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        `)
+        }
 
-  })
-  .always(() => {
+      });
+    })
+    .fail(err => {
 
-  })
+    })
+    .always(() => {
+
+    })
 }
 
 
@@ -304,9 +385,78 @@ function getAllTodos() {
 
 
 //========================Document Ready=======================================
-$(document).ready(()=> {
+$(document).ready(() => {
   console.log("page reloaded");
+  showCovidApi()
+
+  //Register
+  $("#createNewUser").click((event) => {
+    event.preventDefault()
+    var email = $("#emailRegister").val()
+    var password = $("#passwordRegister").val()
+    registerUser(email, password)
+  })
+
+  //show/hide register
+  $("#toLogin").click((event) => {
+    event.preventDefault()
+    $("#register").fadeOut(300, () => {
+      $("#login").fadeIn()
+    })
+  })
+
+  //Login
+  $("#loginUser").click((event) => {
+    event.preventDefault()
+    var email = $("#emailLogin").val()
+    var password = $("#passwordLogin").val()
+    console.log(email, password);
+    login(email, password)
+  })
+
+  //show/hide login
+  $("#toRegister").click((event) => {
+    event.preventDefault()
+    $("#login").fadeOut(300, () => {
+      $("#register").fadeIn()
+    })
+  })
+
+  //logout
+  $("#logout").click((event) => {
+    event.preventDefault()
+    localStorage.clear()
+    const auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+    checkAuth()
+  })
+
+  //create todo
+  $("#showAddForm").click((event) => {
+    event.preventDefault()
+    $("#addForm").fadeIn()
+  })
+
+  $("#hideAddForm").click((event) => {
+    event.preventDefault()
+    $("#addForm").fadeOut()
+  })
+
+  $("#addTodo").click((event) => {
+    event.preventDefault()
+    var title = $("#title").val()
+    var due_date = $("#due_date").val()
+    var description = $("#description").val()
+    var status = false
+    addTodo(title, due_date, description, status)
+  })
+
   checkAuth()
+
+
+
 })
 
 

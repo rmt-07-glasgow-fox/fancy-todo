@@ -1,4 +1,3 @@
-const TodoController = require("../controllers/todoController")
 const {
   cekToken
 } = require("../helpers/jwt")

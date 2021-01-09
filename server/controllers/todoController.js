@@ -25,7 +25,7 @@ class TodoController {
       where: {
         userId: req.user.id
       },
-      order: [["id", "ASC"]]
+      order: [["due_date", "ASC"]]
     })
     .then(data => {
       res.status(200).json(data)

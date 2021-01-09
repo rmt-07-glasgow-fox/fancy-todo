@@ -1,77 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="google-signin-client_id" content="557948819370-81l50efb2ei1fm8amqbecdoud753scu1.apps.googleusercontent.com">
+  <meta name="google-signin-client_id"
+    content="557948819370-81l50efb2ei1fm8amqbecdoud753scu1.apps.googleusercontent.com">
   <title>Fancy Todo</title>
+
+  <style>
+    body {
+      background-image: url('/img/background.png');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+    }
+  </style>
+
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+  <!-- MDB -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.0.0/mdb.min.css" rel="stylesheet" />
 </head>
+
 <body>
+  
+
+
   <!-- Navbar -->
-  <div id="navbar">
-    <h2>Fancy Todo</h2>
-    <a id="logout" href="">Log Out</a>
-  </div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <!-- Container wrapper -->
+  <div class="container">
+    <!-- Navbar brand -->
+    <p style="margin: 0px;" class="navbar-brand">Fancy Todo</p>
+    
 
-  <!-- Home -->
-  <div id="appDesc">
-    <h2>Fancy Todo</h2>
-    <p>lorem ipsum bla bla</p>
-  </div>
+    <!-- Toggle button -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-mdb-toggle="collapse"
+      data-mdb-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <i class="fas fa-bars"></i>
+    </button>
 
-  <!-- covid api -->
-  <div id="covidApiArea">
-  </div>
+    <!-- Collapsible wrapper -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!-- Left links -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link disabled" aria-current="page" href=""></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href=""></a>
+        </li>
+   
+        <li class="nav-item">
+          <a class="nav-link disabled" href="" tabindex="-1" aria-disabled="true"
+            ></a
+          >
+        </li>
+      </ul>
+      <!-- Left links -->
 
-  <!-- Register/Login -->
-  <div id="loginArea">
-    <div id="register">
-      <h1>Register</h1>
-      <form action="">
-        <label for="emailRegister">Email:</label>
-        <input type="text" id="emailRegister" name="emailRegister"><br><br>
-        <label for="passwordRegister">Password:</label>
-        <input type="password" id="passwordRegister" name="passwordRegister"><br><br>
-        <button id="createNewUser" type="submit">Register</button>
-        <button id="toLogin">Already have account</button>
-      </form>
-      <div class="g-signin2" data-onsuccess="onSignIn"></div>
+      <button class="btn btn-danger" id="logout" type="button">Log Out</button>
     </div>
-    <div id="login">
-      <h1>Login</h1>
-      <form action="">
-        <label for="emailLogin">Email:</label>
-        <input type="text" id="emailLogin" name="emailLogin"><br><br>
-        <label for="passwordLogin">Password:</label>
-        <input type="password" id="passwordLogin" name="passwordLogin"><br><br>
-        <button id="loginUser" type="submit">Login</button>
-        <button id="toRegister">I don't have account</button>
-      </form>
-      <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    <!-- Collapsible wrapper -->
+  </div>
+  <!-- Container wrapper -->
+</nav>
+<!-- Navbar -->
+
+  <div class="container mt-5">
+
+    <!-- Content -->
+    <!-- Left side -->
+    <div class="row g-0">
+      <!-- Home -->
+      <div class="col-md-5">
+        <div id="appDesc" style="width: 300px;">
+          <h2>Fancy Todo</h2>
+          <br>
+          <p style="margin-bottom: 0px;">Create list of your fancy things to do, in this fancy app! </p>
+          <p class="my-0">Login now or create an account to immediately use this app</p>
+        </div>
+
+        <!-- covid api -->
+        <div id="covidApiArea"></div>
+
+      </div>
+      <!-- Left side end-->
+
+
+      <!-- Right side -->
+      <div class="col-md-7">
+
+        <!-- Register/Login -->
+        <div id="loginArea">
+          
+          <div id="register">
+            <h1>Register</h1>
+            <br>
+            <form action="">
+              <input style="width: 310px;" type="text" placeholder="Email" id="emailRegister" name="emailRegister">
+              <br><br>
+              <input style="width: 310px;" type="password" placeholder="Password" id="passwordRegister" name="passwordRegister">
+              <br><br>
+              <button class="btn btn-primary" id="createNewUser" type="submit">Register</button>
+              <button class="btn ms-2" id="toLogin">Already have account</button>
+            </form>
+            <br>
+            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+          </div>
+          <div id="login">
+            <h1>Login</h1>
+            <br>
+            <form action="">
+              <input style="width: 310px;" type="text" placeholder="Email" id="emailLogin" name="emailLogin">
+              <br><br>
+              <input style="width: 310px;" type="password" placeholder="Password" id="passwordLogin" name="passwordLogin">
+              <br><br>
+              <button class="btn btn-primary" id="loginUser" type="submit">Login</button>
+              <button class="btn ms-2" id="toRegister">I don't have account</button>
+            </form>
+            <br>
+            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+          </div>
+
+        </div>
+
+
+        <!-- Add new todo -->
+        <div id="createArea">
+          <button class="btn btn-primary" id="showAddForm">Add Todo</button>
+          <br><br>
+
+          <div id="addForm">
+            <form>
+              <input type="text" id="title" name="title" placeholder="Title">
+              <input type="date" id="due_date" name="due_date"><br><br>
+              <textarea style="width: 375px;" class="form-control" id="description" name="description" rows="4" placeholder="What's the detail?"></textarea>
+              <br>
+              <button class="btn btn-primary" type="button" id="addTodo" value="Add">add</button>
+              <button class="btn" type="button" id="hideAddForm">cancel</button>
+            </form>
+            <br><br>
+          </div>
+        </div>
+
+        <!-- Show all todo -->
+        <div id="showTodo"></div>
+      </div>
+      <!-- Right side end-->
+
     </div>
-  </div>
 
-  <!-- Add new todo -->
-  <div id="createArea">
-    <button id="showAddForm">Add Todo</button>
+  </div><!--Content-->
 
-    <div id="addForm">
-      <form>
-        <input type="text" id="title" name="title" placeholder="Title">
-        <input type="date" id="due_date" name="due_date"><br><br>
-        <input type="text" id="description" name="description" placeholder="What's the detail?"><br><br>
-        <input type="submit" id="addTodo" value="Add">
-        <button id="hideAddForm">cancel</button>
-      </form>
-    </div>
-  </div>
 
-  <!-- Show all todo -->
-  <div id="showTodo">
-  </div>
+  <!------------------------------ Script Area ------------------------------->
 
+  <!-- MDB -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.0.0/mdb.min.js"></script>
+
+  <!-- Google OAuth -->
   <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+  <!-- Jquerry -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- SweetAlert -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+
+  <!-- Server connect -->
   <script src="./script.js"></script>
 </body>
+
 </html>

@@ -3,8 +3,9 @@ const axios = require("axios").default
 class CovidController {
   static getLive (req, res) {
     // let baseUrl = "https://covid-api.mmediagroup.fr/v1/cases"
-    let indonesiaUrl = "https://covid-api.mmediagroup.fr/v1/cases?country=Indonesia"
-    axios.get(indonesiaUrl)
+    let globalUrl = "https://covid-api.mmediagroup.fr/v1/cases?country=Global"
+    // let indonesiaUrl = "https://covid-api.mmediagroup.fr/v1/cases?country=Indonesia"
+    axios.get(globalUrl)
     .then(response => {
       let data = response.data.All
       res.status(200).json({
