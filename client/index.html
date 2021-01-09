@@ -19,27 +19,36 @@
     <body>
         <nav class="navbar navbar-dark bg-dark btn-block myNavBar">
             <a href="#" class="navbar-brand">Fancy ToDo</a>
-            <ul class="navbar-nav">
+            <ul class="navbar-nav" id="user">
                 <li class="nav-item">
-                    <a class="nav-link">User</a>
+                    <a class="nav-link" id="logout">Log Out</a>
                 </li>
             </ul>
         </nav>
         <div class="row">
-            <div class="col-sm-4"></div>
-            <div class="col-sm-4 mt-5">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-6 mt-5 welcome">
+                <br><br><br>
+                <h2 class="mt-4"><p>Selamat Datang di Fancy ToDo</p></h2><br>
+                <p>Aplikasi dimana kamu bisa membuat rencana kegiatan dan memanajemennya</p>
+            </div>
+            <div class="col-sm-3">
+                <br><br><br>
                 <div class="login">
                     <div class="mt-4">
                         <p class="h2 text-center text-primary">Login Form</p>
                     </div>
-                    <form class="mt-4 formLogin" action="" method="post">
+                    <form class="mt-4 formLogin">
+                        <div class="loginResult">
+                            <p class="text-center text-danger" id="loginFail"></p>
+                        </div>
                         <div class="form-group">
                             <input type="email" class="form-control" name="email" id="email" placeholder="Email">
                         </div>
                         <div class="form-group">
                           <input type="password" class="form-control" name="password" id="password" placeholder="Password">
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block">Login</button>
+                        <button type="submit" class="btn btn-primary btn-block" id="login">Login</button>
                         <div class="text-center">
                             <button type="button" class="mt-2 btn btn-link" id="toRegister">
                                 Register
@@ -51,27 +60,126 @@
                     <div class="mt-4">
                         <p class="h2 text-center text-success">Register Form</p>
                     </div>
-                    <form class="mt-4 formRegister" action="" method="post">
-                        <div class="form-group">
-                            <input type="email" class="form-control" name="email" id="email" placeholder="Email">
+                    <form class="mt-4 formRegister">
+                        <div class="registerResult">
+                            <p class="text-center text-success" id="regSuccess"></p>
                         </div>
                         <div class="form-group">
-                          <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                            <input type="email" class="form-control" name="emailReg" id="emailReg" placeholder="Email">
                         </div>
-                        <button type="submit" class="btn btn-success btn-block" id="toLogin">Register</button>
+                        <div class="form-group">
+                          <input type="password" class="form-control" name="passwordReg" id="passwordReg" placeholder="Password">
+                        </div>
+                        <button type="submit" class="btn btn-success btn-block" id="register">Register</button>
+                        <div class="text-center">
+                            <button type="button" class="mt-2 btn btn-link" id="toLogin">
+                                Already have account?
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
-            <div class="col-sm-4"></div>
         </div>
         <main class="container main-content">
-            <div>
-
+            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-9">
+                    <div class="home">
+                        <ul class="list-group list-group-horizontal covid-stats">
+                        </ul>
+                        <h4 style="margin-left: 10rem;">Semoga harimu menyenangkan~</h4>
+                        <h4 style="margin-left: 10rem;">Ini Hadiah untukmu</h4>
+                        <div id="joke"></div>
+                        <h4 style="margin-left: 10rem;">Apa yang akan kamu lakukan hari ini?
+                            <button type="button" class="btn btn-success" id="toCreate">
+                                Tambah Todo
+                            </button>
+                        </h4><br>
+                        <table class="table table-striped table-inverse table-responsive">
+                            <thead class="thead-inverse" style="text-align: center;">
+                                <tr>
+                                    <th style="width: 7rem;">Judul Todo</th>
+                                    <th style="width: 22rem;">DesKripsi</th>
+                                    <th>Status</th>
+                                    <th>Batas Waktu</th>
+                                    <th style="width: 10rem;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="allActivities">
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="create">
+                        <h2> Form Rencana </h2>
+                        <form class="formCreate">
+                            <div class="form-group">
+                                <label for="title">Judul Todo</label>
+                                <input type="text" class="form-control" name="title" id="title" placeholder="Nonton Film">
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Deskripsi</label>
+                                <textarea class="form-control" name="description" id="description" rows="3" placeholder="Drama Korea episode terakhir" style="resize: none;"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="status">Status</label>
+                                <select class="custom-select" name="status" id="status">
+                                    <option selected value="">--Pilih--</option>
+                                    <option value="Done">Done</option>
+                                    <option value="OnList">OnList</option>
+                                    <option value="OnProgress">OnProgress</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="batasWaktu">Batas Waktu</label>
+                                <input type="datetime-local"class="form-control" name="batasWaktu" id="batasWaktu" >
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary" id="buat" style="width: 10rem;">Tambah</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="edit">
+                        <h2> Edit Rencana </h2>
+                        <form class="formEdit">
+                            <div class="form-group">
+                                <label for="titleEdit">Judul Kegiatan</label>
+                                <input type="text" class="form-control" name="titleEdit" id="titleEdit" placeholder="Read Novel">
+                            </div>
+                            <div class="form-group">
+                                <label for="descriptionEdit">Deskripsi</label>
+                                <textarea class="form-control" name="descriptionEdit" id="descriptionEdit" rows="3" placeholder="Overgeared chapter 393" style="resize: none;"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="statusEdit">Status</label>
+                                <select class="custom-select" name="statusEdit" id="statusEdit">
+                                    <option value="">--Pilih--</option>
+                                    <option value="Done" id="Done">Done</option>
+                                    <option value="OnList" id="OnList">OnList</option>
+                                    <option value="OnProgress" id="OnProgress">OnProgress</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="due_dateEdit">Batas Waktu</label>
+                                <input type="datetime-local"class="form-control" name="due_dateEdit" id="batasWaktuEdit" >
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" class="form-control" name="UserId" id="UserId" >
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary" id="save" style="width: 10rem;">Edit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-sm-1"></div>
             </div>
         </main>
-        <footer>
-            <p class="mt-5 text-muted text-center">Copyright &copy; 2021 by FDR</p>
-        </footer>
+        <!-- <footer>
+            <p>
+                Copyright &copy; 2021 by FDR
+            </p>
+        </footer> -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

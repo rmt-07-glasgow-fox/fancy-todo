@@ -71,10 +71,10 @@ module.exports = class AuthController {
                     id: user.id,
                     email: user.email
                 }
-                const acces_token = generateToken(payload)
+                const access_token = generateToken(payload)
 
                 return res.status(200).json({
-                    acces_token: acces_token
+                    access_token: access_token
                 })
             } else next({ name: 'loginFailed' })
 

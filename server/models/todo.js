@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         isIn: {
-          args: [['done', 'onlist']],
+          args: [['Done', 'OnList', 'OnProgress']],
           msg: 'Unknown status value'
         }
       }
@@ -42,7 +42,8 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Cannot set Obselete Todo'
         }
       }
-    }
+    },
+    UserId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Todo',

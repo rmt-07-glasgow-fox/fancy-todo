@@ -2,7 +2,10 @@ const { Todo } = require('../models')
 
 module.exports = class TodoController {
     static getTodos(req, res, next) {
-        Todo.findAll({
+        Todo.findAll({ 
+            where: {
+                UserId: req.user
+            },
             attributes: {
                 exclude: [ 'createdAt', 'updatedAt' ]
             }
@@ -16,7 +19,8 @@ module.exports = class TodoController {
     }
 
     static getTodo(req, res, next) {
-        Todo.findByPk(+req.params.id, {
+        const getId = +req.params.id
+        Todo.findByPk(getId, {
             attributes: {
                 exclude: [ 'UserId', 'createdAt', 'updatedAt' ]
             }
@@ -72,17 +76,10 @@ module.exports = class TodoController {
         })
         .then( data => {
             if (data[0] === 1) {
-                return Todo.findByPk(getId, {
-                    attributes: {
-                        exclude: [ 'UserId', 'createdAt', 'updatedAt' ]
-                    }
-                })
+                return res.status(201).json(data)
             } else {
                 next({ name: 'todoNotFound' })
             }
-        } )
-        .then( data => {
-            return res.status(201).json(response)
         } )
         .catch( err => {
             next(err)
@@ -90,27 +87,21 @@ module.exports = class TodoController {
     }
 
     static patchTodo(req, res, next) {
+        const getId = +req.params.id
         const newData = {
             status: req.body.status
         }
         Todo.update(newData, {
             where: {
-                id: +req.params.id
+                id: getId
             }
         })
         .then( data => {
             if (data[0] === 1) {
-                return Todo.findByPk(+req.params.id, {
-                    attributes: {
-                        exclude: [ 'UserId', 'createdAt', 'updatedAt' ]
-                    }
-                })
+                res.status(201).json({ msg: true })
             } else {
                 next({ name: 'todoNotFound' })
             }
-        } )
-        .then( data => {
-            return res.status(201).json(data)
         } )
         .catch( err => {
             next(err)
@@ -118,9 +109,10 @@ module.exports = class TodoController {
     }
 
     static removeTodo(req, res, next) {
+        const getId = +req.params.id
         Todo.destroy( {
             where: {
-                id: req.params.id
+                id: getId
             }
         } )
         .then( data => {

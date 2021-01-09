@@ -18,7 +18,6 @@ async function authenticate(req, res, next) {
 
 async function authorize(req, res, next) {
     try {
-        console.log(req.params.id);
         const found = await Todo.findByPk(+req.params.id)
         if (!found) next({ name: 'todoNotFound' })
         else {
