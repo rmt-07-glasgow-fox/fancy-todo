@@ -13,8 +13,10 @@ class TodosController {
 
     try {
       let todo = await Todo.create(todoObj)
+      console.log('CREATE MASUK CONTROLLER', todo);
       return res.status(201).json(todo)
     } catch(error) {
+      console.log('OH ERROR PAS CREATE YA', error);
       next(error)
     }
   }
@@ -29,6 +31,7 @@ class TodosController {
   }
 
   static async show(req, res, next) {
+    console.log('SHOW TODO CONTROLLER');
     let todo = await Todo.findByPk(+req.params.id)
     try {
       if (todo) {

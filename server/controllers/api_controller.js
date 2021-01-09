@@ -9,7 +9,7 @@ class ApiController {
 
     axios.get(apiUrl)
     .then((response) => {
-      console.log(response.data,);
+
       const currentWeather = {
         timezone: response.data.data[0].timezone,
         city_name: response.data.data[0].city_name,

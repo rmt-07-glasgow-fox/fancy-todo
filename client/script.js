@@ -2,6 +2,7 @@ let baseUrl = "http://localhost:3000"
 let todos = []
 
 $(document).ready(function() {
+  getWeatherbit()
 
   checkAuth()
 })
@@ -85,11 +86,14 @@ $("#btn-update").click(function(event) {
 $("#new-todo-form").click(function() {
   $("#todolist").hide()
   $("#form-new").show()
+  $("#detail-todo").hide()
 })
 
 $("#back-fromdetail-toindex").click(function() {
-  $("detail-todo").hide()
-  getTodolist
+  $("#detail-todo").hide()
+  $("#form-new").hide()
+  $("#new-todo-form").show()
+  getTodolist()
 })
 
 $("#btn-create").click(function(event) {
@@ -111,6 +115,23 @@ $("#btn-create").click(function(event) {
 
 
 // FUNCTION SECTION
+function getWeatherbit() {
+  $.ajax({
+    method: 'get',
+    url: `${baseUrl}/weather`
+  })
+  .done((weather) => {
+    console.log(weather, "SUKSES GET watheer");
+    $("#weatherbit-text").text(weather.city_name + ', ' + weather.temp + ' degree, ' + weather.description)
+  })
+  .fail((error) => {
+    console.log(error, "EROR Weatherbit");
+  })
+  .always(() => {
+
+  })
+}
+
 function checkAuth() {
   if (localStorage.access_token) {
     console.log('LOGIN BERHASIL');
@@ -122,6 +143,7 @@ function checkAuth() {
     $("#form-edit").hide()
     $("#form-new").hide()
     $("#detail-todo").hide()
+    $("#new-todo-form").show()
 
   } else {
     console.log('LOGIN GAGAL');
@@ -130,6 +152,9 @@ function checkAuth() {
     $("#todolist").hide()
     $("#btn-logout").hide()
     $("#form-edit").hide()
+    $("#form-new").hide()
+    $("#detail-todo").hide()
+    $("#new-todo-form").hide()
   }
 }
 
@@ -282,14 +307,16 @@ function onDelete(id) {
 function showTodo(id) {
   $("#todolist").hide()
   $("detail-todo").show()
+  $("#new-todo-form").hide()
   $.ajax({
-    method: 'get',
-    url: `${baseUrl}/todos/id`,
+    url: `${baseUrl}/todos/${id}`,
     headers: {
       access_token: localStorage.access_token
     }
   })
   .done((todo) => {
+    $("#detail-todo").show()
+
     $("#detail-todo-title").val(todo.title)
     $("#detail-todo-description").val(todo.description)
     $("#detail-todo-status").val(todo.status)
