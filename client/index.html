@@ -21,6 +21,16 @@
             color: red;
         }
 
+        .card {
+            border-radius: 20px;
+            padding: 20px;
+        }
+
+        .btn {
+            border-radius: 10px;
+            padding: 10px;
+        }
+
         body {
             background: url('https://source.unsplash.com/twukN12EN7c/1920x1080') no-repeat center center fixed;
             -webkit-background-size: cover;
@@ -35,7 +45,12 @@
     <!-- NAVBAR -->
     <nav class="navbar navbar-light">
         <div class="container-fluid">
-            <button class="btn btn-lg" type="button">Welcome To Fancy Todo</button>
+            <a class="navbar-brand" href="#">
+                <img src="/assets/todo.png" width="30" height="30"
+                    class="d-inline-block align-top" alt="">
+                Fancy Todo
+            </a>
+            <!-- <button class="btn btn-lg" type="button">Welcome To Fancy Todo</button> -->
             <button class="btn btn-lg btn-danger" type="button" id="logout">Logout</button>
         </div>
     </nav>
@@ -46,38 +61,42 @@
             <h4 id="date">Today : </h4>
         </div>
         <!-- REGISTER -->
-        <div class="col-3 card" style="width: 20rem; margin-left: 100px;" id="register-page">
+        <div class="col-3 card shadow" style="width: 20rem; margin-left: 100px;" id="register-page">
             <div class="card-body">
                 <h5 class="card-title">Register</h5>
                 <form>
                     <label for="emailRegister">Email address</label>
                     <input type="email" id="emailRegister" class="form-control" placeholder="Email address" required
-                        autofocus>
+                        autofocus style="margin: 15px 0px;">
 
                     <label for="passwordRegister">Password</label>
-                    <input type="password" id="passwordRegister" class="form-control" placeholder="Password" required>
+                    <input type="password" id="passwordRegister" class="form-control" placeholder="Password" required
+                        style="margin: 15px 0px;">
 
                     <button class="w-100 btn btn-lg btn-primary" type="submit" id="register">Register</button>
-                    <button class="w-100 btn btn-lg " type="button" id="toLoginPage">Already have Account</button>
+                    <button class="w-100 btn btn-lg " type="button" id="toLoginPage" style="margin: 15px 0px;">Already
+                        have Account</button>
                     <div class="g-signin2" data-onsuccess="onSignIn" id="g-signin2">Register using Google Account</div>
                 </form>
             </div>
         </div>
 
         <!-- LOGIN -->
-        <div class="col-3 card" style="width: 20rem; margin-left: 100px;" id="login-page">
+        <div class="col-3 card shadow" style="width: 20rem; margin-left: 100px;" id="login-page">
             <div class="card-body">
                 <h5 class="card-title">Login</h5>
                 <form>
                     <label for="emailLogin">Email address</label>
                     <input type="email" id="emailLogin" class="form-control" placeholder="Email address" required
-                        autofocus>
+                        autofocus style="margin: 15px 0px;">
 
                     <label for="passwordLogin">Password</label>
-                    <input type="password" id="passwordLogin" class="form-control" placeholder="Password" required>
+                    <input type="password" id="passwordLogin" class="form-control" placeholder="Password" required
+                        style="margin: 15px 0px;">
 
                     <button class="w-100 btn btn-lg btn-primary" type="submit" id="login">Login</button>
-                    <button class="w-100 btn btn-lg" type="button" id="toRegisterPage">Register an Account</button>
+                    <button class="w-100 btn btn-lg" type="button" id="toRegisterPage"
+                        style="margin: 15px 0px;">Register an Account</button>
                     <div class="g-signin2" data-onsuccess="onSignIn" id="g-signin2">Login using Google Account</div>
                 </form>
             </div>
@@ -87,13 +106,13 @@
     <!-- Main -->
     <div class="container flex-column" id="main-page">
         <div style="display: flex; justify-content: center; margin-bottom: 50px;">
-            <h4>Welcome</h4>
+            <h4>Here is your todo list</h4>
         </div>
         <div class="row justify-content-between">
-            <div class="col-3 flex-column" id="main-API">
+            <div class="col-2 flex-column" id="main-API">
                 <!-- <h4 id="dateMain">Today : </h4> -->
             </div>
-            <div class="col-7" id="main-right">
+            <div class="col-8" id="main-right">
                 <!--Todo - Add -->
                 <div class="container" id="todo-add-page">
                     <form>

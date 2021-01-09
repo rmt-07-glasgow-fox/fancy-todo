@@ -12,7 +12,7 @@ $(document).ready(() => {
     }
 
     $('#logout').click((e) => {
-        console.log('logout')
+        // console.log('logout')
         e.preventDefault()
 
         localStorage.clear()
@@ -26,26 +26,26 @@ $(document).ready(() => {
     })
 
     $('#toRegisterPage').click((e) => {
-        console.log('toRegisterPage')
+        // console.log('toRegisterPage')
         e.preventDefault()
 
         showRegisterPage()
     })
 
     $('#toLoginPage').click((e) => {
-        console.log('toLoginPage')
+        // console.log('toLoginPage')
         e.preventDefault()
 
         showLoginPage()
     })
 
     $('#login').click((e) => {
-        console.log('login')
+        // console.log('login')
         e.preventDefault()
 
         let email = $('#emailLogin').val()
         let password = $('#passwordLogin').val()
-        console.log(email, password)
+        // console.log(email, password)
 
         // ajax
         $.ajax({
@@ -62,14 +62,14 @@ $(document).ready(() => {
                     Swal.fire('You are login')
                 } else {
                     Swal.fire(response.message)
-                    console.log(response.message)
+                    // console.log(response.message)
                 }
             })
 
             .fail(err => {
                 let error = Array.isArray(err.responseJSON.message) ? err.responseJSON.message.join('\n') : err.responseJSON.message
                 Swal.fire(error)
-                console.log(err.responseJSON.message)
+                // console.log(err.responseJSON.message)
             })
 
             .always(() => {
@@ -79,12 +79,12 @@ $(document).ready(() => {
     })
 
     $('#register').click((e) => {
-        console.log('register')
+        // console.log('register')
         e.preventDefault()
 
         let email = $('#emailRegister').val()
         let password = $('#passwordRegister').val()
-        console.log(email, password)
+        // console.log(email, password)
 
         $.ajax({
             method: 'POST',
@@ -92,14 +92,15 @@ $(document).ready(() => {
             data: { email, password }
         })
             .done(response => {
-                console.log('berhasil : ', response)
+                // console.log('berhasil : ', response)
                 showLoginPage()
+                Swal.fire(`${response.email} is created`)
             })
 
             .fail(err => {
                 let error = Array.isArray(err.responseJSON.message) ? err.responseJSON.message.join('\n') : err.responseJSON.message
                 Swal.fire(error)
-                console.log(err.responseJSON.message)
+                // console.log(err.responseJSON.message)
             })
 
             .always(() => {
@@ -109,13 +110,13 @@ $(document).ready(() => {
     })
 
     $('#todoAdd').click((e) => {
-        console.log('todoAdd')
+        // console.log('todoAdd')
         e.preventDefault()
 
         let title = $('#titleAdd').val()
         let description = $('#descriptionAdd').val()
         let due_date = $('#due_dateAdd').val()
-        console.log(title, description, due_date)
+        // console.log(title, description, due_date)
 
         $.ajax({
             method: 'POST',
@@ -124,7 +125,8 @@ $(document).ready(() => {
             headers: { access_token: localStorage.access_token }
         })
             .done(response => {
-                console.log(response)
+                // console.log(response)
+                Swal.fire('Todo is Added')
                 showMainPage()
             })
             .fail(err => {
@@ -295,7 +297,7 @@ function deleteTodo(id) {
 }
 
 function showEditTodo(id) {
-    console.log('todo id', id)
+    // console.log('todo id', id)
 
     $.ajax({
         method: 'GET',
@@ -303,16 +305,16 @@ function showEditTodo(id) {
         headers: { access_token: localStorage.access_token }
     })
         .done(response => {
-            console.log(response)
+            // console.log(response)
             let { title, status, due_date, description } = response.message
 
             $('#todo-edit-page').append(`
                     <form>
                         <div class="mb-3">
                             <label for="statusEdit" class="form-label">Status</label>
-                            <select name="statusEdit" id="statusEdit">
-                                <option value="true" ${status ? 'selected' : ''}>true</option>
-                                <option value="false" ${status ? '' : 'selected'}>false</option>
+                            <select name="statusEdit" id="statusEdit" >
+                                <option value="true" ${status ? 'selected' : ''}>done</option>
+                                <option value="false" ${status ? '' : 'selected'}>not done</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -347,7 +349,7 @@ function updateSelectedTodo(id) {
     let due_date = $('#due_dateEdit').val()
     let description = $('#descriptionEdit').val()
 
-    console.log('updated todo ID : ', id, title, status, due_date, description)
+    // console.log('updated todo ID : ', id, title, status, due_date, description)
 
     $.ajax({
         method: 'PUT',
@@ -356,26 +358,26 @@ function updateSelectedTodo(id) {
         headers: { access_token: localStorage.access_token }
     })
         .done(response => {
-            console.log(response)
+            // console.log(response)
             showMainPage()
             Swal.fire('Updated')
         })
         .fail(err => {
             let error = Array.isArray(err.responseJSON.message) ? err.responseJSON.message.join('\n') : err.responseJSON.message
             Swal.fire(error)
-            console.log(err.responseJSON.message)
+            // console.log(err.responseJSON.message)
         })
 }
 
 function updateTodoStatus(id) {
-    console.log('edit', id)
+    // console.log('edit', id)
     $.ajax({
         method: 'PATCH',
         url: `${baseURL}/todos/${id}`,
         headers: { access_token: localStorage.access_token }
     })
         .done(response => {
-            console.log(response)
+            // console.log(response)
             showMainPage()
             Swal.fire('Updated')
         })
