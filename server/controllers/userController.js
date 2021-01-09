@@ -1,11 +1,11 @@
 const { User } = require('../models')
 const { comparePass } = require('../helper/hash')
 const { generateToken } = require('../helper/jwt')
+// const { hashPassword } = require('../helper/hash')
 
 class UserController{
     static addNew(req,res){
         const {name, username, email, password, status} = req.body  
-        console.log(req.body.name);
         User.create({name, username, email, password, status})
         .then(data => {
             res.status(201).json(data)
@@ -22,12 +22,14 @@ class UserController{
             }
         })
         .then(data => {
+            console.log(data);
             if (!data) {
                 res.status(401).json({
                     msg: 'Invalid Email/Password'
                 })
             } 
             if (comparePass(password, data.password)) {
+                console.log('romi');
                 const payload = {
                     id: data.id,
                     name: data.name,
@@ -35,6 +37,7 @@ class UserController{
                     email: data.email
                 }
                 const access_token = generateToken(payload)
+                console.log(access_token);
                 return res.status(200).json({
                     access_token : access_token
                 })

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- UIkit CSS -->
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/css/uikit.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+
+    <title>To-Do App</title>
+</head>
+<body>
+    <!-- LOGIN - PAGE -->
+    <section id="login-page">
+        <div class="bg-video">
+            <video class="bg-video-content" autoplay muted loop>
+                <source src="img/video.mp4" type="video/mp4">
+                <source src="img/video.webm" type="video/webm">
+                    your browser is not supported
+            </video>
+        </div>
+        <div class="center">
+            <h1 style="margin-bottom: 3rem;" class="welcome">ToDo App</h1>
+            <form>
+                <div class="uk-margin">
+                    <div class="uk-inline">
+                        <span class="uk-form-icon" uk-icon="icon: user"></span>
+                        <input id="email" class="uk-input" type="email" placeholder="email here">
+                    </div>
+                </div>
+            
+                <div class="uk-margin">
+                    <div class="uk-inline">
+                        <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: lock"></span>
+                        <input id="password" class="uk-input" type="password" placeholder="password here">
+                    </div>
+                </div>
+                <button type="submit" class="login-btn uk-button uk-button-primary" id="login-btn">Login</button>
+            
+            </form>            
+        </div>
+    </section>
+
+
+    <!-- REGISTER - PAGE -->
+    <section id="register-page">
+        <nav class="uk-navbar-container navbar-custom" uk-navbar>
+            <div class="uk-navbar-left">
+        
+                <ul class="uk-navbar-nav">
+                    <li><a onclick="succesLogin()" >To-Do App</a></li>
+                </ul>
+        
+            </div>
+            <div class="uk-navbar-right">
+        
+                <ul class="uk-navbar-nav">
+                    <li>
+                        <a onclick="logOut()" >Logout</a>
+                    </li>
+                    <li>
+                        <a onclick="pageAddTodo()" >Add New Todo</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="center">
+            <h1 style="margin-bottom: 3rem;margin-top: 4rem;" >Register Account</h1>
+            <form>
+
+                <div class="uk-margin">
+                    <div class="uk-inline">
+                        <span class="uk-form-icon" uk-icon="icon: user"></span>
+                        <input id="name-register" class="uk-input" type="text" placeholder="Name">
+                    </div>
+                </div>
+
+                <div class="uk-margin">
+                    <div class="uk-inline">
+                        <span class="uk-form-icon" uk-icon="icon: user"></span>
+                        <input id="username-register" class="uk-input" type="text" placeholder="username">
+                    </div>
+                </div>
+
+                <div class="uk-margin">
+                    <div class="uk-inline">
+                        <span class="uk-form-icon" uk-icon="icon: user"></span>
+                        <input id="email-register" class="uk-input" type="email" placeholder="email here">
+                    </div>
+                </div>
+            
+                <div class="uk-margin">
+                    <div class="uk-inline">
+                        <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: lock"></span>
+                        <input id="password-register" class="uk-input" type="password" placeholder="password here">
+                    </div>
+                </div>
+                <button type="submit" class="login-btn uk-button uk-button-primary" id="register-btn">Register</button>
+            
+            </form>            
+        </div>
+    </section>
+
+     <!-- Add New Todo - PAGE -->
+     <section id="add-todo-page">
+        <nav class="uk-navbar-container navbar-custom" uk-navbar>
+            <div class="uk-navbar-left">
+        
+                <ul class="uk-navbar-nav">
+                    <li><a onclick="succesLogin()" >To-Do App</a></li>
+                </ul>
+        
+            </div>
+            <div class="uk-navbar-right">
+        
+                <ul class="uk-navbar-nav">
+                    <li>
+                        <a onclick="logOut()" >Logout</a>
+                    </li>
+                    <li>
+                        <a onclick="pageAddTodo()" >Add New Todo</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="center">
+            <h1 style="margin-bottom: 3rem;margin-top: 4rem;" >Add New ToDo</h1>
+            <form>            
+
+                <div class="uk-margin">
+                    <div class="uk-inline">
+                        <span class="uk-form-icon uk-form-icon-flip"></span>
+                        <input id="todo-name" class="uk-input" type="text" placeholder="Activity">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <textarea class="form-control" rows="5" id="todo-description" placeholder="Describe your Activity"></textarea>
+                </div>
+
+                <div class="uk-margin">
+                    <div class="uk-inline">
+                        <label>Activity Type</label>
+                            <select id="todo-type">
+                                <option value="Online">Online Activity</option>
+                                <option value="Offline">Offline Activity</option>
+                            </select>
+                    </div>
+                </div>
+
+                <div class="uk-margin">
+                    <div class="uk-inline">
+                        <label>Date Activity</label>
+                            <input id="todo-date" type="date">
+                    </div>
+                </div>
+
+                <div class="uk-margin">
+                    <div class="uk-inline">
+                        <label>Time Activity</label>
+                            <input type="time" id="todo-time">
+                    </div>
+                </div>
+
+                <button type="submit" class="login-btn uk-button uk-button-primary" id="add-todo-btn">Add To-Do</button>
+            
+            </form>            
+        </div>
+     </section>
+
+
+     <!-- Edit Todo PAGE -->
+     <section id="edit-page">
+        <nav class="uk-navbar-container navbar-custom" uk-navbar>
+            <div class="uk-navbar-left">
+        
+                <ul class="uk-navbar-nav">
+                    <li><a onclick="succesLogin()" >To-Do App</a></li>
+                </ul>
+        
+            </div>
+            <div class="uk-navbar-right">
+        
+                <ul class="uk-navbar-nav">
+                    <li>
+                        <a onclick="logOut()" >Logout</a>
+                    </li>
+                    <li>
+                        <a onclick="pageAddTodo()" >Add New Todo</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="center">
+            <h1 style="margin-bottom: 3rem;margin-top: 4rem;" >Update ToDo</h1>
+            <form>            
+
+                <div class="uk-margin">
+                    <div class="uk-inline">
+                        <span class="uk-form-icon uk-form-icon-flip"></span>
+                        <input id="edit-name" class="uk-input" type="text" placeholder="Activity">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <textarea class="form-control" rows="5" id="edit-description" placeholder="Describe your Activity"></textarea>
+                </div>
+
+                <div class="uk-margin">
+                    <div class="uk-inline">
+                        <label>Activity Type</label>
+                            <select id="edit-type">
+                                <option value="Online">Online Activity</option>
+                                <option value="Offline">Offline Activity</option>
+                            </select>
+                    </div>
+                </div>
+
+                <div class="uk-margin">
+                    <div class="uk-inline">
+                        <label>Date Activity</label>
+                            <input id="edit-date" type="date">
+                    </div>
+                </div>
+
+                <div class="uk-margin">
+                    <div class="uk-inline">
+                        <label>Time Activity</label>
+                            <input type="time" id="edit-time">
+                    </div>
+                </div>
+
+                <button type="submit" class="login-btn uk-button uk-button-primary" id="edit-todo-btn">Edit To-Do</button>
+            
+            </form>            
+        </div>
+    </section>
+
+    <!-- MAIN PAGE isinya todo list dan ada navbarnya-->
+    <section id="main-page">
+        <nav class="uk-navbar-container navbar-custom" uk-navbar>
+            <div class="uk-navbar-left">
+        
+                <ul class="uk-navbar-nav">
+                    <li><a onclick="hideContent()" >To-Do App</a></li>
+                </ul>
+        
+            </div>
+            <div class="uk-navbar-right">
+        
+                <ul class="uk-navbar-nav">
+                    <li>
+                        <a onclick="logOut()" >Logout</a>
+                    </li>
+                    <li>
+                        <a onclick="pageAddTodo()" >Add New Todo</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <section id="my-gallery-page">
+            <div>
+                <h1>To-Do List</h1>
+                <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="list-todo"></tbody>
+                  </table>
+            </div>
+    </section>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/js/uikit-icons.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="./script.js"></script>
+</body>
+</html>

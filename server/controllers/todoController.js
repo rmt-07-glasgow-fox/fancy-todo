@@ -2,8 +2,13 @@ const { User,Todo } = require('../models')
 
 class TodoController{
     static getTodo(req,res){
-        Todo.findAll()
+        Todo.findAll({
+            where:{
+                status: true
+            }
+        })
         .then(data => {
+            console.log(data);
             res.status(200).json(data)
         })
         .catch(err => {
@@ -11,8 +16,7 @@ class TodoController{
         })
     }
     static addTodo(req,res){
-        console.log('>>>>>>>>>>',req.user.id);
-        console.log('romi');
+        console.log(req.body);
         const newTodo = {
             name: req.body.name,
             type: req.body.type,
@@ -31,6 +35,7 @@ class TodoController{
         })
     }
     static deleteTodo(req,res){
+        console.log(req.params,'ini req params');
         Todo.destroy({
             where: {
                 id:req.params.id
@@ -51,23 +56,36 @@ class TodoController{
             date: req.body.date,
             time: req.body.time
         }
-        Todo.update(newTodo)
+        console.log(newTodo, 'ada disini guys line 59');
+        Todo.update(newTodo, {
+            where:{
+                id: req.params.id
+            }
+        })
         .then(data => {
+            console.log(req.body, 'masuk');
             res.status(200).json(data)
         })
         .catch(err => {
+            console.log('masuk sini');
             res.status(405).json({message: 'Wrong data update'})
         })
     }
     static editOne(req,res){
         const newTodo = {
-            status: req.body.status
+            status: false
         }
-        Todo.update(newTodo)
+        Todo.update(newTodo, {
+            where:{
+                id:req.params.id
+            }
+        })
         .then(data => {
+            console.log(data, 'disini');
             res.status(200).json(data)
         })
         .catch(err => {
+            console.log(err, 'ini');
             res.status(405).json({message: 'Wrong data update'})
         })
     }

@@ -1,5 +1,5 @@
 'use strict';
-const hashPassword = require('../helper/hash')
+const {hashPassword} = require('../helper/hash')
 
 const {
   Model
@@ -31,8 +31,7 @@ module.exports = (sequelize, DataTypes) => {
           args: [6,12],
           msg: 'username must be 6 - 12 characters'
         }
-      },
-      unique: true
+      }
     },
     email: {
       type: DataTypes.STRING,
@@ -52,15 +51,15 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    status: DataTypes.BOOLEAN
+    status: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'User',
-  });
-
-  User.addHook("beforeCreate",(instance, options) => {
-    instance.status = true
+    modelName: 'User'
+  })
+  User.addHook('beforeCreate', (instance, options) => {
+    instance.status = true,
     instance.password = hashPassword(instance.password)
+    console.log(instance, 'masuk hooks');
   })
 
   return User;
