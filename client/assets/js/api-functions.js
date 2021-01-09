@@ -67,6 +67,7 @@ function login() {
             setTimeout(function () { $('.success-msg a').addClass('active'); }, 1050);
             setTimeout(function () { $('.form').hide(); }, 700);
             
+            
         })
         .fail(err => {
             console.log(err.responseJSON.message);
@@ -107,6 +108,8 @@ function onSignIn(googleUser) {
                </button>
              </div>
              `)
+             readTodo()
+             getHolidays()
         })
         .always(() => {
             hideLoading()

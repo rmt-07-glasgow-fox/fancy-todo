@@ -5,7 +5,7 @@ $(document).ready(function () {
     $('.modal').modal('show');
     if (localStorage.access_token) {
         readTodo()
-        getHolidays()       
+        getHolidays()
     }
     reload()
     // Detect browser for css purpose
