@@ -118,7 +118,7 @@ function getTodoList() {
             <p class="card-text">${todo.description}</p>
             
             <div class="form-check" style="float: right;">
-            <input class="form-check-input" type="checkbox" value="" ${(todo.status) ? 'checked' : ''} id="status">
+            <input class="form-check-input" type="checkbox" id="checkBox-${todo.id}" onclick="checkboxChange(${todo.id}, ${todo.status})" value="" ${(todo.status) ? 'checked' : ''} id="status">
             <label class="form-check-label" for="status">
               Todo done
             </label>
@@ -147,6 +147,48 @@ function getTodoList() {
     })
 
 }
+
+function checkboxChange(id, status){
+  const todoId = id;
+  console.log(status, 'SEBELUM RESPOND');
+  let todoStatus
+  if (status) {
+    todoStatus = false
+  } else{
+    todoStatus = true
+  }
+  
+  $.ajax({
+    method: 'PATCH',
+    url: `${baseUrl}/todos/${todoId}`,
+    headers: {
+      access_token: localStorage.access_token
+    },
+    data: { status: todoStatus }
+  })
+    .done(response => {
+      console.log(response);
+      console.log(response.status, 'SAAT RESPOND');
+      if (!response.status) {
+        $(`#checkBox-${todoId}`).prop("checked", false);
+      } else {
+        $(`#checkBox-${todoId}`).prop("checked", true);
+      }
+    })
+    .fail(err => {
+      Swal.fire({
+        title: err.responseJSON.Error,
+        text: err.responseJSON.message,
+        icon: 'error',
+        confirmButtonText: 'Continue'
+      })
+    })
+    .always(() => {
+      
+  })
+}
+
+
 
 function getOneTodo(id) {
   $.ajax({

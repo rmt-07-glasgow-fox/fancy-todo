@@ -74,6 +74,7 @@ class todoController {
   static patchTodoHandler(req, res, next) {
     const id = req.params.id;
     const status = req.body.status || null;
+    console.log(id, status);
     Todo.update({ status }, {
       returning: true,
       where: { id }
