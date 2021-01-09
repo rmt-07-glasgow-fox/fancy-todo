@@ -1,0 +1,34 @@
+{
+  "name": "fancy-todo",
+  "version": "1.0.0",
+  "description": "Membuat website untuk mencatat hal - hal menarik untuk dilakukan",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "NODE_ENV=development nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zaini01/fancy-todo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zaini01/fancy-todo/issues"
+  },
+  "homepage": "https://github.com/zaini01/fancy-todo#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "live-server": "^1.2.1",
+    "pg": "^8.5.1",
+    "sequelize": "^6.3.5"
+  }
+}

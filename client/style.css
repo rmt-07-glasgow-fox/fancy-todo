@@ -1,0 +1,15 @@
+body {
+    background: #1f2e3d;
+}
+
+form {
+    position: relative;
+    width: 360px;
+    height: 250px;
+    margin: 50px auto;
+    text-align: center;
+    background: #5b6163;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 20px 20px 20px;
+    }
