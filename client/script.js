@@ -8,17 +8,15 @@ function auth() {
         $(".login").hide()
         $(".register").hide()
         $("#user").show()
-        $(".main-content").show()
+        $(".mainPage").show()
         $(".create").hide()
         $(".edit").hide()
-        $('.show-covid-info').show()
         getData()
     } else {
         $(".loginPage").show()
         $(".registerPage").hide()
         $("#user").hide()
         $(".mainPage").hide()
-        $('.show-covid-info').show()
     }
 }
 
