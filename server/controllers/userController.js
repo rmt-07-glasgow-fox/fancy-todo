@@ -13,7 +13,7 @@ class UserController{
         .catch(err => {
             res.status(400).json(err)
         })
-    }
+    } 
     static login(req,res){
         const {email,password} = req.body
         User.findOne({
