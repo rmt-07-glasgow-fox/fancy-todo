@@ -1,4 +1,5 @@
 const { Todo } = require('../models')
+const { sendMail } = require('../services/mailgun')
 
 class Controller {
 
@@ -11,11 +12,17 @@ class Controller {
       due_date,
       UserId: req.user.id
     }
+    let todo
 
     Todo.create(input)
-      .then( todo => {
-        let { title, description, status, due_date } = todo
-        res.status(201).json({ title, description, status, due_date })
+      .then( result => {
+        let { title, description, status, due_date } = result
+        todo = { title, description, status, due_date }
+
+        return sendMail(req.user, todo)
+      })
+      .then( result => {
+        res.status(201).json(todo)
       })
       .catch( err => {
         next(err)
@@ -79,7 +86,6 @@ class Controller {
         }
       })
       .then( newTodo => {
-        console.log(newTodo)
         res.status(200).json(newTodo)
       })
       .catch( err => {
