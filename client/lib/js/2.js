@@ -1,17 +1,5 @@
-const baseUrl = "http://localhost:3000"
 
-// $('#register-form').hide();
-$("#signup").click(function () {
-  $("#first").fadeOut("fast", function () {
-    $("#second").fadeIn("fast");
-  });
-});
 
-$("#signin").click(function () {
-  $("#second").fadeOut("fast", function () {
-    $("#first").fadeIn("fast");
-  });
-});
 
 $(function () {
   $("form[name='login']").validate({
@@ -415,13 +403,13 @@ $(document).ready(function () {
   loggedOut();
 
 
-  $('#loginForm').on('submit', function (e) {
+  $('#login-form').on('submit', function (e) {
     e.preventDefault();
     loginInput();
     loggedIn();
   });
 
-  $('#registerForm').on('submit', function (e) {
+  $('#register-form').on('submit', function (e) {
     e.preventDefault();
     registerInput();
   });

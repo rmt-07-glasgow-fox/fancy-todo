@@ -6,7 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="google-signin-client_id"
     content="141244953512-e5u3ahnvetvn26do1fm743vmni92q0bb.apps.googleusercontent.com">
-  <title>Fancytodo</title>
+  <title>Fancy Todo | Increase productivity! create your todo list.</title>
+  <link rel="stylesheet" href="lib/css/style.css">
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 </head>
 
@@ -14,17 +15,17 @@
   <div class="container">
     <div class="row">
       <div class="col-md-5 mx-auto">
+
+        <!-- LOGIN -->
+
         <div id="first">
           <div class="myform form ">
             <div class="logo mb-3">
-
-              <!-- LOGIN -->
-
               <div class="col-md-12 text-center">
                 <h1>Login</h1>
               </div>
             </div>
-            <form action="" method="post" name="login" id="login-form">
+            <form method="post" name="login" id="loginForm">
               <div>
                 <h3 id="registermessage" style="display: none; text-align: center" class="success-msg">
                   Register Done
@@ -56,15 +57,15 @@
                 <div class="g-signin2 float-right" data-onsuccess="onSignIn"></div>
               </div>
               <div class="form-group">
-
-                <!-- REGISTER -->
-
                 <p class="text-center">Don't have account? <a href="#" id="signup">Sign up here</a></p>
               </div>
             </form>
 
           </div>
         </div>
+
+        <!-- REGISTER -->
+
         <div id="second">
           <div class="myform form ">
             <div class="logo mb-3">
@@ -72,7 +73,7 @@
                 <h1>Signup</h1>
               </div>
             </div>
-            <form action="#" name="registration" id="register-form">
+            <form name="registration" id="registerForm">
               <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
                 <input type="email" name="email" class="form-control" id="email_register_input"
@@ -91,8 +92,8 @@
                   <p class="text-center"><a href="#" id="signin">Already have an account?</a></p>
                 </div>
               </div>
+            </form>
           </div>
-          </form>
         </div>
       </div>
     </div>
@@ -209,7 +210,7 @@
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-  <script type="text/javascript" src="/lib/js/main.js"></script>
+  <script src="lib/js/main.js"></script>
   <script src="https://apis.google.com/js/platform.js" async defer></script>
 
   <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
