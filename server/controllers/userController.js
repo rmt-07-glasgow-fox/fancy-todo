@@ -80,7 +80,6 @@ class UserController{
         })
         .then(ticket => {
             const payload = ticket.getPayload()
-            console.log(payload, 'ini payload');
             email = payload.email
             username = payload.name
             return User.findOne({
@@ -90,7 +89,6 @@ class UserController{
             })
         })
         .then(data => {
-            console.log(data, 'ini data');
             if(!data){
                 return User.create({
                     email,
@@ -107,7 +105,6 @@ class UserController{
                 username: data.username,
                 email: data.email
             })
-            console.log(access_token, 'ini access token');
             res.status(200).json({
                 access_token,
                 username: data.username

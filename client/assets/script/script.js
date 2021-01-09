@@ -57,7 +57,6 @@ $('fieldset').each(function () {
     remove: function (event, ui) {
       event.preventDefault()
       let id = ui.item.attr('id')
-      console.log(id);
       patchTodo(id)
     }
   })
@@ -174,13 +173,11 @@ function onSignIn(googleUser) {
       }
     })
     .done(res => {
-      console.log(res);
       localStorage.setItem('username', res.username)
       localStorage.setItem('access_token', res.access_token)
       checkLogin()
     })
     .fail(xhr => {
-      console.log(xhr);
       Swal.fire({
         title: 'Something Error!',
         text: xhr.responseJSON.message,
@@ -230,7 +227,6 @@ function getTodo() {
       $('#task-backlog').empty()
       $('#task-done').empty()
       dataTodo.forEach(data => {
-        console.log(data);
         if (data.status) {
           $('#task-done').append(
             `
@@ -313,7 +309,6 @@ function handleAddTodo(data) {
       checkLogin()
     })
     .fail(xhr => {
-      console.log(xhr);
       Swal.fire({
         title: 'Something Error!',
         text: xhr.responseJSON.message[0],

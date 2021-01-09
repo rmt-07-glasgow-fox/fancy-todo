@@ -10,7 +10,6 @@ class TodoController{
             order:[['due_date', 'ASC']]
         })
         .then(data => {
-            console.log(data);
             res.status(200).json(data)
         })
         .catch(err => {
@@ -77,7 +76,6 @@ class TodoController{
             else next({status: 404})
         })
         .catch(err => {
-            console.log(err);
             if(err.name === "SequelizeValidationError"){
                 next({
                     status: 400,
