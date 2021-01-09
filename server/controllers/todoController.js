@@ -2,14 +2,19 @@ const { ToDoList } = require('../models')
 
 class ToDoController {
 
-  static showLists(req, res) {
-    ToDoList.findAll()
-    .then(data => {
-      res.status(200).json(data)
-    })
-    .catch(err => {
-      res.status(500).json({message: `cannot get datas`})
-    })
+  static async showLists(req, res) {
+    try {
+      let todos = await ToDoList.findAll({where: {UserId: req.user.id}})
+      res.status(200).json({todos})
+
+      const WEATHER_KEY = process.env.WEATHERSTACK_KEY
+    } catch (err) {
+      if (err) {
+        res.status(400).json({message: `Someting Wrong`})
+      } else {
+        res.status(500).json({message: `cannot get datas`})
+      }
+    }
   }
 
   static addList(req, res) {
@@ -46,7 +51,11 @@ class ToDoController {
       res.status(200).json(data)
     })
     .catch(err => {
-      res.status(500).json({message: `current data is not found`})
+      if (err) {
+        res.status(400).json({message: `Something wrong`})
+      } else {
+        res.status(500).json({message: `Unable to update data, current data is not found`})
+      }    
     })
   }
 
@@ -59,7 +68,7 @@ class ToDoController {
       status: req.body.status,
       due_date: req.body.due_date
     }
-
+    
     if(!id) {
       res.status(404).json({message: `Not Found`})
     } else {
@@ -89,13 +98,17 @@ class ToDoController {
       res.status(200).json({message: `Successfuly updated`})
     })
     .catch(err => {
-      res.status(500).json({message: `Update failed`})
+      if (err) {
+        res.status(400).json({message: `Something wrong`})
+      } else {
+        res.status(500).json({message: `Unable to update data, current data is not found`})
+      }
     })
   }
 
   static deleteList(req, res) {
     let id = +req.params.id
-
+    console.log(id);
     if (!id) {
       res.status(404).json({message: `Not Found`})
     } else {
@@ -104,7 +117,11 @@ class ToDoController {
         res.status(200).json({message: `todo success to delete`})
       })
       .catch(err => {
-        res.status(500).json({message: `No such data found`})
+        if (err) {
+          res.status(400).json({message: `Something wrong`})
+        } else {
+          res.status(500).json({message: `Unable to update data, current data is not found`})
+        }      
       })
     }
   }

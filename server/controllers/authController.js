@@ -10,12 +10,17 @@ class Authentication {
       password: req.body.password
     }
 
+    console.log(newUser)
     User.create(newUser)
     .then(user => {
       return res.status(201).json({id: user.id, email: user.email})
     })
     .catch(err => {
-      return res.status(400).json(err)
+      if (err) {
+        res.status(400).json({message: `Someting Wrong`})
+      } else {
+        res.status(500).json({message: `cannot get datas`})
+      }
     })
   }
 
@@ -26,7 +31,7 @@ class Authentication {
       const user = await User.findOne({where: {email}})
       
       if (!user) {
-        return res.status(400).json({message: `Invalid email / password`})
+        return res.status(401).json({message: `Invalid email / password`})
       }
 
       const matchPassword = comparePassword(password, user.password)
@@ -40,10 +45,14 @@ class Authentication {
         const access_token = generateToken(payload)
         return res.status(200).json({access_token})
       } else {
-        return res.status(400).json({message: `Invalid email / password`})
+        return res.status(401).json({message: `Invalid email / password`})
       }
     } catch(err) {
-      return res.status(400).json(err)
+      if (err) {
+        res.status(400).json({message: `Invalid email / password`})
+      } else {
+        res.status(500).json({message: `cannot get datas`})
+      }
     }
   }
 }

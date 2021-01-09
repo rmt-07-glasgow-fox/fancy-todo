@@ -5,7 +5,7 @@ module.exports = {
     return queryInterface.addColumn("ToDoLists", "UserId", {
       type: Sequelize.INTEGER,
       references: {
-        model: { tableName: "Users"},
+        model: {tableName: "Users"},
         key: "id"
       },
       onDelete: "CASCADE",

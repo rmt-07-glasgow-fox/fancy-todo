@@ -16,8 +16,24 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   ToDoList.init({
-    title: DataTypes.STRING,
-    description: DataTypes.STRING,
+    title: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: `Must be filled`
+        }
+
+      }
+    },
+    description: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: `Must be filled`
+        }
+
+      }
+    },
     status: DataTypes.STRING,
     due_date: {
       type: DataTypes.DATEONLY,
@@ -31,11 +47,11 @@ module.exports = (sequelize, DataTypes) => {
     UserId: DataTypes.INTEGER
   }, {
     hooks: {
-      // beforeCreate: (instance, option) => {
-      //   if (instance.status === "") {
-      //     instance.status = "undone"
-      //   }
-      // }
+      beforeCreate: (instance, option) => {
+        if (instance.status === "") {
+          instance.status = "undone"
+        }
+      }
     },
     sequelize,
     modelName: 'ToDoList',

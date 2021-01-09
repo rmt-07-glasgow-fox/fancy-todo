@@ -3,11 +3,13 @@ if (process.env.NODE_ENV === "development") {
 }
 
 const express = require('express')
-const router = require('./server/routers')
+const router = require('./routers')
 const app = express()
+const cors = require("cors")
 const port = 3000
-const errorsHandler = require("./server/middlewares/errorsHandler")
+const errorsHandler = require("./middlewares/errorsHandler")
 
+app.use(cors())
 app.use(express.urlencoded({ extended:false }))
 
 app.use(router)

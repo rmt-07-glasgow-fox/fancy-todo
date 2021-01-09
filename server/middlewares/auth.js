@@ -20,7 +20,6 @@ async function authentication (req, res, next) {
 
 async function authorize(req, res, next) {
   try {
-    console.log(req.user.id)
     let list = await ToDoList.findOne({ where: {id: req.params.id}})
     if (!list || list.UserId !== req.user.id) {
       res.status(401).json({message: `Not Yours`})
