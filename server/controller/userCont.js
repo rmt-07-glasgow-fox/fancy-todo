@@ -23,7 +23,7 @@ class Controller {
     User.findOne({where: {email: email}})
     .then(user => {
       if (!user) {
-        throw new Error (`You're Not Registered`)
+        throw ({message: `You're Not Registered`})
       }else {
         userData = user
         return compare(password, user.password)
@@ -38,9 +38,9 @@ class Controller {
         }
         let accessToken = generateToken(payload)
         req.header.accessToken = accessToken
-        res.status(200).json(accessToken)
-      }else {
-        console.log('salah pass')
+        res.status(200).json({id: userData.id, email: userData.email, accessToken})
+      } else {
+        throw ({name: '404'})
       }
     })
     .catch(err => {

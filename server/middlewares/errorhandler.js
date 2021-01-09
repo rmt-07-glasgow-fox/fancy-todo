@@ -2,7 +2,6 @@
 function errorHandler (err, req, res, next) {
   let errName = err.name
   let errMsg
-  console.log(err.name)
 
   switch (errName) {
     case 'SequelizeValidationError':
@@ -17,7 +16,6 @@ function errorHandler (err, req, res, next) {
       break
     default:
       errMsg = err.message.split(',\n')
-      res.status(404).json(errMsg)
   }
 }
 

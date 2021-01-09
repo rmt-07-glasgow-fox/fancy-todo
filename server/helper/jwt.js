@@ -7,8 +7,8 @@ function generateToken (payload) {
 }
 
 function checkToken (token) {
-  let decoded = jwt.verify(token, SECRET_KEY)
-  return decoded
+  let verifiedToken = jwt.verify(token, SECRET_KEY)
+  return verifiedToken
 }
 
 module.exports = {generateToken, checkToken};
