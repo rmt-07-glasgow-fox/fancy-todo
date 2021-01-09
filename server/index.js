@@ -9,7 +9,7 @@ const port = 4300
 
 const router = require('./routes/index.js')
 
-app.set('view engine', 'ejs')
+// app.set('view engine', 'ejs')
 
 app.use(express.urlencoded({extended: true}))
 
