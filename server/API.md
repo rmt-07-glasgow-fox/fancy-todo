@@ -10,6 +10,13 @@ My Fancy Todo app is a website where you can manage your todo lists. This app fe
 
 > Get all todos
 
+_Request Header_
+```
+{
+    "access_token" : <given by the system>
+}
+```
+
 _Request Body_
 ```
 not needed
@@ -49,6 +56,13 @@ _Response (500)_
 ### POST /todos
 
 > Create new todo
+
+_Request Header_
+```
+{
+    "access_token" : <given by the system>
+}
+```
 
 _Request Body_
 ```
@@ -93,6 +107,13 @@ _Response (500)_
 
 > Get a specific todo based on id
 
+_Request Header_
+```
+{
+    "access_token" : <given by the system>
+}
+```
+
 _Request Body_
 ```
 not needed
@@ -126,6 +147,13 @@ _Response (404)_
 ### PUT /todos/:id
 
 > Edit all column based on id
+
+_Request Header_
+```
+{
+    "access_token" : <given by the system>
+}
+```
 
 _Request Body_
 ```
@@ -182,6 +210,13 @@ _Response (500)_
 
 > For updating status of todo
 
+_Request Header_
+```
+{
+    "access_token" : <given by the system>
+}
+```
+
 _Request Body_
 ```
 {
@@ -234,6 +269,13 @@ _Response (500)_
 
 > Delete a todo item based on id
 
+_Request Header_
+```
+{
+    "access_token" : <given by the system>
+}
+```
+
 _Request Body_
 ```
 not needed
@@ -265,3 +307,141 @@ _Response (500)_
 }
 ```
 
+### GET /register
+
+> add user to database
+
+_Request Body_
+```
+{
+    "email" : "example@mail.com",
+    "password" : "password"
+}
+```
+
+_Response (201)_
+```
+{
+    "id": 1,
+    "email": "example@mail.com"
+}
+```
+
+_Response (400)_
+```
+{
+    "Errors": [
+        "Invalid email format",
+        "Minimal password length is 8 character"
+    ]
+}
+```
+
+_Response (500)_
+```
+{
+    message: "Internal Server Error"
+}
+```
+
+
+### GET /login
+
+> login user to main page using authentification
+
+_Request Body_
+```
+{
+    "email" : "example@mail.com",
+    "password" : "password"
+}
+```
+
+_Response (201)_
+```
+{
+    "access_token": <given by the system>
+}
+```
+
+_Response (400)_
+```
+{
+    "message": "Incorect Email / Password"
+}
+```
+
+_Response (500)_
+```
+{
+    message: "Internal Server Error"
+}
+```
+
+
+### GET /loginGoogle
+
+> login user using 3rd Party OAuth2 from google
+
+_Response (500)_
+```
+{
+    message: "Internal Server Error"
+}
+```
+
+
+### GET /calendar
+
+> use 3rd Party API to find data of holidays
+
+_Request Header_
+```
+{
+    "access_token" : <given by the system>
+}
+```
+_Request Body_
+```
+{
+    not needed
+}
+```
+
+_Response (200)_
+```
+{
+    {
+    "holidays": [
+        {
+            "name": "New Year's Day",
+            "description": "New Year’s Day is the first day of the year, or January 1, in the Gregorian calendar.",
+            "country": {
+                "id": "id",
+                "name": "Indonesia"
+            },
+            "date": {
+                "iso": "2021-01-01",
+                "datetime": {
+                    "year": 2021,
+                    "month": 1,
+                    "day": 1
+                }
+            },
+            "type": [
+                "National holiday"
+            ],
+            "locations": "All",
+            "states": "All"
+        }
+    }
+}
+```
+
+
+_Response (500)_
+```
+{
+    message: "Internal Server Error"
+}
+```
