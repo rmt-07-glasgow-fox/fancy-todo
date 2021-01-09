@@ -1,92 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <link rel="stylesheet" href="./css/style.css">
-    <title>Fancy To Do</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-signin-client_id" content="404789566886-8t31hjd2lbc9m30c1bemp0s2iqg1r3in.apps.googleusercontent.com">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+  <link rel="stylesheet" href="./css/style.css">
+  <title>Fancy To Do</title>
 </head>
+
 <body>
-    <!-- Nav Bar -->
-    
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Fancy To Do</a>
-        <!--  Sign Out Button-->
-              <button class="btn btn-outline-success" type="submit" id="logout-button">Sign Out</button>
+
+  <!-- Nav Bar -->
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Fancy To Do</a>
+      <!--  Sign Out Button-->
+      <button class="btn btn-outline-danger" type="submit" id="logout-button">Sign Out</button>
+      </form>
+    </div>
+    </div>
+  </nav>
+
+  <!-- login -->
+
+  <div>
+    <div class="container" id='login-form'>
+      <div class="row g-0">
+        <div class="col-sm-6 col-md-6 ">
+          <div class="box-container">
+            <div class="home-p">
+              <div>
+                <h3>Fancy Todo</h3>
+              </div>
+              <div>
+                <p>
+                  Fancy Todo is a task management app to help you stay organized and manage your day-to-day. You can use
+                  Fancy Todo to make shopping lists, take notes, plan an event to increase your productivity and focus
+                  on what matters to you. Fancy Todo makes it easy to stay organized and manage your life.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <form class="form-container">
+          <h3 class="register-p">Login</h3>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email address</label>
+            <input type="email" class="form-control" aria-describedby="emailHelp" id="login-email">
+            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+          </div>
+          <div class="mb-3">
+            <label for="register-password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="login-password">
+          </div>
+          <button type="submit" class="btn btn-primary" id="login-btn">Log In</button>
+          <button class="btn btn-success" type="button" id="register-button">Register</button>
+          <div>
+            <br>
+            <h5> or Sign in by Google</h5>
+            <br>
+          </div>
+          <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- register -->
+
+  <div>
+    <div class="container" id="register-form">
+      <div class="row g-0">
+        <div class="col-sm-6 col-md-6 ">
+          <div class="box-container">
+            <div class="home-p">
+              <div>
+                <h3>Fancy Todo</h3>
+              </div>
+              <p>
+                Fancy Todo is a task management app to help you stay organized and manage your day-to-day. You can use
+                Fancy Todo to make shopping lists, take notes, plan an event to increase your productivity and focus on
+                what matters to you. Fancy Todo makes it easy to stay organized and manage your life.
+              </p>
+            </div>
+
+          </div>
+        </div>
+        <form class="form-container">
+          <h3 class="register-p">Register</h3>
+          <div class="mb-3">
+            <label for="name-register" class="form-label">Name</label>
+            <input type="text" class="form-control" aria-describedby="emailHelp" id="register-name">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email address</label>
+            <input type="email" class="form-control" aria-describedby="emailHelp" id="register-email">
+            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <input type="password" class="form-control" id='register-password'>
+          </div>
+          <div class="col-auto">
+            <button class="btn btn-danger" type="button" id='register-submit'>Register</button>
+            <button class="btn btn-secondary" type="button" id='cancel-submit'>Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main -->
+
+<div class="container" id="main-web">
+  <div class='row'>
+    <div class="col-md-4">
+      <div id="openweathermap-widget-15" style="margin-top: 120px;"></div>
+<script>window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  window.myWidgetParam.push({id: 15,cityid: '1642911',appid: '498411ae61c0536b808a80020b14287a',units: 'metric',containerid: 'openweathermap-widget-15',  });  (function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })();</script>
+    </div>
+
+  <!-- Add Todo -->
+
+  <div class="col-md-8" id="add-todo">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group" id="add-todo-form">
+            <h1>To-Do List</h1>
+            <button type="button" class="btn btn btn-primary" id="add-task">Add New Task</button>
+            <form role="form" id='add-form'>
+              <input type="text" class="form-control" placeholder="New Task" name="task" id="task-name">
+              <input type="date" class="form-control" placeholder="Date" name="Date" id="task-date">
+              <input type="text" class="form-control" placeholder="Description" name="task" id="task-description">
+              <button class="btn btn-primary" id="add-button">Add</button>
+              <button class="btn btn-primary" id="add-cancel-button">Cancel</button>
             </form>
           </div>
         </div>
-    </nav>
 
-    <!-- login -->
+  <!-- Content -->
 
-    <div>
-        <div class="container" id='login-form'>
-            <div class="row g-0">         
-                <div class="col-sm-6 col-md-8 "></div>
-                <form class="form-container">
-                    <h3 class="register-p">Login</h3>
-                    <div class="mb-3">
-                      <label for="exampleInputEmail1" class="form-label">Email address</label>
-                      <input type="email" class="form-control" aria-describedby="emailHelp" id="login-email">
-                      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-                    </div>
-                    <div class="mb-3">
-                      <label for="register-password" class="form-label" >Password</label>
-                      <input type="password" class="form-control" id="login-password">
-                    </div>
-                    <button type="submit" class="btn btn-primary"  id="login-btn">Log In</button>
-                    <button class="btn btn-danger" type="button" id="register-button">Register</button>
-                  </form>
-            </div>
+        <div class="todo" id="todo">
+          
         </div>
-    </div>
-
-    <!-- register -->
-    <div>
-        <div class="container" id="register-form">
-            <!-- Content here -->
-            <div class="row g-0">
-                
-                <div class="col-sm-6 col-md-8 "></div>
-                <form class="form-container">
-                    <h3 class="register-p">Register</h3>
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Name</label>
-                        <input type="email" class="form-control" aria-describedby="emailHelp" id="register-name">
-                      </div>
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Email address</label>
-                        <input type="email" class="form-control" aria-describedby="emailHelp" id="register-email">
-                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-                      </div>
-                      <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Password</label>
-                        <input type="password" class="form-control" id='register-password'>
-                      </div>
-                      <div class="col-auto">
-                        <button class="btn btn-danger" type="button" id='register-submit'>Register</button>
-                      </div>
-                  </form>
-            </div>
+        <div class="edit" id="form-edit">
+          
         </div>
+      </div>
     </div>
-
-    <!-- Todo -->
-    <div id="todo">
-
-    </div>
+  </div>
+</div>
 
 
-    <!-- Logout -->
 
-    
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-    <script src="./index.js"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous">
+  </script>
+  <script src="./index.js"></script>
 </body>
-</html>
 
+</html>

@@ -8,14 +8,19 @@ function error(err, req, res, next) {
             })
             res.status(400).json(errors)
         } else if(err.name === "notFound") {
+            console.log('Error not found')
             res.status(404).json({message: "Errors not found"})
         } else if(err.name === "invalid") {
+            console.log('Invalid email/password')
             res.status(401).json({message: "Invalid email/password"})
         } else if(err.name === "Not Authenticated") {
+            console.log('Please login first')
             res.status(401).json({message: "Please login first"})
         } else if(err.name === "Not Authorized") {
+            console.log('No Authorization')
             res.status(403).json({message: "No Authorization"})
         } else {
+            console.log('internal Server Error')
             res.status(500).json({message: "internal Server Error"})
         }
     }

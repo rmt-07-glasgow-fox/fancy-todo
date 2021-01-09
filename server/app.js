@@ -8,6 +8,7 @@ const cors = require('cors')
 
 app.use(express.urlencoded({ extended:true }))
 
+
 app.use(cors())
 
 app.get('/', (req, res) => {

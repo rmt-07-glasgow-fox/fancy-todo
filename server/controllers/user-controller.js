@@ -1,9 +1,8 @@
+const {OAuth2Client} = require('google-auth-library');
 const { User } = require('../models')
 const { comparePassword } = require('../helpers/bcryptjs')
 const { generateToken } = require('../helpers/jwt')
-const user = require('../models/user')
-const axios = require('axios')
-const { response } = require('express')
+
 
 class UserController {
     static postRegisterHandler(req, res, next) {
@@ -32,7 +31,6 @@ class UserController {
                         id: data.id,
                         email: data.email
                     }
-                    console.log(payload)
                     const access_token = generateToken(payload)
                     // console.log(access_token)
                     res.status(200).json({
@@ -49,16 +47,92 @@ class UserController {
             })
     }
 
-    static userHandler(req,res) {
+    static loginGoogleHandler (req, res, next) {
+        let { id_token } = req.body
+        const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
+        
+        let payload = null
+        //console.log(`masukkk====>`)
+        client.verifyIdToken({
+            idToken: id_token,
+            audience: process.env.GOOGLE_CLIENT_ID
+        })
+        .then(ticket =>{
+            //console.log(ticket)
+            payload = ticket.getPayload()
+            return User.findOne({where: {email: payload.email}})
+        })
+        .then(user =>{
+            //console.log(user)
+            if(!user){
+                //console.log(`masukkk====>`)
+                return User.create({
+                    email: payload.email,
+                    fullName: payload.name,
+                    password: Math.floor(Math.random()*1000) + 'iniDariGoogle'
+                })
+            } else{
+                return user
+            }
+        })
+        .then(user =>{
+            let googleSign = {
+                id: user.id,
+                email: user.email
+            }
+            let accessToken = generateToken(googleSign)
+            return res.status(200).json({
+                access_token: accessToken
+            })
+        })
+        .catch(err =>{
+            console.log(err)
+            next(err)
+        })
 
-        axios.get("http://api.openweathermap.org/data/2.5/weather?q=London&appid=498411ae61c0536b808a80020b14287a")
-            .then(response => {
-                console.log(response)
-                res.send(response)
+    }
+    static loginGasoogleHandler(req, res, next){
+        let {id_token} = req.body
+        const client = new OAuth2Client(process.env.Google_API)
+        
+        let payload = null
+        //console.log(`masukkk====>`)
+        client.verifyIdToken({
+            idToken: id_token,
+            audience: process.env.Google_API
+        })
+        .then(ticket =>{
+            //console.log(ticket)
+            payload = ticket.getPayload()
+            return User.findOne({where: {email: payload.email}})
+        })
+        .then(user =>{
+            //console.log(user)
+            if(!user){
+                //console.log(`masukkk====>`)
+                return User.create({
+                    email: payload.email,
+                    fullName: payload.name,
+                    password: Math.floor(Math.random()*1000) + 'iniDariGoogle'
+                })
+            } else{
+                return user
+            }
+        })
+        .then(user =>{
+            let googleSign = {
+                id: user.id,
+                email: user.email
+            }
+            let accessToken = generateToken(googleSign)
+            return res.status(200).json({
+                access_token: accessToken
             })
-            .catch(err => {
-                res.send(err)
-            })
+        })
+        .catch(err =>{
+            console.log(err)
+            next(err)
+        })
     }
 }
 

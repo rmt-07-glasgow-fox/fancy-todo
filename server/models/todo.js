@@ -35,19 +35,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    status: {
-      type: DataTypes.BOOLEAN,
-      validate: {
-        notEmpty: {
-          args: true,
-          msg: "Status must be filled"
-        },
-        isIn: {
-          args: [['true', 'false']],
-          msg: "Status must be either true or false"
-        }
-      }
-    },
+    status: DataTypes.BOOLEAN,
     due_date: {
       type: DataTypes.DATE,
       validate: {
