@@ -45,11 +45,25 @@ btn_cancel_edit.on('click', function () {
 search_task.on("keyup", function () {
   var value = $(this).val().toLowerCase();
   $(".todo").filter(function () {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
   });
 });
 
-function checkLogin(){
+$('fieldset').each(function () {
+  $(this).sortable({
+    connectWith: 'fieldset',
+    cursor: 'pointer',
+    revert: true,
+    remove: function (event, ui) {
+      event.preventDefault()
+      let id = ui.item.attr('id')
+      console.log(id);
+      patchTodo(id)
+    }
+  })
+})
+
+function checkLogin() {
   if (localStorage.getItem('access_token')) {
     let username = localStorage.getItem('username')
     $('#user-account').text(username)
@@ -89,25 +103,25 @@ function registerPage() {
   })
 }
 
-function handleRegister(data){
+function handleRegister(data) {
   $.ajax({
-    method: 'POST',
-    url: `${baseUrl}/register`,
-    data
-  })
-  .done(() => {
-    $('#form-register').trigger('reset')
-    loginPage()
-  })
-  .fail(xhr => {
-    $('#password').val('')
-    Swal.fire({
-      title: 'Something Error!',
-      text: xhr.responseJSON.message[0],
-      icon: 'error',
-      confirmButtonText: 'Ok'
+      method: 'POST',
+      url: `${baseUrl}/register`,
+      data
     })
-  })
+    .done(() => {
+      $('#form-register').trigger('reset')
+      loginPage()
+    })
+    .fail(xhr => {
+      $('#password').val('')
+      Swal.fire({
+        title: 'Something Error!',
+        text: xhr.responseJSON.message[0],
+        icon: 'error',
+        confirmButtonText: 'Ok'
+      })
+    })
 }
 
 
@@ -127,27 +141,27 @@ function loginPage() {
   })
 }
 
-function handleLogin(data){
+function handleLogin(data) {
   $.ajax({
-    method: 'POST',
-    url: `${baseUrl}/login`,
-    data
-  })
-  .done(res => {
-    localStorage.setItem('username', res.username)
-    localStorage.setItem('access_token', res.access_token)
-    $('#form-login').trigger('reset')
-    checkLogin()
-  })
-  .fail(xhr => {
-    $('#password-login').val('')
-    Swal.fire({
-      title: 'Something Error!',
-      text: xhr.responseJSON.message,
-      icon: 'error',
-      confirmButtonText: 'Ok'
+      method: 'POST',
+      url: `${baseUrl}/login`,
+      data
     })
-  })
+    .done(res => {
+      localStorage.setItem('username', res.username)
+      localStorage.setItem('access_token', res.access_token)
+      $('#form-login').trigger('reset')
+      checkLogin()
+    })
+    .fail(xhr => {
+      $('#password-login').val('')
+      Swal.fire({
+        title: 'Something Error!',
+        text: xhr.responseJSON.message,
+        icon: 'error',
+        confirmButtonText: 'Ok'
+      })
+    })
 }
 
 function onSignIn(googleUser) {
@@ -192,10 +206,10 @@ function todoPage() {
   $('#submit-add').off('click').on('click', function (event) {
     event.preventDefault()
     let data = {
-      title : $('#add-title').val(),
+      title: $('#add-title').val(),
       description: $('#add-description').val(),
       due_date: $('#add-date').val(),
-      status : false
+      status: false
     }
     handleAddTodo(data)
   })
@@ -205,22 +219,22 @@ function todoPage() {
 
 function getTodo() {
   $.ajax({
-    method: 'GET',
-    url: `${baseUrl}/todos`,
-    headers: {
-      access_token: localStorage.getItem('access_token')
-    }
-  })
-  .done(res => {
-    dataTodo = res
-    $('#task-backlog').empty()
-    $('#task-done').empty()
-    dataTodo.forEach(data => {
-      console.log(data);
-      if (data.status) {
-        $('#task-done').append(
-          `
-          <div class="todo card-body bg-white shadow-sm rounded mt-3 p-0 overflow-hidden">
+      method: 'GET',
+      url: `${baseUrl}/todos`,
+      headers: {
+        access_token: localStorage.getItem('access_token')
+      }
+    })
+    .done(res => {
+      dataTodo = res
+      $('#task-backlog').empty()
+      $('#task-done').empty()
+      dataTodo.forEach(data => {
+        console.log(data);
+        if (data.status) {
+          $('#task-done').append(
+            `
+          <div id="${data.id}" class="todo card-body bg-white shadow-sm rounded mt-3 p-0 overflow-hidden">
             <div class="d-flex justify-content-start">
               <div class="p-1 bg-success"></div>
               <div class="pb-3 position-relative w-100"
@@ -243,11 +257,11 @@ function getTodo() {
             </div>
           </div>
           `
-        )
-      } else {
-        $('#task-backlog').append(
-          `
-          <div class="todo card-body bg-white shadow-sm rounded mt-3 p-0 overflow-hidden">
+          )
+        } else {
+          $('#task-backlog').append(
+            `
+          <div id="${data.id}" class="todo card-body bg-white shadow-sm rounded mt-3 p-0 overflow-hidden">
             <div class="d-flex justify-content-start">
               <div class="p-1 bg-info"></div>
               <div class="pb-3 position-relative w-100"
@@ -271,72 +285,72 @@ function getTodo() {
             </div>
           </div>
           `
-        )
-      }
+          )
+        }
+      })
     })
-  })
-  .fail(xhr => {
-    Swal.fire({
-      title: 'Something Error!',
-      text: xhr.responseJSON.message,
-      icon: 'error',
-      confirmButtonText: 'Ok'
+    .fail(xhr => {
+      Swal.fire({
+        title: 'Something Error!',
+        text: xhr.responseJSON.message,
+        icon: 'error',
+        confirmButtonText: 'Ok'
+      })
     })
-  })
 }
 
-function handleAddTodo(data){
+function handleAddTodo(data) {
   $.ajax({
-    method: 'POST',
-    url: `${baseUrl}/todos`,
-    headers: {
-      access_token: localStorage.getItem('access_token')
-    },
-    data
-  })
-  .done(() => {
-    $('#form-add').trigger('reset')
-    checkLogin()
-  })
-  .fail(xhr => {
-    console.log(xhr);
-    Swal.fire({
-      title: 'Something Error!',
-      text: xhr.responseJSON.message[0],
-      icon: 'error',
-      confirmButtonText: 'Ok'
+      method: 'POST',
+      url: `${baseUrl}/todos`,
+      headers: {
+        access_token: localStorage.getItem('access_token')
+      },
+      data
     })
-  })
+    .done(() => {
+      $('#form-add').trigger('reset')
+      checkLogin()
+    })
+    .fail(xhr => {
+      console.log(xhr);
+      Swal.fire({
+        title: 'Something Error!',
+        text: xhr.responseJSON.message[0],
+        icon: 'error',
+        confirmButtonText: 'Ok'
+      })
+    })
 }
 
 function editTodo(id) {
   $.ajax({
-    method: 'GET',
-    url: `${baseUrl}/todos/${id}`,
-    headers: {
-      access_token: localStorage.getItem('access_token')
-    }
-  })
-  .done(res => {
-    $('#modal-edit').show()
-    $('#edit-title').val(res.title)
-    $('#edit-description').val(res.description)
-    $('#edit-date').val(res.due_date.slice(0,10))
-    $(`input[name="edit-status"][value="${res.status}"]`).prop('checked', true)
-    handleEdit(res.id)
-  })
-  .fail(xhr => {
-    Swal.fire({
-      title: 'Something Error!',
-      text: xhr.responseJSON.message,
-      icon: 'error',
-      confirmButtonText: 'Ok'
+      method: 'GET',
+      url: `${baseUrl}/todos/${id}`,
+      headers: {
+        access_token: localStorage.getItem('access_token')
+      }
     })
-  })
+    .done(res => {
+      $('#modal-edit').show()
+      $('#edit-title').val(res.title)
+      $('#edit-description').val(res.description)
+      $('#edit-date').val(res.due_date.slice(0, 10))
+      $(`input[name="edit-status"][value="${res.status}"]`).prop('checked', true)
+      handleEdit(res.id)
+    })
+    .fail(xhr => {
+      Swal.fire({
+        title: 'Something Error!',
+        text: xhr.responseJSON.message,
+        icon: 'error',
+        confirmButtonText: 'Ok'
+      })
+    })
 }
 
-function handleEdit(id){
-  $('#submit-edit').off('click').on('click',function (event) {
+function handleEdit(id) {
+  $('#submit-edit').off('click').on('click', function (event) {
     event.preventDefault()
     const data = {
       title: $('#edit-title').val(),
@@ -382,6 +396,7 @@ function patchTodo(id) {
       checkLogin()
     })
     .fail(xhr => {
+      checkLogin()
       Swal.fire({
         title: 'Something Error!',
         text: xhr.responseJSON.message,
@@ -393,21 +408,21 @@ function patchTodo(id) {
 
 function deleteTodo(id) {
   Swal.fire({
-    title: 'Are you sure?',
-    text: 'You will not be able to recover this imaginary file!',
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonText: 'Yes, delete it!',
-    cancelButtonText: 'No, keep it'
-  })
-  .then(result => {
-    if (result.value) {
-      handleDelete(id)
-    }
-  })
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this imaginary file!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it'
+    })
+    .then(result => {
+      if (result.value) {
+        handleDelete(id)
+      }
+    })
 }
 
-function handleDelete(id){
+function handleDelete(id) {
   $.ajax({
       method: 'DELETE',
       url: `${baseUrl}/todos/${id}`,
@@ -428,18 +443,18 @@ function handleDelete(id){
     })
 }
 
-function getWeather(){
+function getWeather() {
   $.ajax({
-    method: 'GET',
-    url: `${baseUrl}/todos/weather`,
-    headers: {
-      access_token: localStorage.getItem('access_token')
-    }
-  })
-  .done(res => {
-    $('#weather').empty()
-    $('#weather').append(
-      `
+      method: 'GET',
+      url: `${baseUrl}/todos/weather`,
+      headers: {
+        access_token: localStorage.getItem('access_token')
+      }
+    })
+    .done(res => {
+      $('#weather').empty()
+      $('#weather').append(
+        `
       <div class="card-body">
         <small class="text-warning">${new Date().toLocaleString()}</small>
         <h4 class="card-title">${res.name}</h4>
@@ -458,17 +473,14 @@ function getWeather(){
         <small class="text-muted">${res.temp_max}&deg C</small>
       </div>
       `
-    )
-  })
-  .fail(xhr => {
-    Swal.fire({
-      title: 'Something Error!',
-      text: xhr.responseJSON.message,
-      icon: 'error',
-      confirmButtonText: 'Ok'
+      )
     })
-  })
+    .fail(xhr => {
+      Swal.fire({
+        title: 'Something Error!',
+        text: xhr.responseJSON.message,
+        icon: 'error',
+        confirmButtonText: 'Ok'
+      })
+    })
 }
-
-
-
