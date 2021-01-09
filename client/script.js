@@ -7,6 +7,7 @@ function checkAuth() {
 
     $('#login-page').hide();
     getTodoList();
+    currentWeather();
     $('#register-page').hide();
     $('#todo-list').show();
     $('#logout-btn').show();
@@ -27,6 +28,36 @@ function checkAuth() {
 
   }
 }
+
+const currentWeather = () => {
+  const city = Intl.DateTimeFormat().resolvedOptions().timeZone.split('/')[1];
+  $.ajax({
+    method: 'POST',
+    url: `${baseUrl}/currentWeather`,
+    data: { city },
+    headers: {
+      access_token: localStorage.access_token
+    }
+  })
+    .done(response => {
+      $('#cityName').text(response.name);
+      $('#countryName').text(response.sys.country);
+      $('#coordLat').text(response.coord.lat);
+      $('#coordLon').text(response.coord.lon);
+      const iconUrl = `http://openweathermap.org/img/wn/${response.weather[0].icon}@2x.png`;
+      $('#weatherIcon').attr("src", iconUrl);
+      $('#weatherTemp').text(response.main.temp);
+      $('#weatherDescription').text(response.weather[0].description);      
+      console.log(response);
+    })
+    .fail(err => {
+      console.log(err);
+    })
+    .always(() => {
+      console.log('SHOW Weather API');
+    })
+}
+
 
 function getTodoList() {
   $.ajax({
@@ -68,7 +99,6 @@ function getTodoList() {
           </div>
             
             <a href="#" class="btn btn-primary" onclick="getOneTodo(${todo.id})">Update</a>    
-            <a href="#" class="btn btn-primary" onclick="getOneTodo(${todo.id})">Update</a> 
             <a class="btn btn-danger" onclick="getOneTodoDelete(${todo.id})">Delete</a> 
             
         </div>
@@ -96,7 +126,7 @@ function getOneTodo(id) {
     }
   })
     .done(response => {
-      $("#updateStatus").checked = false;  
+      $("#updateStatus").checked = false;
 
       $('#updateTitle').val(response.title);
       $('#updateDueDate').val(new Date(response.due_date).toISOString().split('T')[0]);
@@ -105,9 +135,9 @@ function getOneTodo(id) {
       $('#delete-btn').data('id', id);
 
       if (!response.status) {
-        $("#updateStatus").prop( "checked", false );
+        $("#updateStatus").prop("checked", false);
       } else {
-        $("#updateStatus").prop( "checked", true );
+        $("#updateStatus").prop("checked", true);
       }
       $('#updateTodo').show();
       $(`#todo-${id}`).hide()
@@ -249,7 +279,7 @@ $(document).ready(function () {
         $('#createTitle').val('');
         $('#createDescription').val('');
       })
-    
+
   })
 
   $('#update-btn').click(function (event) {
@@ -289,38 +319,6 @@ $(document).ready(function () {
         console.log('ALWAYS setelah update');
       })
   })
-
-  
-  // $('#delete-btn').click(function (event) {
-  //   event.preventDefault();
-  //   const todoId = $('#delete-btn').data('id');
-  //   const due_date = $('#createDueDate').val();
-  //   const title = $('#createTitle').val();
-  //   const description = $('#createDescription').val();
-  //   console.log(todoId, 'DELETE===========');
-  //   // $.ajax({
-  //   //   method: 'POST',
-  //   //   url: `${baseUrl}/todos`,
-  //   //   data: { due_date, title, description, status },
-  //   //   headers: {
-  //   //     access_token: localStorage.access_token
-  //   //   }
-  //   // })
-  //   //   .done(response => {
-  //   //     console.log(response);
-  //   //     getTodoList();
-  //   //   })
-  //   //   .fail(err => {
-  //   //     console.log(err);
-  //   //   })
-  //   //   .always(() => {
-  //   //     console.log('ALWAYS Create');
-  //   //     $('#createDueDate').val('');
-  //   //     $('#createTitle').val('');
-  //   //     $('#createDescription').val('');
-  //   //   })
-    
-  // })
 
 
   $('#cancelUpdate-btn').click(function () {
