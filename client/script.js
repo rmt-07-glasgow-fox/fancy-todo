@@ -95,6 +95,7 @@ showProjects = () => {
   $('#todos').hide();
   $('#projects').show();
   $('#projectForm').hide();
+  listProject();
 };
 
 const showTodoForm = () => {
@@ -381,6 +382,35 @@ const addProject = (e) => {
       $('#nameProject').val('');
       hideProjectForm();
     });
+};
+
+const listProject = () => {
+  $.ajax({
+    url: url + '/projectusers/projects',
+    method: 'GET',
+    headers: {
+      authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+    },
+  })
+    .done((response) => {
+      console.log(response);
+      $('#projectList').empty();
+      response.map((data, index) => {
+        $(`
+        <tr>
+          <th scope='row'>${index + 1}</th>
+          <td>${data.Project.name}</td>
+        </tr>
+        `).appendTo('#projectList');
+      });
+    })
+    .fail((err) => {
+      err.responseJSON.map((e) => {
+        const template = alertTemplate('error', e.message);
+        $(template).appendTo('#alert');
+      });
+    })
+    .always(() => {});
 };
 
 const register = (e) => {
