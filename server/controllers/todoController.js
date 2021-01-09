@@ -72,7 +72,7 @@ class ToDoController {
     if(!id) {
       res.status(404).json({message: `Not Found`})
     } else {
-      ToDoList.update(forUpdate, {where: {id}})
+      ToDoList.update(forUpdate, {where: {id}, retutning: true})
       .then(data => {
         res.status(200).json({id: data.id, title: data.title, description: data.description, due_date: data.due_date})
       })

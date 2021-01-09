@@ -192,6 +192,7 @@ function updateForm(id) {
 }
 
 function changeStatus(id) {
+  $(".navbar").show()
   $.ajax({
     method: "PATCH",
     url: baseUrl+`/todos/${id}`,
@@ -199,7 +200,7 @@ function changeStatus(id) {
       access_token: localStorage.getItem("access_token")
     },
     data: {
-      
+
     }
   })
   .done(response => {
