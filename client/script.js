@@ -11,6 +11,7 @@ function checkAuth() {
     $('#todo-list').show();
     $('#logout-btn').show();
     $('#updateTodo').hide();
+    $('#createTodo').show();
 
 
 
@@ -21,6 +22,7 @@ function checkAuth() {
     $('#todo-list').hide();
     $('#logout-btn').hide();
     $('#updateTodo').hide();
+    $('#createTodo').hide();
 
 
   }
@@ -66,6 +68,9 @@ function getTodoList() {
           </div>
             
             <a href="#" class="btn btn-primary" onclick="getOneTodo(${todo.id})">Update</a>    
+            <a href="#" class="btn btn-primary" onclick="getOneTodo(${todo.id})">Update</a> 
+            <a class="btn btn-danger" onclick="getOneTodoDelete(${todo.id})">Delete</a> 
+            
         </div>
       </div>`
         )
@@ -97,17 +102,16 @@ function getOneTodo(id) {
       $('#updateDueDate').val(new Date(response.due_date).toISOString().split('T')[0]);
       $('#updateDescription').val(response.description);
       $('#update-btn').data('id', id);
+      $('#delete-btn').data('id', id);
+
       if (!response.status) {
         $("#updateStatus").prop( "checked", false );
       } else {
         $("#updateStatus").prop( "checked", true );
       }
       $('#updateTodo').show();
-
-      console.log(response);
-      console.log(response.status);
       $(`#todo-${id}`).hide()
-
+      $(`#createTodo`).hide()
     })
     .fail(err => {
       console.log(err);
@@ -117,6 +121,26 @@ function getOneTodo(id) {
     })
 }
 
+function getOneTodoDelete(id) {
+  $.ajax({
+    method: 'DELETE',
+    url: `${baseUrl}/todos/${id}`,
+    headers: {
+      access_token: localStorage.access_token
+    }
+  })
+    .done(response => {
+      // $(`#todo-${id}`).hide()
+      getTodoList();
+      console.log(response, 'DELETE SUCCESS');
+    })
+    .fail(err => {
+      console.log(err);
+    })
+    .always(() => {
+      console.log('ALWAYS One Todo');
+    })
+}
 
 $(document).ready(function () {
   console.log('<><><><><><><> Reload Page <><><><><><><>');
@@ -197,6 +221,37 @@ $(document).ready(function () {
       })
   })
 
+
+  $('#create-btn').click(function (event) {
+    event.preventDefault()
+    const due_date = $('#createDueDate').val();
+    const title = $('#createTitle').val();
+    const description = $('#createDescription').val();
+
+    $.ajax({
+      method: 'POST',
+      url: `${baseUrl}/todos`,
+      data: { due_date, title, description, status },
+      headers: {
+        access_token: localStorage.access_token
+      }
+    })
+      .done(response => {
+        console.log(response);
+        getTodoList();
+      })
+      .fail(err => {
+        console.log(err);
+      })
+      .always(() => {
+        console.log('ALWAYS Create');
+        $('#createDueDate').val('');
+        $('#createTitle').val('');
+        $('#createDescription').val('');
+      })
+    
+  })
+
   $('#update-btn').click(function (event) {
     event.preventDefault();
     const todoId = $('#update-btn').data('id');
@@ -204,9 +259,7 @@ $(document).ready(function () {
     const title = $('#updateTitle').val();
     const description = $('#updateDescription').val();
     const status = $('#updateStatus').is(":checked");
-    console.log(status);
 
-    console.log(todoId);
     $.ajax({
       method: 'PUT',
       url: `${baseUrl}/todos/${todoId}`,
@@ -222,11 +275,12 @@ $(document).ready(function () {
     })
       .done(response => {
         console.log(response);
+        getTodoList();
+        $(`#createTodo`).show();
         $('#updateTodo').hide();
         $('#updateDueDate').val('');
         $('#updateTitle').val('');
         $('#updateDescription').val('');
-        getTodoList();
       })
       .fail(err => {
         console.log(err, 'ERR');
@@ -235,6 +289,38 @@ $(document).ready(function () {
         console.log('ALWAYS setelah update');
       })
   })
+
+  
+  // $('#delete-btn').click(function (event) {
+  //   event.preventDefault();
+  //   const todoId = $('#delete-btn').data('id');
+  //   const due_date = $('#createDueDate').val();
+  //   const title = $('#createTitle').val();
+  //   const description = $('#createDescription').val();
+  //   console.log(todoId, 'DELETE===========');
+  //   // $.ajax({
+  //   //   method: 'POST',
+  //   //   url: `${baseUrl}/todos`,
+  //   //   data: { due_date, title, description, status },
+  //   //   headers: {
+  //   //     access_token: localStorage.access_token
+  //   //   }
+  //   // })
+  //   //   .done(response => {
+  //   //     console.log(response);
+  //   //     getTodoList();
+  //   //   })
+  //   //   .fail(err => {
+  //   //     console.log(err);
+  //   //   })
+  //   //   .always(() => {
+  //   //     console.log('ALWAYS Create');
+  //   //     $('#createDueDate').val('');
+  //   //     $('#createTitle').val('');
+  //   //     $('#createDescription').val('');
+  //   //   })
+    
+  // })
 
 
   $('#cancelUpdate-btn').click(function () {

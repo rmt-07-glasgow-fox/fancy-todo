@@ -131,6 +131,28 @@
           </form>
         </div>
 
+        <div class="container" id="createTodo">
+          <form>
+            <div class="card">
+              <div class="card-header">
+                <div class="form-floating">
+                  <input type="date" class="form-control" id="createDueDate">
+                  <label for="createDueDate">Due date</label>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="mb-3">
+                  <input type="text" class="form-control" id="createTitle" placeholder="Title Todo">
+                </div>
+                <div class="mb-3">
+                  <textarea class="form-control" id="createDescription" rows="3" placeholder="Description"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" id="create-btn">Create</button>
+                <button type="reset" value="cancel" class="btn btn-primary" id="cancelCreate-btn">Cancel</button>
+              </div>
+            </div>
+          </form>
+        </div>
 
         <!-- Jquery List Todo -->
         <div class="container" id="todo-list">
