@@ -82,6 +82,64 @@ _Response (400 - Bad Request)_
 }
 ```
 
+### POST /loginGoogle
+_Request Header_
+```
+not needed
+```
+
+_Request Body_
+```json
+{
+  "id_token": "<idToken to get insert into>"
+}
+```
+
+_Response (201 - Created)_
+```json
+{
+  "email": "<email to get insert into>",
+  "password": "<password to get insert into>"
+}
+}
+```
+
+_Response (400 - Bad Request)_
+```json
+{
+  "message": "Invalid requests"
+}
+```
+
+### GET /weather
+_Request Header_
+```
+not needed
+```
+
+_Request Body_
+```json
+{
+  "id_token": "<idToken to get insert into>"
+}
+```
+
+_Response (201 - Created)_
+```json
+{
+  "email": "<email to get insert into>",
+  "password": "<password to get insert into>"
+}
+}
+```
+
+_Response (400 - Bad Request)_
+```json
+{
+  "message": "Invalid requests"
+}
+```
+
 ### GET /todos
 
 > Get all todos

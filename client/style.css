@@ -3,7 +3,7 @@ body {
 }
 
 .home-pict{
-    width: 85%;
+    width: 80%;
     float: right
 }
 
@@ -23,7 +23,7 @@ body {
 
 .signin{
     padding-left: 180px;
-    padding-top: 120px;
+    padding-top: 100px;
     text-align: center;
     color: #2e2d48
 }
@@ -58,4 +58,65 @@ h1 {
 .platform{
     font-weight: 600;
     color: #2e2d48
+}
+
+.row-2 {
+    margin-bottom: 30px;
+}
+
+.row-3 {
+    margin-bottom: 20px;
+}
+
+.row-4 {
+    margin-bottom: 50px;
+}
+
+
+
+/* BODY HOME */
+body {
+    font-family: 'Montserrat';
+}
+  
+.navbar {
+    background-color: black;
+    border-bottom: 1px solid #333;
+}
+
+.logo-news {
+    color: white;
+    font-size: 30px
+}
+
+.container-body{
+    margin-top:50px;
+}
+
+.card{
+margin-bottom: 30px !important;
+}
+
+.card-img-top{
+object-fit: cover;
+object-position: 100% 0;
+
+width: 100%;
+height: 250px;
+}
+
+.card-body{
+padding-bottom: 0.25rem;
+}
+
+.btn-home {
+    margin-bottom: 0 !important;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+}
+
+.myfooter{
+padding-top: 10px;
+color: white;
+background-color: black;
 }
