@@ -152,7 +152,8 @@ $('#add-todo-btn').click(event => {
             } else {
                 doneCheck = 'checked'
             }
-
+            
+            if (navStatus) {
             $('#lists').append(`
             <tr id="todo-${todo.id}">
                 <td>
@@ -174,6 +175,9 @@ $('#add-todo-btn').click(event => {
                 </td>
             </tr>
             `)
+            } else {
+                finish()
+            }
             $('#add-todo-form').modal('hide')
         })
         .fail((xhr, status, err) => {
@@ -234,7 +238,8 @@ function openEditFormTodo(id) {
             }
         })
             .done(response => {
-                getTodoList();
+                if (navStatus) home()
+                else finish()
                 $('#edit-todo-form').modal('hide')
             })
             .fail((xhr) => {
@@ -535,11 +540,15 @@ function doneTodo () {
 function home() {
     getTodoList();
     navStatus = true;
+    $('#home').addClass('active');
+    $('#finish').removeClass('active');
 }
 
 function finish() {
     doneTodo();
     navStatus = false;
+    $('#home').removeClass('active');
+    $('#finish').addClass('active');
 }
 
 
