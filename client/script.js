@@ -99,6 +99,20 @@ $("#back-fromdetail-toindex").click(function() {
   getTodolist()
 })
 
+$("#back-fromedit-toindex").click(function() {
+  $("#form-edit").hide()
+  $("#form-new").hide()
+  $("#new-todo-form").show()
+  getTodolist()
+})
+
+$("#back-fromnew-toindex").click(function() {
+  // $("#form-edit").hide()
+  $("#form-new").hide()
+  // $("#new-todo-form").show()
+  getTodolist()
+})
+
 $("#btn-create").click(function(event) {
   event.preventDefault()
   let title = $("#new-title-value").val()
@@ -247,6 +261,7 @@ function getTodolist() {
 function editTodo(id) {
   $("#todolist").hide()
   $("#form-edit").show()
+  $("#new-todo-form").hide()
   $.ajax({
     url: `${baseUrl}/todos/${id}`,
     headers: {
