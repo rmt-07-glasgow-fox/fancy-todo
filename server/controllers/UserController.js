@@ -14,7 +14,8 @@ class UserController {
       })
       const response = {
         id: data.id,
-        email: data.email
+        email: data.email,
+        location: 'Jakarta'
       }
       res.status (201).json (response)
     } catch (err) {
@@ -37,7 +38,8 @@ class UserController {
       if (match) {
         const payload = {
           id: user.id,
-          email: user.email
+          email: user.email,
+          location: user.location
         }
         let name = ''
         for (let i = 0; i < user.email.length; i++) {
@@ -49,7 +51,8 @@ class UserController {
         const access_token = generateToken (payload) 
         res.status(200).json({
           access_token: access_token,
-          name: name
+          name: name,
+          location: user.location
         })
       } else {
         throw new Error ('Invalid email / password')
@@ -88,6 +91,7 @@ class UserController {
           const payload = {
             id: user.id,
             email: user.email,
+            location: user.location
           }
           console.log (user, 'usergoogle')
           let name = ''
@@ -100,7 +104,8 @@ class UserController {
           const access_token = generateToken (payload) 
           res.status(200).json({
             access_token: access_token,
-            name: name
+            name: name,
+            location: user.location
           })
       }
     } catch (err) {

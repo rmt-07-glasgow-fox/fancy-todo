@@ -1,5 +1,4 @@
 const { Todo } = require ('../models/index')
-const { getWeather } = require ('../helper/axios')
 
 class ToDoController {
   static async getTodos (req, res, next) {
@@ -7,11 +6,13 @@ class ToDoController {
         let data = await Todo.findAll({
           where: {
             user_id: req.user
-          }
+          },
+          order: [
+            ['id', 'ASC']
+          ]
         })
 
-        let weather = await getWeather ()
-        res.status(200).json({data, weather})
+        res.status(200).json(data)
       } catch (err) {
         next (err)
       }
@@ -25,8 +26,7 @@ class ToDoController {
         }
       })
       if (data !== null) {
-        let weather = await getWeather ()
-        res.status(200).json(data, weather)
+        res.status(200).json(data)
       } else {
         throw new Error ('error not found')
       }
@@ -63,7 +63,6 @@ class ToDoController {
         let obj = {
           title: req.body.title,
           description: req.body.description,
-          status: req.body.status,
           due_date: req.body.due_date
         }
     
