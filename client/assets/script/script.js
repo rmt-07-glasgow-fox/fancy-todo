@@ -189,7 +189,7 @@ function todoPage() {
   hideAll()
   btn_logout.show()
   page_todo.show()
-  $('#submit-add').click(function (event) {
+  $('#submit-add').off('click').on('click', function (event) {
     event.preventDefault()
     let data = {
       title : $('#add-title').val(),
