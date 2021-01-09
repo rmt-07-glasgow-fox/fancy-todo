@@ -4,8 +4,9 @@ const { cekToken } = require('../helpers/jwt');
 class todosController {
     static async getTodos (req, res, next) {
         try {
-            console.log('Haloooo');
-            let data = await Todo.findAll({ attributes: { exclude: ['createdAt', 'updatedAt'] } });
+            let token = cekToken(req.headers.token);
+
+            let data = await Todo.findAll({ attributes: { exclude: ['createdAt', 'updatedAt'] }, where: { "userId": token.id } });
 
             return res.status(200).json(data);
         } catch (err) {

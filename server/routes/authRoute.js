@@ -4,5 +4,6 @@ const authRoute = express.Router();
 
 authRoute.post('/signUp', authController.postSignUp);
 authRoute.post('/signIn', authController.postSignIn);
+authRoute.post('/googleLogin', authController.googleLogin);
 
 module.exports = authRoute;

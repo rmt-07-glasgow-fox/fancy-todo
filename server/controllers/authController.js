@@ -1,3 +1,4 @@
+const { OAuth2Client } = require('google-auth-library');
 const { User } = require('../models/index');
 const { comparePass } = require('../helpers/bcrypt');
 const { getToken } = require('../helpers/jwt');
@@ -47,6 +48,37 @@ class authController {
             } else {
                 next({ code: 400, name: 'Error Login', msg: { errors: [{ message: 'Wrong password or email!!!'}] } });
             }
+        } catch (err) {
+            next({ code: 500 });
+        }
+    }
+
+    static async googleLogin (req, res, next) {
+        try {
+            let client = new OAuth2Client(process.env.GOOGLE_AUTH_KEY);
+    
+            let ticket = await client.verifyIdToken({
+                idToken: req.body.id_token,
+                audience: process.env.GOOGLE_AUTH_KEY
+            });
+
+            let payload = ticket.getPayload();
+            
+            let data = await User.findOne({ where: { email: payload.email } });
+
+            if (!data) {
+                data = await User.create({
+                    email: payload.email,
+                    password: `${Math.floor(Math.random() * 1000000) + 1000000}`
+                });
+            }
+
+            payload = {
+                id: data.id,
+                email: data.email
+            };
+
+            res.status(200).json({ token: getToken(payload) });
         } catch (err) {
             next({ code: 500 });
         }

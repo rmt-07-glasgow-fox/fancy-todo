@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="150552715425-vcgoiac96ndsbc205q919126gpip66ct.apps.googleusercontent.com">
+    <title>Fancy Todo</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <body>
+        <section id="register-login">
+            <div id="content-about">
+                <h1 id="con-title">Fancy Todos</h1>
+                <p id="con-desc">
+                    A simple <b>todo list app</b>.
+                    Millions people rely on this app with their task list, reminder, planner, and more.
+                    Be an organized and punctual person.
+                    Keep things practical before they become confusing and forgotten.
+                </p>
+            </div>
+            <div id="register-login-form">
+                <div class="container-register">
+                    <h2 id="title">Let's Get Start!!!</h2>
+                    <div id="reg-form">
+                        <label for="email">Email</label>
+                        <input type="text" id="email-signup">
+                        <label for="email">Password</label>
+                        <input type="password" id="password-signup">
+                    </div>
+                    <div id="reg-error">
+                    </div>
+                    <a id="sign-up-btn">Sign Up</a><a id="go-to-sign-in">Already Have an Account</a>
+                    <p id="else-sign-up">Use social account:</p>
+                    <div class="g-signin2" data-onsuccess="gonSign"></div>
+                </div>
+                <div class="container-login">
+                    <h2 id="title">Welcome Back!!!</h2>
+                    <div id="reg-form">
+                        <label for="email">Email</label>
+                        <input type="text" id="email-signin">
+                        <label for="email">Password</label>
+                        <input type="password" id="password-signin">
+                    </div>
+                    <div id="err-login">
+                    </div>
+                    <a id="sign-in-btn">Sign In</a><a id="go-to-sign-up">Doesn't Have an Account</a>
+                    <p id="else-sign-up">Use social account:</p>
+                    <div class="g-signin2" data-onsuccess="gonSign"></div>
+                </div>
+            </div>
+        </section>
+        <section id="main-app">
+            <div id="movie-disp-con" style="position: absolute; width: 100%; height: 100vh; display: flex; flex-direction: row; align-items: center;">
+                <div id="movie-container" style="margin: 0 auto; background-color: white; width: 70%; height: 80vh; border-radius: 10px; box-shadow: 0 20px 50px 3px black;">
+                    <div id="movie-nav" style="padding: 10px; display: flex; flex-direction: row; justify-content: space-between; align-items: center; background-color: rgb(185, 185, 185);">
+                        <h1>Movies</h1>
+                        <input id="search-movie" type="text" style="margin-bottom: -5px;">
+                        <a style="color: blue;" onclick="searchMovie()">Search</a>
+                        <a style="color: blue;" onclick="showMovie()">Popular</a>
+                        <a style="color: blue;" onclick="topRated()">Top</a>
+                        <a id="close-movie" style="background-color: #ee4747; border-radius: 50%; width: 25px; height: 25px;" onclick="hideMovie()"></a>
+                    </div>
+                    <div id="movie-list" style="overflow-y: scroll; height: 65vh;"></div>
+                </div>
+            </div>
+            <div id="add-todo">
+                <div id="container-add-todo">
+                    <h1 id="add-title">Hello!</br>What you gonna do?</h1>
+                    <div id="add-todo-form">
+                        <label for="title">Title</label>
+                        <input type="text" id="todo-form-title">
+                        <label for="description">Description</label>
+                        <input type="text" id="todo-form-desc">
+                        <label for="dueDate">Due date</label>
+                        <input type="date" id="todo-form-date">
+                    </div>
+                    <div id="add-todo-err">
+                    </div>
+                    <a id="add-todo-btn">Add</a><a id="read-a-book-btn" onclick="showMovie()">Watch a Movie</a>
+                </div>
+            </div>
+            <div id="update-todo">
+                <div id="container-add-todo">
+                    <h1 id="add-title">Make any mistake?</h1>
+                    <div id="add-todo-form">
+                        <label for="title">Title</label>
+                        <input type="text" id="todo-update-title">
+                        <label for="description">Description</label>
+                        <input type="text" id="todo-update-desc">
+                        <label for="dueDate">Due date</label>
+                        <input type="date" id="todo-update-date">
+                    </div>
+                    <div id="update-todo-err">
+                    </div>
+                    <a id="update-todo-btn" onclick="confirmUpdate()">Update</a><a id="cancel-update-btn"
+                        onclick="cancelUpdate()">Cancel</a>
+                </div>
+            </div>
+            <div id="todo-list">
+                <div id="todo-nav">
+                    <h2>Your Todos</h2>
+                    <a id="logout-btn">Log Out</a>
+                </div>
+                <div id="todo-data">
+                </div>
+            </div>
+        </section>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="index.js"></script>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+    </body>
+</body>
+
+</html>

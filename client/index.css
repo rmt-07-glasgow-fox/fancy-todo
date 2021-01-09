@@ -1,0 +1,313 @@
+* {
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+}
+
+#register-login {
+    display: flex;
+    height: 100vh;
+}
+
+#content-about {
+    width: 60%;
+    color: white;
+    background: url(notes2.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% 100vh;
+    opacity: 0.8;
+}
+
+#con-title {
+    margin: 10px 20px;
+    font-size: 30px;
+}
+
+#con-desc {
+    margin: 0 20px;
+}
+
+#register-login-form {
+    width: 40%;
+    background-color: rgb(179, 176, 176);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+.container-register {
+    margin: 0 auto;
+}
+
+.container-login {
+    margin: 0 auto;
+}
+
+#reg-form {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+}
+
+#title {
+    margin-bottom: 40px;
+}
+
+#sign-up-btn {
+    margin: 0 5px;
+    padding: 5px;
+    background-color: #007bff;
+    border-radius: 3px;
+}
+
+#sign-up-btn:hover {
+    background-color: #0668d1;
+}
+
+#sign-in-btn {
+    margin: 0 5px;
+    padding: 5px;
+    background-color: #007bff;
+    border-radius: 3px;
+}
+
+#sign-in-btn:hover {
+    background-color: #0668d1;
+}
+
+#go-to-sign-in {
+    margin: 0 5px;
+    padding: 5px;
+    background-color: #2ebe50;
+    border-radius: 3px;
+}
+
+#go-to-sign-in:hover {
+    background-color: #2aa046;
+}
+
+#go-to-sign-up {
+    margin: 0 5px;
+    padding: 5px;
+    background-color: #2ebe50;
+    border-radius: 3px;
+}
+
+#go-to-sign-up:hover {
+    background-color: #2aa046;
+}
+
+#else-sign-up {
+    margin-top: 20px;
+}
+
+input[ type=text ], input[ type=password ], input[ type=date ], textarea{
+    padding: 5px;
+    margin-bottom: 40px;
+    border: none;
+    border-radius: 3px;
+}
+
+input[ type=text ]:hover, input[ type=password ]:hover, input[ type=date ]:hover, textarea:hover {
+    cursor: text;
+}
+
+input[ type=text ]:focus, input[ type=password ]:focus, input[ type=date ]:focus, textarea:focus {
+    outline: none;
+    box-shadow: 0 0 3px 0 gray;
+}
+
+#error {
+    padding: 5px;
+    border-radius: 3px;
+    background-color: #f76c6c;
+    color: rgb(151, 8, 8);
+    margin: 0 0 10px 0;
+}
+
+#reg-error, #err-login, #add-todo-err {
+    margin-bottom: 20px;
+    margin-top: -20px;
+}
+
+#main-app {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+
+#add-todo {
+    color: white;
+    background-color: rgb(179, 176, 176);
+    width: 40%;
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+#update-todo {
+    color: white;
+    background-color: rgb(179, 176, 176);
+    width: 40%;
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+#add-todo-form {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin: 0 auto;
+}
+
+#container-add-todo {
+    text-align: left;
+    margin: 0 auto;
+    width: 350px;
+}
+
+#add-title {
+    margin-bottom: 25px;
+}
+
+#add-todo-btn {
+    margin: 0 5px;
+    padding: 5px;
+    background-color: #007bff;
+    border-radius: 3px;
+}
+
+#add-todo-btn:hover {
+    background-color: #0668d1;
+}
+
+#update-todo-btn {
+    margin: 0 5px;
+    padding: 5px;
+    background-color: #007bff;
+    border-radius: 3px;
+}
+
+#update-todo-btn:hover {
+    background-color: #0668d1;
+}
+
+#cancel-update-btn {
+    margin: 0 5px;
+    padding: 5px;
+    background-color: #ee4747;
+    border-radius: 3px;
+}
+
+#cancel-update-btn:hover {
+    background-color: #cf3c3c;
+}
+
+#read-a-book-btn {
+    margin: 0 5px;
+    padding: 5px;
+    background-color: #2ebe50;
+    border-radius: 3px;
+}
+
+#read-a-book-btn:hover {
+    background-color: #2aa046;
+}
+
+#todo-list {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+}
+
+#todo-nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+#logout-btn {
+    margin: 0 5px;
+    padding: 5px;
+    background-color: #ee4747;
+    border-radius: 3px;
+    color: white;
+}
+
+#logout-btn:hover {
+    background-color: #cf3c3c;
+}
+
+#todo-data {
+    margin: 0 auto;
+    width: 600px;
+}
+
+#todo-card{
+    padding: 10px;
+    box-shadow: 0 1px 3px 0 rgb(179, 176, 176);
+    border-radius: 5px;
+    margin: 15px 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#no-data-todo {
+    color: rgb(179, 176, 176);
+}
+
+#todo-title {
+    margin-bottom: 5px;
+}
+
+#card-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 50%;
+    color: white;
+}
+
+#todo-content {
+    width: 50%;
+}
+
+#status-card-btn {
+    padding: 5px;
+    background-color: rgb(179, 176, 176);
+    border-radius: 3px;
+}
+
+#status-card-btn:hover {
+    background-color: #0668d1;
+}
+
+#update-card-btn {
+    padding: 5px;
+    background-color: rgb(179, 176, 176);
+    border-radius: 3px;
+}
+
+#update-card-btn:hover {
+    background-color: #2aa046;
+}
+
+#delete-card-btn {
+    padding: 5px;
+    background-color: rgb(179, 176, 176);
+    border-radius: 3px;
+}
+
+#delete-card-btn:hover {
+    background-color: #cf3c3c;
+}
