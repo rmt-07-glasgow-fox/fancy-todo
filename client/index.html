@@ -8,16 +8,19 @@
     <meta name="google-signin-client_id" content="150670312701-l30t46525oh8a1i1lj4osktquvshkgfp.apps.googleusercontent.com">
     
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- CSS -->
+    <!-- <link rel="stylesheet" href="assets/css/style.css"> -->
+    <link rel="stylesheet" href="assets/css/auth.css">
+    <link rel="stylesheet" href="assets/css/main.css">
   </head>
   <body>
    
-   <div class="container">
+   <div class="container d-none" id="body">
       <section id="formHolder">
-
          <div class="row">
-
             <!-- Brand Box -->
             <div class="col-sm-12 col-md-6 brand">
                <a href="#" class="logo">LiSted <span>.</span></a>
@@ -33,11 +36,10 @@
                   <a href="#" class="switch"></a>
                </div>
             </div>
-   
-   
+
             <!-- Form Box -->
             <div class="col-sm-9 col-md-6 form">
-   
+
                <!-- Login Form -->
                <div class="login form-peice switched">
                   <form class="login-form" action="#" method="post">
@@ -59,7 +61,6 @@
                      </div>
                   </form>
                </div><!-- End Login Form -->
-   
    
                <!-- Signup Form -->
                <div class="signup form-peice">
@@ -96,16 +97,72 @@
          </div>
 
       </section>
+
+      <section id="todoHolder">
+         <div class="mt-3">
+            <!-- Navbar -->
+            <button type="button" class="btn btn-primary" onclick="logout()">Logout</button>
+            
+            <!-- Greating -->
+   
+            <!-- Form Todo -->
+            <div class="container" id="todoForm">
+               <form class="p-3">
+                  <input type="hidden" name="todoId" id="todoId">
+                  <div class="form-group">
+                    <label for="todoTitle">Name </label>
+                    <input type="text" class="form-control" id="todoTitle" aria-describedby="emailHelp">
+                  </div>
+                  <div class="form-group">
+                    <label for="todoDescription">Description</label>
+                    <input type="text" class="form-control" id="todoDescription">
+                  </div>
+                  <div class="form-group">
+                     <label for="todoDueDate">Due Date</label>
+                     <input type="date" class="form-control" id="todoDueDate">
+                   </div>
+                  <div id="addTodo">
+                     <button type="button" class="btn btn-primary" onclick="createTodo()">Add</button>
+                  </div>
+                  <div id="editTodo" class="d-none">
+                     <button type="button" class="btn btn-primary" onclick="updateTodo()">Edit</button>
+                     <button type="button" class="btn btn-secondary" onclick="showEdit(true)">Cancel</button>
+                     <button type="button" class="btn btn-danger" onclick="">Delete</button>
+                  </div>
+
+                </form>
+            </div>
+
+            <!-- List Todo -->
+            <h1>TODOS</h1>
+            <div id="listTodo" class="container">
+
+            </div>
+   
+            <!-- Calendar -->
+   
+            <!-- Calndar holiday -->
+         </div>
+
+
+      </section>
    </div>
 
-    
+   <!-- LOADER WITH MODAL -->
+   <div class="modal fade bd-example-modal-lg bg-white" data-backdrop="static" data-keyboard="false" tabindex="-1">
+      <div class="modal-dialog modal-sm">
+          <div class="modal-content" style="width: 48px">
+              <span class="fa fa-spinner fa-spin fa-3x"></span>
+          </div>
+      </div>
+   </div>
     
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
     <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
     
     <!-- Optional JavaScript -->
     <script src="assets/js/script.js"></script>

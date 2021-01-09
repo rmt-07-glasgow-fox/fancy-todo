@@ -6,6 +6,8 @@ function register() {
     let email = $('#email').val()
     let password = $('#password').val()
     let name = $('#name').val()
+    $('.modal').modal('show');
+
     User.register(email, password, name)
         .done(response => {
             console.log(response);
@@ -20,20 +22,24 @@ function register() {
             console.log(err.responseJSON.message);
         })
         .always(() => {
-            console.log('always');
+            hideLoading()
         })
 }
 
 function login() {
+    $('.modal').modal('show');
     let email = $('#loginEmail').val()
     let password = $('#loginPassword').val()
-    console.log(email, password);
     User.login(email, password)
         .done(response => {
+            localStorage.email = email
             localStorage.access_token = response.access_token
             $('#loginEmail').val('')
             $('#loginPassword').val('')
             // //auth()
+            setTimeout(function () {
+                $('.modal').modal('hide');
+            }, 3000);
             $('.signup, .login').addClass('switched');
             setTimeout(function () { $('.signup, .login').hide(); }, 700);
             setTimeout(function () { $('.brand').addClass('active').addClass('col-sm-12').removeClass('col-sm-6'); }, 300);
@@ -44,29 +50,34 @@ function login() {
             
         })
         .fail(err => {
-            alert(err.responseJSON.message)
-            console.log(err.responseJSON);
+            console.log(err.responseJSON.message);
         })
         .always(() => {
+            hideLoading()
         })
 }
 
 function onSignIn(googleUser) {
+    const profile = googleUser.getBasicProfile();
     const id_token = googleUser.getAuthResponse().id_token;
-    if (true) {
-        
-    }
+    $('.modal').modal('show');
+
     User.loginGoogle(id_token)
         .done(response => {
+            localStorage.email = profile.getEmail()
             localStorage.access_token = response.access_token
             //auth()
         })
         .fail((xhr, status) => {
             console.log(status,'<<<<<<<<<<<<<<');
         })
+        .always(() => {
+            hideLoading()
+        })
 }
 
 function logout() {
+    $('.modal').modal('show');
     localStorage.clear()
     if (gapi.auth2) {
         const auth2 = gapi.auth2.getAuthInstance();
@@ -74,27 +85,36 @@ function logout() {
             console.log('User signed out.');
         });
     }
+    hideLoading()
     //auth()
 }
 
 /** TODO */
 
 function readTodo() {
+    // $('.modal').modal('show');
+
     Todo.readTodo()
         .done(response => {
             console.log(response);
-            $("#list-todo-container").empty()
+            $("#listTodo").empty()
             response.forEach(el => {
-                let due_date = new Date(el.due_date).getFullYear()
-                $('#list-todo-container').append(`
-                <div class="d-flex text-muted pt-3">
-                <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#6f42c1"/><text x="50%" y="50%" fill="#6f42c1" dy=".3em">32x32</text></svg>
-                    <div class="pb-3 mb-0 small lh-sm border-bottom">
-                        <p class="mb-0">
-                            <strong class="d-block text-gray-dark">${el.title}</strong>
-                            ${el.description}
-                        </p>
-                        <a href="">${due_date}</a>
+                console.log(localStorage.email , el.User.email);
+                let due_date = new Date(el.due_date).toISOString().slice(0, 10)
+                $('#listTodo').append(`
+                <div class="card bg-light mb-3" style="max-width: 18rem;">
+                    ${localStorage.email === el.User.email ?
+                        `<div class="card-header text-white bg-primary">Me</div>` : 
+                        `<div class="card-header text-white bg-danger">${el.User.name}</div>`}
+                    <div class="card-body">
+                        <h5 class="card-title">${el.title}</h5>
+                        <p class="card-text">${el.description}</p>
+                        <p class="card-text text-danger">${due_date}</p>
+                        <div>
+                            <button type="button" class="btn btn-warning btn-sm btnLoad" onClick="doneTodo(${el.id}, ${el.status})">${el.status ? 'CANCEL' : 'DONE'}</button>
+                            <button type="button" class="btn btn-primary btn-sm"  onClick="readOneTodo(${el.id})">UPDATE</button>
+                            <button type="button" class="btn btn-danger btn-sm" onClick="deleteTodo(${el.id})">DELETE</button>
+                        </div>
                     </div>
                 </div>
                 `)
@@ -105,7 +125,7 @@ function readTodo() {
             console.log(err);
         })
         .always(() => {
-            console.log('always');
+            hideLoading()
         })
 }
 
@@ -113,51 +133,74 @@ function readOneTodo(id) {
     Todo.readOneTodo(id)
         .done(response => {
             console.log(response);
+            const { title, description, due_date } =  response
+            const date = new Date(due_date).toISOString().slice(0, 10)
+            console.log(date,'<<<<');
+            $('#todoId').val(id)
+            $('#todoTitle').val(title)
+            $('#todoDescription').val(description)
+            $('#todoDueDate').val(date)
+            showEdit(true)
         })
         .fail(err => {
             console.log(err);
         })
         .always(() => {
-            console.log('always');
+            hideLoading()
         })
 }
 
-function createTodo(title, description, due_date) {
-    Todo.createTodo(title, description, '', due_date)
-        .done(response => {
-            console.log(response);
+function createTodo() {
+    let name = $('#todoTitle').val()
+    let description = $('#todoDescription').val()
+    let due_date = $('#todoDueDate').val()
+    Todo.createTodo(name, description, '', due_date)
+    .done(response => {
+            $('.modal').modal('show');
+            $('#todoTitle').val('')
+            $('#todoDescription').val('')
+            $('#todoDueDate').val('')
+            readTodo()
         })
         .fail(err => {
             console.log(err);
         })
         .always(() => {
-            console.log('always');
+            hideLoading()
         })
 }
 
-function updateTodo(id, title, description, status, due_date) {
+function updateTodo() {
+    let id = $('#todoId').val()
+    let title = $('#todoTitle').val()
+    let description = $('#todoDescription').val()
+    let status = $('#todoStatus').val()
+    let due_date = $('#todoDueDate').val()
     Todo.updateTodo(id, title, description, status, due_date)
         .done(response => {
             console.log(response);
+            showEdit(false)
+            readTodo()
         })
         .fail(err => {
             console.log(err);
         })
         .always(() => {
-            console.log('always');
+            hideLoading()
         })
 }
 
-function updateStatusTodo(id, status) {
-    Todo.updateStatusTodo(id, status)
+function doneTodo(id, status) {
+    Todo.updateStatusTodo(id, !status)
         .done(response => {
             console.log(response);
+            readTodo()
         })
         .fail(err => {
             console.log(err);
         })
         .always(() => {
-            console.log('always');
+            hideLoading()
         })
 }
 
@@ -165,11 +208,12 @@ function deleteTodo(id) {
     Todo.deleteTodo(id)
         .done(response => {
             console.log(response);
+            readTodo()
         })
         .fail(err => {
             console.log(err);
         })
         .always(() => {
-            console.log('always');
+            hideLoading()
         })
 }
