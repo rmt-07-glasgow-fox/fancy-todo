@@ -25,6 +25,14 @@ $(document).ready(() => {
       $('#modalConfirmDelete').modal('hide');
     });
   });
+
+  $('#modalConfirmDeleteProject').on('show.bs.modal', function (event) {
+    const projectid = $(event.relatedTarget).data('projectid');
+    $('#btn-delete-project').click(function () {
+      deleteProject(projectid);
+      $('#modalConfirmDeleteProject').modal('hide');
+    });
+  });
 });
 
 const loginPage = () => {
@@ -370,7 +378,7 @@ const addProject = (e) => {
     .done((response) => {
       const template = alertTemplate('success', 'Project has been created');
       $(template).appendTo('#alert');
-      // listTodo();
+      listProject();
     })
     .fail((err) => {
       err.responseJSON.map((e) => {
@@ -400,6 +408,24 @@ const listProject = () => {
         <tr>
           <th scope='row'>${index + 1}</th>
           <td>${data.Project.name}</td>
+          <td>
+            <button
+            class="btn btn-primary"
+            onclick="showDetailProject(${data.id})"
+            >
+              <i class="fa fa-eye"></i>
+            </button>
+            ${
+              data.UserId === data.Project.CreatorId
+                ? `<button
+            class="btn btn-danger"
+            data-projectid="${data.ProjectId}" data-toggle="modal" data-target="#modalConfirmDeleteProject"
+            >
+              <i class="fa fa-trash"></i>
+            </button>`
+                : ''
+            }
+          </td>
         </tr>
         `).appendTo('#projectList');
       });
@@ -411,6 +437,28 @@ const listProject = () => {
       });
     })
     .always(() => {});
+};
+
+const deleteProject = (id) => {
+  $.ajax({
+    method: 'DELETE',
+    url: url + `/projects/${id}`,
+    headers: {
+      authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+    },
+  })
+    .done((response) => {
+      const template = alertTemplate(
+        'success',
+        'Your Project has been deleted'
+      );
+      $(template).appendTo('#alert');
+      listProject();
+    })
+    .fail((err) => {
+      const template = alertTemplate('error', err.message);
+      $(template).appendTo('#alert');
+    });
 };
 
 const register = (e) => {

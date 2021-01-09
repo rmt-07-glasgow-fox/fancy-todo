@@ -23,4 +23,20 @@ exports.create = async (req, res, next) => {
   }
 };
 
-exports.delete = async (req, res, next) => {};
+exports.destroy = async (req, res, next) => {
+  const id = req.params.id;
+  const userId = req.user.id;
+
+  try {
+    const isFound = await Project.findOne({
+      where: { id: id, CreatorId: userId },
+    });
+    if (!isFound) return next({ name: 'NotFound' });
+    else {
+      await Project.destroy({ where: { id: id } });
+      return res.status(200).json({ message: 'Project success to delete' });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
