@@ -13,6 +13,11 @@ class EventController{
     static showAllEvent(req,res,next){
         Event.findAll()
         .then(result=>{
+            result.forEach(element => {
+                // console.log(element.dataValues); 
+                element.dataValues.strDate = strDate(element.due_date)
+            });
+            // console.log(result);
             res.status(200).json(result)
         })
         .catch(next)
@@ -59,4 +64,8 @@ class EventController{
     }
 }
 
+function strDate(date){
+    let month = ['January', 'February', 'March', 'April', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    return `${date.getDate()} ${month[date.getMonth()]} ${date.getFullYear()}`
+}
 module.exports = EventController

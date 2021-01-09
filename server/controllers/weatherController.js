@@ -1,5 +1,4 @@
 const axios = require('axios')
-const { response } = require('express')
 
 function getWeather (req,res,next){
     let {lat,lon} = req.query

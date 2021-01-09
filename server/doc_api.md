@@ -8,32 +8,75 @@ Todo App is an application to manage your assets. This app has :
 list endpoints:
 - POST /register
 - POST /login
+- GET /todos
+- GET /todos/:id
+- POST /todos
+- PUT /todos/:id
+- DELETE /todos/:id
+- GET /weather
 
 &nbsp;
 # RESTful endpoints
 
-- POST /register/
+### POST /register/
 
-    _Request:_
 
-    >body : 
+_Request:_
+
+- body : 
 
     ```json
     {
-        "email" : <yourname>,
-        "passoword" : <yourpassword>
+        "email" : "mail@email.com",
+        "passoword" : "password"
     }
     ```
 
-    _Response:_
-
+_Response:_
+- body
     ```json
     {
         "id": 1,
-        "email": <yourname>,
+        "email": "mail@email.com",
         "createdAt": "2020-06-08T03:33:04.404Z",
         "updatedAt": "2020-06-08T03:33:04.404Z"
     },
     ```
 
-- POST /login/
+### POST /login/
+_Request_
+- body
+
+    ```json
+    {
+        "email" : "mail@email.com",
+        "passoword" : "password"
+    }
+    ```
+_Response_
+- body
+
+    ```json
+    {
+        "message":"berhasil login",
+        "access_token":"youraccesstoken"
+    },
+    ```
+### GET /todos
+_Request_
+- headers
+
+    ```json
+    {
+        "access_token":"youraccesstoken"
+    }
+    ```
+_Response_
+- body
+
+    ```json
+    {
+        "message":"berhasil login",
+        "access_token":"youraccesstoken"
+    },
+    ```
