@@ -10,7 +10,7 @@ async function authentication(req, res ,next){
             throw { msg: 'Authentication failed', status: 401 }
         }else{
             const decoded = verifyToken(accessToken)
-            console.log(decoded);
+            console.log(decoded, 'huuuu');
             const user = await User.findOne({
                 where:{
                     email:decoded.email
@@ -21,7 +21,7 @@ async function authentication(req, res ,next){
                 throw { msg: 'Authentication failed', status: 401}
             }else{
                 req.loggedInUser = decoded
-                console.log(req.loggedInUser);
+                console.log(req.loggedInUser, 'hmmm');
                 next()
             }
         }

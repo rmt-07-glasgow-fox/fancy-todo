@@ -5,7 +5,7 @@ class toDoController{
         let input = {
             title : req.body.title,
             description : req.body.description,
-            status : req.body.status,
+            status : "Not completed",
             due_date : req.body.due_date,
             UserId: req.loggedInUser.id
 
