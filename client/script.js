@@ -1,7 +1,7 @@
 let baseURL = 'http://localhost:3000'
 
 $(document).ready(() => {
-    console.log('reload')
+    // console.log('reload')
 
     if (localStorage.access_token) {
         getNewsAPI()
@@ -145,12 +145,15 @@ $(document).ready(() => {
 
     $('#updateTodoStatus').click((e) => {
         e.preventDefault()
-        updateStatusTodo()
     })
 
     $('#cancelTodoEdit').click((e) => {
         e.preventDefault()
         $('#todo-edit-page').hide()
+    })
+
+    $('#todoEdit').click((e) => {
+        e.preventDefault()
     })
 })
 
@@ -189,7 +192,7 @@ function getTodoList() {
     })
 
         .done(response => {
-            console.log(response.message)
+            // console.log(response.message)
             let todos = response.message
             $('#todo-list').empty()
 
@@ -204,7 +207,7 @@ function getTodoList() {
                 <td>${todo.due_date}</td>
                 <td>
                     <button class='btn btn-lg btn-danger' id='deleteTodo' onclick="deleteTodo(${todo.id})">Delete</button>
-                    <button class='btn btn-lg btn-success' id='updateTodo' onclick="updateTodo(${todo.id})">Edit</button>
+                    <button class='btn btn-lg btn-success' id='editTodo' onclick="showEditTodo(${todo.id})">Edit</button>
                 </td>
             </tr>`)
             });
@@ -218,7 +221,7 @@ function getTodoList() {
 }
 
 function getNewsAPI() {
-    console.log('newsAPI')
+    // console.log('newsAPI')
     $('#date').append(getDateToday())
 
     $.ajax({
@@ -226,7 +229,7 @@ function getNewsAPI() {
         url: `${baseURL}/news`
     })
         .done(response => {
-            console.log(response)
+            // console.log(response)
             response.slice(-1).forEach(news => {
                 $('#main-API').append(`
                 <div class="card" style="width: 18rem;">
@@ -277,7 +280,7 @@ function deleteTodo(id) {
         })
 }
 
-function updateTodo(id) {
+function showEditTodo(id) {
     console.log('update', id)
     $('#todo-edit-page').show()
 
@@ -290,9 +293,54 @@ function updateTodo(id) {
             console.log(response)
             let { title, status, due_date, description } = response.message
 
-            $('#titleEdit').val(title)
-            $('#descriptionEdit').val(description)
-            $('#due_dateEdit').val(due_date)
+            $('#todo-edit-page').append(`
+                    <form>
+                        <div class="mb-3">
+                            <label for="statusEdit" class="form-label">Status</label>
+                            <select name="statusEdit" id="statusEdit">
+                                <option value="true" ${status ? 'selected' : ''}>true</option>
+                                <option value="false" ${status ? '' : 'selected'}>false</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="titleEdit" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="titleEdit" value="${title}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="descriptionEdit" class="form-label">Description</label>
+                            <input type="text" class="form-control" id="descriptionEdit" value="${description}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="due_dateEdit" class="form-label">Description</label>
+                            <input type="date" class="form-control" id="due_dateEdit" value="${due_date}">
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="todoEdit" onclick="updateSelectedTodo(${id})">Update todo</button>
+                        <button class="btn btn-primary" id="cancelTodoEdit">Cancel</button>
+                </form>
+            `)
+        })
+        .fail(err => {
+            console.log(err)
+        })
+}
+
+function updateSelectedTodo(id) {
+    let title = $('#titleEdit').val()
+    let status = $('#statusEdit').val()
+    let due_date = $('#due_dateEdit').val()
+    let description = $('#descriptionEdit').val()
+
+    console.log('updated todo ID : ', id, title, status, due_date, description)
+
+    $.ajax({
+        method: 'PUT',
+        url: `${baseURL}/todos/${id}`,
+        data: { title, status, due_date, description },
+        headers: { access_token: localStorage.access_token }
+    })
+        .done(response => {
+            console.log(response)
+            showMainPage()
         })
         .fail(err => {
             console.log(err)
@@ -318,7 +366,7 @@ function updateTodoStatus(id) {
 function onSignIn(googleUser) {
 
     let id_token = googleUser.getAuthResponse().id_token;
-    console.log('>>> id_token google : ', id_token)
+    // console.log('>>> id_token google : ', id_token)
 
     $.ajax({
         method: 'POST',
@@ -326,7 +374,7 @@ function onSignIn(googleUser) {
         data: { id_token }
     })
         .done(response => {
-            console.log(response)
+            // console.log(response)
             localStorage.setItem('access_token', response.access_token)
             showMainPage()
         })
