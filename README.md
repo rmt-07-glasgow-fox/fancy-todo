@@ -1,46 +1,138 @@
-# fancy-todo
-Membuat website untuk mencatat hal - hal menarik untuk dilakukan
+### How To Use
+```
+SETTING
 
-notes lecture 
-- creating folder
-- initiate package.json
-npm init => isi manual description nya 
-npm init -y => default
+npm i
+sequelize db:migrate
 
-install => express, sequelize, pg
-kalau mau autorestart server bisa pakai nodemon di local => https://www.npmjs.com/package/nodemon
+RUN
+npm install -g nodemon (if you dont have installed globally)
+nodemon app.js (if you have installed nodemon globally)
 
-- creating driver file (app.js / index.js)
-- require express => http://expressjs.com/en/starter/hello-world.html
+Server URL : http://localhost:3000
 
-- start bikin routingan => bisa mulai dengan buat folder routes
-- bikin file index.js, require router
-const router = require('express').Router()
-
-- bikin endpoints
-contoh: 
-router.get('/assets',  assetController.getAsset)
-router.post('/assets', assetController.createAsset)
-router.delete('/assets/:id', assetController.deleteAset)
-
-- bikin controller
-
-NOTES: 
-kirim data dari body 
-- json  => app.use(express.json())
-- urlencoded => app.use(express.urlencoded({extended:true}))
+```
 
 
-request : 
-req.body => body 
-req.params => url params
-'/assets/:id' => params id
+### User
+| Method | Route            | Description           |
+| ------ | ---------------- | --------------------- |
+| POST   | /auth/register   | Add new user          |
+| POST   | /auth/login      | Login user            |
+| POST   | /auth/loginGooge | Login user Via Google |
 
-req.query => query params
+### TO-DO
+| Method | Route            | Description                                     |
+| ------ | ---------------- | ----------------------------------------------- |
+| GET    | /todos     | Get all To-Do data |
+| POST    | /todos | Add New data             |
+| DELETE    | /todos/:id | Delete Selected Data              |
+| PUT    | /todos/:id | Edit All Attributes data              |
+| PATCH    | /todos/:id | Edit Status To false              |
 
-req.headers => put headers
 
+### POST /auth/login
+---
+> login user
 
-documentation template : 
-https://gist.github.com/iros/3426278
-https://github.com/Sursev07/documentation-example
+_Request Headers_
+```
+Not needed
+```
+
+_Request Body_
+```
+{
+    email : user01@gmail.com,
+    password : user01
+}
+```
+
+_Response ( 200 )_
+```
+{
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InJvbWl6YWtpIiwiZW1haWwiOiJyemZlcmRpeWFudG9AZ21haWwuY29tIiwiaWF0IjoxNjEwMDg5NTk3fQ.SsRxk2IWB_Z11AWIpXOBcZIVt4Mm22gM04PIMC2n99g"
+}
+```
+
+_Response (401)_
+```
+{
+    "msg": "Invalid Email/Password"
+}
+```
+
+---
+### POST /auth/loginGoogle
+---
+> login user
+
+_Request Headers_
+```
+Not needed
+```
+
+_Request Body_
+```
+{
+    email : user01@gmail.com,
+    password : user01
+}
+```
+
+_Response ( 200 )_
+```
+{
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InJvbWl6YWtpIiwiZW1haWwiOiJyemZlcmRpeWFudG9AZ21haWwuY29tIiwiaWF0IjoxNjEwMDg5NTk3fQ.SsRxk2IWB_Z11AWIpXOBcZIVt4Mm22gM04PIMC2n99g"
+}
+```
+
+_Response (401)_
+```
+{
+    "msg": "Invalid Email/Password"
+}
+```
+
+---
+### POST /auth/register
+---
+> register user
+
+_Request Headers_
+```
+Not needed
+```
+
+_Request Body_
+```
+{
+    email : user01@gmail.com,
+    password : user01
+}
+```
+
+_Response ( 200 )_
+```
+{
+    "name": "Romi Zaki",
+    "email": "greedymons@gmail.com"
+}
+```
+
+_Response (400)_
+```
+[
+    {
+        "message": "email must be unique",
+        "column": "email"
+    }
+]
+```
+
+_Response (500)_
+```
+{
+    "msg": "Internar server error"
+}
+```
