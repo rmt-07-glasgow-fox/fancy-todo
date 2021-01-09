@@ -26,6 +26,12 @@ const errorHandler = (err, req, res, next) => {
                 })
             }
             break;
+        case "cannotDeleteSelf":
+            res.status(400).json({
+                status: 'error',
+                message: 'ups, you cannot kick your self in your project'
+            })
+            break;
         case "authValidate":
             res.status(401).json({
                 status: 'error',

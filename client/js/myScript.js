@@ -1,5 +1,5 @@
 const baseUrl = 'http://localhost:3000'
-let tableTodo, tableProject, save_method, method;
+let tableTodo, tableProject, tableProjectDetailUser, save_method, method;
 
 $(document).ready(function() {
     if (localStorage.access_token) {
@@ -12,7 +12,7 @@ $(document).ready(function() {
 
     $('#modal-todos form').on('submit', (e) => {
         if (!e.isDefaultPrevented()) {
-            var id = $('#id_todos').val();
+            const id = $('#id_todos').val();
             if (save_method == "add") {
                 url = `${baseUrl}/todos`;
                 method = 'POST';
@@ -53,7 +53,7 @@ $(document).ready(function() {
 
     $('#modal-project form').on('submit', (e) => {
         if (!e.isDefaultPrevented()) {
-            var id = $('#id_project').val();
+            const id = $('#id_project').val();
             if (save_method == "add") {
                 url = `${baseUrl}/project`;
                 method = 'POST';
@@ -105,6 +105,13 @@ $('#btnCreateProject').click(function() {
     $('#modal-project').modal();
     $('#modal-project form')[0].reset();
     $('.modal-title').text('Add new project');
+    save_method = "add";
+});
+
+$('#btnCreateMember').click(function() {
+    $('#modal-member').modal();
+    $('#modal-member form')[0].reset();
+    $('.modal-title').text('Add new member');
     save_method = "add";
 });
 
@@ -242,7 +249,8 @@ const tableGroupTodosFetch = () => {
                 render: function(data, type, row) {
                     return `<div class="input-group-btn">
                             ${(row['status'] === true) ? '' : '<button class="btn btn-sm btn-warning" id="bEditProject"><i class="fa fa-pencil-alt"></i></button>'}
-                            <button class="btn btn-sm btn-danger"  id="bDestroyProject"><i class="fa fa-trash"></i></button> 
+                            <button class="btn btn-sm btn-danger"  id="bDestroyProject"><i class="fa fa-trash"></i></button>
+                            <button class="btn btn-sm btn-success"  id="bAddTodo" ><i class="fa fa-book"></i> add todo</button>
                             <button class="btn btn-sm btn-info"  id="bIsDoneProject"> ${(row['status'] === true) ? '<i class="fa fa-times"></i> On Going' : '<i class="fa fa-paper-plane"></i> Done'}</button>  </div>`
                 }
             },
@@ -262,14 +270,60 @@ const tableGroupTodosFetch = () => {
     });
 }
 
+const tableProjectDetailUserFetch = (id) => {
+    tableProjectDetailUser = $('#tableProjectDetailUser').DataTable({
+        destroy: true,
+        searchable: true,
+        processing: true,
+        responsive: true,
+        order: [],
+        language: {
+            "processing": '<div class="spinner-border text-info m-2" role="status"><span class="sr-only"></span></div></br><div>Tunggu Sebentar yaa...</div>',
+        },
+        "drawCallback": function() {
+            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+        },
+        ajax: {
+            method: 'GET',
+            url: `${baseUrl}/project/${id}/user`,
+            headers: {
+                authorization: localStorage.getItem('access_token')
+            },
+            error: (err) => {
+                if (err.responseJSON.message === 'jwt expired') {
+                    toastr.info(`${err.responseJSON.message}`, 'session expired');
+                    logout()
+                }
+            }
+        },
+        columns: [
+            { data: 'id', name: 'id', visible: false, searchable: false },
+            {
+                data: 'action',
+                name: 'action',
+                orderable: false,
+                searchable: false,
+                render: function(data, type, row) {
+                    return `<div class="input-group-btn">
+                            <button class="btn btn-sm btn-danger" id="bDestroyProjectUser"><i class="fa fa-trash"></i></button>
+                            </div>`
+                }
+            },
+            {
+                data: 'email'
+            },
+        ],
+    });
+}
+
 const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" }
     return new Date(dateString).toLocaleDateString(undefined, options)
 }
 
 $('#tableTodo tbody').on('click', '#bIsDone', function() {
-    var id = tableTodo.row($(this).parents('tr')).data().id;
-    var status = tableTodo.row($(this).parents('tr')).data().status;
+    const id = tableTodo.row($(this).parents('tr')).data().id;
+    const status = tableTodo.row($(this).parents('tr')).data().status;
 
     $.ajax({
         type: "PATCH",
@@ -281,6 +335,31 @@ $('#tableTodo tbody').on('click', '#bIsDone', function() {
         success: (data) => {
             toastr.success(data.message, 'Success Alert')
             tableTodo.ajax.reload()
+        },
+        error: (err) => {
+            if (err.responseJSON.message === 'jwt expired') {
+                toastr.info(`${err.responseJSON.message}`, 'session expired');
+                logout()
+            }
+            toastr.error(err.message, 'Error Alert')
+        }
+    });
+});
+
+$('#tableProject tbody').on('click', '#bIsDoneProject', function() {
+    const id = tableProject.row($(this).parents('tr')).data().id;
+    const status = tableProject.row($(this).parents('tr')).data().status;
+
+    $.ajax({
+        type: "PATCH",
+        url: `${baseUrl}/project/${id}`,
+        data: { status: !status },
+        headers: {
+            authorization: localStorage.access_token
+        },
+        success: (data) => {
+            toastr.success(data.message, 'Success Alert')
+            tableProject.ajax.reload()
         },
         error: (err) => {
             if (err.responseJSON.message === 'jwt expired') {
@@ -395,11 +474,83 @@ $('#tableProject tbody').on('click', '#bDestroyProject', function() {
     })
 });
 
+$('#tableProjectDetailUser tbody').on('click', '#bDestroyProjectUser', function() {
+    const id = $('#project_id_detail_project').val();
+    const idUser = tableProjectDetailUser.row($(this).parents('tr')).data().id;
+
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.value) {
+            $.ajax({
+                type: "DELETE",
+                url: `${baseUrl}/project/${id}/user/${idUser}`,
+                headers: {
+                    authorization: localStorage.access_token
+                },
+                success: (data) => {
+                    Swal.fire("Done!", "Data Berhasil di hapus!", "success");
+                    toastr.success(data.message, 'Success Alert')
+                    tableProject.ajax.reload()
+                },
+                error: (err) => {
+                    if (err.responseJSON.message === 'jwt expired') {
+                        toastr.info(`${err.responseJSON.message}`, 'session expired');
+                        logout()
+                    }
+                    Swal.fire("Error deleting!", err.responseJSON.message, "error");
+                    // console.log(err);
+                    toastr.error(err.responseJSON.message, 'Error Alert')
+                }
+            });
+        }
+    })
+});
+
+
+$('#tableProject tbody').on('click', '#bAddTodo', function() {
+    const id = tableProject.row($(this).parents('tr')).data().id;
+
+    $('#dasboardContent').hide();
+    $('#todoContent').hide();
+    $('#projectTodoContent').hide();
+    $('#projectTodoDetailContent').show();
+    $('#dasboardContent').hide();
+
+    $.ajax({
+        type: 'GET',
+        url: `${baseUrl}/project/${id}`,
+        headers: {
+            authorization: localStorage.access_token
+        },
+        success: (data) => {
+            $('#titleDetailProject').html(data.data.title)
+            $('#ownerDetailProject').html('Owner: ' + data.data.owner.firstName + ' ' + data.data.owner.lastName)
+            $('#descriptionDetailProject').html(data.data.description)
+            $('#project_id_detail_project').val(id)
+            tableProjectDetailUserFetch(id);
+
+        },
+        error: (err) => {
+            toastr.error(err.message, 'Error Alert')
+        }
+    })
+});
+
+
 const dashboardPage = () => {
     $('#dashboardPage').show();
     $('#dasboardContent').show();
     $('#todoContent').hide();
     $('#projectTodoContent').hide();
+    $('#projectTodoDetailContent').hide();
     $('#loginPage').hide();
     $('#registerPage').hide();
     $('span#fullname').html(localStorage.fullname)
@@ -438,6 +589,7 @@ const todoPage = () => {
         $('#todoContent').show();
         $('#dasboardContent').hide();
         $('#projectTodoContent').hide();
+        $('#projectTodoDetailContent').hide();
         tableTodosFetch()
         select2Movie()
     } else {
@@ -454,6 +606,7 @@ const projectTodoPage = () => {
     if (localStorage.access_token) {
         $('#todoContent').hide();
         $('#dasboardContent').hide();
+        $('#projectTodoDetailContent').hide();
         $('#projectTodoContent').show();
         tableGroupTodosFetch()
         select2Movie()
@@ -469,6 +622,14 @@ const projectTodoPage = () => {
 
 const refreshTableTodo = () => {
     tableTodo.ajax.reload(null, false);
+}
+
+const refreshTableProject = () => {
+    tableProject.ajax.reload(null, false);
+}
+
+const refreshTableMember = () => {
+    tableProjectDetailUser.ajax.reload(null, false);
 }
 
 const logout = () => {
