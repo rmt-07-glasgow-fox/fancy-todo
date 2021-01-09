@@ -58,7 +58,10 @@ function registerMenu() {
 function afterLogin() {
     $('#main-page').hide()
     $('#content-page').show()
+    $('#updateTodoForm').hide()
     $('#container-todo-list').show()
+    $('#col-sidebar').show()
+    $('#col-todolist').show()
     getTodoList()
     $('#logout-btn').show()
 }
@@ -67,6 +70,19 @@ function loggedOut() {
     loginMenu()
     googleSignOut()
 
+}
+
+function formUpdateTodo(todoId) {
+    $('#main-page').hide()
+    $('#content-page').show()
+    $('#col-sidebar').hide()
+    $('#col-todolist').hide()
+    $('#updateTodoForm').show()
+    $('#update-btn').click((event) => {
+        event.preventDefault()
+        updateTodo(todoId)
+    })
+    $('#logout-btn').show()
 }
 
 function getTodoList() {
@@ -96,8 +112,8 @@ function getTodoList() {
                                             <div class="card-body text-dark text-justify">
                                                 <p class="card-text">${element.description}</p>
                                                 <p class="card-text">Due: ${element.due_date}</p>
-                                                <a href="#" class="btn btn-primary">Update</a>
-                                                <a href="#" class="btn btn-danger">Delete</a>
+                                                <a href="#" class="btn btn-primary" onclick="formUpdateTodo(${element.id})">Update</a>
+                                                <a href="#" class="btn btn-danger" onclick="deleteTodo(${element.id})">Delete</a>
                                             </div>
                                         </div>
                                     </div>
@@ -113,6 +129,65 @@ function getTodoList() {
             console.log("ALWAYS!")
         })
 }
+
+function deleteTodo(todoId) {
+    $("#todo-list").empty()
+    $.ajax({
+        method: 'DELETE',
+        url: `${baseUrl}/todos/${todoId}`,
+        headers: {
+            access_token: localStorage.access_token
+        }
+    })
+        .done(response => {
+            console.log(response, ">>>> this is response from ajax deletetodo")
+
+        })
+        .fail(err => {
+            console.log(err, ">>>> this is error from ajax deleteTodo")
+        })
+        .always(() => {
+            console.log("ALWAYS!")
+        })
+}
+
+function updateTodo(todoId) {
+    let title = $("#editTodoTitle").val()
+    let description = $("#editTodoDescription").val()
+    let due_date = $("#editTodoDueDate").val()
+    $.ajax({
+        method: 'PUT',
+        url: `${baseUrl}/todos/${todoId}`,
+        headers: {
+            access_token: localStorage.access_token
+        },
+        data: {
+            title,
+            description,
+            due_date
+        }
+    })
+        .done(response => {
+            $('#update-success').empty()
+            if (response) {
+                $('#update-success').append(`
+                                <div class="alert alert-success" role="alert" id="update-sucess">
+                                        Update Success!
+                                </div>
+                                `)
+            }
+            setTimeout(() => {
+                afterLogin()
+            }, 500)
+        })
+        .fail(err => {
+            console.log(err, ">>>> this is error from ajax updateTodo")
+        })
+        .always(() => {
+            console.log("ALWAYS!")
+        })
+}
+
 
 $(document).ready(function () {
     checkAuth()
@@ -200,6 +275,13 @@ $(document).ready(function () {
     $('#login-link').click((event) => {
         event.preventDefault()
         loginMenu()
+    })
+
+
+    $('#delete-btn').click((event) => {
+        event.preventDefault()
+        deleteTodo()
+        afterLogin()
     })
 })
 

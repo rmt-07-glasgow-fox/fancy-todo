@@ -81,8 +81,40 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-4 bg-warning side-bar p-0">
+            <div class="row" id="todolist-page">
+                <div class="col-12" id="updateTodoForm">
+                    <div class="container mt-5 mb-5">
+                        <div class="update-form-main-text">
+                            <h2>Update your Todo</h2>
+                        </div>
+                        <form>
+                            <div class="form-group row">
+                                <label for="editTodoTitle" class="col-sm-2 col-form-label">Title</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="editTodoTitle"
+                                        placeholder="What do you want to do?">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="editTodoDescription" class="col-sm-2 col-form-label">Description</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="editTodoDescription"
+                                        placeholder="Describe what do you want to do...">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="editTodoDueDate" class="col-sm-2 col-form-label">Due Date</label>
+                                <div class="col-sm-10">
+                                    <input type="date" class="form-control" id="editTodoDueDate">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="update-btn">Confirm</button><br><br>
+                            <div id="update-success">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-4 bg-warning side-bar p-0" id="col-sidebar">
                     <div class="side-bar-content mt-5 mb-5">
                         <a href="#" class="btn btn-primary mt-4 mb-2">Add Todo</a>
                         <div class="card" style="width: 18rem;">
@@ -94,7 +126,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-8 bg-danger content-container mt-4">
+                <div class="col-8 bg-danger content-container mt-4" id="col-todolist">
                     <br>
                     <br>
                     <div class="container" id="container-todo-list">
