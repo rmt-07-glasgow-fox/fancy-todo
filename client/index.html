@@ -7,21 +7,24 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./style.css">
+    <meta name="google-signin-client_id" content="141969560150-4vpetka23kjgv034cnrm504doe3ti5or.apps.googleusercontent.com">
 </head>
 
 <body>
     <!-- LOGIN PAGE-->
     <div class="card mt-4 text-center" id="login-page">
-        <h4>Log In</h4>
-        <div class="text-center intro"> <img src="https://i.imgur.com/uNiv4bD.png" width="160"></div>
-        <span id="error-message"></span>
+        <h4><b>TO DO LIST</b></h4>
+        <div class="text-center intro"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/GNOME_Todo_icon_2019.svg/1024px-GNOME_Todo_icon_2019.svg.png" width="160"></div>
+        <br>
+        <h6><b>Log In</b></h6>
+        <span id="error-message-login"></span>
         <form>
             <div>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                <input type="email" class="form-control" id="email-login" name="email" placeholder="Email">
             </div>
             <br>
             <div>
-                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                <input type="password" class="form-control" id="password-login" name="password" placeholder="Password">
             </div>
             <br>
             <div class="mt-2">
@@ -31,55 +34,114 @@
         <br>
         <div>
             <a id="register">Don't have todo account? Register</a>
+            <div id="g-sign">
+                <div class="g-signin2" data-onsuccess="onSignIn"></div>
+            </div>  
         </div>
     </div>
 
     <!-- REGISTER PAGE-->
     <div class="card mt-4 text-center" id="register-page">
-        <h4>Register</h4>
-        <div class="text-center intro"> <img src="https://i.imgur.com/uNiv4bD.png" width="160"></div>
-        <span id="error-message"></span>
+        <h4><b>TO DO LIST</b></h4>
+        <div class="text-center intro"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/GNOME_Todo_icon_2019.svg/1024px-GNOME_Todo_icon_2019.svg.png" width="160"></div>
+        <br>
+        <h6><b>Register</b></h6>
+        <span id="error-message-register"></span>
         <form>
             <div>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                <input type="email" class="form-control" id="email-register" name="email" placeholder="Email">
             </div>
             <br>
             <div>
-                <input type="email" class="form-control" id="name" name="name" placeholder="Name">
+                <input type="text" class="form-control" id="name-register" name="name" placeholder="Name">
             </div>
             <br>
             <div>
-                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                <input type="password" class="form-control" id="password-register" name="password" placeholder="Password">
             </div>
             <br>
             <div class="mt-2">
                 <input type="button" class="btn btn-primary btn-block" id="register-btn" value="Register">
+                <input type="button" class="btn btn-block btn-danger" id="cancel-btn" value="Cancel" onclick=checkAuth()>
             </div>
         </form>
     </div>
 
-    <!-- TO DO LIST PAGE -->
-    <div class="card-2" id="todo-page">
-        <div class="card-header-tab card-header">
-            <div class="card-header-title font-size-lg text-capitalize font-weight-normal"><i class="fa fa-tasks"></i><h4>&nbsp;To Do Lists</h4></div>
-        </div>
-        <div class="scroll-area-sm">
-            <perfect-scrollbar class="ps-show-limits"></perfect-scrollbar>
-                <div style="position: static;" class="ps ps--active-y">
-                    <div class="ps-content">
-                        <ul class=" list-group list-group-flush">
-                            <div id="todo-list">
+    <!-- BIG DIV -->
+    <div id="big-div">
 
+        <!-- TO DO LIST PAGE -->
+        <div class="card-1" id="todo-page">
+            <div class="card-header-tab card-header">
+                <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                    <i class="fa fa-tasks"></i>
+                    <h4><b>To Do Lists</b></h4>
+                </div>
+            </div>
+            <div class="scroll-area-sm">
+                <perfect-scrollbar class="ps-show-limits">
+                    <div style="position: static;" class="ps ps--active-y">
+                        <div class="ps-content">
+                            <ul class=" list-group list-group-flush">
+                                <div id="todo-list">
+
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </perfect-scrollbar>
+            </div>
+        </div>
+
+        <!-- ADD CARD -->
+
+        <div class="card-2">
+            <div id="add-todo" class="card">
+                <h5><b>Today's Weather</b></h5>
+                <br>
+                <div id="weather">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                            <div class="row" id="weather-row">
                             </div>
-                        </ul>
+                        </div>
                     </div>
                 </div>
-            </perfect-scrollbar>
+            </div>
+
+            <div id="add-todo" class="card">
+                <h5><b>Add To Do</b></h5>
+                <div id="error-message-add"></div>
+                <form>
+                    <label>Title</label>
+                    <input type="text" id="add-title" class="form-control inputbox" placeholder="title">
+                    <label>Description</label>
+                    <input type="text" id="add-detail"class="form-control inputbox" placeholder="description">
+                    <label>Due Date</label>
+                    <input type="date" id="add-date" class="form-control inputbox" placeholder="due date">
+                </form>
+            </div>
+
+        <div id="action-button">   
+            <div class="widget-content-right"> 
+                <button class="border-0 btn-transition btn btn-success" id="add-btn" onclick="addTodo()"> Add </button> 
+            </div>
+
+
+            <div class="widget-content-right">
+                <button id="logout-btn" class="border-0 btn-transition btn btn-danger">
+                        Log out
+                </button>
+            </div>
         </div>
+        
+
+        </div>
+
     </div>
 
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="./script.js"></script>
 </body>
 </html>

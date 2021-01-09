@@ -10,8 +10,8 @@ router.get('/', (req, res) => {
     })
 });
 router.use(users);
-router.use('/weather', weather);
 router.use(authenticate);
+router.use('/weather', weather);
 router.use('/todos', todos);
 
 module.exports = router;
