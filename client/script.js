@@ -307,6 +307,7 @@ function checkOut() {
         $("#sign-in").show('fast')
         $("#todo").hide('fast')
         $('#btn-sign-out').hide()
+        $('#news').show()
         getNews()
     }
 }
