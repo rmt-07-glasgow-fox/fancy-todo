@@ -17,6 +17,8 @@ function authorization(){
         $("#welcome-page").hide()
         $('#error-add').empty()
         $("#function-holidays").hide()
+        $("#template-login").hide()
+        $("#website-name").show()
     } else {
         $('.nav').hide()
         $('#login-form').hide()
@@ -25,10 +27,18 @@ function authorization(){
         $('#form-todo').hide()
         $('#greetings').hide()
         $("#welcome-page").show()
+
+        $('#btn-login').hide()
+        $("#template-login").show()
+        $("#website-name").hide()
+        $("#register-button").hide()
+        $("#btn-sign-up").show()
+        $("#login-button").show()
     }
 }
 
 $('#btn-sign-up').on('click', function(){
+    event.preventDefault()
     $('#signin-form').show()
     $('#login-form').hide()
     $('#btn-sign-up').hide()
@@ -36,14 +46,23 @@ $('#btn-sign-up').on('click', function(){
     $("#login-error").empty()
     $("#email").val('')
     $("#password").val('')
+    $("#register-button").show()
+    $("#login-button").hide()
+    $("#btn-login").show()
+    $("#btn-sign-up").hide()
 })
 
-$('#btn-login').on('click', function(){
-    $('#signin-form').hide()
-    $('#login-form').show()
-    $('#btn-login').hide()
-    $('#btn-sign-up').show()
-    $("#signup-error").empty()
+$('#btn-login').on('click', function(event){
+    event.preventDefault()
+    // $('#signin-form').hide()
+    // $('#login-form').show()
+    // $('#btn-login').hide()
+    // $('#btn-sign-up').show()
+    // $("#signup-error").empty()
+    $("#login-button").show()
+    $("#register-button").hide()
+    $("#btn-login").hide()
+    $("#btn-sign-up").show()
 })
 
 
@@ -61,8 +80,8 @@ $("#logout").on('click',function(){
 
 $("#register").on('click',function(event){
     event.preventDefault()
-    const email = $("#register-email").val()
-    const password = $("#register-password").val()
+    const email = $("#email").val()
+    const password = $("#password").val()
     $.ajax({
         method : "POST",
         url : `${baseUrl}/register`,
@@ -83,8 +102,8 @@ $("#register").on('click',function(event){
         })
     })
     .always(() => {
-        $("#register-email").val('')
-        $("#register-password").val('')
+        $("#email").val('')
+        $("#password").val('')
     })
 })
 
