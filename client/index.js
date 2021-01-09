@@ -46,6 +46,12 @@ $('#login-btn').click(function (event) {
 $('#logout-button').click(function (event) {
     event.preventDefault()
     localStorage.clear()
+    event.preventDefault()
+    localStorage.removeItem('access_token')
+    const auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+        console.log('User signed out.');
+    });
     checkAuth()
 })
 
@@ -78,12 +84,6 @@ $(`#add-cancel-button`).click(function (event) {
 $('#add-button').click(function (event) {
     event.preventDefault()
     addTodo()
-})
-
-$('#btn-signOut').click(function () {
-    localStorage.removeItem('access_token')
-    signOut()
-    loggedOut()
 })
 
 
@@ -363,8 +363,5 @@ function onSignIn(googleUser) {
 }
 
 function signOut() {
-    const auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-        console.log('User signed out.');
-    });
+    
 }
