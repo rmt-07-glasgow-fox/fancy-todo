@@ -28,7 +28,8 @@ class Controller{
             res.status(200).json(data)
         })
         .catch(err=>{
-            next(err)
+            console.log(err)
+            next()
         })
     }
 

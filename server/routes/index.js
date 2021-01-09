@@ -8,7 +8,7 @@ const {authentication} = require('../midedlewares/auth')
 router.use('/', user)
 router.use('/', calendar)
 
-// router.use(authentication)
+router.use(authentication)
 router.use('/', todos)
 
 module.exports = router

@@ -23,6 +23,7 @@
     </ul>
 </nav>
 
+
 <!------ Log in Form ---------->
 <div class="container" id="form-login">
    <div class="row">
@@ -97,6 +98,42 @@
         </div>
     </div>
 </div>
+
+<!------ HomePage ---------->
+
+<div id="homepage">
+   <div id="btn">
+      <button>Add Todo</button>
+   </div>
+   <br>
+   <div id="form-add-todo">
+      <form action="">
+         <input type="text" name="title" id="title" placeholder="Title">
+         <input type="date" name="due_date" id="due_date" paceholder="dd/mm/yy">
+         <br><br>
+         <textarea name="description" id="description" cols="48" rows="5" placeholder="Detail Here..."></textarea>
+         <button class="add-btn">Add</button>
+         <button class="cancel-btn">Cancel</button>
+      </form>
+   </div>
+   <br>
+   <!------ list todo---------->
+   <div id="list-Todo"></div>
+</div>
+
+
+<!------ form Edit todo---------->
+<div id="form-edit">
+   <div id="form-add-todo">
+      <form action="">
+         <input type="text" name="title" id="edit-title" placeholder="Title">
+         <input type="date" name="due_date" id="edit-due_date" paceholder="dd/mm/yy">
+         <br><br>
+         <textarea name="description" id="edit-description" cols="48" rows="5" placeholder="Detail Here..."></textarea>
+         <button class="edit-btn">Edit</button>
+         <button class="cancel-btn">Cancel</button>
+      </form>
+   </div>
 
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
