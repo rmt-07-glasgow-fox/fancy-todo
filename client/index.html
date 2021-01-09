@@ -29,10 +29,6 @@
                 <input type="password" class="form-control" id="password" placeholder="Password">
                 <label class="text-secondary">Password</label>
               </div>
-              <!-- <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">Remember me</label>
-              </div> -->
               <center>
                 <div id="login-container">
                   <button type="submit" class="btn btn-primary" id="login-btn">Login</button>
@@ -85,9 +81,11 @@
           </div>
 
         </div>
+        <div class="row">
 
+        
         <!-- todo -->
-        <div id="todo" style="border: 1px solid;" class="">
+        <div id="todo" class="col-7">
           
             <div class="bg-cover text-white p-2">
               <div class="container d-flex justify-content-between">
@@ -159,6 +157,71 @@
           <div id="todo-container">
 
           </div>
+        </div>
+
+        <div id="project" class="col-5">
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+              <a class="navbar-brand">Your Project:</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                  <li class="nav-item">
+                  </li>
+                </ul>
+                <a class="text-success" id="add-project"><i class="fas fa-plus-square"></i></i></a>
+              </div>
+            </div>
+          </nav>
+
+          <!-- add project -->
+          <div class="card mt-3 bg-light p-3" id="project-add" style="display: none;">
+            <form class="form-floating">
+
+              <div class="form-floating mb-2">
+                <input type="text" class="form-control" id="title-project" placeholder="Title">
+                <label>Project Title</label>
+              </div>
+              
+              <div class="form-floating mb-2">
+                <textarea class="form-control" placeholder="Leave a comment here" id="desc-project" style="height: 100px"></textarea>
+                <label>Description</label>
+              </div>
+
+              <div>
+                <button type="submit" class="btn btn-primary" id="btn-add-project">Add</button>
+                <button type="submit" class="btn btn-danger" id="btn-cancel-project">Cancel</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- show project -->
+          <div id="project-container">
+            
+          </div>
+        </div>
+
+        </div>
+        <!-- The Modal -->
+        <div id="modal-project" class="modal">
+
+          <!-- Modal content -->
+          <!-- <div class="modal-content">
+            <div class="close" id="close-modal-project">X</div>
+            <div class="modal-body d-flex justify-content-center align-items-center" id="modal-body">
+              <div style="font-weight: bold;">Members</div>
+              <div class="mb-3"><i class="fas fa-user-friends"></i></div>
+              <div id="members">
+
+              </div>
+              <div id="btn-add-member">
+
+              </div>
+            </div>
+          </div> -->
+
         </div>
     </div>
 

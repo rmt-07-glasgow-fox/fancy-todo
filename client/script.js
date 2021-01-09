@@ -112,12 +112,15 @@ function cekAuth(){
   if(localStorage.access_token){
     $('#login-form').hide()
     $('#todo').show()
+    $('#project').show()
     $('.bg-login').hide()
     showTodos()
+    showProject()
     getWeather()
   }else{
     $('#login-form').show()
     $('#todo').hide()
+    $('#project').hide()
     $('.bg-login').show()
   }
 }
@@ -343,6 +346,240 @@ function getWeather(){
   .fail(err=>console.log(err))
 }
 
+//project
+function showProject(){
+  $.ajax({
+    method: 'GET',
+    url: `${baseUrl}/projects`,
+    headers: {
+      access_token: localStorage.access_token
+    },
+  })
+  .done(res => {
+    $('#project-container').empty()
+    res.forEach(e => {
+      $('#project-container').append(`
+        <div class="card mt-3 p-3" id="project-${e.id}">
+          <div class="d-flex align-items-center">
+          <div class="col d-flex align-items-center justify-content-between">
+            <div id="project-title">
+              ${e.title}
+            </div>
+            <div>
+              <a class="text-primary" onClick="projectMembers(${e.id})"><i class="fas fa-user-friends"></i></a>
+              <a class="text-success" onClick="projectEdit(${e.id})"><i class="fas fa-edit"></i></a>
+              <a class="text-danger" onClick="projectDelete(${e.id})"><i class="fas fa-trash-alt"></i></a>
+            </div>
+          </div>
+          </div>
+          <hr>
+          <div id="project-desc">
+            ${e.desc}
+          </div>
+        </div>
+      `)
+    })
+  })
+  .fail(err => console.log(err))
+}
+
+$('#add-project').click(function(event){
+  event.preventDefault()
+  $('#project-add').show()
+})
+
+$('#btn-cancel-project').click(function(event){
+  event.preventDefault()
+  $('#project-add').hide()
+  $('#title-project').val("")
+  $('#desc-project').val("")
+})
+
+$('#btn-add-project').click(function(event){
+  event.preventDefault()
+  const title = $('#title-project').val()
+  const desc = $('#desc-project').val()
+
+  $.ajax({
+    method: 'POST',
+    url: `${baseUrl}/projects`,
+    headers: {
+      access_token: localStorage.access_token
+    },
+    data : {
+      title,
+      desc
+    }
+  })
+  .done(response => {
+    $('#project-add').hide()
+    showProject()
+    $('#title-project').val("")
+    $('#desc-project').val("")
+  })
+  .fail(err => {
+    $('#modal-message').empty()
+    $('#modal-message').append(err.responseJSON[0])
+    $('#modal').fadeIn(1000)
+  })
+})
+
+function projectDelete(id){
+  $.ajax({
+    method: 'DELETE',
+    url: `${baseUrl}/projects/${id}`,
+    headers: {
+      access_token: localStorage.access_token
+    }
+  })
+  .done(response => {
+    showProject()
+  })
+  .fail(err => console.log(err))
+}
+
+function projectEdit(id){
+  $(`#project-${id}`).empty()
+  $.ajax({
+    method: 'GET',
+    url: `${baseUrl}/projects/${id}`,
+    headers : {
+      access_token: localStorage.access_token
+    }
+  })
+  .done(response => {
+    console.log(response);
+    $(`#project-${id}`).append(`
+        <form class="form-floating">
+
+          <div class="form-floating mb-2">
+            <input type="text" class="form-control" id="title-project-${id}" value="${response.title}" placeholder="Title">
+            <label>Project Title</label>
+          </div>
+          
+          <div class="form-floating mb-2">
+            <textarea class="form-control" placeholder="Leave a comment here" id="desc-project-${id}" style="height: 100px">${response.desc}</textarea>
+            <label>Description</label>
+          </div>
+
+          <div>
+            <a class="btn btn-primary" onClick="editProject(${id})">Edit</a>
+            <a class="btn btn-danger" onClick="showProject()">Cancel</a>
+          </div>
+        </form>
+    `)
+  })
+  .fail(err => console.log(err))
+}
+
+function editProject(id){
+  const title = $(`#title-project-${id}`).val()
+  const desc = $(`#desc-project-${id}`).val()
+  
+  $.ajax({
+    method: 'PUT',
+    url: `${baseUrl}/projects/${id}`,
+    headers: {
+      access_token: localStorage.access_token
+    },
+    data : {
+      title,
+      desc
+    }
+  })
+  .done(response=>{
+    showProject()
+  })
+  .fail(err => {
+    $('#modal-message').empty()
+    $('#modal-message').append(err.responseJSON[0])
+    $('#modal').fadeIn(1000)
+  })
+}
+
+function projectMembers(id){
+  $('#modal-project').empty()
+  $('#modal-project').append(`
+  <div class="modal-content">
+    <div class="close" id="close-modal-project" onclick="closed()">X</div>
+    <div class="modal-body d-flex justify-content-center align-items-center" id="modal-body">
+      <div style="font-weight: bold;">Members</div>
+      <div class="mb-3"><i class="fas fa-user-friends"></i></div>
+      <div id="members">
+
+      </div>
+      <div id="btn-add-member">
+
+      </div>
+    </div>
+  </div>
+  `)
+  
+  $('#modal-project').fadeIn(1000)
+  $.ajax({
+    method: 'GET',
+    url: `${baseUrl}/projects/${id}/members`,
+    headers: {
+      access_token: localStorage.access_token
+    }
+  })
+  .done(res=> {
+    $('#members').empty()
+    res.forEach(member => {
+      $('#members').append(`<div>${member.email}</div>`)
+    })
+    $('#btn-add-member').empty()
+    $('#btn-add-member').append(`
+      <a class="btn btn-primary mt-3" onclick="addMember(${id})">Add member</a>
+    `)
+  })
+  .fail(err => console.log(err))
+}
+
+function addMember(id){
+  $.ajax({
+    method: 'GET',
+    url: `${baseUrl}/users`,
+    headers: {
+      access_token: localStorage.access_token
+    }
+  })
+  .done(res=>{
+    $('#modal-body').empty()
+    let members = res.map(member => `<option value="${member.id}">${member.email}</option>`)
+    $('#modal-body').append(`
+    <form>
+      <select class="form-select" id="select-member">
+        ${members}
+      </select>
+      <a class="btn btn-primary mt-4" id="selected-member" onclick="addProjectMember(${id})">Add member</a>
+    </form>
+    `)
+  })
+  .fail(err => console.log(err))
+}
+
+function addProjectMember(id){
+  const userId = $('#select-member').val()
+  const projectId = id
+  $.ajax({
+    method: 'POST',
+    url: `${baseUrl}/projects/${projectId}/add/${userId}`,
+    headers: {
+      access_token: localStorage.access_token
+    }
+  })
+  .done(res=> {
+    $('#modal-project').fadeOut(1000)
+  })
+  .fail(err => console.log(err))
+  
+}
+
 $('#close-modal').click(function(){
   $('#modal').fadeOut(1000)
 })
+
+function closed(){
+  $('#modal-project').fadeOut(1000)
+}

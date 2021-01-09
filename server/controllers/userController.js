@@ -92,6 +92,21 @@ class userController {
       next(err)
     }
   }
+
+  static async showUser(req,res,next){
+    try {
+      const users = await User.findAll()
+      let response = users.map(e => {
+        return {
+          id: e.id,
+          email: e.email
+        }
+      }) 
+      res.status(200).json(response)
+    } catch (err) {
+      next(err)
+    }
+  }
 }
 
 module.exports = userController

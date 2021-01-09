@@ -13,6 +13,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       User.hasMany(models.Todo)
+      User.hasMany(models.UserProject)
+      User.belongsToMany(models.Project, { through: models.UserProject})
     }
   };
   User.init({
