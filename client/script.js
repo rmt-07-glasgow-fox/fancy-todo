@@ -22,6 +22,7 @@ $(document).ready(() => {
         });
 
         showLoginPage()
+        Swal.fire('You are logout')
     })
 
     $('#toRegisterPage').click((e) => {
@@ -58,12 +59,16 @@ $(document).ready(() => {
                 if (response.access_token) {
                     localStorage.setItem('access_token', response.access_token)
                     showMainPage()
+                    Swal.fire('You are login')
                 } else {
+                    Swal.fire(response.message)
                     console.log(response.message)
                 }
             })
 
             .fail(err => {
+                let error = Array.isArray(err.responseJSON.message) ? err.responseJSON.message.join('\n') : err.responseJSON.message
+                Swal.fire(error)
                 console.log(err.responseJSON.message)
             })
 
@@ -92,8 +97,9 @@ $(document).ready(() => {
             })
 
             .fail(err => {
+                let error = Array.isArray(err.responseJSON.message) ? err.responseJSON.message.join('\n') : err.responseJSON.message
+                Swal.fire(error)
                 console.log(err.responseJSON.message)
-                // console.log(err)
             })
 
             .always(() => {
@@ -122,7 +128,8 @@ $(document).ready(() => {
                 showMainPage()
             })
             .fail(err => {
-                // console.log(err)
+                let error = Array.isArray(err.responseJSON.message) ? err.responseJSON.message.join('\n') : err.responseJSON.message
+                Swal.fire(error)
                 console.log(err.responseJSON.message)
             })
             .always(() => {
@@ -213,7 +220,9 @@ function getTodoList() {
             });
         })
         .fail(err => {
-            console.log(err)
+            let error = Array.isArray(err.responseJSON.message) ? err.responseJSON.message.join('\n') : err.responseJSON.message
+            Swal.fire(error)
+            console.log(err.responseJSON.message)
         })
         .always(() => {
 
@@ -255,7 +264,9 @@ function getNewsAPI() {
             })
         })
         .fail(err => {
-            console.log(err)
+            let error = Array.isArray(err.responseJSON.message) ? err.responseJSON.message.join('\n') : err.responseJSON.message
+            Swal.fire(error)
+            console.log(err.responseJSON.message)
         })
 }
 
@@ -274,15 +285,17 @@ function deleteTodo(id) {
         .done(response => {
             console.log(response)
             showMainPage()
+            Swal.fire('Success deleted')
         })
         .fail(err => {
-            console.log(err)
+            let error = Array.isArray(err.responseJSON.message) ? err.responseJSON.message.join('\n') : err.responseJSON.message
+            Swal.fire(error)
+            console.log(err.responseJSON.message)
         })
 }
 
 function showEditTodo(id) {
-    console.log('update', id)
-    $('#todo-edit-page').show()
+    console.log('todo id', id)
 
     $.ajax({
         method: 'GET',
@@ -318,9 +331,13 @@ function showEditTodo(id) {
                         <button class="btn btn-primary" id="cancelTodoEdit">Cancel</button>
                 </form>
             `)
+
+            $('#todo-edit-page').show()
         })
         .fail(err => {
-            console.log(err)
+            let error = Array.isArray(err.responseJSON.message) ? err.responseJSON.message.join('\n') : err.responseJSON.message
+            Swal.fire(error)
+            console.log(err.responseJSON.message)
         })
 }
 
@@ -341,9 +358,12 @@ function updateSelectedTodo(id) {
         .done(response => {
             console.log(response)
             showMainPage()
+            Swal.fire('Updated')
         })
         .fail(err => {
-            console.log(err)
+            let error = Array.isArray(err.responseJSON.message) ? err.responseJSON.message.join('\n') : err.responseJSON.message
+            Swal.fire(error)
+            console.log(err.responseJSON.message)
         })
 }
 
@@ -357,9 +377,12 @@ function updateTodoStatus(id) {
         .done(response => {
             console.log(response)
             showMainPage()
+            Swal.fire('Updated')
         })
         .fail(err => {
-            console.log(err)
+            let error = Array.isArray(err.responseJSON.message) ? err.responseJSON.message.join('\n') : err.responseJSON.message
+            Swal.fire(error)
+            console.log(err.responseJSON.message)
         })
 }
 
@@ -377,8 +400,10 @@ function onSignIn(googleUser) {
             // console.log(response)
             localStorage.setItem('access_token', response.access_token)
             showMainPage()
+            // Swal.fire('You are login')
         })
         .fail((xhr, status) => {
+            Swal.fire(status)
             console.log(status)
         })
 
