@@ -1,5 +1,7 @@
 const { TodoList } = require('../models')
 
+const axios = require('axios')
+
 // change to async await
 
 class Controller {
@@ -67,9 +69,11 @@ class Controller {
             const data = await TodoList.findByPk(todoId)
             
             if(!data) {
-                res.status(404).json({
+                throw {
+                    status : 404,
                     message : 'Error not found'
-                })
+                }
+
             } else {
                 res.status(200).json(data)
             }
@@ -111,9 +115,11 @@ class Controller {
             })
             
             if(!data) {
-                res.status(404).json({
+
+                throw {
+                    status : 404,
                     message : 'Error not found'
-                })
+                }
             } else {
                 res.status(200).json(data)
             }
@@ -154,9 +160,11 @@ class Controller {
             })
             
             if(!data) {
-                res.status(404).json({
+
+                throw {
+                    status : 404,
                     message : 'Error not found'
-                })
+                }
             } else {
                 res.status(200).json(data)
             }
@@ -192,9 +200,11 @@ class Controller {
             })
 
             if(!data) {
-                res.status(404).json({
+
+                throw {
+                    status: 404,
                     message : 'Error not found'
-                })
+                }
             } else {
                 res.status(200).json({
                     message : 'Todo success to delete'
@@ -224,6 +234,20 @@ class Controller {
         //         message : 'Error in internal server'
         //     })
         // })
+    }
+
+    static async weather(req, res, next) {
+
+        let weatherData = 'https://www.metaweather.com/api/location/1047378/'
+
+         try {
+            const response = await axios.get(weatherData)
+
+            res.status(200).json(response)
+
+         } catch (err) {
+             next(err)
+         }
     }
 }
 

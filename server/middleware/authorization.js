@@ -11,24 +11,25 @@ async function authorUser (req, res, next) {
         })
 
         if(!todo) {
-            res.status(404).json({
+
+            throw {
+                status : 404,
                 message : 'Error not found'
-            })
+            }
         } else {
             
             if(todo.user_id == req.loginUser.id) {
                 next()
             } else {
-                res.status(401),json({
-                    message : `You don't have Authorizatrion`
-                })
+                throw {
+                    status : 401,
+                    message : `You dont dont't have Authorization`
+                }
             }
         }
 
     } catch (err) {
-        res.status(500).json({
-            message : 'error in internal server'
-        })
+        next(err)
     }
 
 

@@ -4,12 +4,12 @@ const Controller = require('../controller/todoController.js')
 const { authUser } = require('../middleware')
 const { authorUser } = require('../middleware')
 
-// router.use(authUser)
+router.use(authUser)
 
 router.get('/', Controller.readList)
 router.post('/', Controller.create)
 
-// router.use('/:id', authorUser)
+router.use('/:id', authorUser)
 
 router.get('/:id', Controller.getTodoId)
 router.put('/:id', Controller.edit)

@@ -5,16 +5,17 @@ const { User } = require('../models')
 //change to async await
 
 async function authUser(req, res, next) {
-    const { accessToken } = req.headers
+    const { access_token } = req.headers
 
     try {
 
         if( !accessToken ) {
-            res.status(401).json({
-                message : 'Please Login first'
-            })
+            throw {
+                status : 401,
+                message : 'Please Login First'
+            }
         } else {
-            const decoded = verifyToken(accessToken)
+            const decoded = verifyToken(access_token)
 
             req.loginUser = decoded
 
@@ -23,18 +24,18 @@ async function authUser(req, res, next) {
             })
 
             if(!data) {
-                res.status(401).json({
-                    message : 'Please login first'
-                })
+
+                throw {
+                    status : 401,
+                    message : 'Please Login First'
+                }
             } else {
                 next()
             }
         }
 
     } catch (err) {
-        res.status(500).json({
-            message : 'Error in internal server'
-        })
+        next(err)
     }
 
 
