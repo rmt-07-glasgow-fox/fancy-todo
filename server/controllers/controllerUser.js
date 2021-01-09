@@ -30,20 +30,43 @@ class ControllerUser {
     static googleLogin(req,res,next){
         const client = new OAuth2Client(process.env.GOOGLE_CLIENT_KEY);
         const id_token = req.body.id_token
-        
-        async function verify() {
-            const ticket = await client.verifyIdToken({
-                idToken: id_token,
-                audience: process.env.GOOGLE_CLIENT_KEY
+
+        client.verifyIdToken({
+            idToken: id_token,
+            audience: process.env.GOOGLE_CLIENT_KEY
+        })
+        .then(ticket => {
+            const payload = ticket.getPayload();
+            const email = payload.email
+            return User.findOne({where: {email: email}})
+            .then(user => {
+                if (user) {
+                    return user
+                } else {
+                    const obj = {
+                        firstname: payload.given_name,
+                        lastname: payload.family_name,
+                        email: email,
+                        password: 'hehehehehe'
+                    }
+                    return User.create(obj)
+                }
             })
-            .then(ticket => {
-                const payload = ticket.getPayload();
-                console.log(payload)
+            .then(user => {
+                const access_token = generateToken({id: user.id, email:user.email})
+                const first_name = user.firstname
+                res.status(200).json({ access_token,first_name })
             })
             .catch(error => {
+                console.log(error)
                 next(error)
             })
-        }
+
+        })
+        .catch(error => {
+            next(error)
+        })
+        
     }
 
     static login(req,res,next){
