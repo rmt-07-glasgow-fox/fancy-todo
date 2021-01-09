@@ -12,10 +12,10 @@ function errorHandler (err, req, res, next) {
                 res.status(404).json({ message: 'Not Found' })
                 break;
             case 'Invalid Input':
-                res.status(400).json({ message: 'Invalid Input'})
+                res.status(400).json({ message: 'Invalid Email/Password'})
                 break
             case 'Unauthorized':
-                res.status(401).json({ message: `Unauthorized`})
+                res.status(401).json({ message: `You don't have permission to perform this action`})
                 break
             case 'JsonWebTokenError': 
                 res.status(401).json({ message: 'You need to login first'})

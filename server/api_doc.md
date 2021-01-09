@@ -9,6 +9,7 @@
 - `PUT /todos/:id`
 - `PATCH /todos/:id`
 - `DELETE /todos/:id`
+- `GET /jokes`
 
 ## RESTful endpoints
 ### POST /register
@@ -40,7 +41,7 @@ _Response (201 - Created)_
 _Response (400 - Bad Request)_
 ```
 {
-  "message": "Errors"
+  "message": "<validation errors>"
 }
 ```
 
@@ -72,7 +73,7 @@ _Response (200 - OK)_
 _Response (400 - Bad Request)_
 ```
 {
-  "message": "Error"
+  "message": "Invalid Email/Password"
 }
 ```
 
@@ -94,7 +95,8 @@ _Request Body_
   "title": "<name to get insert into>",
   "description": "<description to get insert into>",
   "status": "<status to get insert into>",
-  "due_date": "<date to get insert into>"
+  "due_date": "<date to get insert into>",
+  "UserId": "<user id>"
 }
 ```
 
@@ -106,6 +108,7 @@ _Response (201 - Created)_
   "description": "<posted description>",
   "status": "<status>",
   "due_date": "<posted date>",
+  "UserId": <"user id">,
   "createdAt": "2020-03-20T07:15:12.149Z",
   "updatedAt": "2020-03-20T07:15:12.149Z",
 }
@@ -114,7 +117,7 @@ _Response (201 - Created)_
 _Response (400 - Bad Request)_
 ```
 {
-  "message": "Validation Errors"
+  "message": "<validation errors>"
 }
 ```
 _Response (500 - Internal Server Error)_
@@ -143,8 +146,9 @@ _Response (200 - OK)_
     "id": 1,
     "title": "<title name>",
     "description": "<description name>",
-    "status": "status",
+    "status": "<status>",
     "due_date": "<due_date>",
+    "UserId": "<user id>",
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
   },
@@ -152,8 +156,9 @@ _Response (200 - OK)_
     "id": 2,
     "title": "<title name>",
     "description": "<description name>",
-    "status": "status",
+    "status": "<status>",
     "due_date": "<due_date>",
+    "UserId": "<user id>"
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
   }
@@ -191,6 +196,7 @@ _Response (200 - OK)_
   "description": "<description name>",
   "status": "<status>",
   "due_date": "<due_date>",
+  "UserId": "<user id>",
   "createdAt": "2020-03-20T07:15:12.149Z",
   "updatedAt": "2020-03-20T07:15:12.149Z",
 }
@@ -231,7 +237,8 @@ _Response (200 - OK)_
   "title": "<updated title name>",
   "description": "<updated description name>",
   "status": "<updated status>",
-  "due_date": "<updated due_date>"
+  "due_date": "<updated due_date>",
+  "UserId": "<user id>",
   "createdAt": "2020-03-20T07:15:12.149Z",
   "updatedAt": "2020-03-20T07:15:12.149Z",
 }
@@ -239,7 +246,7 @@ _Response (200 - OK)_
 _Response (400 - Bad Request)_
 ```
 {
-  "message": "Validation Errors"
+  "message": "<validation errors>"
 }
 ```
 _Response (404 - Not Found)_
@@ -280,7 +287,8 @@ _Response (200 - OK)_
   "title": "<title name>",
   "description": "<description name>",
   "status": "<updated status>",
-  "due_date": "<updated due_date>"
+  "due_date": "<updated due_date>",
+  "UserId": "<user id>"
   "createdAt": "2020-03-20T07:15:12.149Z",
   "updatedAt": "2020-03-20T07:15:12.149Z",
 }
@@ -289,7 +297,7 @@ _Response (200 - OK)_
 _Response (400 - Bad Request)_
 ```
 {
-  "message": "Validation Errors"
+  "message": "<validation errors>"
 }
 ```
 _Response (404 - Not Found)_
@@ -324,7 +332,8 @@ _Response (200 - OK)_
   "title": "<title name>",
   "description": "<description name>",
   "status": "<updated status>",
-  "due_date": "<updated due_date>"
+  "due_date": "<updated due_date>",
+  "UserId": "user id",
   "createdAt": "2020-03-20T07:15:12.149Z",
   "updatedAt": "2020-03-20T07:15:12.149Z",
 }
@@ -344,3 +353,30 @@ _Response (404 - Not Found)_
 
 _Response (500 - Internal Server Errors)_
 
+---
+### GET /jokes
+
+> Get one random joke
+
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200 - OK)_
+```
+{
+  "id": "<id>",
+  "jokes": "<jokes>"
+}
+```
+_Response (500 - Internal Server Errors)_
+
+---
