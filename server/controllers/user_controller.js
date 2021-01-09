@@ -93,7 +93,7 @@ class UserController {
 
       const access_token = generateToken(_payload)
       console.log("USER YG SEDANG LOGIN", user.email);
-      return res.status(200).json({access_token})
+      return res.status(200).json({access_token, email: user.email})
 
     } catch(error) {
       next(error)
