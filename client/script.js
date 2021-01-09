@@ -293,6 +293,7 @@ function checkAuth() {
         $('#auth-page').hide();
         $('#todo-list-page').show();
         $('#logout-btn').show();
+        $('#quote img').removeAttr('src');
 
         getTodoList();
         weatherToday()
@@ -332,7 +333,8 @@ function getTodoList() {
                     doneCheck = 'checked'
                 }
 
-                $('#lists').append(`
+                if (todo.status !== 'done') {
+                    $('#lists').append(`
                 <tr id="todo-${todo.id}">
                     <td>
                         <input type="radio" id="new-todo-${todo.id}" name="status-${todo.id}" value="new-todo" ${newTodoCheck} onclick=newTodo(${todo.id})>
@@ -353,6 +355,7 @@ function getTodoList() {
                     </td>
                 </tr>
                 `)
+                }  
             })
         })
         .fail(xhr => {
@@ -388,19 +391,32 @@ function patchStatus(id, status) {
         })
 }
 
+let navStatus = true;
+
 function newTodo(id) {
     let status = $(`#new-todo-${id}`).val().replace('-', ' ');
     patchStatus(id, status)
+
+    if (!navStatus) {
+        $(`#todo-${id}`).remove()
+    }
 }
 
 function ongoing(id) {
     let status = $(`#ongoing-${id}`).val()
     patchStatus(id, status)
+    if (!navStatus) {
+        $(`#todo-${id}`).remove()
+    } 
 }
 
 function done(id) {
     let status = $(`#done-${id}`).val()
     patchStatus(id, status)
+   
+    if (navStatus) {
+        $(`#todo-${id}`).remove()
+    } 
 }
 
 function weatherToday() {
@@ -412,7 +428,6 @@ function weatherToday() {
         }
     })
     .then(location => {
-        console.log(location);
         return $.ajax({
             method: 'POST',
             url: `${baseUrl}/weather`,
@@ -463,3 +478,69 @@ function getQuote() {
     })
 }
 
+function doneTodo () {
+    $.ajax({
+        method: 'GET',
+        url: `${baseUrl}/todos`,
+        headers: {
+            access_token: localStorage.access_token
+        }
+    })
+        .done(todos => {
+            $('#lists').empty()
+
+            todos.forEach(todo => {
+                let newTodoCheck = '';
+                let ongoingCheck = '';
+                let doneCheck = '';
+
+                if (todo.status === "new todo") {
+                    newTodoCheck = 'checked';
+                } else if (todo.status === 'ongoing') {
+                    ongoingCheck = 'checked';
+                } else {
+                    doneCheck = 'checked'
+                }
+
+                if (todo.status === 'done') {
+                    $('#lists').append(`
+                <tr id="todo-${todo.id}">
+                    <td>
+                        <input type="radio" id="new-todo-${todo.id}" name="status-${todo.id}" value="new-todo" ${newTodoCheck} onclick=newTodo(${todo.id})>
+                        <label for="new-todo-${todo.id}">New Todo</label><br>
+
+                        <input type="radio" id="ongoing-${todo.id}" name="status-${todo.id}" value="ongoing" ${ongoingCheck} onclick=ongoing(${todo.id})> 
+                        <label for="ongoing-${todo.id}">Ongoing</label><br>
+                        
+                        <input type="radio" id="done-${todo.id}" name="status-${todo.id}" value="done" ${doneCheck} onclick=done(${todo.id})>
+                        <label for="done-${todo.id}">Done</label>
+                    </td>
+                    <td class="align-middle">${todo.title}</td>
+                    <td class="align-middle">${todo.description}</td>
+                    <td style="text-align: center;" class="align-middle">${todo.due_date}</td>
+                    <td style="text-align: center;" class="align-middle">
+                        <button class="btn btn-success" onclick="openEditFormTodo(${todo.id})">Edit</button>
+                        <button class="btn btn-danger" onclick="deleteTodo(${todo.id})">Delete</button>
+                    </td>
+                </tr>
+                `)
+                }
+            })
+        })
+        .fail(xhr => {
+            console.log(xhr.responseJSON.message);
+        })
+}
+
+function home() {
+    getTodoList();
+    navStatus = true;
+}
+
+function finish() {
+    doneTodo();
+    navStatus = false;
+}
+
+
+console.log(navStatus)
