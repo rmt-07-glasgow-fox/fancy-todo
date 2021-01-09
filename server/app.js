@@ -5,6 +5,7 @@ if(process.env.NODE_ENV === 'development') {
 const express = require('express')
 
 const router = require('./routes')
+const errorHandler = require('./middlewares/errorHandler')
 
 const PORT = process.env.PORT || 3000
 const app = express()
@@ -15,5 +16,6 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 // routes
 app.use(router)
+app.use(errorHandler)
 
 app.listen(PORT, _ => console.log(`Server is running on ${PORT}`))

@@ -2,9 +2,15 @@ const { Todo } = require('../models')
 
 class Controller {
 
-  static createTodo(req, res) {
+  static createTodo(req, res, next) {
     let { title, description, status, due_date } = req.body
-    let input = { title, description, status, due_date }
+    let input = {
+      title,
+      description,
+      status,
+      due_date,
+      UserId: req.user.id
+    }
 
     Todo.create(input)
       .then( todo => {
@@ -12,30 +18,28 @@ class Controller {
         res.status(201).json({ title, description, status, due_date })
       })
       .catch( err => {
-        if (err.errors) {
-          res.status(400).json({ validationErrors: err.errors.map( error => error.message )})
-        } else {
-          console.log(err)
-          res.status(500).json({ message: 'Server Error'})
-        }
+        next(err)
       })
   }
 
-  static getTodos(req, res) {
+  static getTodos(req, res, next) {
     Todo.findAll({
       attributes: {
         exclude: ['createdAt', 'updatedAt']
+      },
+      where: {
+        UserId: req.user.id
       }
     })
       .then( todos => {
         res.status(200).json(todos)
       })
       .catch( err => {
-        res.status(500).json({ message: 'Server Error'})
+        next(err)
       })
   }
 
-  static getTodoById(req, res) {
+  static getTodoById(req, res, next) {
     let id = req.params.id
     Todo.findByPk(id, {
       attributes: {
@@ -46,15 +50,15 @@ class Controller {
         if (todo) {
           res.status(200).json(todo)
         } else {
-          res.status(404).json({ message: 'Todo not found'})
+          next({ name: 'NotFound' })
         }
       })
       .catch( err => {
-        res.status(500).json({ message: 'Server Error'})
+        next(err)
       })
   }
 
-  static putTodoById(req, res) {
+  static putTodoById(req, res, next) {
     let id = req.params.id
     let { title, description, status, due_date } = req.body
 
@@ -71,7 +75,7 @@ class Controller {
           todo.due_date = due_date
           return todo.save()
         } else {
-          res.status(404).json({ message: 'Todo not found' })
+          next({ name: 'NotFound' })
         }
       })
       .then( newTodo => {
@@ -79,12 +83,7 @@ class Controller {
         res.status(200).json(newTodo)
       })
       .catch( err => {
-        if (err.errors) {
-          res.status(400).json({ validationErrors: err.errors.map( error => error.message )})
-        } else {
-          console.log(err)
-          res.status(500).json({ message: 'Server Error'})
-        }
+        next(err)
       })
   }
 
@@ -105,12 +104,7 @@ class Controller {
         res.status(200).json(todo)
       })
       .catch( err => {
-        if (err.errors) {
-          res.status(400).json({ validationErrors: err.errors.map( error => error.message )})
-        } else {
-          console.log(err)
-          res.status(500).json({ message: 'Server Error'})
-        }
+        next(err)
       })
   }
 
@@ -129,12 +123,7 @@ class Controller {
         res.status(200).json({ message: 'todo success to delete' })
       })
       .catch( err => {
-        if (err.errors) {
-          res.status(400).json({ validationErrors: err.errors.map( error => error.message )})
-        } else {
-          console.log(err)
-          res.status(500).json({ message: 'Server Error'})
-        }
+        next(err)
       })
   }
 }

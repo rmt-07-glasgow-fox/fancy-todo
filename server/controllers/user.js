@@ -32,7 +32,7 @@ class Controller {
       .then( user => {
         if(user) {
           if(checkHash(password, user.password)) {
-            res.status(200).json({ accessToken: generateToken({ id: user.id })})
+            res.status(200).json({ accessToken: generateToken({ id: user.id, email: user.email })})
           } else {
             res.status(400).json({ message: 'Wrong email/password' })
           }
