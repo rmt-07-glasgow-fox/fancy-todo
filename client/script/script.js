@@ -114,9 +114,9 @@ function loginClient(e) { //ok di html
 function registerClient(e) { //ok di html
     e.preventDefault()
 
-    let emailReg = $('#email-form-regist').val()
-    let passReg = $('#pass-form-regist').val()
-    let passVerif = $('#pass-verif-form-regist').val()
+    let emailReg = $('#email-form-regist').val() //ok
+    let passReg = $('#pass-form-regist').val() //ok
+    let passVerif = $('#pass-verif-form-regist').val() //ok
 
     if(!emailReg || !passReg || !passVerif) {
         console.log(err)
@@ -153,6 +153,8 @@ function registerClient(e) { //ok di html
 
 // list todo by user login
 function fetchTodo() { //ok
+    let todoAppend
+
     $.ajax({
         method : 'GET',
         url : `${baseurl}/todos`,
@@ -163,39 +165,40 @@ function fetchTodo() { //ok
     .done(response => {
         $('#todoList').empty() //ok
         $.each(response, function (el, i) {
-            let checkBoxtodo = `input type="checkbox" id="status-${e.id}" onclick="changeStatus(${e.id}, '${e.status}')" `
+            let checkBoxtodo = `input type="checkbox" id="status-${el.id}" onclick="changeStatus(${el.id}, '${el.status}')" `
 
             if(el.status == true) {
                 checkBoxtodo += `checked>`
             } else {
                 checkBoxtodo += `>`
             }
+
+            todoAppend += `
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                <div class="input-group-text">
+                    ${checkBoxTodo}
+                </div>
+                </div>
+                <div class="card" style="width: 40rem">
+                    <div class="card-body" id=todoCardBody_${el.id}>
+                    <div id=todoCardValue_${el.id}> 
+                        <h5 class="card-title">${el.title}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">${el.due_date.split('T')[0]}</h6>
+                        <p class="card-text">${el.description}</p>
+                        <a href="#" onclick='editTodoForm(${el.id})' class="card-link" id="edit Todo">Edit</a>
+                        <a href="#" onclick='deleteTodo(${el.id})' class="card-link" id="delete Todo">Hapus</a>
+                    </div>
+                    </div>
+                </div>
+            </div>`
         })
 
-        let todoAppend = `
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-            <div class="input-group-text">
-                ${checkBoxTodo}
-            </div>
-            </div>
-            <div class="card" style="width: 40rem">
-                <div class="card-body" id=todoCardBody_${el.id}>
-                <div id=todoCardValue_${el.id}> 
-                    <h5 class="card-title">${el.title}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">${el.due_date.split('T')[0]}</h6>
-                    <p class="card-text">${el.description}</p>
-                    <a href="#" onclick='editTodoForm(${el.id})' class="card-link" id="edit Todo">Edit</a>
-                    <a href="#" onclick='deleteTodo(${el.id})' class="card-link" id="delete Todo">Hapus</a>
-                </div>
-                </div>
-            </div>
-        </div>`
 
-        $('#todoList').append(todoAppend)
+        $('#todoList').append(todoAppend) //ok
     })
     .fail(err => {
-        console.log(err)
+        console.log(err, "error di show list / fetch todo")
     })
     .always(() => {
 
@@ -262,17 +265,17 @@ function editTodoForm(todoById) {  //ok -> fetch todo
         $(`#todoCardValue_${todoCurrentId}`).hide(); //ok
 
         let cardBody = `
-        <form onsubmit="editTodo(event)" id="formEdit${todoCurrentId}">
+        <form onsubmit="editTodo(e)" id="formEdit${todoCurrentId}">
         <div class="row">
             <div class="col">
-            <input type="text" class="form-control title" placeholder="Title" id="titleEdit" value="${response.title}">
+            <input type="text" class="form-control title" placeholder="Title" id="edit-title-todo" value="${response.title}">
             </div>
             <div class="col">
-            <input type="date" class="form-control due_date" placeholder="due date" id="dueDateEdit" value="${response.due_date.split('T')[0]}">
+            <input type="date" class="form-control due_date" placeholder="due date" id="edit-due-date-todo" value="${response.due_date.split('T')[0]}">
             </div>
         </div>
         <div class="form-group">
-            <textarea class="form-control description" id="descriptionEdit" rows="3" placeholder="Description Here....">${response.description}</textarea>
+            <textarea class="form-control description" id="edit-desc-todo" rows="3" placeholder="Description Todo ..">${response.description}</textarea>
             </div>
             <button type="submit" class="btn btn-primary">Edit</button>
             <button onclick="cancleEdit(e)" class="btn btn-danger">Cancel</button>
@@ -293,18 +296,18 @@ function cancelEdit(e) { //ok
     e.preventDefault()
 
     $(`#todoCardValue_${todoCurrentId}`).show() //ok
-    $(`#formEdit${todoCurrentId}`).remove()
+    $(`#formEdit${todoCurrentId}`).remove() //ok
 }
 
 
-function editTodo(e) {
+function editTodo(e) { //ok --> edit todo by id
     e.preventDefault()
-    var title = $('#titleEdit').val();
-    var due_date = $('#dueDateEdit').val();
-    var description = $('#descriptionEdit').val();
+    var title = $('#edit-title-todo').val(); //ok
+    var due_date = $('#edit-due-date-todo').val(); //ok
+    var description = $('#edit-desc-todo').val(); //ok
     $.ajax({
         method: "PUT",
-        url: serverURL + "/todos/" + todoCurrentId,
+        url: `${baseurl}/todos/${todoCurrentId}`,
         headers: {
             access_token: localStorage.access_token
         },
@@ -314,14 +317,14 @@ function editTodo(e) {
     }).done(() => {
         console.log('Selesai Edit')
         fetchTodo()
-        $(`#formEdit`).hide();
+        $(`#formEdit`).hide(); //ok
         $(`#todoCardValue_${todoCurrentId}`).show(); //ok
     }).fail(err => {
-        console.log(err, 'ERROR')
+        console.log(err, 'error di edit todo')
     }).always(() => {
-        $('#titleEdit').val('');
-        $('#dueDateEdit').val('');
-        $('#descriptionEdit').val('')
+        $('#edit-title-todo').val(''); //ok
+        $('#edit-due-date-todo').val(''); //ok
+        $('#edit-desc-todo').val('') //ok
     })
 }
 
@@ -384,7 +387,7 @@ function onSignIn(googleUser) { //ok
 
     $.ajax({
         method: "POST",
-        url: `${baseurl}/googleLogin`,
+        url: `${baseurl}/googleLogin`, //ok
         headers: {
             google_access_token: id_token
         }
@@ -409,7 +412,7 @@ function LogOut() { //ok
 
 // ---------------------- 3rd API -------------------------//
 
-function fetchNews () { //ok perlu diperbaiki
+function fetchNews() { //ok perlu diperbaiki
     $.ajax({
         method: "GET",
         url: `${baseurl}/news`,
@@ -417,36 +420,26 @@ function fetchNews () { //ok perlu diperbaiki
             access_token: localStorage.access_token
         }
     }).done (result => {
+        // let showNews
         // console.log (result)
         $('#news-widget-get').empty();
 
-        let dataNews = `
-        <div class="weather-card card" data-toggle="tooltip" data-placement="top" title="Untuk mengubah lokasi buka pengaturan user"> <span class="weather-icon icon"><img class="img-fluid" src="${result.current.weather_icons[0]}" /></span>
-            <div class="weather-title title">
-                <p>${result.location.name}</p>
-            </div>
-            <div class="weather-temp">${result.current.temperature}<sup>&deg;</sup></div>
-            <div class="weather-row row">
-                <div class="weather-col-4 col-4">
-                    <div class="weather-header header">General</div>
-                    <div class="weather-value value">${result.current.weather_descriptions[0]}</div>
+        $.each(result, function (el, i) {
+            $('#news-widget-get').append(
+            `
+            <div class="card" style="width: 18rem;">
+                <img src="${el.poster}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">${el.tipe}</h5>
+                    <p class="card-text">${el.judul}</p>
+                    <a href="${el.link}" class="btn btn-primary">Baca Berita</a>
                 </div>
-                <div class="weather-col-4 col-4">
-                    <div class="weather-header header">Cloud</div>
-                    <div class="weather-value value">${result.current.cloudcover}</div>
-                </div>
-                <div class="weather-col-4 col-4">
-                    <div class="weather-header header">Pressure</div>
-                    <div class="weather-value value">${result.current.pressure}</div>
-                </div>
-            </div>
-        </div>
-        `
-        $('#news').append(); //belom disi
+            </div>`)
+        })
     }).fail (err => {
         console.log (err)
     }).always (() => {
-        console.log ('ajax 3rd API get')
+        console.log ('ajax 3rd API get cnn news')
     })
 }
 
