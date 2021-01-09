@@ -141,29 +141,35 @@ $('#add-todo-btn').click(event => {
         }
     })
         .done(todo => {
-            $('tbody').append(`
+            let newTodoCheck = '';
+            let ongoingCheck = '';
+            let doneCheck = '';
+
+            if (todo.status === "new todo") {
+                newTodoCheck = 'checked';
+            } else if (todo.status === 'ongoing') {
+                ongoingCheck = 'checked';
+            } else {
+                doneCheck = 'checked'
+            }
+
+            $('#lists').append(`
             <tr id="todo-${todo.id}">
                 <td>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="new-todo-radio" value="new todo" checked>
-                        <label class="form-check-label" for="new-todo-radio">New Todo</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="ongoing-radio" value="ongoing">
-                        <label class="form-check-label" for="ongoing-radio">Ongoing</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="done-radio" value="done">
-                        <label class="form-check-label" for="done-radio">Done</label>
-                    </div>
+                    <input type="radio" id="new-todo-${todo.id}" name="status-${todo.id}" value="new-todo" ${newTodoCheck} onclick=newTodo(${todo.id})>
+                    <label for="new-todo-${todo.id}">New Todo</label><br>
+
+                    <input type="radio" id="ongoing-${todo.id}" name="status-${todo.id}" value="ongoing" ${ongoingCheck} onclick=ongoing(${todo.id})> 
+                    <label for="ongoing-${todo.id}">Ongoing</label><br>
+                    
+                    <input type="radio" id="done-${todo.id}" name="status-${todo.id}" value="done" ${doneCheck} onclick=done(${todo.id})>
+                    <label for="done-${todo.id}">Done</label>
                 </td>
                 <td class="align-middle">${todo.title}</td>
                 <td class="align-middle">${todo.description}</td>
-                <td style="text-align: center;" class="align-middle">${todo.status}</td>
                 <td style="text-align: center;" class="align-middle">${todo.due_date}</td>
                 <td style="text-align: center;" class="align-middle">
                     <button class="btn btn-success" onclick="openEditFormTodo(${todo.id})">Edit</button>
-                    <button class="btn btn-warning" onclick="statusTodoForm(${todo.id})">Status</button>
                     <button class="btn btn-danger" onclick="deleteTodo(${todo.id})">Delete</button>
                 </td>
             </tr>
@@ -288,6 +294,7 @@ function checkAuth() {
         $('#todo-list-page').show();
         getTodoList();
         $('#logout-btn').show();
+
     } else {
         $('#auth-page').show();
         $('#login-form').show()
@@ -307,7 +314,7 @@ function getTodoList() {
         }
     })
         .done(todos => {
-            $('tbody').empty()
+            $('#lists').empty()
 
             todos.forEach(todo => {
                 let newTodoCheck = '';
@@ -322,7 +329,7 @@ function getTodoList() {
                     doneCheck = 'checked'
                 }
 
-                $('tbody').append(`
+                $('#lists').append(`
                 <tr id="todo-${todo.id}">
                     <td>
                         <input type="radio" id="new-todo-${todo.id}" name="status-${todo.id}" value="new-todo" ${newTodoCheck} onclick=newTodo(${todo.id})>
@@ -393,3 +400,65 @@ function done(id) {
     patchStatus(id, status)
 }
 
+function weatherToday() {
+    $.ajax({
+        method: 'GET',
+        url: `${baseUrl}/location`,
+        headers: {
+            access_token: localStorage.access_token,
+        }
+    })
+    .then(location => {
+        console.log(location);
+        return $.ajax({
+            method: 'POST',
+            url: `${baseUrl}/weather`,
+            headers: {
+                access_token: localStorage.access_token
+            },
+            data: {
+                location
+            }  
+        })
+    })
+    .done(locationData => {
+        window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = []; 
+        window.myWidgetParam.push({ 
+            id: 15, 
+            cityid: locationData.id, 
+            appid: locationData.appid, 
+            units: 'metric', 
+            containerid: 'openweathermap-widget-15', }); 
+            
+            (function () { 
+                var script = document.createElement('script'); 
+                script.async = true; 
+                script.charset = "utf-8"; 
+                script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js"; 
+                
+                var s = document.getElementsByTagName('script')[0]; 
+                s.parentNode.insertBefore(script, s); 
+            })();   
+    })
+    .fail(xhr => {
+        console.log(xhr);
+    })
+}
+
+
+function getQuote() {
+    $.ajax({
+        method: 'GET',
+        url: `${baseUrl}/quote`,
+        headers: {
+            access_token: localStorage.access_token
+        }
+    })
+    .done(quote => {
+        $('#quote img').removeAttr('src');
+        $('#quote img').attr('src', quote.media)
+    })
+}
+
+weatherToday()
+getQuote()
