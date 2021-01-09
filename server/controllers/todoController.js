@@ -7,7 +7,8 @@ class todoController{
         Todo.findAll({
             where: {
                 userId : req.user.id
-            }
+            },
+            order : ['id']
         })
         .then(data => {
             if(data.length !== 0){

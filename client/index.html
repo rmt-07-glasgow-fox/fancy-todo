@@ -10,12 +10,22 @@
     <title>Document</title>
 </head>
 <body>
-    <div id="website-name">
-        <h1>Fancy Todo</h1>
-    </div>
-    <nav class="nav">
-        <button id="logout">Log out</button>
-    </nav>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark nav">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Fancy Todo</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active" aria-current="page" href="#" id="home">Home</a>
+              <a class="nav-link" href="#" id="btn-add-todo">Add Todo</a>
+              <a class="nav-link" href="#" id="show-holidays">Show Holidays</a>
+              <a class="nav-link" href="#" id="logout">Logout</a>
+            </div>
+          </div>
+        </div>
+      </nav>
 
     <div class="wrapper fadeInDown" id="template-login">
         <div id="formContent">
@@ -53,62 +63,36 @@
         </div>
     </div>
 
-    <!-- <div id="welcome-page">
-        <div id="signin-form">
-            <form>
-                <label>Email:</label>
-                <input type="text" id="register-email">
-                <label>Password:</label>
-                <input type="password" id="register-password">
-                <div id="signup-error"></div>
-                <div style="margin-top: 10px;">
-                    <button type="submit" class="btn btn-primary" >Register</button>
-                </div>
-                <p>Already have an account?</p>
-            </form>
-        </div>
-        <div id="login-form">
-            <form>
-                <label>Email:</label>
-                <input type="email" >
-                <label>Password:</label>
-                <input type="password" >
-                <div id="login-error"></div>
-                <div style="margin-top: 10px;">
-                    <button type="submit"  class="btn btn-primary" >Login</button>
-                </div>
-                <p>Create an account?</p>
-            </form>
-        </div>
-        <button class="btn btn-secondary">Sign up</button>
-        <button class="btn btn-secondary">Login</button>
-    </div> -->
-    
-
     <div id="main-page">
         <div id="todo-feature">
-            <h1>Todo List</h1>
-            <button id="show-holidays">Show Holidays</button>
+            <h1 style="text-align: center;">Todo List</h1>
+            <!-- <button id="show-holidays">Show Holidays</button> -->
             <div id="function-holidays">
-                <button id="hide-holidays">Hide Holidays</button>
+                <!-- <button id="hide-holidays">Hide Holidays</button> -->
                 <div id="holidays">
                 </div>
             </div>
                 <div class ="todo-list" style="margin-top: 20px;" id="main-todo">
-                    <button id="btn-add-todo">Add Todo</button>  
+                    <!-- <button id="btn-add-todo">Add Todo</button>   -->
                     <div id="error-add"></div>
-                    <div id="todo"></div>  
+                    <div id="todo" style="margin: 10px; padding: 10px;" class="border border-5"></div>  
                 </div>
         </div>
         <div id="form-todo">
             <form>
                 <div id="error-form"></div>
-                <label><h5>Title</h5></label>
-                <input type="text" id='title'>
-                <label><h5>Description</h5></label>
-                <input type="text" id='description'>
-                <label><h5>Due Date</h5></label>
-                <input type="date" id='due_date'>
+                <div>
+                    <label><h5>Title</h5></label>
+                    <input type="text" id='title'>
+                </div>
+                <div>
+                    <label><h5>Description</h5></label>
+                    <input type="text" id='description'>
+                </div>
+                <div>
+                    <label><h5>Due Date</h5></label>
+                    <input type="date" id='due_date'>
+                </div>
                 <div class="add">
                     <button id="add-todo" type="submit">Add Todo</button>
                 </div>

@@ -19,6 +19,7 @@ function authorization(){
         $("#function-holidays").hide()
         $("#template-login").hide()
         $("#website-name").show()
+        $("#show-holidays").show()
     } else {
         $('.nav').hide()
         $('#login-form').hide()
@@ -67,7 +68,9 @@ $('#btn-login').on('click', function(event){
     $("#error").empty()
 })
 
-
+$("#home").on('click', function(){
+    authorization()
+})
 
 $("#logout").on('click',function(){
     localStorage.clear()
@@ -172,15 +175,19 @@ function getTodoList(){
         } else {
             todolist.forEach((el , i) => {
                 $('#todo').append(`
-                <div>
-                    <h5>${i + 1}
-                    <h5>${el.title}<h5>
-                    <h5>${el.description}<h5>
-                    <h5>${el.status}<h5><a href="#" onclick="editStatus(${el.id})">Complete Task</a>
-                    <h5>${el.due_date.substring(0,10)}<h5>
+                <div class="card">
+                    <h5>Task : ${el.title}<h5>
+                    <h5>Description : ${el.description}<h5>
+                    <h5>Due Date : ${el.due_date.substring(0,10)}<h5>
                     <a href="#" onclick="getTodo(${el.id})">Edit</a>
                     <a href="#" onclick="deleteTodo(${el.id})">Delete</a>
-                </div>`)  
+                </div>`) 
+                let status =''
+                if(el.status === true){
+                    $("#todo").append(`<h5>Status : Completed<h5><a href="#" onclick="editStatusUnComplete(${el.id})">Not Complete</a>`)
+                } else if (el.status === false){
+                    $("#todo").append(`<h5>Status : Not Completed<h5><a href="#" onclick="editStatusComplete(${el.id})">Complete</a>`)
+                }
             })
         }
     })
@@ -249,7 +256,7 @@ function getTodo(id){
     })
 }
 
-function editStatus(id){
+function editStatusComplete(id){
     $.ajax({
         method : "PATCH",
         url : `${baseUrl}/todos/${id}`,
@@ -258,6 +265,26 @@ function editStatus(id){
         },
         data : {
             status : true
+        }
+    })
+    .done(response => {
+        $(".todo-list").show()
+        authorization()
+    })
+    .fail(error => {
+        
+    })
+}
+
+function editStatusUnComplete(id){
+    $.ajax({
+        method : "PATCH",
+        url : `${baseUrl}/todos/${id}`,
+        headers : {
+            access_token : localStorage.access_token
+        },
+        data : {
+            status : false
         }
     })
     .done(response => {
@@ -287,10 +314,14 @@ function deleteTodo(id){
 }
 
 $("#btn-add-todo").on('click',function(){
+    authorization()
     $("#form-todo").show()
     $('#add-todo').show()
     $(".todo-list").hide()
     $('#edit-todo').hide()
+    $('#title').val('')
+    $('#description').val('')
+    $('#due_date').val('')
 })
 
 $("#add-todo").on('click', function(event){
@@ -350,7 +381,6 @@ $("#show-holidays").on('click', function(){
     $("#main-todo").hide()
     $("#function-holidays").show()
     getHolidays()
-    $("#show-holidays").hide()
 })
 
 
