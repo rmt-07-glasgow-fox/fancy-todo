@@ -6,14 +6,15 @@
     <meta name="google-signin-client_id" content="826425000447-gt39is72tfoncrialeoedku6p3khjc93.apps.googleusercontent.com">
 
     <title>Todos</title>
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
-<body>
+<body style="background-color: lightblue;">
     <div class="container-fluid">
         <div class="row">
             <!-- navbar -->
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <h1>Todos</h1>
+            <nav class="navbar navbar-expand-lg navbar-light bg-info rounded">
+                <h1 style="text-shadow: white 1px 1px;">Todos</h1>
                 <div class="collapse navbar-collapse">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-link" id="registerForm">
@@ -32,7 +33,7 @@
         </div>
         <!-- register -->
         <div class="register" style="display: none;">
-            <h2>Register</h2>
+            <h2 style="text-shadow: white 1px 1px;">Register</h2>
             <form action="">
                 <label for="email">Email</label><br>
                 <input type="text" id="email-register" name="email"><br><br>
@@ -45,8 +46,8 @@
         </div>
         <!-- end register -->
         <!-- login -->
-        <div class="login">
-            <h2>Login</h2>
+        <div class="login" >
+            <h2 style="text-shadow: white 1px 1px;">Login</h2>
             <form action="">
                 <label for="email">Email</label><br>
                 <input type="text" id="email" name="email"><br><br>
@@ -55,14 +56,14 @@
                 <button type="submit" class="rounded" id="login-btn">Login</button>
             </form>
         </div><br><br>
-        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        <div class="g-signin2" data-onsuccess="onSignIn" style="margin-left: 30px;"></div>
         <!-- end login -->
         <!-- todos list -->
         
             <div id="todos" style="display: none;">
-                <div id="add-todos">
+                <div id="add-todos" style="margin-left: 20px;">
                     <button class="rounded" id="to-add-form">Add New Task</button>
-                </div>
+                </div><br>
                 <div id="todos-list">
                     
                 </div>
@@ -70,7 +71,7 @@
             </div>
             <!-- end todos list -->
             <!-- add todo -->
-            <div id="add-task-form" style="display: none;">
+            <div id="add-task-form" style="display: none; margin-left: 30px;">
                 <form action="">
                     <label for="title">Title</label><br>
                     <input type="text" name="" id="title"><br><br>
@@ -82,7 +83,7 @@
                 </form>
             </div>
             <!-- end add todo -->
-            <div id="edit-task-form" style="display: none;">
+            <div id="edit-task-form" style="display: none; margin-left: 30px;">
                 <form action="">
                     <label for="title">Title</label><br>
                     <input type="text" name="" id="title-edit"><br><br>
@@ -93,7 +94,7 @@
                     <button type="submit" class="rounded" id="edit-task-btn">Confirm Edit</button>
                 </form>
             </div>
-        
+
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

@@ -67,6 +67,7 @@ function login(event) {
             $('#logout').show()
             $('.login').hide()
             $('.g-signin2').hide()
+            todosList()
             dashBoard()
         })
         .fail(err => {
@@ -125,14 +126,14 @@ function todosList() {
             }
             
             $(`
-                <div class="card" style="width: 50rem;">
+                <div class="card" style="width: 30rem;">
                     <div class="card-body" id="cardBody">
                         <input type="checkbox" name="" id="status" onclick="changeStatus(${task.id}, ${task.status})" ${checkbox}>
                         <h5 class="card-title">${task.title}</h5>
                         <h7 class="card-subtitle">${task.due_date}</h7><br><br>
                         <p class="card-text">${task.description}</p>
                         <a href="#" class="text-decoration-none" onclick="deleteTask(${task.id})">Delete</a>
-                        <a href="#" class="text-decoration-none" onclick="editForm(${task.id})">Edit</a>
+                        <a href="#" class="text-decoration-none" style="margin-left: 20px" onclick="editForm(${task.id})">Edit</a>
                     </div>
                 </div>
             `).appendTo('#todos-list')
