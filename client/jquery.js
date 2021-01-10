@@ -35,6 +35,7 @@ function authorization(){
         $("#register-button").hide()
         $("#btn-sign-up").show()
         $("#login-button").show()
+        $("#error").empty()
     }
 }
 
