@@ -307,7 +307,7 @@ _Response (500)_
 }
 ```
 
-### GET /register
+### POST /register
 
 > add user to database
 
@@ -345,7 +345,7 @@ _Response (500)_
 ```
 
 
-### GET /login
+### POST /login
 
 > login user to main page using authentification
 
