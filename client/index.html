@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-signin-client_id" content="113397546058-4kcvij6pape3o8lqv335i3idu24jtenv.apps.googleusercontent.com">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <title>Fancy Todo</title>
+  </head>
+  <style>
+  </style>
+  <body>
+    <!-- Login Page -->
+    <div class="container loginPage">
+      <div class="row justify-content-center align-items-center" style="height:100vh">
+        <div class="col-4">
+          <div class="card">
+            <div class="card-body">
+              <form action="" autocomplete="off">
+                <div class="form-group">
+                  <label for="email" id="email">Email: </label>
+                  <input type="text" id="emaillog" class="form-control" name="email">
+                </div>
+                <div class="form-group">
+                  <label for="password" id="password">Password: </label>
+                  <input type="password" id="passwordlog" class="form-control" name="password">
+                </div><br>
+                <div class="row">
+                  <div class="col">
+                    <button type="button" id="sendLogin" class="btn btn-primary">login</button><br>
+                  </div>
+                  <div class="col">
+                    <div id="my-signin2" class=""></div>
+                  </div>
+                </div>
+              </form>
+              <div class="col text-center mt-2">
+                <a class="registerBtn">Register new Account</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Register Page -->
+    <div class="container registerPage">
+      <div class="row justify-content-center align-items-center" style="height:100vh">
+        <div class="col-4">
+          <div class="card">
+            <div class="card-body">
+              <form action="" autocomplete="off">
+                <div class="form-group">
+                  <label for="email" id="email">Email: </label>
+                  <input type="text" id="emailreg" class="form-control" name="email"  placeholder="e.g: andrianm28@hacktiv8.com">
+                </div>
+                <div class="form-group">
+                  <label for="password" id="password">Password: </label>
+                  <input type="password" id="passwordreg" class="form-control" name="password" placeholder="at least 6 characters">
+                </div><br>
+                <div class="row">
+                  <div class="col">
+                    <button type="submit" id="sendRegister" class="btn btn-primary">Submit</button>
+                  </div>
+                  <div class="col">
+                    <p>already have account?<a class="loginBtnPage">Login</a></p>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container mainPage">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#" id="userId">Navbar</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="logoutBtn">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <div class="row">
+        <div class="col-sm">
+          <h1>TODO List: </h1>
+          <ul class="list-group todoList">
+          </ul>
+        </div>
+        <div class="col-sm">
+          <h1>Action: </h1>
+            <div class="container addTodo">
+              <div class="row justify-content-center align-items-center">
+                <div class="col">
+                  <div class="card">
+                    <div class="card-body">
+                      <form action="" autocomplete="off">
+                        <div class="form-group">
+                          <label for="title" id="title">Title: </label>
+                          <input type="text" id="titleForm" class="form-control" name="title" ">
+                        </div>
+                        <div class="form-group">
+                          <label for="description" id="description">Description: </label>
+                          <input type="text" id="descriptionForm" class="form-control" name="description" ">
+                        </div>
+                        <div class="form-group">
+                          <label for="due_date" id="due_date">Due Date: </label>
+                          <input type="date" id="due_dateForm" class="form-control" name="due_date" ">
+                        </div>
+                        <div class="row mt-2">
+                          <div class="col">
+                            <button type="submit" id="sendRegister" class="btn btn-primary">Add Todo</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- Optional JavaScript -->
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+    <script src="script.js"></script>
+  </body>
+</html>
