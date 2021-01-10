@@ -15,3 +15,6 @@ function comparePass(pass, hashPass) {
 module.exports = {
     hashPass, comparePass
 }
+
+
+// console.log(hashPass('pratama12'))

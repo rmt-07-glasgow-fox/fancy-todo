@@ -1,15 +1,15 @@
 const router = require('express').Router()
 
-const Controller = require('../controller/userController')
+const UserController = require('../controller/userController')
 
-router.get('/user', Controller.getUser)
+router.get('/user', UserController.getUser)
 
-router.get('/news', Controller.newsWidget)
-router.post('/login', Controller.login)
+router.get('/news', UserController.newsWidget)
+router.post('/login', UserController.login)
 
-router.post('/googleLogin',Controller.googleLogin)
+router.post('/googleLogin', UserController.googleLogin)
 
-router.post('/register', Controller.register)
+router.post('/register', UserController.register)
 
 
 

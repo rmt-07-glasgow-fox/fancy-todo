@@ -6,4 +6,4 @@ module.exports = {
     randomPass
 }
 
-console.log(randomPass())
+// console.log(randomPass())

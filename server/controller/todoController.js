@@ -4,14 +4,14 @@ const axios = require('axios')
 
 // change to async await
 
-class Controller {
+class TodoController {
     static async create(req, res, next) {
         const create = {
             title : req.body.title,
             description : req.body.description,
             status : req.body.status,
             due_date : req.body.due_date,
-            user_id : req.loginUser.id
+            UserId : req.loginUser.id
         }
 
         try {  
@@ -41,9 +41,11 @@ class Controller {
 
     static async readList(req, res, next) {
         try {
-            const data  = await TodoList.findAll({ where : 
-                { user_id : req.loginUser.id }
-            })
+            // const data  = await TodoList.findAll({ where : 
+            //     { UserId : req.loginUser.id }
+            // })
+
+            const data = await TodoList.findAll()
 
             res.status(200).json(data)
         } catch (err) {
@@ -66,7 +68,7 @@ class Controller {
         let todoId = +req.params.id
 
         try {
-            const data = await TodoList.findByPk(todoId)
+            const data = await TodoList.findOne({where : {id : todoId}})
             
             if(!data) {
                 throw {
@@ -121,7 +123,13 @@ class Controller {
                     message : 'Error not found'
                 }
             } else {
-                res.status(200).json(data)
+                res.status(200).json({
+                    id : todoId,
+                    title : dataEdit.title,
+                    description : dataEdit.description,
+                    status : dataEdit.status,
+                    due_date : dataEdit.due_date
+                })
             }
             
         } catch (err) {
@@ -166,7 +174,9 @@ class Controller {
                     message : 'Error not found'
                 }
             } else {
-                res.status(200).json(data)
+                res.status(200).json({
+                    message : `Change status to ${newStatus.status}`
+                })
             }
         } catch (err) {
             next(err)
@@ -207,6 +217,7 @@ class Controller {
                 }
             } else {
                 res.status(200).json({
+                    id : todoId,
                     message : 'Todo success to delete'
                 })
             }
@@ -251,4 +262,4 @@ class Controller {
     }
 }
 
-module.exports = Controller
+module.exports = TodoController

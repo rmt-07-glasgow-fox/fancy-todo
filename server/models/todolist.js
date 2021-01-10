@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    user_id : DataTypes.INTEGER
+    UserId : DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'TodoList',

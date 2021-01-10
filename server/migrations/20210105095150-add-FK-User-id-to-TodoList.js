@@ -3,7 +3,7 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
 
-    await queryInterface.addColumn('TodoLists', 'user_id', {
+    await queryInterface.addColumn('TodoLists', 'UserId', {
       type : Sequelize.INTEGER,
       references : {
         model : {
@@ -18,6 +18,6 @@ module.exports = {
 
   down: async (queryInterface, Sequelize) => {
     
-    await queryInterface.removeColumn('TodoLists', 'user_id', {})
+    await queryInterface.removeColumn('TodoLists', 'UserId', {})
   }
 };

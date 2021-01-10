@@ -8,7 +8,7 @@ const { comparePass } = require('../helper/bcrypt')
 const { randomPass } = require('../helper/randomPass')
 //change to async await
 
-class Controller {
+class UserController {
     static async login (req, res, next) {
         let userEmail = req.body.email
         let userPass = req.body.password
@@ -119,6 +119,7 @@ class Controller {
                     password : randomPass()
                 }
             })
+
            }
        })
        .then(user => {
@@ -199,4 +200,4 @@ class Controller {
     }
 }
 
-module.exports = Controller
+module.exports = UserController

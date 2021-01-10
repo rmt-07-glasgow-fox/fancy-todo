@@ -5,7 +5,7 @@ if(process.env.NODE_ENV != 'production'){
 const express = require('express')
 
 const app = express()
-const port = 4300
+const port = 4400
 
 const router = require('./routes/index.js')
 
