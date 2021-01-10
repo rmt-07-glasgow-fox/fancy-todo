@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-signin-client_id" content="309535552197-op3324hgs4nnfiba7frspobvi7408bbp.apps.googleusercontent.com">
+  <title>Fancy Todo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+
+</head>
+
+<body style="background: linear-gradient(to right, #373b44, #4286f4);">
+  <!-- Navbar -->
+  <nav class="navbar navbar-light bg-light" style="margin-bottom: 5rem;">
+    <div class="container-fluid">
+      <a class="navbar-brand" style="text-align: center;" href="">Fancy Todo</a>
+      <button type="button" class="btn btn-danger" id="sign-out-btn">Sign Out</button>
+    </div>
+  </nav>
+  <!-- Sign In Div -->
+  <div class="container" id="sign-in-div" style="background: linear-gradient(to right, #c9d6ff, #e2e2e2);width: 50%;">
+    <p class="lead">Sign In</p>
+    <form>
+      <div class="mb-3">
+        <label for="InputEmail" class="form-label">Email address</label>
+        <input type="email" class="form-control" id="InputEmail" aria-describedby="emailHelp" required>
+        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+      </div>
+      <div class="mb-3">
+        <label for="InputPassword" class="form-label">Password</label>
+        <input type="password" class="form-control" id="InputPassword" required>
+      </div>
+      <div class="alert alert-warning" role="alert" id="alertSignIn">
+        Invalid email / password
+      </div>
+      <button type="submit" class="btn btn-primary" id="sign-in-btn">Sign In</button>      
+      <p class="lead">New to Fancy Todo? <span><a id="sign-up-link" href="">Sign up now</a></span>.</p>
+      <p class="lead">Or sign in using google</p>
+      <div class="g-signin2" data-onsuccess="onSignIn" style="padding-bottom: 20px;"></div>
+      <div class="alert alert-warning" role="alert" id="alertServerSignIn">
+        
+      </div>
+    </form>
+  </div>
+  <!-- Sign Up Div -->
+  <div class="container" id="sign-up-div" style="background: linear-gradient(to right, #c9d6ff, #e2e2e2); width: 50%;">
+    <p class="lead">Sign Up</p>
+    <form>
+      <div class="mb-3">
+        <label for="SignUpEmail" class="form-label">Email address</label>
+        <input type="email" class="form-control" id="SignUpEmail" aria-describedby="emailHelp" required>
+        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+      </div>
+      <div class="mb-3">
+        <label for="SignUpPassword" class="form-label">Password</label>
+        <input type="password" class="form-control" id="SignUpPassword" required>
+      </div>
+      <div class="alert alert-warning" role="alert" id="alertSignUp">
+        <!-- Alert from jquery -->
+      </div>
+      <button type="submit" class="btn btn-success" id="sign-up-btn">Sign Up</button>
+      <p class="lead">Already have an account? <span><a id="sign-in-link" href="">Sign In</a></span>.</p>
+    </form>
+  </div>
+  <!-- Todo Div -->
+
+  <div class="container" id="todo-div" style="background: linear-gradient(to right, #c9d6ff, #e2e2e2);">
+    <!-- Greetings -->
+    <div class="card" style="background-color: #c9d6ff;">
+      <h1 id="greetings"></h1>
+      <blockquote class="blockquote">
+        <p class="mb-0" id="randomQuote"></p> <br>
+        <footer class="blockquote-footer"></footer>
+      </blockquote>
+    </div>
+
+    <!-- Add todo Button -->
+    <br>
+    <button id="add-todo-btn" type="button" class="btn btn-primary" style="margin-bottom: 20px;">Add Todo</button>
+    <!-- Add New Todo -->
+    <div class="card" id="add-todo-form" style="width: 18rem;padding: 10px;">
+      <h3>Add New Todo</h3>
+      <form>
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input type="text" class="form-control" id="title" required>
+        </div>
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <input type="text" class="form-control" id="description" required>
+        </div>
+        <div class="mb-3">
+          <label for="due_date" class="form-label">Due Date</label>
+          <input type="date" class="form-control" id="due_date" required>
+        </div>
+        <div class="alert alert-warning" role="alert" id="alertAddTodo">
+          <!-- Error messages -->
+        </div>
+        <button type="submit" class="btn btn-primary" id="add-new-todo-btn" style="margin-bottom: 20px;">Save</button>
+        <button type="button" class="btn btn-secondary" id="hide-todo-form-btn" style="margin-bottom: 20px;">Close</button>
+      </form>
+    </div>
+
+    <!-- Todo List -->
+    <table class="table" id="todo-list">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Title</th>
+          <th scope="col">Description</th>
+          <th scope="col">Due Date</th>
+          <th scope="col">Status</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Todo from jquery -->
+      </tbody>
+    </table>
+    <div class="card mx-auto" id="edit-todo-form" style="width: 25rem;padding: 10px;">
+      <h3>Edit Todo</h3>
+      <form>
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input type="text" class="form-control" id="titlePopulate" required>
+        </div>
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <input type="text" class="form-control" id="descriptionPopulate" required>
+        </div>
+        <div class="mb-3">
+          <label for="due_date" class="form-label">Due Date</label>
+          <input type="date" class="form-control" id="due_datePopulate" required>
+        </div>
+        <div class="alert alert-warning" role="alert" id="alertEditTodo">
+          <!-- Error messages -->
+        </div>
+        <button type="submit" class="btn btn-primary" id="update-todo-btn" style="margin-bottom: 20px;">Update</button>
+        <button type="button" class="btn btn-secondary" id="hide-edit-todo-form-btn" style="margin-bottom: 20px;">Close</button>
+      </form>
+    </div>
+    
+
+  </div>
+
+
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<script src="./script.js"></script>
+
+</html>
