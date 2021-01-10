@@ -179,9 +179,6 @@ function readTodo() {
                 $('#listTodo').append(`
                 <div class="col-md-4">
                     <div class="card bg-light mb-3" style="max-width: 18rem;">
-                        ${localStorage.email === el.User.email ?
-                            `<div class="card-header text-white bg-primary">Me</div>` : 
-                            `<div class="card-header text-white bg-danger">${el.User.name}</div>`}
                         <div class="card-body">
                             <h5 class="card-title">${el.title}</h5>
                             <p class="card-text">${el.description}</p>

@@ -15,9 +15,7 @@ class Controller {
 
     static findAll(req, res, next) {
         Todo
-            .findAll({
-                include: User,
-            })
+            .findAll()
             .then(todoList => res.status(200).json(todoList))
             .catch(err => next(err))
     }
