@@ -14,6 +14,7 @@ $(document).ready(()=>{
         $("#logout-button").show();
         $("#signup").hide()
         $("#add").hide()
+        $("#welcome").hide()
         showWeather();
         showToDo()
 
@@ -46,6 +47,7 @@ function showSignUp(){
     $("#signup-button").hide();
     $("#logout-button").hide();
     $("#add").hide()
+    $("#welcome").hide() 
 }
 
 function showLogin() {
@@ -61,6 +63,7 @@ function showLogin() {
   $("#logout-button").hide();
   $("#signup").hide()
   $("#add").hide()
+  $("#welcome").hide() 
 }
 function showToDoForm() {
     const token = localStorage.token
@@ -96,6 +99,7 @@ function home(){
     $("#login").hide()
     $("#todo").hide();
     $("#add").hide()
+    $("#welcome").show()
     const token = localStorage.token
     if(token){
         $("#addbutton").show()
@@ -106,6 +110,7 @@ function home(){
         $("#signup-button").hide();
         $("#logout-button").show();
         $("#add").hide()
+        $("#welcome").hide()
         showToDo()
     }else{
         $("#addbutton").hide()
@@ -168,11 +173,13 @@ function signUp(event) {
 }
 
 function login(event) {
+    
     event.preventDefault()
     console.log('ooooyy');
     const email = $("#email").val()
     const password = $("#password").val()
     console.log(email||"kosong",password);
+    
 
     $.ajax({
         method: "POST",
@@ -191,7 +198,8 @@ function login(event) {
         $("#login").hide()
         $("#todos").show();
         $("#weatherbar").show();
-        $("#logout-button").show();        
+        $("#logout-button").show(); 
+              
         showToDo()
         showWeather()
     })
@@ -222,7 +230,7 @@ function addToDo(event){
         due_date
         },
         headers: {
-            accesstoken: localStorage.token
+            accessToken: localStorage.token
         }
     })
     .done(result=>{
@@ -248,14 +256,14 @@ function showToDo(){
         method: "GET",
         url: SERVER + "/todos",
         headers: {
-            accesstoken: localStorage.token
+            accessToken: localStorage.token
         }
     })
     .done(result=>{
         todos=result
         console.log(todos);
         $.each(todos, (key, value)=>{
-            console.log(value.User.email);
+            console.log(value);
             $("#fetch-todos").append(`
             <div class="card col-3 mx-4 mb-4 btn" onclick="showToDoById(${value.id})" >
             <div class="card-body">
@@ -287,7 +295,7 @@ function showToDoById(id){
         method: "GET",
         url: SERVER + `/todos/${id}`,
         headers: {
-            accesstoken: localStorage.token
+            accessToken: localStorage.token
         }
     })
     .done(result=>{
@@ -380,7 +388,7 @@ function editToDo(event){
             status
         },
         headers: {
-            accesstoken: localStorage.token
+            accessToken: localStorage.token
         }
     })
     .done(()=>{
@@ -404,7 +412,7 @@ function completeToDo(id){
         method: "PATCH",
         url: SERVER + `/todos/${id}`,
         headers: {
-            accesstoken: localStorage.token
+            accessToken: localStorage.token
         }
     })
     .done(()=>{
@@ -428,7 +436,7 @@ function deletetodo(id){
         method: "DELETE",
         url: SERVER + `/todos/${id}`,
         headers: {
-            accesstoken: localStorage.token
+            accessToken: localStorage.token
         }
     })
     .done(()=>{
@@ -461,6 +469,7 @@ function logout() {
     $("#signup-button").show();
     $("#logout-button").hide();
     $("#add").hide()
+    $("#welcome").show()
 
 }
 
@@ -484,6 +493,7 @@ function onSignIn(googleUser) {
         $("#weatherbar").show();
         $("#logout-button").show();
         $("#errorbar").hide()
+        $("#welcome").hide()
         showToDo()
         showWeather()
       })

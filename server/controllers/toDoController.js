@@ -1,4 +1,4 @@
-const {ToDo} = require('../models')
+const {ToDo, User} = require('../models/index')
 
 class toDoController{
     static add(req, res, next) {
@@ -23,8 +23,11 @@ class toDoController{
     }
 
     static showAll(req,res, next) {
-        ToDo.findAll()
+        ToDo.findAll({
+            include: User
+        })
         .then(result => {
+            console.log(result);
             if (result.length === 0) {
                 next()
             } else {
@@ -81,7 +84,7 @@ class toDoController{
 
     static completeToDo(req, res, next) {
         const input = {
-            status: req.body.status
+            status: "Completed"
         }
 
         ToDo.update(input, {
