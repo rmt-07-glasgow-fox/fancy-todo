@@ -15,8 +15,11 @@ function errorHandler(err, req, res , next){
     else if (err.name === 'Not found'){
         res.status(404).json({message : 'Not found'})
     }
+    else if (err.name === "SequelizeUniqueConstraintError"){
+        let message = ['Email has been registered']
+        res.status(400).json({Errors : message})
+    }
     else {
-        console.log(err)
         res.status(500).send({message : 'Internal Server Error'})
     }
 }
