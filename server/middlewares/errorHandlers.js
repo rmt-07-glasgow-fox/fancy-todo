@@ -18,6 +18,12 @@ function errorHandlers(err, req, res, next) {
     else if(err.name === 'Not authorized') {
       return res.status(400).json({message: 'Not authorized'});
     }
+    else if(err.name === 'Invalid email / password') {
+      return res.status(400).json({message: 'Invalid email / password'});
+    }
+    else if(err.name === 'Unable to connect to quotable api') {
+      return res.status(500).json({message: 'Unable to connect to quotable api'});
+    }
     else {
       return res.status(500).json({
         message: 'internal server error',

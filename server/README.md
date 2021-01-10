@@ -2,6 +2,123 @@
 Membuat website untuk mencatat hal - hal menarik untuk dilakukan
 
 ## RESTful endpoints
+### POST /login
+
+> Login User
+
+_Request Header_
+```
+{
+  not needed
+}
+```
+
+_Request Body_
+```
+{
+  "email": "<email>",
+  "password": "<password>"
+}
+```
+
+_Response (200)_
+```
+
+{
+  "access_token": "<jwt token>",
+  "email": "<email>"
+}
+
+```
+
+_Response (400 - Bad Request)_
+```
+{
+  "message": "Invalid email / password"
+}
+```
+_Response (500 - Internal Server Error)_
+```
+{
+  "message": "internal server error"
+}
+```
+---
+### POST /register
+
+> Register new user
+
+_Request Header_
+```
+{
+  not needed
+}
+```
+
+_Request Body_
+```
+{
+  "email": "<email>",
+  "password": "<password>"
+}
+```
+
+_Response (201)_
+```
+
+{
+  "message": "Success create user"
+}
+
+```
+
+_Response (400 - Bad Request)_
+```
+{
+  "message": "<error validation messages>"
+}
+```
+_Response (500 - Internal Server Error)_
+```
+{
+  "message": "internal server error"
+}
+```
+---
+### GET /quote
+
+> Get random quote from api
+
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+{
+  not needed
+}
+```
+
+_Response (200)_
+```
+
+{
+  "content": "<quote content>",
+  "author": "<quote author>"
+}
+
+```
+Response (500 - Internal Server Error)
+```
+{
+  "message": "internal server error"
+}
+```
+---
 ### GET /todos
 
 > Get all todos

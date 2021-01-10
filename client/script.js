@@ -4,13 +4,30 @@ $(document).ready( () => {
   if(localStorage.access_token) { //jika sudah sign in
     $("#sign-out-btn").show();
     $("#alertSignIn").hide();
-    afterLogin(localStorage.email, JSON.parse(localStorage.quote));
+    afterLogin();
   } 
   else {
     // jika belum sign in
     beforeLogin();
   }
 });
+
+const getQuote = () => {
+  $.ajax({
+    method: "GET",
+    url: `${baseUrl}/quote`,
+    headers: { "access_token": localStorage.access_token }
+  })
+  .done(response => {   
+    const quote = response;
+    $("#randomQuote").text(`${quote.content}`);
+    $(".blockquote-footer").text(`${quote.author}`); 
+  })
+  .fail(err => {
+    const errMessage = err.responseJSON.message;
+    console.log(errMessage);
+  });
+}
 
 const beforeLogin = () => {
   $("#sign-up-div").hide();
@@ -20,9 +37,10 @@ const beforeLogin = () => {
   hideLoginAlerts();
 }
 
-const afterLogin = (email, quote) => {
-  const idx = email.split('').indexOf('@');
-  const name = email.split('').splice(0, idx).join('');
+const afterLogin = () => {
+  const idx = localStorage.email.split('').indexOf('@');
+  const name = localStorage.email.split('').splice(0, idx).join('');
+  getQuote();     
   $("#sign-in-div").hide();
   $("#sign-up-div").hide();
   $("#add-todo-form").hide();
@@ -30,9 +48,7 @@ const afterLogin = (email, quote) => {
   $("#alertAddTodo").hide();
   $("#sign-out-btn").show();
   $("#todo-div").fadeIn('slow');
-  $("#greetings").text(`${getGreetingMsg()} ${name}`);
-  $("#randomQuote").text(`${quote.content}`);
-  $(".blockquote-footer").text(`${quote.author}`);      
+  $("#greetings").text(`${getGreetingMsg()} ${name}`);    
   $.ajax({
     method: "GET",
     url: `${baseUrl}/todos`,
@@ -78,7 +94,6 @@ const afterSuccessAddTodo = () => {
 const setItem = (response) => {
   localStorage.setItem('access_token', response.access_token);
   localStorage.setItem('email', response.email);
-  localStorage.setItem('quote', JSON.stringify(response.quote));
 }
 
 // jika sign up link di klik, tampilkan sign up form, hide sign in form
@@ -112,8 +127,7 @@ $( "#sign-in-btn" ).click((event) => {
     })
     .done(response => {
       setItem(response);      
-      const quote = response.quote;
-      afterLogin(email, quote);
+      afterLogin();
     })
     .fail(err => {     
       if(!err.responseJSON) { //jika tidak connect ke server
@@ -153,7 +167,7 @@ $("#sign-up-btn").click((event) => {
       .done(response => {
         setItem(response);     
         const quote = response.quote;
-        afterLogin(email, quote);
+        afterLogin();
       })
       .fail(err => {
         const errMessage = err.responseJSON.message;
@@ -212,7 +226,7 @@ $( "#add-new-todo-btn" ).click((event) => {
    $("#description").val('');  
    $("#due_date").val('');  
    $("#alertAddTodo").empty();   
-   afterLogin(localStorage.email, JSON.parse(localStorage.quote));
+   afterLogin();
   })
   .fail(err => {
     const errMessage = err.responseJSON.map(e => `<p>${e.message}</p>`);
@@ -247,7 +261,7 @@ const deleteTodo = (todoId) => {
   })
   .done(response => {
     $("#todo-list > tbody").empty();
-    afterLogin(localStorage.email, JSON.parse(localStorage.quote));
+    afterLogin();
   })
   .fail(err => {
     console.log(err);
@@ -292,7 +306,7 @@ const saveTodo = (todo) => {
     console.log(response);
     $("#todo-list > tbody").empty();
     $('#update-todo-btn').unbind('click');
-    afterLogin(localStorage.email, JSON.parse(localStorage.quote));
+    afterLogin();
   })
   .fail(err => {
     const errMessages = err.responseJSON.map(e => `<p>${e.message}</p>`);
@@ -315,7 +329,7 @@ const markAsDone = (todoId, status) => {
   })
   .done(response => {
     $("#todo-list > tbody").empty();
-    afterLogin(localStorage.email, JSON.parse(localStorage.quote));
+    afterLogin();
   })
   .fail(err => {
     console.log(err);
@@ -339,7 +353,7 @@ const getGreetingMsg = () => {
 }
 
 /* ============= Google Sign In */
-const onSignIn = (googleUser) => {
+function onSignIn(googleUser) {
   const idToken = googleUser.getAuthResponse().id_token;
   $.ajax({
     method: "POST",
@@ -351,7 +365,7 @@ const onSignIn = (googleUser) => {
     const email = response.email;
     const quote = response.quote;
     setItem(response); 
-    afterLogin(email, quote);
+    afterLogin();
     
   })
   .fail((xhr, status) => {
