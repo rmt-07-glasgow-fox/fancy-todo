@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="1061793780278-o5r28r5c3s65gupqom5087jf4kqj4s5j.apps.googleusercontent.com">
+    <link rel="stylesheet" href="./style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <title>Document</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark nav">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Fancy Todo</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active" aria-current="page" href="#" id="home">Home</a>
+              <a class="nav-link" href="#" id="btn-add-todo">Add Todo</a>
+              <a class="nav-link" href="#" id="show-holidays">Show Holidays</a>
+              <a class="nav-link" href="#" id="logout">Logout</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+    <div class="wrapper fadeInDown" id="template-login">
+        <div id="formContent">
+            <div class="fadeIn first">
+                <h1>Fancy Todo</h1>
+                <h5>Manage your To Do list now using our Fancy Todo Website!<h5>
+            </div>
+            <div id="error"></div>
+            <form>
+                <input type="text" class="fadeIn second" placeholder="email" id="email">
+                <input type="password" class="fadeIn third" placeholder="password" id="password">
+                <div>
+                    <div id="login-button">
+                        <input type="submit" class="fadeIn first" value="Log In" id="login" style="margin-bottom: 20px; margin-top: 20px;">
+                        <p>Create an account?</p>
+                    </div>
+                    <div id="register-button">
+                        <input type="submit" class="fadeIn first" value="Register" id="register" style="margin-bottom: 20px; margin-top: 20px;">
+                        <p>Already have an account?</p>
+                    </div>
+                </div>
+                <div style="padding-bottom: 15px;">
+                    <div>
+                        <button id="btn-sign-up" class="btn btn-secondary">Sign up</button>
+                    </div>
+                    <div>
+                        <button id="btn-login" class="btn btn-secondary">Login</button>
+                    </div>
+                </div>
+                <div id="signin-google" class="container-sm">
+                    <p>Or you can sign in using google</p>
+                    <div class="g-signin2 fadeIn fourth" style="padding-left: 4cm; padding-bottom: 0.5cm;" data-onsuccess="onSignIn"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="main-page">
+        <div id="todo-feature">
+            <h1 style="text-align: center;">Todo List</h1>
+            <!-- <button id="show-holidays">Show Holidays</button> -->
+            <div id="function-holidays">
+                <!-- <button id="hide-holidays">Hide Holidays</button> -->
+                <div id="holidays">
+                </div>
+            </div>
+                <div class ="todo-list" style="margin-top: 20px;" id="main-todo">
+                    <!-- <button id="btn-add-todo">Add Todo</button>   -->
+                    <div id="error-add"></div>
+                    <div id="todo" style="margin: 10px; padding: 10px;" class="border border-5"></div>  
+                </div>
+        </div>
+        <div id="form-todo">
+            <form>
+                <div id="error-form"></div>
+                <div>
+                    <label><h5>Title</h5></label>
+                    <input type="text" id='title'>
+                </div>
+                <div>
+                    <label><h5>Description</h5></label>
+                    <input type="text" id='description'>
+                </div>
+                <div>
+                    <label><h5>Due Date</h5></label>
+                    <input type="date" id='due_date'>
+                </div>
+                <div class="add">
+                    <button id="add-todo" type="submit">Add Todo</button>
+                </div>
+                <div class="edit">
+                    <button id="edit-todo" type="submit">Edit</button>
+                </div>
+                <button id="btn-cancel-add-todo">Cancel</button>
+            </form>
+        </div>
+    </div>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./jquery.js"></script>
+</body>
+</html>
