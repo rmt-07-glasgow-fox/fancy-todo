@@ -18,7 +18,7 @@ $(document).ready(function () {
     // console.log(email, password);
 
     $.ajax({
-      url: "http://localhost:3000/login",
+      url: "https://server-fancy-todo-jan.herokuapp.com/login",
       method: "POST",
       data: {
         email,
@@ -60,7 +60,7 @@ $(document).ready(function () {
     // console.log(username, fullName, email, password);
 
     $.ajax({
-      url: "http://localhost:3000/register",
+      url: "https://server-fancy-todo-jan.herokuapp.com/register",
       method: "POST",
       data: {
         username,
@@ -115,7 +115,7 @@ $(document).ready(function () {
     // console.log(title, description, status, due_date);
 
     $.ajax({
-      url: "http://localhost:3000/todos",
+      url: "https://server-fancy-todo-jan.herokuapp.com/todos",
       method: "POST",
       data: {
         title,
@@ -160,7 +160,7 @@ $(document).ready(function () {
     // console.log(idTodo, "delete btn dipencet");
 
     $.ajax({
-      url: `http://localhost:3000/todos/${idTodo}`,
+      url: `https://server-fancy-todo-jan.herokuapp.com/todos/${idTodo}`,
       method: "DELETE",
       headers: {
         access_token: localStorage.access_token,
@@ -187,7 +187,7 @@ $(document).ready(function () {
     // console.log(idTodo, "delete btn dipencet");
 
     $.ajax({
-      url: `http://localhost:3000/todos/${idTodo}`,
+      url: `https://server-fancy-todo-jan.herokuapp.com/todos/${idTodo}`,
       method: "PATCH",
       data: {
         status: updateStatus,
@@ -210,7 +210,7 @@ $(document).ready(function () {
     // console.log(idTodo);
 
     $.ajax({
-      url: `http://localhost:3000/todos/${idTodo}`,
+      url: `https://server-fancy-todo-jan.herokuapp.com/todos/${idTodo}`,
       method: "GET",
       headers: {
         access_token: localStorage.access_token,
@@ -251,7 +251,7 @@ $(document).ready(function () {
     // console.log(title, description, status, due_date, idTodo);
 
     $.ajax({
-      url: `http://localhost:3000/todos/${idTodo}`,
+      url: `https://server-fancy-todo-jan.herokuapp.com/todos/${idTodo}`,
       method: "PUT",
       data: {
         title,
@@ -301,7 +301,7 @@ function registerPage() {
   $(".main-page").hide();
 
   $.ajax({
-    url: "http://localhost:3000/",
+    url: "https://server-fancy-todo-jan.herokuapp.com/",
     method: "GET",
   })
     .done((response) => {
@@ -322,7 +322,7 @@ function loginPage() {
   $("footer").hide();
 
   $.ajax({
-    url: "http://localhost:3000/",
+    url: "https://server-fancy-todo-jan.herokuapp.com/",
     method: "GET",
   })
     .done((response) => {
@@ -344,7 +344,7 @@ function todoMainPage() {
   // console.log("reload");
 
   $.ajax({
-    url: "http://localhost:3000/todos",
+    url: "https://server-fancy-todo-jan.herokuapp.com/todos",
     method: "GET",
     headers: {
       access_token: localStorage.access_token,
@@ -409,7 +409,7 @@ function todoMainPage() {
 
 function getChuckQuote() {
   $.ajax({
-    url: "http://localhost:3000/quote",
+    url: "https://server-fancy-todo-jan.herokuapp.com/quote",
     method: "GET",
     headers: {
       access_token: localStorage.access_token,
@@ -426,7 +426,7 @@ function getChuckQuote() {
 
 function getNews() {
   $.ajax({
-    url: "http://localhost:3000/news",
+    url: "https://server-fancy-todo-jan.herokuapp.com/news",
     method: "GET",
     headers: {
       access_token: localStorage.access_token,
@@ -460,7 +460,7 @@ function onSignIn(googleUser) {
   const id_token = googleUser.getAuthResponse().id_token;
   $.ajax({
     method: "POST",
-    url: "http://localhost:3000/loginGoogle",
+    url: "https://server-fancy-todo-jan.herokuapp.com/loginGoogle",
     data: {
       id_token,
     },
