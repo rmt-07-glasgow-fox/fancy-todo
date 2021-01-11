@@ -4,7 +4,7 @@ const {Todo} = require('../models')
 class TodoController {
     static todoPage (req, res, next){
         // res.send('hello world')
-        Todo.findAll()
+        Todo.findAll({where: { user_id: req.user.id},order: [['id', 'DESC']]})
         .then(data => {
             res.status(200).json(data)
         })
@@ -38,7 +38,7 @@ class TodoController {
             res.status(201).json(data)
         })
         .catch(err => {
-            // console.log(err)
+            console.log(err)
             next({code: 500})
         })
     }

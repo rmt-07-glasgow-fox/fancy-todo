@@ -334,7 +334,7 @@ function getWeather(response){
     weather = response.weather
     temp = response.temp
     city = response.city
-    $('#weather').append(`<h3> Cuaca Hari Ini </h3>
+    $('#weather').append(`
     <p>${weather}</p>
    <p>${temp}&deg;</p>
     <p>${city}</p>`)
