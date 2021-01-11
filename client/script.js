@@ -105,6 +105,7 @@ showProjects = () => {
   hideProjectContent();
   hideProjectForm();
   hideProjectTodoForm();
+  hideMemberForm();
   listProject();
 };
 
@@ -116,13 +117,14 @@ const hideTodoForm = () => {
   $('#todoForm').hide();
 };
 
-showProjectContent = (id) => {
+const showProjectContent = (id) => {
   $('#projectContent').show();
   $('#pProjectIdTodo').val(id);
+  $('#mProjectIdTodo').val(id);
   listProjectTodo(id);
 };
 
-hideProjectContent = () => {
+const hideProjectContent = () => {
   $('#projectContent').hide();
 };
 
@@ -140,6 +142,44 @@ const showProjectTodoForm = () => {
 
 const hideProjectTodoForm = () => {
   $('#projectTodoForm').hide();
+};
+
+const showMemberForm = () => {
+  $('#memberForm').show();
+};
+
+const hideMemberForm = () => {
+  $('#memberForm').hide();
+};
+
+const member = (e, i) => {
+  e.preventDefault();
+  const projectId = $('#mProjectIdTodo').val();
+  const email = $('#mEmail').val();
+
+  $.ajax({
+    url: url + `/projectusers/invite`,
+    method: 'POST',
+    headers: {
+      authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+    },
+    data: {
+      email,
+      projectId,
+    },
+  })
+    .done((response) => {
+      const template = alertTemplate('success', 'Member has been invited');
+      $(template).appendTo('#alert');
+    })
+    .fail((err) => {
+      const template = alertTemplate('error', e.message);
+      $(template).appendTo('#alert');
+    })
+    .always(() => {
+      $('#mEmail').val('');
+      hideMemberForm();
+    });
 };
 
 const showEditTodo = (id) => {
