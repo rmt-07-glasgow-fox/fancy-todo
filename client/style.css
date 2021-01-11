@@ -132,7 +132,7 @@ h3 {
 
 #todo-list {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 }
 
