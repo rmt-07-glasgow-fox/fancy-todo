@@ -32,7 +32,7 @@ function contentInit() {
 
 $(document).ready(function(){
       contentInit()
-      
+      getTodos()
       checkAuth()
       
       $("#home").click(function(){
@@ -103,27 +103,25 @@ $(document).ready(function(){
       //log in
       $("#login-submit").click(function(event){
             event.preventDefault()
+
             let email = $("#email-login").val()
             let password = $("#password-login").val()
             console.log(email, password, "<<<");
-      
+
             $.ajax({
-                  method: 'POST',
+                  method: "POST",
                   url: `${baseUrl}/login`,
                   data: { email, password }
-            })
-            .done(response => {
+            }).done(response=> {
                   console.log(response);
                   localStorage.setItem("access_token", response.access_token)
                   checkAuth()
                   getTodos()
-            })
-            .fail(err => {
-                  alert(err.responseJSON.message)
-            })
-            .always(() => {
-                  console.log('always');
-                  $("#password-login").val('')
+
+            }).fail(err => {
+
+            }).always(()=> {
+
             })
       })
 
