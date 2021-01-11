@@ -1,32 +1,32 @@
-const { checkToken } = require('../helpers/jwt.js');
+const { chkToken } = require('../helpers/jwt.js');
 const { User, Todo } = require('../models/index.js');
 
 let authenticate = async (req, res, next) => {
   try {
-    const decoded = checkToken(req.headers.access_token);
-    const userFindOne = await User.findOne({ where: { email: decoded.email } })
+    const decoded = chkToken(req.headers.access_token);
+    const user = await User.findOne({ where: { email: decoded.email } })
 
-    if (!userFindOne) {
+    if (!user) {
       throw { name: `Unauthorized` };
     } else {
-      req.user = userFindOne;
+      req.user = user;
       next();
     }
   } catch (err) {
     next(err);
-  }
+  };
 };
 
 let authorize = async (req, res, next) => {
   try {
-    const todoFindOne = await Todo.findOne({ where: { id: Number(req.params.id) } })
-    if (!todoFindOne) {
+    const todo = await Todo.findOne({ where: { id: Number(req.params.id) } })
+    if (!todo) {
       throw { name: `NotFound` };
-    } else if (todoFindOne.UserId !== req.user.id) {
+    } else if (todo.UserId !== req.user.id) {
       throw { name: `Unauthorized` };
     } else {
       next();
-    }
+    };
   } catch (err) {
     next(err);
   };

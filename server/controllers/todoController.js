@@ -33,9 +33,8 @@ class TodoController {
       const inputID = Number(req.params.id);
       const todo = await Todo.findByPk(inputID);
 
-      if (!todo) {
-        throw { name: `NotFound` };
-      }
+      if (!todo) throw { name: `NotFound` };
+
       return res.status(200).json(todo);
     } catch (err) {
       next(err);
@@ -47,11 +46,10 @@ class TodoController {
       const inputID = Number(req.params.id);
       const { title, description, status, due_date } = req.body;
       const todoUpdate = await Todo.update({ title, description, status, due_date }, { where: { id: inputID } });
-      const todo = await Todo.findByPk(inputID, { todoUpdate })
+      const todo = await Todo.findByPk(inputID, { todoUpdate });
 
-      if (!todo) {
-        throw { name: `NotFound` };
-      }
+      if (!todo) throw { name: `NotFound` };
+
       return res.status(200).json(todo);
     } catch (err) {
       next(err);
@@ -63,11 +61,10 @@ class TodoController {
       const inputID = Number(req.params.id);
       const { status } = req.body;
       const todoUpdate = await Todo.update({ status }, { where: { id: inputID } });
-      const todo = await Todo.findByPk(inputID, { todoUpdate })
+      const todo = await Todo.findByPk(inputID, { todoUpdate });
 
-      if (!todo) {
-        throw { name: `NotFound` };
-      }
+      if (!todo) throw { name: `NotFound` };
+
       return res.status(200).json(todo);
     } catch (err) {
       next(err);
@@ -78,11 +75,11 @@ class TodoController {
     try {
       const inputID = Number(req.params.id);
       const todo = await Todo.findByPk(inputID)
+
       await Todo.destroy({ where: { id: inputID } });
 
-      if (!todo) {
-        throw { name: `NotFound` };
-      }
+      if (!todo) throw { name: `NotFound` };
+
       return res.status(200).json({ message: "ToDo success to delete" });
     } catch (err) {
       next(err);

@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       },
       unique: {
-        args:true,
+        args: true,
         msg: "Email account already exists"
       }
     },
@@ -59,11 +59,16 @@ module.exports = (sequelize, DataTypes) => {
           msg: "Whitespace is not allowed"
         }
       }
+    },
+    profpic: {
+      type: DataTypes.STRING,
     }
   }, {
     hooks: {
-      beforeCreate: (instance, options) => {
-        instance.password = hashPass(instance.password);
+      beforeCreate: (user, options) => {
+        user.password = hashPass(user.password);
+
+        !user.profpic ? user.profpic = `https://ui-avatars.com/api/?name=${user.name}&background=random&length=1&bold=true&color=ffffff` : user.profpic;
       }
     },
     sequelize,

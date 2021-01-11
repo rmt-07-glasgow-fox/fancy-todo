@@ -1,6 +1,6 @@
 class Controller {
   static async landing(req,res){
-    await res.send('OK!');
+    await res.send({message: 'Risuto DB OK!'});
   };
 };
 

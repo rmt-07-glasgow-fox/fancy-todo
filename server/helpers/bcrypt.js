@@ -6,6 +6,6 @@ let hashPass = userPass => {
   return hash;
 };
 
-let comparePass = (userPass, dbPass) => bcrypt.compareSync(userPass, dbPass);
+let compPass = (userPass, dbPass) => bcrypt.compareSync(userPass, dbPass);
 
-module.exports = { hashPass, comparePass };
+module.exports = { hashPass, compPass };
