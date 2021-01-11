@@ -8,11 +8,31 @@ exports.listProject = async (req, res, next) => {
       include: [Project],
     });
     return res.status(200).json(projectUser);
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };
 
-exports.invite = async (req, res, next) => {};
+exports.invite = async (req, res, next) => {
+  try {
+    const { email, projectId } = req.body;
+
+    const user = await User.findOne({ where: { email: email } });
+
+    if (!user) {
+      return next({ name: 'NotFound' });
+    } else {
+      const body = {
+        ProjectId: Number(projectId),
+        UserId: user.id,
+      };
+      await ProjectUser.create(body);
+      return res.status(201).json({ message: 'ok' });
+    }
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+};
 
 exports.destroy = async (req, res, next) => {};

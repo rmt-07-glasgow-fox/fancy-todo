@@ -3,7 +3,7 @@ const moment = require('moment');
 
 const url = `https://calendarific.com/api/v2/holidays`;
 
-exports.year = async (req, res) => {
+exports.year = async (req, res, next) => {
   try {
     const response = await axios.get(url, {
       params: {
@@ -14,8 +14,8 @@ exports.year = async (req, res) => {
       },
     });
     return res.status(200).json(response.data.response.holidays);
-  } catch (error) {
-    return res.status(500).json(error);
+  } catch (err) {
+    next(err);
   }
 };
 
@@ -31,8 +31,8 @@ exports.month = async (req, res) => {
       },
     });
     return res.status(200).json(response.data.response.holidays);
-  } catch (error) {
-    return res.status(500).json(error);
+  } catch (err) {
+    next(err);
   }
 };
 
@@ -49,7 +49,7 @@ exports.day = async (req, res) => {
       },
     });
     return res.status(200).json(response.data.response.holidays);
-  } catch (error) {
-    return res.status(500).json(error);
+  } catch (err) {
+    next(err);
   }
 };

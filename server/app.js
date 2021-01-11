@@ -1,10 +1,11 @@
+if (process.env.NODE_ENV === 'development') {
+  require('dotenv').config();
+}
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 const cors = require('cors');
-const dotenv = require('dotenv');
-dotenv.config();
 
 const routes = require('./routes');
 
@@ -17,6 +18,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/', routes);
 app.use(errorHandler);
 
-app.listen(process.env.PORT || 3000, () => {
+app.listen(port, () => {
   console.log(`Server running on: http://localhost:${port}`);
 });

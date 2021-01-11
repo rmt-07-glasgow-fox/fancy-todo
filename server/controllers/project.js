@@ -18,8 +18,8 @@ exports.create = async (req, res, next) => {
     };
     await ProjectUser.create(bodyProjectUser);
     return res.status(201).json(project);
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };
 
@@ -36,7 +36,7 @@ exports.destroy = async (req, res, next) => {
       await Project.destroy({ where: { id: id } });
       return res.status(200).json({ message: 'Project success to delete' });
     }
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };

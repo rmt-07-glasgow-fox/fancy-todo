@@ -5,8 +5,8 @@ exports.list = async (req, res, next) => {
     const userId = req.user.id;
     const todos = await Todo.findAll({ where: { UserId: userId } });
     return res.status(200).json(todos);
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };
 
@@ -18,8 +18,8 @@ exports.listByProject = async (req, res, next) => {
       where: { UserId: userId, ProjectId: projectId },
     });
     return res.status(200).json(todos);
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };
 
@@ -36,8 +36,8 @@ exports.create = async (req, res, next) => {
   try {
     const todo = await Todo.create(body);
     return res.status(201).json(todo);
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };
 
@@ -49,8 +49,8 @@ exports.detail = async (req, res, next) => {
     const todo = await Todo.findOne({ where: { id: id, UserId: userId } });
     if (!todo) return next({ name: 'NotFound' });
     return res.status(200).json(todo);
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };
 
@@ -71,8 +71,8 @@ exports.update = async (req, res, next) => {
       const todo = await Todo.update(body, { where: { id: id } });
       return res.status(200).json(isFound);
     }
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };
 
@@ -91,8 +91,8 @@ exports.updateStatus = async (req, res, next) => {
       );
       return res.status(200).json(todo[1][0]);
     }
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };
 
@@ -107,7 +107,7 @@ exports.destroy = async (req, res, next) => {
       const todo = await Todo.destroy({ where: { id: id } });
       return res.status(200).json({ message: 'todo success to delete' });
     }
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };

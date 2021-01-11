@@ -54,8 +54,8 @@ exports.register = async (req, res, next) => {
     };
 
     return res.status(201).json(data);
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };
 
@@ -109,7 +109,7 @@ exports.googleLogin = async (req, res, next) => {
         lastName: payloadGoogle.family_name,
       });
     }
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };
