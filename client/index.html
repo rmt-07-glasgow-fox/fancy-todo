@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-signin-client_id" content="568061174345-sbuapfqv2pekt88jj0313cdmhs6d000b.apps.googleusercontent.com">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <title>Todo Application</title>
+    <link rel="stylesheet" href="./static/style.css">
+    <style></style>
+  </head>
+  <body class="">
+    <!-- nav user -->
+    <div class="" id="nav-user-display">
+        <nav class="navbar navbar-light">
+            <div class="container-fluid">
+              <img class="navbar-brand" src="https://i.pinimg.com/originals/52/6a/bf/526abf16cc3e74882fa7304abc0f841c.png" width="40" height="50" style="margin-top: 1 px" class="d-inline-block align-top">
+                <button class="mx-left btn btn-outline-info" id="addTodo-btn">add todo</button>
+                <button class="mx-5 btn btn-outline-light" id="dark-theme-btn" style="display: none;">Light Theme</button>
+                <button class="mx-5 btn btn-outline-dark" id="light-theme-btn" style="display: none;">Dark Theme</button>
+                <button class="mx-right btn btn-outline-danger" id="button-logout">Logout</button>
+            </div>
+        </nav>
+        <div id="list-todos">
+             
+        </div>
+    </div>
+
+    <!-- dashboard -->
+
+    <div class="container jumbotron" id="mainDashboard">
+        <img src="https://i.pinimg.com/originals/52/6a/bf/526abf16cc3e74882fa7304abc0f841c.png" width="150" height="145" style="margin-top: 10px" class="d-inline-block align-top">
+        <div class="row">
+            <div class="col-6">
+                <h3>Here Your task: </h3>
+                <br>
+                <a href="#" class="btn btn-primary" onclick="addTodoForm()">New Todo</a>
+                <hr>
+                <!-- Form add -->
+                <div id="add-new-todo" style="width: 34rem; margin-bottom: 2rem">
+                    <form onsubmit="addNewTodo(e)">
+                        <div class="row">
+                            <div class="container">
+                                <input type="text" class="form-control title" placeholder="Title" id="add-title-todo" required>
+                            </div>
+                            <div class="container">
+                                <input type="date" class="form-control due_date" placeholder="due date" id="add-due-date-todo" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control description" id="add-desc-todo" rows="3"
+                                placeholder="Description todos .."></textarea>
+                        </div>
+                        <small>* FIll date must be at least Today</small>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                        <button onclick="cancelAddTodo(e)" class="btn btn-danger">Cancel</button>
+                    </form>
+                </div>
+                <div id="todoList"> 
+                    <!-- isi todo by user  -->
+                </div>
+            </div>
+            <div class="col">
+                <h2>Selamat Datang, <span id="halo-name"></span></h2>
+                <h5>Berita yang mungkin ingin anda baca :</h5>
+                <br>
+                <div class="col" id="news-widget-get">
+
+                </div>
+                <div id="video-youtube">
+                    <!-- append  video lofi dari database-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- homepage : register , login  -->
+
+    <div class="container">
+        <div class="jumbotron" id="homePage-web">
+            <div class="row">
+                <div class="col">
+                    <!-- Form Log In -->
+                    <div id="login-form-display">
+                        <h1>Log In</h1>
+                        <form onsubmit="loginClient(e)">
+                            <div class="form-group">
+                                <label for="email-form-login">Email address :</label>
+                                <input type="email" class="form-control" id="email-form-login" aria-describedby="emailHelp"
+                                    placeholder="Enter email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pass-form-login">Password :</label>
+                                <input type="password" class="form-control" id="pass-form-login" placeholder="Password" required>
+                            </div>
+                            <div id="show-error-login">
+
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-primary">Sign In</button>
+                                <button class="btn btn-success mx-2" onclick="showRegister(e)">Don't Have Account</button>
+                            </div><br>
+                            <div>
+                                <h5>Or Login With :</h5>
+                                <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- form Register -->
+                    <div id="register-form-display">
+                        <h1>Register</h1>
+                        <form onsubmit="registerClient(e)">
+                            <div class="form-group">
+                                <label for="email-form-regist">Email address :</label>
+                                <input type="email" class="form-control" id="email-form-regist" aria-describedby="emailHelp"
+                                    placeholder="Enter email" required>
+                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with
+                                    anyone else.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="pass-form-regist">Password :</label>
+                                <input type="password" class="form-control" id="pass-form-regist" placeholder="Password" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pass-verif-form-regist">Repeat Password :</label>
+                                <input type="password" class="form-control" id="pass-verif-form-regist" placeholder="Password" required>
+                            </div>
+                            <div id="notifikasiSignUp">
+
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-primary">Sign Up</button>
+                                <button class="btn btn-success mx-2" onclick="showLogin(e)">I have an Account</button>
+                            </div><br>
+                            <div>
+                                <h5>Or Register With :</h5>
+                                <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <!-- add form todo -->
+
+
+    <div class="container" id="addTodo">
+        <div id="formContent">
+          <div class="fadeIn first">
+            
+
+          
+        
+    </div>
+
+    <!-- adit form -->
+
+    <div class="wrapper fadeInDown" id="editTodo"></div>
+    
+    <!-- <h1>Hello, this Todo Application!</h1> -->
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <script src ='./script/script.js'></script>
+  </body>
+</html>
