@@ -148,7 +148,7 @@ let fetchTodo = () => {
                     
                     <div class="card-footer">
                         <button type="submit" class="btn btn-warning">
-                            Change Todo
+                            Update Todo
                         </button>
                         <button class="btn btn-danger" onclick="event.preventDefault();document.getElementById('update-form-${todo.id}').style.display = 'none';document.getElementById('todo-${todo.id}').style.display = 'block';document.getElementById('opt-${todo.id}').style.display = 'block';">
                             Cancel Edit
