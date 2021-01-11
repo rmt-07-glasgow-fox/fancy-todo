@@ -5,7 +5,7 @@ if (process.env.NODE_ENV === 'development') {
 const express = require('express')
 // const bodyParser = require('body-parser')
 const app = express()
-const port = 3000
+const PORT = process.env.PORT || 3000
 const {router} = require('./routes')
 const { errorHandlers } = require('./middlewares/errorHandles')
 const cors = require('cors')
@@ -20,5 +20,5 @@ app.use('/', router)
 app.use(errorHandlers)
 
 app.listen(port, (req, res) => {
-  console.log('Fancy todo app running well on port ', port);
+  console.log('Fancy todo app running well on port ', PORT);
 })
