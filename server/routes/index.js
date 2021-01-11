@@ -4,8 +4,8 @@ const userRouter = require('./user');
 const weatherRouter = require('./weather')
 const { authentication } = require('../middlewares/auth')
 
-router.get('/welcome', (req, res) => {
-    res.send(`Hello World`)
+router.get('/', (req, res) => {
+    res.send({ message: `Hello welcome to fancy todo`})
 })
 
 router.use(userRouter)
