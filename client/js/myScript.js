@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost:3000'
+const baseUrl = 'https://todo-movie.herokuapp.com'
 let tableTodo, tableProject, tableProjectDetailUser, save_method, method;
 
 $(document).ready(function() {
