@@ -181,6 +181,20 @@ iframe {
   box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
 }
 
+.wrap-quote100 {
+  width: auto;
+  height:auto;
+  background: rgba(30, 30, 30, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  word-wrap: break-word;
+  border-radius: 8px;
+  /* overflow: hidden; */
+
+  box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+}
+
 .wrap-edit-task100 {
   width: auto;
   background: rgba(255, 204, 18, 0.65);
@@ -193,20 +207,157 @@ iframe {
   box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
 }
 
-.wrap-todo-card100 {
-  width: 22.8vw;
-  height: 210px;
-  /* margin-left: 1.5vw;
-  margin-right: 2vw; */
-  background: rgba(88, 172, 255, 0.5);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-
-  border-radius: 8px;
-  overflow: hidden;
-
-  box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+@media screen and (min-width:240px ) {
+  .griddy{
+    margin-left:40px; 
+    margin-right: 40px; 
+    margin-bottom: 20px;
+    display:block; 
+    flex-wrap: wrap; 
+    flex-flow:row-wrap;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
+
+@media screen and (min-width:720px ) {
+  .griddy{
+    margin-left:40px; 
+    margin-right: 40px; 
+    margin-bottom: 20px;
+    display:flex; 
+    flex-wrap: wrap; 
+    flex-flow:row-wrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+@media screen and (min-width:240px) {
+
+  .wrap-todo-card100 {
+    width: auto;
+    height: 210px;
+    /* margin-left: 1.5vw;
+    margin-right: 2vw; */
+    background: rgba(88, 172, 255, 0.5);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    border-radius: 8px;
+    overflow: hidden;
+
+    box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+  }
+}
+
+@media screen and (min-width:720px) {
+
+  .wrap-todo-card100 {
+    width: 25vw;
+    height: 210px;
+    /* margin-left: 1.5vw;
+    margin-right: 2vw; */
+    background: rgba(88, 172, 255, 0.5);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    border-radius: 8px;
+    overflow: hidden;
+
+    box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+  }
+}
+
+@media screen and (min-width:890px) {
+
+  .wrap-todo-card100 {
+    width: 18vw;
+    height: 210px;
+    /* margin-left: 1.5vw;
+    margin-right: 2vw; */
+    background: rgba(88, 172, 255, 0.5);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    border-radius: 8px;
+    overflow: hidden;
+
+    box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+  }
+}
+
+@media screen and (min-width:1170px) {
+
+  .wrap-todo-card100 {
+    width: 19vw;
+    height: 210px;
+    /* margin-left: 1.5vw;
+    margin-right: 2vw; */
+    background: rgba(88, 172, 255, 0.5);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    border-radius: 8px;
+    overflow: hidden;
+
+    box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+  }
+}
+
+@media screen and (min-width:1366px) {
+
+  .wrap-todo-card100 {
+    width: 22.7vw;
+    height: 210px;
+    /* margin-left: 1.5vw;
+    margin-right: 2vw; */
+    background: rgba(88, 172, 255, 0.5);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    border-radius: 8px;
+    overflow: hidden;
+
+    box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+  }
+}
+
+@media screen and (min-width:1400px) {
+
+  .wrap-todo-card100 {
+    width: 20vw;
+    height: 210px;
+    /* margin-left: 1.5vw;
+    margin-right: 2vw; */
+    background: rgba(88, 172, 255, 0.5);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    border-radius: 8px;
+    overflow: hidden;
+
+    box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+  }
+}
+
+@media screen and (min-width:1750px) {
+  .wrap-todo-card100 {
+    width: 24vw;
+    height: 210px;
+    /* margin-left: 1.5vw;
+    margin-right: 2vw; */
+    background: rgba(88, 172, 255, 0.5);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  
+    border-radius: 8px;
+    overflow: hidden;
+  
+    box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+  }
+}
+
 
 
 /*==================================================================

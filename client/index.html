@@ -34,7 +34,7 @@
 
 					<!-- login-form -->
 					<div id="login-form">
-						<form class="login100-form validate-form">
+						<form onsubmit="login(event)" class="login100-form validate-form">
 							<img src="/images/img_logo.png" class="login100-form p-b-28 p-r-64 p-l-64" alt="">
 							<span class="login100-form-title p-b-28">
 								Login
@@ -59,7 +59,7 @@
 									Create an account?
 								</span>
 
-								<a id="to-register" href="" class="txt2 hov1">
+								<a id="to-register" onclick="toRegisterForm(event)" href="" class="txt2 hov1">
 									Register
 								</a>
 							</div>
@@ -76,7 +76,7 @@
 
 					<!-- register-form -->
 					<div id="register-form">
-						<form class="login100-form validate-form">
+						<form onsubmit="register(event)" class="login100-form validate-form">
 							<img src="/images/img_logo.png" class="login100-form p-b-28 p-r-64 p-l-64" alt="">
 							<span class="login100-form-title p-b-28">
 								Register
@@ -87,7 +87,7 @@
 							</div>
 
 							<div class="wrap-input100 rs1 validate-input">
-								<input id="email-register" class="input100" type="text" name="email" placeholder="Email">
+								<input id="email-register" class="input100" type="email" name="email" placeholder="Email">
 							</div>
 
 							<div class="wrap-input100 rs1 validate-input">
@@ -105,7 +105,7 @@
 									Already have an account?
 								</span>
 
-								<a id="to-login" href="" class="txt2 hov1">
+								<a id="to-login" onclick="toLoginForm(event)" href="" class="txt2 hov1">
 									Login
 								</a>
 							</div>
@@ -169,7 +169,7 @@
 						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
 							<div id="user-name-email"></div>
 							<div class="dropdown-divider"></div>
-							<a id="logout-btn" class="dropdown-item" href="">Logout</a>
+							<a id="logout-btn" onclick="logout(event)" class="dropdown-item" href="">Logout</a>
 						</div>
 						<!-- user-name-email// -->
 
@@ -184,12 +184,18 @@
 				<div class="container-body-content100">
 					<div class="container">
 
+						<!-- aniQuote -->
+						<div id="aniQuote">
+
+						</div>
+						<!-- aniQuote// -->
+
 						<!-- add-task-minimized -->
-						<div id="add-task-minimized">
+						<div id="add-task-minimized" style="cursor: pointer;" onclick="maximizeAddTask()">
 							<div class="wrap-add-task100 m-t-40 m-l-40 m-r-40">
 								<form class="form p-t-16 p-b-16">
 									<input id="title-minimized" class="add-task m-t-12 m-l-32 m-r-32 m-b-12"
-										style="font-weight: 600; cursor: pointer;" type="text" placeholder="Take a note here..." disabled>
+										style="font-weight: 600;  cursor: pointer;" type="text" placeholder="Take a note here..." disabled>
 								</form>
 							</div>
 						</div>
@@ -199,7 +205,7 @@
 						<div id="add-task-expanded">
 							<div class="wrap-add-task100 m-t-40 m-l-40 m-r-40">
 								<div id="todoForm">
-									<form class="form p-t-16 p-b-16">
+									<form onsubmit="addTask(event)" class="form p-t-16 p-b-16">
 										<input id="title" class="add-task m-t-12 m-l-32 m-r-32 m-b-12" style="font-weight: 600;" type="text"
 											placeholder="Title">
 
@@ -214,7 +220,8 @@
 
 											<!-- <button id="add-task-cancel" class="btn btn-dark btn-add-task text-up" style="font-size: 100% ;letter-spacing: 2px;font-weight: 600;"  >Cancel</button> -->
 											<span style="font-size: 0.5rem;">
-												<i id="add-task-cancel" class="fas fa-times-circle fa-3x add-task-cancel"></i>
+												<i id="add-task-cancel" onclick="minimizeAddTask()"
+													class="fas fa-times-circle fa-3x add-task-cancel"></i>
 												<button type="submit" class="fa-3x m-l-32 add-task-submit">
 													<i class="fa fa-check-circle"></i>
 												</button>
@@ -235,8 +242,7 @@
 
 						<!-- todo-field -->
 
-						<div id="todo-field" style="margin-left:40px; margin-right: 40px; margin-bottom: 20px;display:flex; flex-wrap: wrap; justify-content: space-between;
-						align-items: center;">
+						<div id="todo-field" class="griddy">
 
 
 						</div>
@@ -268,6 +274,8 @@
 		crossorigin="anonymous"></script>
 	<!--===============================================================================================-->
 	<script src="/script/app.js"></script>
+	<!--===============================================================================================-->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<!--===============================================================================================-->
 
 </body>
