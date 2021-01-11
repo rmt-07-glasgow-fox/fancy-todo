@@ -320,6 +320,7 @@ function loginPage() {
   $(".main-page").hide();
   $("#logout-btn").hide();
   $("footer").hide();
+  $("#no-todo").hide();
 
   $.ajax({
     url: "https://server-fancy-todo-jan.herokuapp.com/",
@@ -341,6 +342,7 @@ function todoMainPage() {
   $(".main-page").show();
   $("footer").show();
   $("#logout-btn").show();
+  $("#no-todo").hide();
   // console.log("reload");
 
   $.ajax({
@@ -352,6 +354,12 @@ function todoMainPage() {
   })
     .done((response) => {
       $("#todo-list").empty();
+      // console.log(response);
+      // console.log(response.todoList.length);
+      
+      if(response.todoList.length === 0){
+        $("#no-todo").show();
+      }
       response.todoList.forEach((todo) => {
         // console.log(todo);
         let statusTodo;

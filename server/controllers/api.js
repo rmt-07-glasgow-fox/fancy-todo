@@ -11,7 +11,7 @@ class ApiController {
       'country=id&' +
       `apiKey=${NEWS_API_KEY}`)
       .then(({ data }) => {
-        res.send(data.articles.slice(0,3));
+        res.send(data.articles.slice(0,5));
       })
       .catch((err) => {
         next(err)
