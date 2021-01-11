@@ -1,4 +1,4 @@
-const url = 'http://localhost:3000';
+const url = 'https://fancytodo-api.herokuapp.com';
 
 $(document).ready(() => {
   loginPage();
