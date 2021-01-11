@@ -1,4 +1,4 @@
-var baseUrl = 'http://localhost:3000';
+var baseUrl = 'https://todolist-samm021.herokuapp.com';
 
 $(document).ready(function() {
     checkAuth()
@@ -254,7 +254,7 @@ function googleLogout() {
     const auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut()
     .then(_ => {
-        checkAuth();
+        checkAuth();  
     })
 }
 
