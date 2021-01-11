@@ -576,7 +576,6 @@ $('#tableProjectDetailUser tbody').on('click', '#bDestroyProjectUser', function(
     const id = $('#project_id_detail_project').val();
     const idUser = tableProjectDetailUser.row($(this).parents('tr')).data().id;
 
-
     Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",

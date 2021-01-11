@@ -1,5 +1,6 @@
-require("dotenv").config();
-
+if (process.env.NODE_ENV === "development") {
+    require('dotenv').config()
+}
 const express = require('express');
 const port = 3000;
 const indexRouter = require('./routes')
