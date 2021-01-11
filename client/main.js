@@ -288,6 +288,7 @@ function deleteTodo(id) {
     })
     .done(response => {
         console.log(response);
+        checkAuth()
     })
     .fail(err => {
         console.log(err);
