@@ -1,3 +1,4 @@
+const {OAuth2Client} = require('google-auth-library')
 const {User} = require("../models")
 const {comparePassword} = require("../helpers/bcrypt")
 const {generateToken} = require("../helpers/jwt")
@@ -56,8 +57,7 @@ class userController {
             if(!user){
                 return User.create({
                     email: payload.email,
-                    password: Math.floor(Math.random()*1000) + 'iniDariGoogle',
-                    fullName: payload.name
+                    password: Math.floor(Math.random()*1000) + 'iniDariGoogle'
                 })
             }else {
                 return user
@@ -68,7 +68,7 @@ class userController {
                 id: user.id,
                 email: user.email
             }
-            let acces_token = getToken(googleSign)
+            let acces_token = generateToken(googleSign)
             res.status(200).json({acces_token})
         })
         .catch(err =>{

@@ -365,7 +365,6 @@ $("#signout-navbar").click((event) => {
 
 function onSignIn(googleUser) {
     let id_token = googleUser.getAuthResponse().id_token
-    console.log(id_token)
     $.ajax({
         method: 'POST',
         url: `${baseUrl}/loginGoogle`,
