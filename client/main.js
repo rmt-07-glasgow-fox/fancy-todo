@@ -125,9 +125,6 @@ $(document).ready(function () {
     $("#hide-add-form").click(function () {
         $("#add-form").hide()
     })
-   
-    
-
 
 })
 
@@ -293,7 +290,7 @@ function updateTodoList (id) {
             `<label> <h5> Update Your Plan ? </h5> </label>
             <form>
                 <div class="row g-2 ">
-                    <div class="col-6 mt-5">
+                    <div class="col-6">
                       <div class="form-floating">
                         <input type="text" class="form-control" id="update-title" placeholder="Todo Title">
                         <label for="title">${updateTodo.title}</label>
@@ -372,10 +369,9 @@ function getQuotes () {
                 <h3>Quotes Of The Day</h3>
             </div>
             <div class="card-body">
-                <h4 class="text-justify m-3 justify-content-center"><p class="font-italic"> ${result.quote}</p></h4>
-                <h5> -${result.author}</h5>
-            </div>
-            `
+                <h5 class="text-justify m-3 justify-content-center"><p class="font-italic"> <i>"${result.quote}"</i></p></h5>
+                <h6> -${result.author}</h6>
+            </div>`
         )
     })
     .catch (err => {
