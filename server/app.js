@@ -10,6 +10,7 @@ const port = 3000
 app.use(cors())
 //body parser
 app.use(express.urlencoded({extended: true}))
+app.use(express.json())
 //route
 app.use(route)
 
