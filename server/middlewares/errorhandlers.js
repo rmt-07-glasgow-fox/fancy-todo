@@ -12,6 +12,12 @@ const errorHandler = (err, req, res, next) => {
         case 'InvalidInput':
             res.status(400).json({message: 'Wrong email or password'});
             break;
+        case 'PleaseLogin':
+            res.status(400).json({message: 'Please login first'});
+            break;
+        case 'Unauthorized':
+            res.status(401).json({message: 'Unauthorized'});
+            break;
         default:
             res.status(500).json({message: 'Internal server error'});
             break;

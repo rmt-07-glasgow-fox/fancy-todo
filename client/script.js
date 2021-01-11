@@ -1,9 +1,8 @@
 var baseUrl = 'http://localhost:3000';
 
-$(document).ready(function () {
+$(document).ready(function() {
     checkAuth()
 })
-
 
 function checkAuth() {
     if (!localStorage.access_token) {
@@ -186,7 +185,7 @@ function deleteTodo(id) {
     .done(res => {
         getTodos()
     })
-    .fail(err => {
+    .fail(xhr => {
         var err = eval("(" + xhr.responseText + ")");
         err = Array.isArray(err) ? err[0] : err;
         console.log(err)
@@ -200,7 +199,6 @@ function getWeather() {
         headers: { access_token: localStorage.access_token }
     })
     .done(res => {
-        console.log(res)
         var weathers = res;
         $('#weather-row').empty();
         weathers.map(weather => {
@@ -222,7 +220,7 @@ function getWeather() {
         `)
         });
     })
-    .fail(err => {
+    .fail(xhr => {
         var err = eval("(" + xhr.responseText + ")");
         err = Array.isArray(err) ? err[0] : err;
         console.log(err)
