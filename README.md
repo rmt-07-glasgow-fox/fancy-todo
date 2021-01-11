@@ -4,7 +4,7 @@ A simple todo apps, created using node.js, express, sequelize, postgres.
 
 ## URL
 - Client: http://localhost:8080
-- Server: http://localhost:3000
+- Server: https://fancy-todo-glasgow-server.herokuapp.com
 
 
 ## How to use this web application to its fullest?
