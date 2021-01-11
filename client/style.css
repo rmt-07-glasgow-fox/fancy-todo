@@ -1,0 +1,14 @@
+html,
+body {
+  width: 100%;
+  margin: 0;
+  height: 100%;
+}
+
+.text-red {
+  color: red !important;
+}
+
+.text-red:hover {
+  color: darkred !important;
+}
