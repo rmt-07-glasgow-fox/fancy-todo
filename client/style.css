@@ -1,0 +1,199 @@
+@import url("https://fonts.googleapis.com/css2?family=Heebo:wght@300;500;800&display=swap");
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  background-color: black;
+  font-size: 2em;
+  color: white;
+}
+nav .btn {
+  background-color: black;
+}
+nav .btn:hover {
+  color: rgb(238, 238, 238);
+}
+form .btn:hover {
+  background-color: white;
+}
+#add-new-todo-btn,
+#edit-new-todo-btn {
+  color: rgb(56, 172, 56);
+}
+#add-new-todo-btn:hover,
+#edit-new-todo-btn:hover {
+  color: rgb(67, 221, 67);
+}
+#cancel-add-btn,
+#cancel-edit-btn {
+  color: rgb(182, 25, 25);
+}
+#cancel-add-btn:hover,
+#cancel-edit-btn:hover {
+  color: rgb(223, 71, 71);
+}
+
+body {
+  font-family: "Heebo", sans-serif;
+}
+
+main {
+  display: flex;
+  width: 90%;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 50px;
+}
+
+#login-page form {
+  margin: 0 auto;
+  width: 500px;
+  padding: 3em;
+}
+
+#registration-page form {
+  margin: 0 auto;
+  width: 500px;
+  padding: 3em;
+}
+
+.btn {
+  margin: 0 20px;
+  background-color: white;
+  border: none;
+  color: white;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+h2 {
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #68086b;
+}
+
+#login-btn,
+#registerUser-btn,
+#login-redirect-btn {
+  color: #68086b;
+  cursor: pointer;
+  outline: none;
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  width: auto;
+}
+#login-btn:hover,
+#registerUser-btn:hover,
+#login-redirect-btn:hover {
+  color: rgb(44, 43, 43);
+  border-radius: 1px;
+  background-color: white;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+form {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.container p {
+  text-align: center;
+  margin-top: 50px;
+  font-weight: 300px;
+  font-size: 1rem;
+}
+
+#add-todo-card form {
+  padding: 2em;
+}
+#edit-todo-card form {
+  padding: 2em;
+}
+
+h3 {
+  color: purple;
+  font-size: 1.5rem;
+}
+
+#todo-list {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.card {
+  margin: 10px;
+  padding: 1rem;
+  font-size: 0.9rem;
+}
+
+.card button {
+  margin: 5px;
+}
+p.card-due-date {
+  margin: 10px;
+  color: gray;
+}
+
+#delete-todo {
+  color: rgb(192, 38, 11);
+}
+#delete-todo:hover {
+  color: rgb(233, 76, 49);
+  background-color: white;
+}
+#update-status {
+  color: rgb(7, 167, 216);
+}
+#update-status:hover {
+  color: rgb(33, 213, 226);
+  background-color: white;
+}
+#update-todo {
+  color: rgb(35, 129, 12);
+}
+#update-todo:hover {
+  color: rgb(63, 179, 34);
+  background-color: white;
+}
+
+p.card-text {
+  margin-top: 20px;
+  color: rgb(221, 103, 123);
+}
+
+.child-container {
+  display: flex;
+  flex-direction: row;
+}
+
+#sub-container-news {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+#sub-container-todolist {
+  flex-direction: column;
+}
+a {
+  text-decoration: none;
+}
+.card img {
+  width: 200px;
+}
