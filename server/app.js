@@ -5,7 +5,7 @@ const express = require('express')
 const route = require('./routes')
 const cors = require('cors')
 const app = express()
-const port = 3000
+const PORT = process.env.PORT || 3000
 
 app.use(cors())
 //body parser
@@ -14,6 +14,6 @@ app.use(express.json())
 //route
 app.use(route)
 
-app.listen(port, () => {
-    console.log('Listening to',port);
+app.listen(PORT, () => {
+    console.log('Listening to',PORT);
 })
