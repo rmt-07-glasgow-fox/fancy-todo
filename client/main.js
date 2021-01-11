@@ -137,6 +137,7 @@ function checkAuth () {
         $("#register").hide()
         $("#todo").show()
         getTodoList()
+        getQuotes()
         $("#logout-button").show()
         $("#add-form").hide()
         $("#update-form").hide()
@@ -175,7 +176,38 @@ function onSignIn(googleUser) {
         console.log(err)
     })
 }
-  
+
+function changeStatus (id, status) {
+    console.log(id, status)
+    $.ajax ({
+        method: "PATCH",
+        url: `${baseURL}/todos/${id}`,
+        data: {
+            status
+        },
+        headers: {
+            access_token: localStorage.access_token
+        }
+    })
+    .done (result => {
+        getTodoList()
+    })
+    .fail (err => {
+        console.log(err)
+    })
+}
+
+// function btnShowHide (id) {
+//     if ($(`#btn-${id}`)) {
+
+//     }
+//     $(".todo-button").hide()
+
+//     $(".todo-list").click(function (event) {
+//         event.preventDefault()
+//         $("#todo-button").show()
+// })
+// }
 
 function getTodoList () {
     $.ajax ({
@@ -196,8 +228,9 @@ function getTodoList () {
                 </div>
                 <div class="row card-body">
                     <div class="col-2 d-flex justify-content-start m-2 border-end border-primary">
-                        <input type="checkbox" class="btn-check" id="status" autocomplete="off">
-                        <label class="btn btn-outline-primary d-flex align-items-center" for="status">Overdue?</label>
+                    
+                        <input type="checkbox" onclick="changeStatus(${element.id}, ${!element.status})" ${element.status? 'checked': ''} >
+                        
                     </div>
                     <div class="col-9 d-flex justify-content-center m-2">
                         <div class="row">
@@ -205,22 +238,19 @@ function getTodoList () {
                             <p class="card-text mt-2">${element.description}</p>
                         </div>
                     </div>
-                    <div class="btn-group" role="group" aria-label="Basic mixed styles example" id="todo-button">
-                        <button href="/" type="button" class="btn btn-danger" onclick="updateTodoList(${+element.id})">Update</button>
-                        <button type="button" class="btn btn-warning" onclick="deleteTodoList(${+element.id})">Delete</button>
+                    <div class="btn-group" role="group" aria-label="Basic mixed styles example" onclick="btnShowHide(${element.id})">
+                        
+                            <button href="/" type="button" class="btn btn-danger" onclick="updateTodoList(${+element.id})">Update</button>
+                            <button type="button" class="btn btn-warning" onclick="deleteTodoList(${+element.id})">Delete</button>
+                    
+                        
                     </div>
                 </div>
                 </div>`
             )
             
         });
-        console.log(result)
-        $("#todo-button").hide()
-
-        $("#todo-list").click(function (event) {
-            event.preventDefault()
-            $("#todo-button").show()
-    })
+      
        
     })
     .fail (err => {
@@ -263,7 +293,7 @@ function updateTodoList (id) {
             `<label> <h5> Update Your Plan ? </h5> </label>
             <form>
                 <div class="row g-2 ">
-                    <div class="col-6 ">
+                    <div class="col-6 mt-5">
                       <div class="form-floating">
                         <input type="text" class="form-control" id="update-title" placeholder="Todo Title">
                         <label for="title">${updateTodo.title}</label>
@@ -322,6 +352,33 @@ function updateTodoList (id) {
         })
     })
     .fail (err => {
+        console.log(err)
+    })
+}
+
+function getQuotes () {
+    $.ajax ({
+        method: "GET",
+        url: `${baseURL}/RandomQuote`,
+        headers: {
+            access_token: localStorage.access_token
+        }
+    })
+    .done (result => {
+        $("#quotesBox").empty()
+        $("#quotesBox").append(
+            `
+            <div class="card-header">
+                <h3>Quotes Of The Day</h3>
+            </div>
+            <div class="card-body">
+                <h4 class="text-justify m-3 justify-content-center"><p class="font-italic"> ${result.quote}</p></h4>
+                <h5> -${result.author}</h5>
+            </div>
+            `
+        )
+    })
+    .catch (err => {
         console.log(err)
     })
 }

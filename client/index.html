@@ -15,7 +15,7 @@
 <body>
     <!-- NAVBAR -->
     <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light"  style="background-color: #e3f2fd;">
+        <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light"  style="background-color: #e3f2fd;">
           <div class="container-fluid">
             <a class="navbar-brand" href="/">Fancy Todo</a>
           </div>
@@ -24,7 +24,7 @@
     </div>
 <!-- FORM LOGIN -->
     <div id="login">
-        <div class="container d-flex justify-content-center">
+        <div class="container d-flex justify-content-center mt-5">
             <form method="POST">
                 <h3>Login</h3>
                 <div class="mb-3">
@@ -47,7 +47,7 @@
     </div>
 <!-- FORM REGISTER -->
     <div id="register">
-        <div class="container d-flex justify-content-center">
+        <div class="container d-flex justify-content-center mt-5">
             <form method="POST">
                 <h3>Register</h3>
                 <div class="mb-3">
@@ -66,8 +66,8 @@
     </div>
 
 <!-- TODO  -->
-    <div id="todo" class="container">
-        <div class="container row-3 mt-3 mb-3 d-flex justify-content-center" >
+    <div id="todo" class="container mt-5">
+        <div class="container row-3 mt- mb-3 d-flex justify-content-center" >
             <section id="add-form">
                 <label> <h5> What's Your Plan ? </h5> </label>
                 <form>
@@ -111,10 +111,14 @@
         </div>
         <div class="container row-9 d-flex justify-content-center">
             <!-- SIDE BAR -->
-            <div class="col-3 m-3">
+            <div class="col-3 m-3 fixed-left">
                 <div class="card">
                     <button id="add-todo" class="btn btn danger">Add Todo</button>
                 </div>
+                <div class="card mt-3 quotesBox">
+                    
+                </div>
+
             </div>
             <!-- CONTENT TODO -->
             <div class="col-9 m-3" >
