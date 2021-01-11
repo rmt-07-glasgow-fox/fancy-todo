@@ -13,7 +13,7 @@ app.use(cors())
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 app.get('/', (req, res) => {
-      console.log("Welcome");
+      res.send("welcome");
 })
 app.use('/', router)
 app.use(errorHandler)
