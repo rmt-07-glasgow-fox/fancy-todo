@@ -17,6 +17,7 @@ class userController {
             })
         })
         .catch(err => {
+            console.log(err.name)
             next(err)
         })
     }
