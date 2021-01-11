@@ -79,7 +79,7 @@ $(document).ready(function () {
         checkAuth();
       })
       .fail((err) => {
-        // console.log(err, "== err");
+        console.log(err, "== err");
         let errMsgScript = "";
         err.responseJSON.forEach((msg) => {
           errMsgScript += `<p style="color: red;">${msg}</p>`;

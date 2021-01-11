@@ -107,7 +107,8 @@ class UserController {
       return res.status(200).json({ access_token });
     })
     .catch(err => {
-      next(err)
+      res.send(err)
+      // next(err)
     })
   }
 }
