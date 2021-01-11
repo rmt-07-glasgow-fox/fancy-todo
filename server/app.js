@@ -12,7 +12,9 @@ const cors = require('cors')
 app.use(cors())
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
-
+app.get('/', (req, res) => {
+      console.log("Welcome");
+})
 app.use('/', router)
 app.use(errorHandler)
 
