@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost:3000';
+const baseUrl = 'https://risuto-fancytodo-db.herokuapp.com';
 
 $(document).ready(_ => {
   initContent();
@@ -130,7 +130,7 @@ const getUserInfo = _ => {
 
       $('#dropdownMenuButton').append(
         `
-        <img src="${response.profpic}" class="profPic m-l-24 hov1" alt="logo">
+        <img src="${response.profpic}" class="profPic hov1" alt="logo" style="margin-left: 24px">
         `
       );
       $('#user-name-email').append(
@@ -192,24 +192,24 @@ const getTodoList = _ => {
           `
           <!-- card-todo -->
           <div id="card-todo">
-            <div class="wrap-todo-card100 m-t-40 p-t-12 p-b-12">
-              <h6 class="m-t-12 m-r-24 m-b-12 m-l-24 todo-title" style="color: #1E1E1E; font-weight: 600;">${e.title}</h6>
+            <div class="wrap-todo-card100" style="margin-top: 40px; padding-top: 12px; padding-bottom: 12px">
+              <h6 class="todo-title" style="margin: 12px 24px; color: #1E1E1E; font-weight: 600;">${e.title}</h6>
 
-              <p class="m-t-12 m-r-24 m-b-12 m-l-24 todo-description" style="color: #1E1E1E; font-weight: 400;">
+              <p class="todo-description" style="margin: 12px 24px; color: #1E1E1E; font-weight: 400;">
                 ${e.description}</p>
 
               <hr style="margin:0" />
 
-              <p class="m-l-24 m-t-12" style="color:#1E1E1E; font-weight:600;" > Due ${e.due_date.split('T')[0]} </p>
+              <p style="margin-left: 24px; margin-top: 12px; color:#1E1E1E; font-weight:600;" > Due ${e.due_date.split('T')[0]} </p>
 
               <div id="markAsDone">
                 <form>
-                  <input id="done-button${e.id}" class="m-t-12 m-r-24 m-b-12 m-l-24" type="checkbox" onclick="markTask(${e.id}, ${!e.status})" ${e.status ? 'checked' : ''} >
+                  <input id="done-button${e.id}" style="margin: 12px 24px;" type="checkbox" onclick="markTask(${e.id}, ${!e.status})" ${e.status ? 'checked' : ''} >
                   <label style="margin-left:-18px ;font-weight: 600;">Done</label>
                 </form>
-                <span class="m-l-24" style="font-size: 0.5rem;">
+                <span style="margin-left: 24px; font-size: 0.5rem;">
                   <i onclick="editTask(${e.id})" class="fas fa-pen-square fa-3x add-task-bot"></i>
-                  <i onclick="deleteTask(${e.id})" class="fas fa-trash-alt fa-3x m-l-16 add-task-bot"></i>
+                  <i onclick="deleteTask(${e.id})" class="fas fa-trash-alt fa-3x add-task-bot" style="margin-left: 16px;"></i>
                 </span>
               </div>
             </div>
@@ -235,24 +235,24 @@ const editTask = id => {
       $('#edit-task-expanded').empty();
       $('#edit-task-expanded').append(
         `
-      <div class="wrap-edit-task100 m-t-40 m-l-40 m-r-40">
+      <div class="wrap-edit-task100" style="margin-top: 40px; margin-left: 40px; margin-right:40px;>
       <div id="todoForm-edit">
-        <form onsubmit="editTaskSubmit(event, ${response.id})" class="form p-t-16 p-b-16">
-          <input id="title-edit" class="edit-task m-t-12 m-l-32 m-r-32 m-b-12" style="font-weight: 600;"
+        <form onsubmit="editTaskSubmit(event, ${response.id})" class="form" style="padding-top: 16px; padding-bottom: 16px;">
+          <input id="title-edit" class="edit-task" style="margin: 12px 32px;font-weight: 600;"
             type="text" value="${response.title}">
 
           <hr style="margin:0" />
 
-          <input id="description-edit" class="edit-task text-box m-t-12 m-r-32 m-l-32" type="text"
+          <input id="description-edit" class="edit-task text-box" style="margin-top: 12px; margin-right: 32px; margin-left: 32px" type="text"
             value="${response.description}">
 
-          <input id="due_date-edit" class="edit-task m-l-32 m-t-24" style="width:160px;" type="date" value="${response.due_date.split('T')[0]}">
+          <input id="due_date-edit" class="edit-task" style="margin-left: 32px; margin-top:24px; width:160px;" type="date" value="${response.due_date.split('T')[0]}">
 
-          <div id="edit-task-button" class="m-l-28 m-t-24 m-b-18">
+          <div id="edit-task-button" style="margin-top: 24px; margin-left: 28px; margin-bottom: 18px;">
 
             <span style="font-size: 0.5rem;">
               <i id="edit-task-cancel" onclick="editCancel()" class="fas fa-times-circle fa-3x add-task-cancel"></i>
-              <button type="submit"  class="fa-3x m-l-32 add-task-submit">
+              <button type="submit"  class="fa-3x add-task-submit" style="margin-left: 32px;">
                 <i class="fa fa-check-circle"></i>
               </button>
             </span>
@@ -358,12 +358,12 @@ const getAniQuote = _ => {
       $('#aniQuote').empty();
       $('#aniQuote').append(
         `
-        <div class="wrap-quote100 m-t-40 m-l-40 m-r-40">
-          <form class="form p-t-16 p-b-16">
-            <h6 class="add-task m-t-12 m-l-32 m-r-32 m-b-12 text-center" style="font-weight: 600;">
+        <div class="wrap-quote100" style="margin-top: 40px; margin-left: 40px; margin-right: 40px;">
+          <form class="form" style="padding-top: 16px; padding-bottom: 16px;">
+            <h6 class="add-task" style="margin:12px 32px; text-align: center; font-weight: 600;">
               "${response.quote}"
             </h6>
-            <p class="txt1 text-center m-b-8">${response.character} @ ${response.anime}</p>
+            <p class="txt1" style="text-align: center; margin-bottom: 8px;">${response.character} @ ${response.anime}</p>
           </form>
         </div>
         `

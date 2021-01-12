@@ -8,7 +8,7 @@
 
 	<!--===============================================================================================-->
 	<meta name="google-signin-client_id"
-		content="25069710585-2229tdamv883dq3pr43p2k98374ajlp3.apps.googleusercontent.com">
+		content="25069710585-7lam51la1jq0dbi1ehohq21oeherp5bp.apps.googleusercontent.com">
 	<!--===============================================================================================-->
 	<link rel="icon" type="image/png" href="images/icons/favicon.ico" />
 	<!--===============================================================================================-->
@@ -28,15 +28,15 @@
 	<!-- landing-page -->
 	<div id="landing-page">
 		<div class="limiter">
-			<div class="container-login100 landing-bg p-t-15 p-r-15 p-b-15 p-l-15">
+			<div class="container-login100 landing-bg" style="padding:15px">
 
-				<div class="wrap-login100 p-l-55 p-r-55 p-t-40 p-b-36">
+				<div class="wrap-login100" style="padding:40px 55px 36px 55px">
 
 					<!-- login-form -->
 					<div id="login-form">
 						<form onsubmit="login(event)" class="login100-form validate-form">
-							<img src="/images/img_logo.png" class="login100-form p-b-28 p-r-64 p-l-64" alt="">
-							<span class="login100-form-title p-b-28">
+							<img src="/images/img_logo.webp" class="login100-form" alt="logo" style="padding-left: 64px; padding-bottom: 28px; padding-right: 64px;">
+							<span class="login100-form-title" style="padding-bottom: 28px;">
 								Login
 							</span>
 
@@ -48,13 +48,13 @@
 								<input id="password-login" class="input100" type="password" name="pass" placeholder="Password">
 							</div>
 
-							<div class="container-login100-form-btn m-t-20">
-								<button class="btn btn-primary btn-landing login100 text-up">
+							<div class="container-login100-form-btn" style="margin-top: 20px;">
+								<button class="btn btn-primary btn-landing login100" style="text-transform: uppercase;">
 									Login
 								</button>
 							</div>
 
-							<div class="text-center p-t-12 p-b-8">
+							<div style="padding-top: 12px; padding-bottom: 8px; text-align: center;">
 								<span class="txt1">
 									Create an account?
 								</span>
@@ -68,7 +68,7 @@
 								or
 							</div>
 
-							<div class="g-signin2 p-t-16" style="width:auto;" data-onsuccess="onSignIn" data-longtitle="true"></div>
+							<div class="g-signin2" style="width:auto; padding-top: 16px;" data-onsuccess="onSignIn" data-longtitle="true"></div>
 
 						</form>
 					</div>
@@ -77,8 +77,8 @@
 					<!-- register-form -->
 					<div id="register-form">
 						<form onsubmit="register(event)" class="login100-form validate-form">
-							<img src="/images/img_logo.png" class="login100-form p-b-28 p-r-64 p-l-64" alt="">
-							<span class="login100-form-title p-b-28">
+							<img src="/images/img_logo.webp" class="login100-form" alt="" style="padding-left: 64px; padding-bottom: 28px; padding-right: 64px;">
+							<span class="login100-form-title" style="padding-bottom: 28px;">
 								Register
 							</span>
 
@@ -94,13 +94,13 @@
 								<input id="password-register" class="input100" type="password" name="pass" placeholder="Password">
 							</div>
 
-							<div class="container-login100-form-btn m-t-20">
-								<button class="btn btn-primary btn-landing login100 text-up">
+							<div class="container-login100-form-btn" style="margin-top: 20px;">
+								<button class="btn btn-primary btn-landing login100" style="text-transform: uppercase;">
 									Register
 								</button>
 							</div>
 
-							<div class="text-center p-t-12 p-b-8">
+							<div style="padding-top: 12px; padding-bottom: 8px; text-align: center;">
 								<span class="txt1">
 									Already have an account?
 								</span>
@@ -112,12 +112,12 @@
 
 						</form>
 
-						<div class="separator p-t-6">×</div>
+						<div class="separator" style="padding-top: 6px;">×</div>
 					</div>
 					<!-- register-form// -->
 
 					<!-- copyright-section -->
-					<div class="text-center p-t-12">
+					<div style="padding-top: 12px; text-align: center;">
 						<span class="txt1">
 							BG illust by
 						</span>
@@ -127,7 +127,7 @@
 						</a>
 					</div>
 
-					<div class="text-center p-t-12">
+					<div style="padding-top: 12px; text-align: center;">
 						<span class="txt1">
 							Code by
 						</span>
@@ -152,7 +152,7 @@
 			<!-- navbar -->
 			<nav class="navbar navbar-light sticky-top navbar-color navbar-margin">
 				<a class="navbar-brand">
-					<img src="/images/img_logo.png" height="24" class="d-inline-block align-middle" style="margin-top: -3px;"
+					<img src="/images/img_logo.webp" height="24" class="d-inline-block align-middle" style="margin-top: -3px;"
 						alt="" loading="lazy">
 				</a>
 
@@ -192,10 +192,10 @@
 
 						<!-- add-task-minimized -->
 						<div id="add-task-minimized" style="cursor: pointer;" onclick="maximizeAddTask()">
-							<div class="wrap-add-task100 m-t-40 m-l-40 m-r-40">
-								<form class="form p-t-16 p-b-16">
-									<input id="title-minimized" class="add-task m-t-12 m-l-32 m-r-32 m-b-12"
-										style="font-weight: 600;  cursor: pointer;" type="text" placeholder="Take a note here..." disabled>
+							<div class="wrap-add-task100" style="margin-top: 40px; margin-left: 40px; margin-right: 40px;">
+								<form class="form" style="padding-top: 16px; padding-bottom: 16px;">
+									<input id="title-minimized" class="add-task"
+										style="font-weight: 600;  cursor: pointer; margin: 12px 32px;" type="text" placeholder="Take a note here..." disabled>
 								</form>
 							</div>
 						</div>
@@ -203,30 +203,28 @@
 
 						<!-- add-task-expanded -->
 						<div id="add-task-expanded">
-							<div class="wrap-add-task100 m-t-40 m-l-40 m-r-40">
+							<div class="wrap-add-task100" style="margin-top: 40px; margin-right: 40px; margin-left: 40px;">
 								<div id="todoForm">
-									<form onsubmit="addTask(event)" class="form p-t-16 p-b-16">
-										<input id="title" class="add-task m-t-12 m-l-32 m-r-32 m-b-12" style="font-weight: 600;" type="text"
+									<form onsubmit="addTask(event)" class="form" style="padding-top: 16px; padding-bottom: 16px;">
+										<input id="title" class="add-task" style="font-weight: 600; margin: 12px 32px;" type="text"
 											placeholder="Title">
 
 										<hr style="margin:0" />
 
-										<input id="description" class="add-task text-box m-t-12 m-r-32 m-l-32" type="text"
+										<input id="description" class="add-task text-box" style="margin-top: 12px; margin-right: 32px; margin-left: 32px;" type="text"
 											placeholder="Take a note (max 32 char)" maxlength="32">
 
-										<input id="due_date" class="add-task m-l-32 m-t-24" style="width:160px;" type="date">
+										<input id="due_date" class="add-task" style="width:160px; margin-left: 32px; margin-top: 24px;" type="date">
 
-										<div id="add-task-button" class="m-l-28 m-t-24 m-b-18">
+										<div id="add-task-button" style="margin-top: 24px; margin-bottom: 18px; margin-left: 28px;">
 
-											<!-- <button id="add-task-cancel" class="btn btn-dark btn-add-task text-up" style="font-size: 100% ;letter-spacing: 2px;font-weight: 600;"  >Cancel</button> -->
 											<span style="font-size: 0.5rem;">
 												<i id="add-task-cancel" onclick="minimizeAddTask()"
 													class="fas fa-times-circle fa-3x add-task-cancel"></i>
-												<button type="submit" class="fa-3x m-l-32 add-task-submit">
+												<button type="submit" class="fa-3x add-task-submit" style="margin-left: 32px;">
 													<i class="fa fa-check-circle"></i>
 												</button>
 											</span>
-											<!-- <input id="add-task-submit" class="btn btn-dark btn-add-task text-up" style="font-size: 100% ;letter-spacing: 2px;font-weight: 600;" type="submit" value="Submit"> -->
 										</div>
 									</form>
 								</div>
