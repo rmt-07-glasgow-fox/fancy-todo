@@ -1,4 +1,4 @@
-var baseurl = 'https://fdr-fancy-todos-server.herokuapp.com'
+var baseurl = 'http://localhost:3000'
 $(document).ready( () => {
     auth()
     getData()
@@ -174,12 +174,14 @@ function create() {
         console.log(err);
     } )
     .always( () => {
+        console.log(due_date);
     } )
 }
 
 function getData() {
     getJokes()
     $('.allActivities').empty()
+
     $.ajax({
         method: 'GET',
         url: `${baseurl}/todos`,
@@ -214,11 +216,12 @@ function getEdit(id) {
         }
     })
     .done( data => {
+        console.log(data);
         $('#titleEdit').val(`${data.title}`)
         $('#descriptionEdit').val(`${data.description}`)
         $('#statusEdit').val(`${data.status}`)
         $(`${data.status}`).attr('selected')
-        $('#batasWaktuEdit').val(`${data.due_date.toLocaleString()}`)
+        $('#batasWaktuEdit').val(`${data.due_date.slice(0, -1)}`)
         $('#UserId').val(`${id}`)
     } )
     .fail( err => {
@@ -271,7 +274,7 @@ function onSignIn(googleUser) {
     var id_token = googleUser.getAuthResponse().id_token;
     $.ajax({
         method: "POST",
-        url: "https://fdr-fancy-todos-server.herokuapp.com/loginGoogle",
+        url: "https://fdr-fancy-todos-server.herokuapp.com",
         data: { id_token }
     })
     .done( data => {
