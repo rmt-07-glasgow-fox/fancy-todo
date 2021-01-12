@@ -7,13 +7,13 @@ function authorize(req, res, next) {
     where: { id }
   })
     .then(todo => {
-      if (todo.user_id !== req.user.id) {
-        res.status(401).json({
-          message: 'Invalid user, not authorized'
-        })
-      } else if (!todo) {
+      if (!todo) {
         res.status(404).json({
           message: 'User not found'
+        })
+      } else if (todo.user_id !== req.user.id) {
+        res.status(401).json({
+          message: 'Invalid user, not authorized'
         })
       } else {
         next()
