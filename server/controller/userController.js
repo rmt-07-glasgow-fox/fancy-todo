@@ -1,3 +1,4 @@
+const { OAuth2Client } = require('google-auth-library')
 const { user, Sequelize } =  require('../models/index')
 const { comparePassword } = require('../helpers/bcrypt');
 const { generateTokenJwt } = require('../helpers/jwt');
@@ -56,6 +57,43 @@ class userController {
 
         })
     }
+
+    static loginGoogle (req, res, next) {
+        const { id_token } = req.body
+        let objUser
+        const CLIENT_ID = process.env.GOOGLE_CLIENT_ID 
+        const client = new OAuth2Client(CLIENT_ID);
+        client.verifyIdToken({
+            idToken: id_token,
+            audience: CLIENT_ID,  
+        })
+        .then(ticket => {
+            const payload = ticket.getPayload();
+            objUser =  {
+                email: payload.email,
+                password: String(Math.random()*1000)
+            }
+        return user.findOne({where: {email: objUser.email}})
+        })
+        .then(data => {
+            if (!data) {
+                return user.create(objUser)
+            } else {
+                return data
+            }
+        })
+        .then(data => {
+            let payload = { 
+                id: data.id,
+                email: data.email 
+            } 
+            const access_token = generateTokenJwt(payload)  
+            return res.status(200).json({access_token: access_token})
+        })
+        .catch( err => {
+            next(err)
+        })
+    } 
 }
 
 module.exports = userController 

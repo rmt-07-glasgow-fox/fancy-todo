@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:3000"
+const baseUrl = "http://localhost:3001"
 
 $(document).ready(function(){
   // jQuery methods go here...
@@ -32,6 +32,26 @@ function showFormLogin(){
   $(`#login-page`).show()
 }
 
+function onSignIn(googleUser) {
+  var id_token = googleUser.getAuthResponse().id_token;
+  $.ajax({
+    method: `POST`,
+    url: `${baseUrl}/user/loginGoogle`,
+    data: { id_token }
+  })
+  .done( response => {
+    localStorage.setItem(`access_token`,response.access_token)
+    checkAuth()
+  })
+  .fail(err => {
+    alert({message : err.msg});
+  })
+  .always(() => {
+    $(`#search-login`).val('')
+    $(`#password-login`).val('')
+  })
+}
+
 $(`#btn-register`).click((event) => {
   event.preventDefault()
   var email = $(`#email-register`).val()
@@ -48,11 +68,14 @@ $(`#btn-register`).click((event) => {
     }
   })
   .done(response => {
-    // console.log(response,`response`);
+    // console.log(response,`response`);   
+    $(`#login-page`).show()
+    $(`#register-page`).hide()
     Auth()
   })
   .fail(err => {
     console.log(err,`err`);
+    // alert(err)
   })
   .always(() => {
     $(`#email-register`).val('')
@@ -100,5 +123,10 @@ $(`#link-login`).click((event) => {
 
 $(`#btn-logout`).click(() => {
   localStorage.clear()
+  var auth2 = gapi.auth2.getAuthInstance();
+  auth2.signOut().then(function () {
+    console.log('User signed out.');
+  });
   checkAuth()
 })
+
