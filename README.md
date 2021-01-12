@@ -1,365 +1,69 @@
-# Fancy ToDo Web App Server
-Fancy ToDo is an web application to list all your plan. 
+# Risuto ToDo List
+Risuto ToDo list is a fancy-todo web application (well, not too fancy I guess) for your need to list all your activity plan.
 
-Below is API List to us easier develop this web app.
-## RESTful endpoints
-### POST /register
-_Request Header_
-```
-  not needed
-```
+> P.S.: This app is still experimental and for educational purpose, but ofcourse you can use it for your daily driver.
 
-_Request Body_
-```json
-{
-  "email": "<your email>",
-  "name": "<your name>",
-  "password": "<your password>"
-}
-```
+## Feature
+ - Create, Read, Update, and Delete your todo list
+ - Optimized for mobile
+ - Glassmorphism design
+ - and IT'S FREE!
 
-_Response (201)_
-```json
-{
-  "id": "<your id>",
-  "email": "<your email>",
-  "name": "<your name>"
-}
-```
+ ## Endpoints
+ This table is list of this app's API endpoint. You can see the detail in [API Documentation](https://github.com/Ralfarios/fancy-todo/blob/main/server/api_doc.md). 
 
-_Response (400)_
-```json
-{
-  "message": "Error 400: Bad Request"
-}
-```
+| Route         | Method      | Description                   |
+| ------------- | ----------- | ----------------------------- |
+| `/register`   | POST        | For register user             |
+| `/login`      | POST        | For login user                |
+| `/glogin`     | POST        | For login user with Google    |
+| `/getuser`    | GET         | For get user information      |
+| `/todos`      | POST        | For add todo to list          |
+| `/todos`      | GET         | For get user's todo list      |
+| `/todos/:id`  | GET         | For detailed todo list        |
+| `/todos/:id`  | PUT         | For update todo list          |
+| `/todos/:id`  | PATCH       | For mark as done todo list    |
+| `/todos/:id`  | DELETE      | For delete todo list          |
+| `/animequote` | GET         | For get random anime quote    |
+<br>
 
-### POST /login
-_Request Header_
-```
-  not needed
-```
+## Are you dev?
+Want to help me to develop this web application? You are very welcome and Let's get started!
 
-_Request Body_
-```json
-{
-  "email": "<your email>",
-  "password": "<your password>"
-}
-```
+Before you start, make sure you already installed [Node.js](https://nodejs.org/en/) on your machine.
 
-_Response (201)_
-```json
-{
-"access_token": "<your access token>"
-}
-```
+### Let's get started
 
-_Response (400)_
-```json
-{
-  "message": "Error 400: Bad Request"
-}
-```
+ First, all you had to do is clone this repo <br> `$ git clone https://github.com/ralfarios/fancy-todo`
 
-### POST /glogin
-_Request Header_
-```
-  not needed
-```
+#### If you want to develop back-end side
 
-_Request Body_
-```json
-{
-  "id_token": "id_token";
-}
-```
+ 1. Second, go to your `repo`/server directory `$cd fancy-todo/server/`
+ 2. and then, install the packages <br>
+ `$ npm install`
+ 3. Install sequelize-cli and nodemon (global recommended).
+ `$ npm install -g sequelize-cli nodemon`
+ 4. Then, setup the Sequelize database with these commands: 
+    - For create the database<br>
+    `$ sequelize db:create`
+    - For creating the tables and stuff<br>
+    `$ sequelize db:migrate`
+ 5. Remember to fill API KEY on `.env` file (make one if you don't have it, example is on `.env.example` file)
+ 6. AND YOU GOOD TO GO! 
 
-_Response (201)_
-```json
-Payload from Google
-```
+ #### If you want to develop front-end side
+ 1. Second, go to your `repo`/server directory `$cd fancy-todo/client/`
+ 2. Install live-server (global recommended).
+ `$ npm install -g live-server`
+ 3. AND YOU GOOD TO GO! 
 
-_Response (500)_
-```json
-{
-  "message": "Error 500: Internal Server Error"
-}
-```
+ ## Executing
+After everything is done, let's execute it with `$ npm run dev` for `back-end` or `live-server --host=localhost` for `front-end`.
 
-### GET /getuser
-_Request Header_
-```
-  "access_token": "access_token"
-```
+## Any question?
+Feel free to contact me!
 
-_Request Body_
-```json
-{
-  "id": "id from decoded access_token"
-}
-```
-
-_Response (200)_
-```json
-{
-  "id": "Your ID",
-  "email": "Your Email",
-  "name": "Your Name"
-}
-```
-
-_Response (500)_
-```json
-{
-  "message": "Error 500: Internal Server Error"
-}
-```
-
-
-### POST /todos
-
-_Request Header_
-```json
-{
-  "access_token": "<your access token>"
-}
-```
-
-_Request Body_
-```json
-{
-  "title": "<todo title>",
-  "description": "<todo description>",
-  "status": "<todo status>",
-  "due_date": "<todo due_date>"
-}
-```
-
-_Response (201)_
-```json
-{
-  "title": "<todo title>",
-  "description": "<todo description>",
-  "status": "<todo status>",
-  "due_date": "<todo due_date>"
-}
-```
-
-_Response (400)_
-```json
-{
-  "message": "Error 400: Bad Request"
-}
-```
-
-_Response (500)_
-```json
-{
-  "message": "Error 500: Internal Server Error"
-}
-```
-
-
-### GET /todos
-
-_Request Header_
-```json
-{
-  "access_token": "<your access token>"
-}
-```
-
-_Request Body_
-```
-not needed
-```
-
-_Response (200)_
-```json
-[
-  {
-    "title": "<todo title>",
-    "description": "<todo description>",
-    "status": "<todo status>",
-    "due_date": "<todo due_date>"
-  },
-  {
-    "title": "<todo title>",
-    "description": "<todo description>",
-    "status": "<todo status>",
-    "due_date": "<todo due_date>"
-  }
-  ...
-]
-```
-
-_Response (500)_
-```json
-{
-  "message": "Error 500: Internal Server Error"
-}
-```
-
-### GET /todos/:id
-
-_Request Header_
-```json
-{
-  "access_token": "<your access token>"
-}
-```
-
-_Request Body_
-```
-not needed
-```
-
-_Response (200)_
-```json
-{
-  "title": "<todo title>",
-  "description": "<todo description>",
-  "status": "<todo status>",
-  "due_date": "<todo due_date>"
-}
-```
-
-_Response (404)_
-```json
-{
-  "message": "Error 404: ToDo List not found"
-}
-```
-
-### PUT /todos/:id
-
-_Request Header_
-```json
-{
-  "access_token": "<your access token>"
-}
-```
-
-_Request Body_
-```json
-{
-  "title": "<todo title>",
-  "description": "<todo description>",
-  "status": "<todo status>",
-  "due_date": "<todo due_date>"
-}
-```
-
-_Response (200)_
-```json
-{
-  "title": "<[new] todo title>",
-  "description": "<[new] todo description>",
-  "status": "<[new] todo status>",
-  "due_date": "<[new] todo due_date>"
-}
-```
-
-_Response (400)_
-```json
-{
-  "message": "Error 400: Bad Request"
-}
-```
-
-_Response (404)_
-```json
-{
-  "message": "Error 404: ToDo List not found"
-}
-```
-
-_Response (500)_
-```json
-{
-  "message": "Error 500: Internal Server Error"
-}
-```
-
-### PATCH /todos/:id
-
-_Request Header_
-```json
-{
-  "access_token": "<your access token>"
-}
-```
-
-_Request Body_
-```json
-{
-  "status": "<todo status>"
-}
-```
-
-_Response (200)_
-```json
-{
-  "title": "<todo title>",
-  "description": "<todo description>",
-  "status": "<[new] todo status>",
-  "due_date": "<todo due_date>"
-}
-```
-
-_Response (400)_
-```json
-{
-  "message": "Error 400: Bad Request"
-}
-```
-
-_Response (404)_
-```json
-{
-  "message": "Error 404: ToDo List not found"
-}
-```
-
-_Response (500)_
-```json
-{
-  "message": "Error 500: Internal Server Error"
-}
-```
-
-### DELETE /todos/:id
-
-_Request Header_
-```json
-{
-  "access_token": "<your access token>"
-}
-```
-
-_Request Body_
-```
-not needed
-```
-
-_Response (200)_
-```json
-{
-  "message": "ToDo success to delete"
-}
-```
-
-_Response (404)_
-```json
-{
-  "message": "Error 404: ToDo List not found"
-}
-```
-
-_Response (500)_
-```json
-{
-  "message": "Error 500: Internal Server Error"
-}
-```
+## Credit
+- [satomizu @ Pixiv](https://pixiv.me/stmzu)
+- [UI-Avatars](https://ui-avatars.com/)
+- [Animechan API](https://animechanapi.xyz/)

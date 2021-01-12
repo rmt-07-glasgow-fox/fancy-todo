@@ -1,20 +1,35 @@
-# Fancy ToDo Web App Server
-Fancy ToDo is an web application to list all your plan. This Web App has:
- - RESTful endpoint for todo list's CRUD operation
- - JSON formatted response
+# Risuto ToDo API Documentation
+For make you easier to develop this app, I make a documentation about API endpoints.
 
-## RESTful endpoints
+
+| Route         | Method      | Description                   |
+| ------------- | ----------- | ----------------------------- |
+| `/register`   | POST        | For register user             |
+| `/login`      | POST        | For login user                |
+| `/glogin`     | POST        | For login user with Google    |
+| `/getuser`    | GET         | For get user information      |
+| `/todos`      | POST        | For add todo to list          |
+| `/todos`      | GET         | For get user's todo list      |
+| `/todos/:id`  | GET         | For detailed todo list        |
+| `/todos/:id`  | PUT         | For update todo list          |
+| `/todos/:id`  | PATCH       | For mark as done todo list    |
+| `/todos/:id`  | DELETE      | For delete todo list          |
+| `/animequote` | GET         | For get random anime quote    |
+<br>
+
+
+## Detailed Endpoints
 ### POST /register
 _Request Header_
 ```
-  not needed
+Unneeded
 ```
 
 _Request Body_
 ```json
 {
-  "email": "<your email>",
   "name": "<your name>",
+  "email": "<your email>",
   "password": "<your password>"
 }
 ```
@@ -38,7 +53,7 @@ _Response (400)_
 ### POST /login
 _Request Header_
 ```
-  not needed
+Unneeded
 ```
 
 _Request Body_
@@ -66,13 +81,13 @@ _Response (400)_
 ### POST /glogin
 _Request Header_
 ```
-  not needed
+Unneeded
 ```
 
 _Request Body_
 ```json
 {
-  "id_token": "id_token";
+  "id_token": "id_token"
 }
 ```
 
@@ -90,23 +105,24 @@ _Response (500)_
 
 ### GET /getuser
 _Request Header_
-```
-  "access_token": "access_token"
+```json
+{
+  "access_token": "<your access token>"
+}
 ```
 
 _Request Body_
 ```json
-{
-  "id": "id from decoded access_token"
-}
+  Unneeded
 ```
 
 _Response (200)_
 ```json
 {
-  "id": "Your ID",
-  "email": "Your Email",
-  "name": "Your Name"
+  "id": "<your id>",
+  "email": "<your email>",
+  "name": "<your name>",
+  "profpic": "<your profpic link>"
 }
 ```
 
@@ -143,7 +159,10 @@ _Response (201)_
   "title": "<todo title>",
   "description": "<todo description>",
   "status": "<todo status>",
-  "due_date": "<todo due_date>"
+  "due_date": "<todo due_date>",
+  "UserId": "<your id>",
+  "updatedAt": "<date>",
+  "createdAt": "<date>",
 }
 ```
 
@@ -173,7 +192,7 @@ _Request Header_
 
 _Request Body_
 ```
-not needed
+Unneeded
 ```
 
 _Response (200)_
@@ -183,13 +202,19 @@ _Response (200)_
     "title": "<todo title>",
     "description": "<todo description>",
     "status": "<todo status>",
-    "due_date": "<todo due_date>"
+    "due_date": "<todo due_date>",
+    "UserId": "<your id>",
+    "updatedAt": "<date>",
+    "createdAt": "<date>",
   },
   {
     "title": "<todo title>",
     "description": "<todo description>",
     "status": "<todo status>",
-    "due_date": "<todo due_date>"
+    "due_date": "<todo due_date>",
+    "UserId": "<your id>",
+    "updatedAt": "<date>",
+    "createdAt": "<date>",
   }
   ...
 ]
@@ -213,7 +238,7 @@ _Request Header_
 
 _Request Body_
 ```
-not needed
+Unneeded
 ```
 
 _Response (200)_
@@ -222,7 +247,10 @@ _Response (200)_
   "title": "<todo title>",
   "description": "<todo description>",
   "status": "<todo status>",
-  "due_date": "<todo due_date>"
+  "due_date": "<todo due_date>",
+  "UserId": "<your id>",
+  "updatedAt": "<date>",
+  "createdAt": "<date>",
 }
 ```
 
@@ -258,7 +286,10 @@ _Response (200)_
   "title": "<[new] todo title>",
   "description": "<[new] todo description>",
   "status": "<[new] todo status>",
-  "due_date": "<[new] todo due_date>"
+  "due_date": "<[new] todo due_date>",
+  "UserId": "<your id>",
+  "createdAt": "<date>",
+  "updatedAt": "<[new] date>",
 }
 ```
 
@@ -305,7 +336,10 @@ _Response (200)_
   "title": "<todo title>",
   "description": "<todo description>",
   "status": "<[new] todo status>",
-  "due_date": "<todo due_date>"
+  "due_date": "<todo due_date>",
+  "UserId": "<your id>",
+  "createdAt": "<date>",
+  "updatedAt": "<[new] date>",
 }
 ```
 
@@ -341,7 +375,7 @@ _Request Header_
 
 _Request Body_
 ```
-not needed
+Unneeded
 ```
 
 _Response (200)_
@@ -355,6 +389,43 @@ _Response (404)_
 ```json
 {
   "message": "Error 404: ToDo List not found"
+}
+```
+
+_Response (500)_
+```json
+{
+  "message": "Error 500: Internal Server Error"
+}
+```
+
+### GET /animequote
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+Unneeded
+```
+
+_Response (200)_
+```json
+{
+  "quote": "<random quote>",
+  "character": "<random character>",
+  "anime": "T<random anime>"
+}
+```
+
+_Response (401)_
+```json
+{
+  "message": "Error 401: You don't have permission to access this feature"
 }
 ```
 
