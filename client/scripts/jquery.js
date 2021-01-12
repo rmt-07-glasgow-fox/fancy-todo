@@ -1,4 +1,4 @@
-var baseurl = 'http://localhost:3000'
+const baseurl = 'http://localhost:3000'
 $(document).ready( () => {
     auth()
     getData()
@@ -46,14 +46,18 @@ $("#toLogin").on( "click", (even) => {
 $('#logout').on( 'click', (even) => {
     even.preventDefault()
     localStorage.clear()
+    const auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
     resetAuth()
     auth()
 } )
 $("#login").on( "click", (even) => {
     even.preventDefault()
     $('#loginFail').text('')
-    var email = $('#email').val()
-    var password = $('#password').val()
+    const email = $('#email').val()
+    const password = $('#password').val()
     $.ajax({
         method: "POST",
         url: `${baseurl}/login`,
@@ -64,6 +68,7 @@ $("#login").on( "click", (even) => {
     })
     .done( data => {
         localStorage.setItem('access_token', data.access_token)
+        getData()
     } )
     .fail( xhr => {
         const { message } = xhr.responseJSON
@@ -77,8 +82,8 @@ $("#register").on( "click", (even) => {
     even.preventDefault()
     $('.regFail').remove()
     $('.regSuccess').remove()
-    var email = $('#emailReg').val()
-    var password = $('#passwordReg').val()
+    const email = $('#emailReg').val()
+    const password = $('#passwordReg').val()
     $.ajax({
         method: "POST",
         url: `${baseurl}/register`,
@@ -112,11 +117,11 @@ $('#buat').on( 'click', (even) => {
 
 $('#save').on( 'click', (even) => {
     even.preventDefault()
-    var title = $('#titleEdit').val()
-    var description = $('#descriptionEdit').val()
-    var status = $('#statusEdit').val()
-    var due_date = $('#batasWaktuEdit').val()
-    var id = $('#UserId').val()
+    const title = $('#titleEdit').val()
+    const description = $('#descriptionEdit').val()
+    const status = $('#statusEdit').val()
+    const due_date = $('#batasWaktuEdit').val()
+    const id = $('#UserId').val()
     $.ajax({
         method: 'PUT',
         url: `${baseurl}/todos/${id}`,
@@ -143,10 +148,10 @@ $('#save').on( 'click', (even) => {
 } )
 
 function create() {
-    var title = $('#title').val()
-    var description = $('#description').val()
-    var status = $('#status').val()
-    var due_date = $('#batasWaktu').val()
+    const title = $('#title').val()
+    const description = $('#description').val()
+    const status = $('#status').val()
+    const due_date = $('#batasWaktu').val()
     $.ajax({
         method: 'POST',
         url: `${baseurl}/todos`,
@@ -262,3 +267,22 @@ function getJokes() {
     .always( () => {
     } )
 }
+
+function onSignIn(googleUser) {
+    const id_token = googleUser.getAuthResponse().id_token;
+    $.ajax({
+        method: "POST",
+        url: "http://localhost:3000/loginGoogle",
+        data: { id_token }
+    })
+    .done( data => {
+        localStorage.setItem('access_token', data.access_token)
+        getData()
+    } )
+    .fail( (xhr, status) => {
+
+    } )
+    .always( () => {
+        auth()
+    } )
+  }

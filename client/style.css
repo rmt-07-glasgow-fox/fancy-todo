@@ -14,3 +14,11 @@ footer {
     text-align: center;
     width:100%;
 }
+
+.gbtn {
+    float: left;
+}
+
+.regbtn {
+    float: right;
+}

@@ -3,13 +3,13 @@ const axios = require('axios')
 
 module.exports = class Controller {
     static getJoke(req, res) {
-        const apiUrl = "https://official-joke-api.appspot.com/jokes/programming/random"
+        const apiUrl = "https://official-joke-api.appspot.com/random_joke"
         axios.get(apiUrl)
         .then( response => {
             return res.status(200).json({
                 msg: "welcome",
-                setup: `${response.data[0].setup}`,
-                punchline: `${response.data[0].punchline}`
+                setup: `${response.data.setup}`,
+                punchline: `${response.data.punchline}`
             })
         } )
         .catch( error => {

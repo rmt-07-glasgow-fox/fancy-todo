@@ -5,5 +5,6 @@ router.get('/register', AuthController.getRegister)
 router.post('/register', AuthController.postRegister)
 router.delete('/register/:id', AuthController.removeRegister)
 router.post('/login', AuthController.postLogin)
+router.post('/loginGoogle', AuthController.loginGoogle)
 
 module.exports = router

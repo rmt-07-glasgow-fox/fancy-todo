@@ -1,4 +1,5 @@
 const { User } = require('../models')
+const {OAuth2Client} = require('google-auth-library');
 const comparePassword = require('../helpers/bcryptjs.js').comparePassword
 const generateToken = require('../helpers/jwt.js').generateToken
 
@@ -78,6 +79,39 @@ module.exports = class AuthController {
                 })
             } else next({ name: 'loginFailed' })
 
+        } catch (err) {
+            next(err)
+        }
+    }
+
+    static async loginGoogle(req, res, next) {
+        try {
+            const client = new OAuth2Client(process.env.CLIENT_ID);
+            const ticket = await client.verifyIdToken({
+                idToken: req.body.id_token,
+                audience: process.env.CLIENT_ID,
+            })
+            const payload = ticket.getPayload();
+            const email = payload.email;
+            const found = await User.findOne({
+                where: {
+                    email: email
+                }
+            })
+            
+            if (!found) {
+                found = await User.create({
+                    email,
+                    password: Math.random()*100 + 'fancytodos'
+                })
+            }
+
+            const pyld = {
+                id: found.id,
+                email: found.email
+            }
+            const access_token = generateToken(pyld)
+            res.status(200).json({ access_token: access_token })
         } catch (err) {
             next(err)
         }
