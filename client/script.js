@@ -446,7 +446,7 @@ function getNews() {
       response.forEach((news, idx) => {
         $("#accordionNews").append(`<div class="accordion-item">
       <h2 class="accordion-header text-start" id="heading${idx}">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${idx}" aria-expanded="true" aria-controls="collapse${idx}">
+        <button class="accordion-button collapsed text-start" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${idx}" aria-expanded="true" aria-controls="collapse${idx}">
           ${news.title}
           </button>
           </h2>
