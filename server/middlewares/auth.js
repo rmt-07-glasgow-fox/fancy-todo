@@ -4,6 +4,7 @@ const checkToken = require('../helpers/jwt.js').checkToken
 async function authenticate(req, res, next) {
     try {
         const decoded = checkToken(req.headers.access_token)
+        console.log(req.headers);
         const found = await User.findByPk(decoded.id)
         
         if (!found) next({ name: 'notLogin' })
