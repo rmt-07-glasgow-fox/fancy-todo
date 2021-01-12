@@ -1,0 +1,24 @@
+.myNavBar {
+    position: fixed;
+    z-index: 5;
+}
+
+.main-content {
+    padding-top: 4.5rem;
+}
+
+footer {
+    position:fixed;
+    bottom:0;
+    left:0;
+    text-align: center;
+    width:100%;
+}
+
+.gbtn {
+    float: left;
+}
+
+.regbtn {
+    float: right;
+}
