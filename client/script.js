@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:3000"
+const baseUrl = "https://fancytoeat.herokuapp.com"
 
 //per satu page satu function
 //munculin error dan success nya pake sweetalert di fail (dalam Swal.fire kalau mau pake )
