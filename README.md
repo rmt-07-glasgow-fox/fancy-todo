@@ -3,8 +3,10 @@ A simple todo apps, created using node.js, express, sequelize, postgres.
 
 
 ## URL
-- Client: http://localhost:8080
+- Client: https://fancy-todo-h8.web.app
 - Server: https://fancy-todo-glasgow-server.herokuapp.com
+
+(For client's Google sign-in development, use http://localhost:8080)
 
 
 ## How to use this web application to its fullest?
