@@ -1,4 +1,4 @@
-const baseurl = 'http://localhost:3000'
+const baseurl = 'https://fdr-fancy-todos-server.herokuapp.com'
 $(document).ready( () => {
     auth()
     getData()
@@ -69,13 +69,13 @@ $("#login").on( "click", (even) => {
     .done( data => {
         localStorage.setItem('access_token', data.access_token)
         getData()
+        auth()
     } )
     .fail( xhr => {
         const { message } = xhr.responseJSON
         $('#loginFail').text(message)
     } )
     .always( () => {
-        auth()
     } )
 } )
 $("#register").on( "click", (even) => {
@@ -94,6 +94,7 @@ $("#register").on( "click", (even) => {
     })
     .done( data => {
         $("#regSuccess").text('Register Succesed')
+        showPage('.register', '.welcome')
     } )
     .fail( xhr => {
         xhr.responseJSON.map( el => {
@@ -101,7 +102,6 @@ $("#register").on( "click", (even) => {
         });
     } )
     .always( () => {
-        showPage('.register')
     } )
 } )
 
@@ -257,7 +257,6 @@ function getJokes() {
         },
     })
     .done( data => {
-        console.log('masuk', data);
         let joke = `<p>${data.setup}</p><p>${data.punchline}</p>`
         $('#joke').append(joke)
     } )
@@ -272,7 +271,7 @@ function onSignIn(googleUser) {
     const id_token = googleUser.getAuthResponse().id_token;
     $.ajax({
         method: "POST",
-        url: "http://localhost:3000/loginGoogle",
+        url: "https://fdr-fancy-todos-server.herokuapp.com/loginGoogle",
         data: { id_token }
     })
     .done( data => {
