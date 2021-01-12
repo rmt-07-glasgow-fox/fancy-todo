@@ -134,11 +134,11 @@ function getTodoList() {
                                 <div class="card-header">${element.title}</div>
                                     <div class="row">
                                         <div class="col-2 mt-5 mb-5">
-                                          <button id="showDone-btn">
+                                          <button id="showDone-btn-${element.id}" onclick=showDone(${element.id}) class="btn btn-primary">
                                           Set as done
                                           </button>
-                                          <div id="done-status">
-                                            <p id="done-status">DONE</p>
+                                          <div id="done-status-${element.id}">
+                                            DONE
                                           </div>
                                         </div>
                                         <div class="col-10">
@@ -261,6 +261,21 @@ function updateTodo(todoId) {
         })
 }
 
+function showDone(todoId) {
+    const displayProp = ($(`#done-status-${todoId}`).css('display'))
+
+    if (displayProp === "none") {
+        $(`#done-status-${todoId}`).show()
+        $(`#showDone-btn-${todoId}`).html('Set as undone')
+        // insert a function to switch status here using ajax
+    }
+    else {
+        $(`#done-status-${todoId}`).hide()
+        $(`#showDone-btn-${todoId}`).html('Set as done')
+        // insert a function to switch status here using ajax
+    }
+
+}
 
 $(document).ready(function () {
     checkAuth()
@@ -400,10 +415,6 @@ $(document).ready(function () {
             })
     })
 
-    $('#showDone-btn').click((event) => {
-        event.preventDefault()
-        $("#done-status").toggle()
-    })
 })
 
 

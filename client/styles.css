@@ -102,3 +102,6 @@ body {
     color: #fff;
 }
 
+#done-status {
+    display: none;
+}
