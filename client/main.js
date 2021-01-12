@@ -160,7 +160,7 @@ function getTodo(){
     .fail(err=>{
         console.log(err);
     })
-}a
+}
 
 function deleteTodo(id){
     $.ajax({
