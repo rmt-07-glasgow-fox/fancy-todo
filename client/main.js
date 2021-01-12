@@ -2,7 +2,6 @@ const baseUrl = "http://localhost:3000"
 
 $(document).ready(function(){
     preventDefault()
-    // show("login")
     checkAuthentication()
 })
 
@@ -40,10 +39,12 @@ $("#btn-showAdd").click(()=>{
 })
 
 $("#btn-addTodo").click(()=>{
+    preventDefault()
     let title = $("#addTitleTodo").val()
     let description = $("#addDescriptionTodo").val()
     let due_date = $("#addDueDate").val()
     let status = false
+    console.log(title,description,due_date);
     $.ajax({
         method : 'POST',
         url : baseUrl+'/todos/',
@@ -121,7 +122,7 @@ function getTodo(){
             status = (due_date<=Date.now())? 'missed' : status? 'done' : 'not yet'
 
             const content = `
-            <div class="card col" style="width: 18rem;">                        
+            <div class="card col-md-4" style="width: 18rem;">                        
                 <div class="card-body">
                     <p class="card-title">${title}</p>
                     <hr>
@@ -137,7 +138,7 @@ function getTodo(){
             </div>
             `
 
-            if(i%3 === 0 && i!==0){
+            if(i%2 === 0 && i!==0){
                 wrapperTodo+=`
                 </div>
                 <div class="row">
@@ -154,11 +155,12 @@ function getTodo(){
             }
         }
         $(".wrapper-todo").append(`${wrapperTodo} </div>`)
+        $("#form-add").hide()
     })
     .fail(err=>{
         console.log(err);
     })
-}
+}a
 
 function deleteTodo(id){
     $.ajax({
@@ -273,7 +275,6 @@ function show(option){
         case "content":
             $("#login-form").hide();
             $("#register-form").hide();
-            $("#form-add").hide()
             Weather()
             getTodo()
             $(".content").show();

@@ -85,8 +85,8 @@ input{
     /* background-color: white; */
 }
 
-.wrapper-todo .row .col{
-    margin: 5px;
+.wrapper-todo .row .col-md-4{
+    margin: 1px;
 }
 
 .card-title{
