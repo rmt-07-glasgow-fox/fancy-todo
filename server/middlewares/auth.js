@@ -5,7 +5,7 @@ async function authenticate(req, res, next) {
     try {
         const decoded = checkToken(req.headers.access_token)
         const found = await User.findByPk(decoded.id)
-        console.log(decoded);
+        
         if (!found) next({ name: 'notLogin' })
         else {
             req.user = found.id

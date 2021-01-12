@@ -33,12 +33,10 @@ function resetAuth() {
 }
 
 $("#toRegister").on( "click", (even) => {
-    even.preventDefault()
     resetAuth()
     showPage('.register', '.welcome')
 } )
 $("#toLogin").on( "click", (even) => {
-    even.preventDefault()
     resetAuth()
     showPage('.login', '.welcome')
 } )
@@ -54,7 +52,6 @@ $('#logout').on( 'click', (even) => {
     auth()
 } )
 $("#login").on( "click", (even) => {
-    even.preventDefault()
     $('#loginFail').text('')
     var email = $('#email').val()
     var password = $('#password').val()
@@ -79,7 +76,6 @@ $("#login").on( "click", (even) => {
     } )
 } )
 $("#register").on( "click", (even) => {
-    even.preventDefault()
     $('.regFail').remove()
     $('.regSuccess').remove()
     var email = $('#emailReg').val()
@@ -105,9 +101,14 @@ $("#register").on( "click", (even) => {
     } )
 } )
 
-
-$("#toCreate").on("click", (even) => {
+$(".btn").on("click", (even) => {
     even.preventDefault()
+})
+$("#toCreate").on("click", (even) => {
+    $('#title').val('')
+    $('#description').val('')
+    $('#status').val('')
+    $('#batasWaktu').val('')
     $(".create").fadeIn()
     $(".home").hide()
 } )
@@ -116,7 +117,6 @@ $('#buat').on( 'click', (even) => {
 } )
 
 $('#save').on( 'click', (even) => {
-    even.preventDefault()
     var title = $('#titleEdit').val()
     var description = $('#descriptionEdit').val()
     var status = $('#statusEdit').val()
@@ -174,7 +174,6 @@ function create() {
         console.log(err);
     } )
     .always( () => {
-        console.log(due_date);
     } )
 }
 
@@ -188,14 +187,15 @@ function getData() {
         headers: {
             access_token: localStorage.access_token
         },
-
     })
     .done( data => {
-        let dataActivities 
-        data.forEach( el => {
-            dataActivities += `<tr><td>${el.title}</td><td>${el.description}</td><td>${el.status}</td><td>${el.due_date}</td> <td> <button class="btn btn-primary" onclick="getEdit(${el.id})"> Edit </button>  <button class="btn btn-primary" onclick="deleteData(${el.id})"> Delete </button> </td></tr>`
-        } )
-        $('.allActivities').append(dataActivities)
+        if (data) {
+            let dataActivities 
+            data.forEach( el => {
+                dataActivities += `<tr><td>${el.title}</td><td>${el.description}</td><td>${el.status}</td><td>${el.due_date}</td> <td> <button class="btn btn-primary" onclick="getEdit(${el.id})"> Edit </button>  <button class="btn btn-primary" onclick="deleteData(${el.id})"> Delete </button> </td></tr>`
+            } )
+            $('.allActivities').append(dataActivities)
+        }
     } )
     .fail( err => {
         console.log(err);
@@ -216,7 +216,6 @@ function getEdit(id) {
         }
     })
     .done( data => {
-        console.log(data);
         $('#titleEdit').val(`${data.title}`)
         $('#descriptionEdit').val(`${data.description}`)
         $('#statusEdit').val(`${data.status}`)
@@ -280,11 +279,11 @@ function onSignIn(googleUser) {
     .done( data => {
         localStorage.setItem('access_token', data.access_token)
         getData()
+        auth()
     } )
     .fail( (xhr, status) => {
-
+        console.log(xhr);
     } )
     .always( () => {
-        auth()
     } )
   }
