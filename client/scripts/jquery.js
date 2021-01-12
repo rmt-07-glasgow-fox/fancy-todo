@@ -1,4 +1,4 @@
-var baseurl = 'http://localhost:3000'
+var baseurl = 'https://fdr-fancy-todos-server.herokuapp.com'
 $(document).ready( () => {
     auth()
     getData()
@@ -274,7 +274,7 @@ function onSignIn(googleUser) {
     var id_token = googleUser.getAuthResponse().id_token;
     $.ajax({
         method: "POST",
-        url: "https://fdr-fancy-todos-server.herokuapp.com",
+        url: `${baseurl}/loginGoogle`,
         data: { id_token }
     })
     .done( data => {
