@@ -1,4 +1,4 @@
-const baseurl = 'https://fdr-fancy-todos-server.herokuapp.com'
+var baseurl = 'https://fdr-fancy-todos-server.herokuapp.com'
 $(document).ready( () => {
     auth()
     getData()
@@ -46,7 +46,7 @@ $("#toLogin").on( "click", (even) => {
 $('#logout').on( 'click', (even) => {
     even.preventDefault()
     localStorage.clear()
-    const auth2 = gapi.auth2.getAuthInstance();
+    var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
       console.log('User signed out.');
     });
@@ -56,8 +56,8 @@ $('#logout').on( 'click', (even) => {
 $("#login").on( "click", (even) => {
     even.preventDefault()
     $('#loginFail').text('')
-    const email = $('#email').val()
-    const password = $('#password').val()
+    var email = $('#email').val()
+    var password = $('#password').val()
     $.ajax({
         method: "POST",
         url: `${baseurl}/login`,
@@ -72,7 +72,7 @@ $("#login").on( "click", (even) => {
         auth()
     } )
     .fail( xhr => {
-        const { message } = xhr.responseJSON
+        var { message } = xhr.responseJSON
         $('#loginFail').text(message)
     } )
     .always( () => {
@@ -82,8 +82,8 @@ $("#register").on( "click", (even) => {
     even.preventDefault()
     $('.regFail').remove()
     $('.regSuccess').remove()
-    const email = $('#emailReg').val()
-    const password = $('#passwordReg').val()
+    var email = $('#emailReg').val()
+    var password = $('#passwordReg').val()
     $.ajax({
         method: "POST",
         url: `${baseurl}/register`,
@@ -117,11 +117,11 @@ $('#buat').on( 'click', (even) => {
 
 $('#save').on( 'click', (even) => {
     even.preventDefault()
-    const title = $('#titleEdit').val()
-    const description = $('#descriptionEdit').val()
-    const status = $('#statusEdit').val()
-    const due_date = $('#batasWaktuEdit').val()
-    const id = $('#UserId').val()
+    var title = $('#titleEdit').val()
+    var description = $('#descriptionEdit').val()
+    var status = $('#statusEdit').val()
+    var due_date = $('#batasWaktuEdit').val()
+    var id = $('#UserId').val()
     $.ajax({
         method: 'PUT',
         url: `${baseurl}/todos/${id}`,
@@ -148,10 +148,10 @@ $('#save').on( 'click', (even) => {
 } )
 
 function create() {
-    const title = $('#title').val()
-    const description = $('#description').val()
-    const status = $('#status').val()
-    const due_date = $('#batasWaktu').val()
+    var title = $('#title').val()
+    var description = $('#description').val()
+    var status = $('#status').val()
+    var due_date = $('#batasWaktu').val()
     $.ajax({
         method: 'POST',
         url: `${baseurl}/todos`,
@@ -268,7 +268,7 @@ function getJokes() {
 }
 
 function onSignIn(googleUser) {
-    const id_token = googleUser.getAuthResponse().id_token;
+    var id_token = googleUser.getAuthResponse().id_token;
     $.ajax({
         method: "POST",
         url: "https://fdr-fancy-todos-server.herokuapp.com/loginGoogle",
