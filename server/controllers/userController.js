@@ -52,7 +52,6 @@ class UserController {
                 email: payload.email,
                 password: genPassword(8)
             }
-            console.log(user.password,'>>>>>>>>>>>>>>>>>>>>>>>');
             let data = await User.findOne({where : {email:user.email}})
             // console.log(data);
             if(data) {
