@@ -189,7 +189,7 @@ Response:
 ### GET /todos
 
 description: 
-  get all list todo that user created before
+  get all todo that user created before
 
 Request:
 
@@ -277,7 +277,7 @@ Response:
 ### POST /todos
 
 description: 
-  Create list todo that user made in form
+  Create new todo 
 
 Request:
 
@@ -358,7 +358,7 @@ Response:
 ### GET /todos/:id
 
 description: 
-  get list todo that user requested
+  show todo which is requested by user
 
 Request:
 
@@ -413,7 +413,7 @@ Response:
 ### PUT /todos/:id
 
 description: 
-  Update list todo that user requested
+  Update todo which is picked by user
 
 Request:
 
@@ -477,7 +477,7 @@ Response:
 ### PATCH /todos/:id
 
 description: 
-  Update status todo that signed as done/finished
+  Update todo status into done or vice-versa
 
 Request:
 
@@ -532,7 +532,7 @@ Response:
 ### DELETE /todos/:id
 
 description: 
-  Delete status todo that signed as done/finished or not
+  Delete todo
 
 Request:
 
@@ -546,7 +546,7 @@ Response:
 
 ```json
 {
-    "message": "todo success to delete"
+    "message": "todo is deleted successfully"
 }
 ```
 
@@ -580,7 +580,7 @@ Response:
 ### GET /weather
 
 description: 
-  get current weather from city we requested
+  get current weather based from user location
 
 Request:
 
