@@ -20,9 +20,12 @@ body {
 }
 
 .footer-copyright {
-    margin-top: 20px;
     background-color: #1a1c20;
     color: #f4f4f4;
+    position: fixed;
+    margin: 0;
+    bottom: 0;
+    width: 100%;
 }
 
 .blockquote-footer {
