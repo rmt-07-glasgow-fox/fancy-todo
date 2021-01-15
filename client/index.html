@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="✓port" content="width=device-width, initial-scale=1" />
+    <meta name="google-signin-client_id" content="306581942322-rnggqrh8qfvqrjan41bcc389uuvag31c.apps.googleusercontent.com">
+
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+      crossorigin="anonymous"
+    />
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <link href="./navbar-top-fixed.css" rel="stylesheet">
+
+    <title>Fancy ToDo</title>
+  </head>
+  <body>
+
+    <!----------------------------------- NAVBAR ----------------------------------->
+
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Fancy Todo</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav ml-auto mb-2 mb-md-0">
+            <!-- <li class="nav-item active">
+              <a class="nav-link" aria-current="page" href="#">Home</a>
+            </li> -->
+            <li class="nav-item">
+              <a class="nav-link" id="logout-btn" href="#">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!------------------------------- END OF NAVBAR ------------------------------->
+
+    <!----------------------------------- MODAL ADD TODO ----------------------------------->
+
+    <div class="modal modal-todo" id="modal-add-todo" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Add Todo</h5>
+            <button type="button" class="btn-close modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="title-add-todo" class="form-label">Title</label>
+                <input type="text" class="form-control" id="title-add-todo" placeholder="What do you want to do?"/>
+              </div>
+              <div class="mb-3">
+                <label for="description-add-todo" class="form-label">Description</label>
+                <input type="text" class="form-control" id="description-add-todo" placeholder="Add a short description"/>
+              </div>
+              <div class="mb-3">
+                <label for="date-add-todo" class="form-label">Password</label>
+                <input type="date" class="form-control" id="date-add-todo" />
+              </div>
+              <div class="add-todo-errors todo-errors"></div>
+              <button type="button" class="btn btn-primary" id="modal-add-todo-save">Save changes</button>
+              <button type="button" class="btn btn-secondary modal-close" data-bs-dismiss="modal">Cancel</button>
+            </form>
+          </div>
+          <!-- <div class="modal-footer">
+          </div> -->
+        </div>
+      </div>
+    </div>
+    
+    <!------------------------------- END OF MODAL ADD TODO ------------------------------->
+
+    <!----------------------------------- MODAL EDIT TODO ----------------------------------->
+
+    <div class="modal modal-todo" id="modal-edit-todo" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit Todo</h5>
+            <button type="button" class="btn-close modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="title-edit-todo" class="form-label">Title</label>
+                <input type="text" class="form-control" id="title-edit-todo" placeholder="What do you want to do?"/>
+              </div>
+              <div class="mb-3">
+                <label for="description-edit-todo" class="form-label">Description</label>
+                <input type="text" class="form-control" id="description-edit-todo" placeholder="Add a short description"/>
+              </div>
+              <div class="mb-3">
+                <label for="date-edit-todo" class="form-label">Password</label>
+                <input type="date" class="form-control" id="date-edit-todo" />
+              </div>
+              <div class="edit-todo-errors"></div>
+              <button type="button" class="btn btn-primary" id="modal-edit-todo-save" idTodo="" statusTodo="">Save changes</button>
+              <button type="button" class="btn btn-secondary modal-close" data-bs-dismiss="modal">Cancel</button>
+            </form>
+          </div>
+          <!-- <div class="modal-footer">
+          </div> -->
+        </div>
+      </div>
+    </div>
+    
+    <!------------------------------- END OF MODAL EDIT TODO ------------------------------->
+
+    <!----------------------------------- HOME ----------------------------------->
+
+    <div class="home container .col-md-8 py-5 text-center">
+      <h1>Fancy ToDo</h1>
+      <p>
+        Keep forgetting what you need to do? We help you remember it.
+      </p>
+      <p class="quote-landing fst-italic"></p>
+    </div>
+
+    <!------------------------------- END OF HOME ------------------------------->
+
+    <!----------------------------------- REGISTER ----------------------------------->
+    <div class="register-form container .col-md-4 pb-5">
+      <form>
+        <div class="mb-3">
+          <label for="username-register" class="form-label">User name</label>
+          <input type="text" class="form-control" id="username-register" />
+        </div>
+        <div class="mb-3">
+          <label for="fullName-register" class="form-label">Full name</label>
+          <input type="text" class="form-control" id="fullName-register" />
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email-register"
+            aria-describedby="emailHelp"
+          />
+          <div id="emailHelp" class="form-text">
+            We'll never share your email with anyone else.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password-register" />
+        </div>
+        <div class="register-errors"></div>
+        <div class="row">
+          <div class="col-md-auto">
+            <button type="submit" class="btn btn-primary mb-3" style="width: 120px;" id="register-btn">
+              Register
+            </button>
+          </div>
+          <div class="col-md-auto">
+            <button type="submit" class="btn btn-secondary mb-3" style="width: 120px;" id="register-cancel-btn">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!------------------------------- END OF REGISTER ------------------------------->
+
+    <!----------------------------------- LOGIN ----------------------------------->
+
+    <div class="login-form container">
+      <form>
+        <div class="mb-3">
+          <label for="email-login" class="form-label">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email-login"
+            aria-describedby="emailHelp"
+          />
+          <div id="emailHelp" class="form-text">
+            We'll never share your email with anyone else.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="password-login" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password-login" />
+        </div>
+        <div class="login-errors"></div>
+        <div class="row">
+          <div class="col-md-auto">
+            <button type="submit" class="btn btn-primary" style="width: 120px;" id="login-btn">
+              Sign in
+            </button>
+          </div>
+          <div class="col-md-auto">
+            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+          </div>
+          <div class="col-md-auto">
+            <button type="button" class="btn btn-secondary" id="link-to-register">Not registered?</button>
+          </div>
+          <!-- <a href="#" id="link-to-register">Not registered?</a> -->
+        </div>
+      </form>
+    </div>
+
+    <!------------------------------- END OF LOGIN ------------------------------->
+    
+    <!----------------------------------- MAIN PAGE ----------------------------------->
+    <div class="main-page">
+      <div class="container">
+        <div class="row align-items-center">
+          <div>
+            <section class="py-5 text-center container">
+              <div class="row py-lg-5">
+                <div class="mx-auto">
+                  <h1 class="fw-light">Hi there!</h1>
+                  <p class="lead text-muted">Keep forgetting what you need to do? Put it down below!</p>
+                  <p>
+                    <a href="#" class="btn btn-primary my-2" id="add-todo-btn">Add Todo</a>
+                  </p>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+        
+      </div>
+      
+      <div class="album py-5 bg-light">
+        <div class="container">
+          <h3 class="text-center text-muted fw-light" id="no-todo">Take a rest :) You don't have any Todo</h3>
+    
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="todo-list">
+            <!-- disini diisi todo-->
+          </div>
+        </div>
+      </div>
+    
+
+    <div class="container py-5">
+      <h4 class="text-center mb-5">Berita trending Indonesia</h4>
+      <div class="accordion" id="accordionNews">
+        <!-- disini dimasukkan berita-->
+      </div>
+    </div>
+  </div>
+
+    <!------------------------------- END OF MAIN PAGE ------------------------------->
+
+    
+    <!----------------------------------- FUN FACT ----------------------------------->
+  <div class="bg-dark">
+
+    <footer class="text-light py-5 fun-fact container">
+      <div class="row align-items-center justify-content-center">
+        <div class="col-12">
+          <blockquote class="blockquote">
+            <p class="mb-0 text-center fw-light fst-italic" id="inspirational-quote"></p>
+          </blockquote>
+        </div>
+      </footer>
+    </div>
+      
+    <!------------------------------- END OF FUN FACT ------------------------------->
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./script.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
