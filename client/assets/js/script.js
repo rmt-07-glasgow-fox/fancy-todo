@@ -1,33 +1,10 @@
-/*global $, document, window, setTimeout, navigator, console, location*/
+
 $(document).ready(function () {
     'use strict';
-    $('#body').removeClass('d-none')
-    $('.modal').modal('show');
-    if (localStorage.access_token) {
-        readTodo()
-        getHolidays()
-    }
-    reload()
-    // Detect browser for css purpose
-    if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
-        $('.form form label').addClass('fontSwitch');
-    }
+    $('#body').removeClass('d-none')    
+    cekAuth()
 
-    // Label effect
-    $('input').focus(function () {
-        $(this).siblings('label').addClass('active');
-    });
-
-    // Form validation
-    $('input').blur(function () {
-        // label effect
-        if ($(this).val().length > 0) {
-            $(this).siblings('label').addClass('active');
-        } else {
-            $(this).siblings('label').removeClass('active');
-        }
-    });
-
+    /** CSS Purpose */
     // form switch
     $('a.switch').click(function (e) {
         $(this).toggleClass('active');
@@ -39,17 +16,14 @@ $(document).ready(function () {
             $(this).parents('.form-peice').removeClass('switched').siblings('.form-peice').addClass('switched');
         }
     });
-
-    // button load
-    $(".btnLoad").click(function() {
-        // disable button
-        $(this).prop("disabled", true);
-        // add spinner to button
-        $(this).html(
-          `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...`
-        );
+    
+    // Detect browser for css purpose
+    if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+        $('.form form label').addClass('fontSwitch');
+    }
+    
+    // Label effect
+    $('input').focus(function () {
+        $(this).siblings('label').addClass('active');
     });
-
-    hideLoading()
-
 });

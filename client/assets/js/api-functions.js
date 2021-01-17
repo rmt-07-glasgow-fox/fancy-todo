@@ -3,37 +3,30 @@
 /** USER FUNCTION */
 
 function register() {
+    $('.modal').modal('show');
+
     let email = $('#email').val()
     let password = $('#password').val()
     let name = $('#name').val()
-    $('.modal').modal('show');
-
+    
     User.register(email, password, name)
         .done(response => {
             console.log(response);
-            login(email, password)
+            // reset input
             $('#email').val('')
             $('#password').val('')
             $('#name').val('')
             $('#passwordCon').val('')
-            console.log(email, password);
-            $('#alert').empty()
-            $('#alert').append(`
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-               <strong>WARNING!</strong> Register berhasil! Silahkan login!
-               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                 <span aria-hidden="true">&times;</span>
-               </button>
-             </div>
-             `)
-
+            
+            login(email, password) // Login account after register
         })
         .fail(err => {
             console.log(err.responseJSON.message);
+            // Error Alert
             $('#alert').empty()
             $('#alert').append(`
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-               <strong>WARNING!</strong> ${err.responseJSON.message}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+               <strong>ERROR!</strong> ${err.responseJSON.message}
                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                  <span aria-hidden="true">&times;</span>
                </button>
@@ -41,40 +34,33 @@ function register() {
              `)
         })
         .always(() => {
-            hideLoading()
+            $('.modal').modal('hide');
         })
 }
 
-function login() {
+function login(email, password) {
     $('.modal').modal('show');
-    let email = $('#loginEmail').val()
-    let password = $('#loginPassword').val()
+
+    if (!email || !password) {
+        email = $('#loginEmail').val()
+        password = $('#loginPassword').val()
+    }
+
     User.login(email, password)
         .done(response => {
-            localStorage.email = email
             localStorage.access_token = response.access_token
+            // reset input
             $('#loginEmail').val('')
             $('#loginPassword').val('')
-            // //auth()
-            setTimeout(function () {
-                $('.modal').modal('hide');
-            }, 3000);
-            $('.signup, .login').addClass('switched');
-            setTimeout(function () { $('.signup, .login').hide(); }, 700);
-            setTimeout(function () { $('.brand').addClass('active').addClass('col-sm-12').removeClass('col-sm-6'); }, 300);
-            setTimeout(function () { $('.heading').addClass('active'); }, 600);
-            setTimeout(function () { $('.success-msg p').addClass('active'); }, 900);
-            setTimeout(function () { $('.success-msg a').addClass('active'); }, 1050);
-            setTimeout(function () { $('.form').hide(); }, 700);
-            
-            
+
+            cekAuth()
         })
         .fail(err => {
             console.log(err.responseJSON.message);
             $('#alert').empty()
             $('#alert').append(`
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-               <strong>WARNING!</strong> ${err.responseJSON.message}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+               <strong>ERROR!</strong> ${err.responseJSON.message}
                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                  <span aria-hidden="true">&times;</span>
                </button>
@@ -82,42 +68,37 @@ function login() {
              `)
         })
         .always(() => {
-            hideLoading()
+            $('.modal').modal('hide');
         })
 }
 
 function onSignIn(googleUser) {
     const profile = googleUser.getBasicProfile();
     const id_token = googleUser.getAuthResponse().id_token;
-    $('.modal').modal('show');
 
     User.loginGoogle(id_token)
         .done(response => {
-            localStorage.email = profile.getEmail()
             localStorage.access_token = response.access_token
-            //auth()
+            cekAuth()
         })
         .fail((err) => {
             console.log(err.responseJSON.message);
             $('#alert').empty()
             $('#alert').append(`
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-               <strong>WARNING!</strong> ${err}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+               <strong>ERROR!</strong> ${err}
                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                  <span aria-hidden="true">&times;</span>
                </button>
              </div>
              `)
-             readTodo()
-             getHolidays()
         })
         .always(() => {
-            hideLoading()
+            
         })
 }
 
 function logout() {
-    $('.modal').modal('show');
     localStorage.clear()
     if (gapi.auth2) {
         const auth2 = gapi.auth2.getAuthInstance();
@@ -125,9 +106,9 @@ function logout() {
             console.log('User signed out.');
         });
     }
-    hideLoading()
-    //auth()
+    cekAuth()
 }
+
 /** API */
 function getHolidays() {
     API.getHolidayDate()
@@ -144,15 +125,13 @@ function getHolidays() {
                 </div>
                 `)
             });
-
-            
         })
         .fail((err) => {
             console.log(err.responseJSON.message);
             $('#alert').empty()
             $('#alert').append(`
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-               <strong>WARNING!</strong> ${err.responseJSON.message}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+               <strong>ERROR!</strong> ${err.responseJSON.message}
                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                  <span aria-hidden="true">&times;</span>
                </button>
@@ -163,18 +142,15 @@ function getHolidays() {
 
         })
 }
+
 /** TODO */
 
 function readTodo() {
-    // $('.modal').modal('show');
-
     Todo.readTodo()
         .done(response => {
             console.log(response);
             $("#listTodo").empty()
-            
             response.forEach(el => {
-                console.log(localStorage.email , el.User.email);
                 let due_date = new Date(el.due_date).toISOString().slice(0, 10)
                 $('#listTodo').append(`
                 <div class="col-md-4">
@@ -198,8 +174,8 @@ function readTodo() {
             console.log(err.responseJSON.message);
             $('#alert').empty()
             $('#alert').append(`
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-               <strong>WARNING!</strong> ${err.responseJSON.message}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+               <strong>ERROR!</strong> ${err.responseJSON.message}
                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                  <span aria-hidden="true">&times;</span>
                </button>
@@ -207,7 +183,7 @@ function readTodo() {
              `)
         })
         .always(() => {
-            hideLoading()
+            
         })
 }
 
@@ -217,7 +193,6 @@ function readOneTodo(id) {
             console.log(response);
             const { title, description, due_date } =  response
             const date = new Date(due_date).toISOString().slice(0, 10)
-            console.log(date,'<<<<');
             $('#todoId').val(id)
             $('#todoTitle').val(title)
             $('#todoDescription').val(description)
@@ -228,8 +203,8 @@ function readOneTodo(id) {
             console.log(err.responseJSON.message);
             $('#alert').empty()
             $('#alert').append(`
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-               <strong>WARNING!</strong> ${err.responseJSON.message}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+               <strong>ERROR!</strong> ${err.responseJSON.message}
                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                  <span aria-hidden="true">&times;</span>
                </button>
@@ -237,7 +212,7 @@ function readOneTodo(id) {
              `)
         })
         .always(() => {
-            hideLoading()
+            
         })
 }
 
@@ -246,8 +221,7 @@ function createTodo() {
     let description = $('#todoDescription').val()
     let due_date = $('#todoDueDate').val()
     Todo.createTodo(name, description, '', due_date)
-    .done(response => {
-            $('.modal').modal('show');
+        .done(response => {
             $('#todoTitle').val('')
             $('#todoDescription').val('')
             $('#todoDueDate').val('')
@@ -257,8 +231,8 @@ function createTodo() {
             console.log(err.responseJSON.message);
             $('#alert').empty()
             $('#alert').append(`
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-               <strong>WARNING!</strong> ${err.responseJSON.message}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+               <strong>ERROR!</strong> ${err.responseJSON.message}
                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                  <span aria-hidden="true">&times;</span>
                </button>
@@ -266,7 +240,7 @@ function createTodo() {
              `)
         })
         .always(() => {
-            hideLoading()
+            
         })
 }
 
@@ -276,6 +250,7 @@ function updateTodo() {
     let description = $('#todoDescription').val()
     let status = $('#todoStatus').val()
     let due_date = $('#todoDueDate').val()
+
     Todo.updateTodo(id, title, description, status, due_date)
         .done(response => {
             console.log(response);
@@ -286,8 +261,8 @@ function updateTodo() {
             console.log(err.responseJSON.message);
             $('#alert').empty()
             $('#alert').append(`
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-               <strong>WARNING!</strong> ${err.responseJSON.message}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+               <strong>ERROR!</strong> ${err.responseJSON.message}
                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                  <span aria-hidden="true">&times;</span>
                </button>
@@ -295,7 +270,7 @@ function updateTodo() {
              `)
         })
         .always(() => {
-            hideLoading()
+            
         })
 }
 
@@ -309,8 +284,8 @@ function doneTodo(id, status) {
             console.log(err.responseJSON.message);
             $('#alert').empty()
             $('#alert').append(`
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-               <strong>WARNING!</strong> ${err.responseJSON.message}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+               <strong>ERROR!</strong> ${err.responseJSON.message}
                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                  <span aria-hidden="true">&times;</span>
                </button>
@@ -318,7 +293,7 @@ function doneTodo(id, status) {
              `)
         })
         .always(() => {
-            hideLoading()
+            
         })
 }
 
@@ -332,8 +307,8 @@ function deleteTodo(id) {
             console.log(err.responseJSON.message);
             $('#alert').empty()
             $('#alert').append(`
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-               <strong>WARNING!</strong> ${err.responseJSON.message}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+               <strong>ERROR!</strong> ${err.responseJSON.message}
                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                  <span aria-hidden="true">&times;</span>
                </button>
@@ -341,6 +316,6 @@ function deleteTodo(id) {
              `)
         })
         .always(() => {
-            hideLoading()
+            
         })
 }

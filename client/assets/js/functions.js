@@ -1,7 +1,6 @@
 /** GOOGLE BUTTON SET */
 function onFailure(error) {
     console.log(error);
-    alert(error)
 }
 function renderButton() {
     gapi.signin2.render('my-signin2', {
@@ -38,27 +37,16 @@ function showEdit(show) {
     }
 }
 
-function reload() {
-    
+function cekAuth() {
     if (localStorage.access_token) {
-        $('#formHolder').hide()
-        $('#todoHolder').show()
-    } else {
-        $('#formHolder').show()
-        $('#todoHolder').hide()
-    }
+      $('#formHolder').hide()
+      $('#todoHolder').show()
+      readTodo()
+      getHolidays()
+  } else {
+      $('#formHolder').show()
+      $('#todoHolder').hide()
+  }
 }
 
-function initLoad(params) {
-    $('#body').hide()
-    $('#formHolder').hide()
-    $('#todoHolder').hide()
-}
-
-function hideLoading() {
-    setTimeout(function () {
-        reload()
-        $('.modal').modal('hide');
-    }, 1000);
-}
 

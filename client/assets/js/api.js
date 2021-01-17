@@ -1,6 +1,7 @@
 "use strict"
 
-const baseUrl = 'http://localhost:3000'
+const baseUrl = 'https://listed-todo.herokuapp.com'
+// const baseUrl = 'http://localhost:3000'
 
 class User {
     static login(email, password) {
