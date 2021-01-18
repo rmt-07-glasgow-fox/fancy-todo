@@ -3,8 +3,6 @@
 /** USER FUNCTION */
 
 function register() {
-    $('.modal').modal('show');
-
     let email = $('#email').val()
     let password = $('#password').val()
     let name = $('#name').val()
@@ -34,13 +32,11 @@ function register() {
              `)
         })
         .always(() => {
-            $('.modal').modal('hide');
+            
         })
 }
 
 function login(email, password) {
-    $('.modal').modal('show');
-
     if (!email || !password) {
         email = $('#loginEmail').val()
         password = $('#loginPassword').val()
@@ -68,7 +64,7 @@ function login(email, password) {
              `)
         })
         .always(() => {
-            $('.modal').modal('hide');
+            
         })
 }
 
