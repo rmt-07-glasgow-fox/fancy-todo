@@ -54,7 +54,6 @@ class userController {
             return User.findOne({where: {email: payload.email}})
         })
         .then(user =>{
-            console.log(user)
             if(!user){
                 return User.create({
                     email: payload.email,
@@ -73,7 +72,6 @@ class userController {
             res.status(200).json({access_token})
         })
         .catch(err =>{
-            console.log(err)
             next(err)
         })
     }

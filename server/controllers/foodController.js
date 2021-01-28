@@ -7,9 +7,14 @@ class foodController {
     static getFoodRecommendation(req,res) {
         const diet = req.query.diet
         let foodUrl = `https://api.edamam.com/search?q=&app_id=${APP_ID}&app_key=${APP_KEY}&diet=${diet}`
-        axios.get(foodUrl)
+        let url = null
+        for (let i = 0; i < foodUrl.length; i++) {
+            if (foodUrl[i] !== '"') {
+                url += foodUrl[i]
+            }
+        }
+        axios.get(url)
         .then(response => {
-            console.log(response)
             let foodRecommendation = response.data.hits.map(el => {  //destructure el.recipe
                 return {
                     image: el.recipe.image,
@@ -22,7 +27,8 @@ class foodController {
             })
             res.status(200).json(foodRecommendation)
         })
-        .catch(err => res.status(500).json(err))
+        .catch(err => {
+            res.status(500).json(err)})
     }
 
 }

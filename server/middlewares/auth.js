@@ -3,7 +3,7 @@ const {User, Todo} = require("../models")
 
 function authentication (req, res, next) {
     try {
-        let authParams = checkToken(req.headers.access_token); 
+        let authParams = checkToken(req.headers.access_token);
         User.findOne({where: {email: authParams.email}})
         .then(user => {
             if (!user) {
