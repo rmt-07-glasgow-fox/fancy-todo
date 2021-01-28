@@ -1,3 +1,5 @@
+const { hashPassword } = require('../helper/hash')
+
 'use strict';
 
 module.exports = {
@@ -7,7 +9,7 @@ module.exports = {
       name: 'Romi Zaki Ferdiyanto',
       username: 'romizaki',
       email: 'rzferdiyanto@gmail.com',
-      password: '12345678',
+      password: hashPassword('12345678'),
       status: true,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -16,7 +18,7 @@ module.exports = {
         name: 'Jose Mourinho',
         username: 'josemou',
         email: 'greedymons@gmail.com',
-        password: '12345678',
+        password: hashPassword('12345678'),
         status: true,
         createdAt: new Date(),
         updatedAt: new Date()

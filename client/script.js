@@ -34,6 +34,14 @@ function failLogin() {
     $('#main-page').hide()
 }
 
+function registerPage() {
+    $('#login-page').hide()
+    $('#register-page').show()
+    $('#add-todo-page').hide()
+    $('#edit-page').hide()
+    $('#main-page').hide()
+}
+
 function logOut() {
     localStorage.clear()
     failLogin()
@@ -55,6 +63,8 @@ function todoList() {
                 <tr>
                     <td>${data.name}</td>
                     <td>${data.type}</td>
+                    <td> ${ data.status == true ? 'Not Done Yet' : 'Activity Done'  }</td>
+                    
                     <td>${data.description}</td>
                     <td>${data.date}</td>
                     <td>${data.time}</td>
@@ -80,9 +90,8 @@ function deleleteTodo(params) {
         url: `${baseUrl}/todos/${params}`,
         headers: { access_token: localStorage.access_token }
     })
-    .done(res => {
-        hideContent()
-        console.log(res);
+    .done(_ => {
+        succesLogin()
     })
     .fail(err => {
         console.log(err);
@@ -96,7 +105,7 @@ function doneTodo(params) {
         headers: { access_token: localStorage.access_token }
     })
     .done(res => {
-        hideContent()
+        succesLogin()
         console.log(res);
     })
     .fail(err => {
@@ -122,16 +131,12 @@ function updateTodo(params) {
             data :{name, type, description, date, time},
             headers : { access_token: localStorage.access_token }
         })
-    .done(res => {
-        console.log(res);
-        $('#main-page').show()
-    })
-    .fail(err => {
-        console.log(err);
-    })
-    .always(() => {
-        console.log('ini always');
-    })
+        .done(_ => {
+            succesLogin() 
+        })
+        .fail(err => {
+            console.log(err);
+        })
     })
 }
 
@@ -153,7 +158,7 @@ $(document).ready(function() {
     
         $.ajax({
             method : 'POST',
-            url : `${baseUrl}/auth/login`,
+            url : `${baseUrl}/auth/signin`,
             data :{
                 email: email,
                 password: password
@@ -192,6 +197,35 @@ $(document).ready(function() {
             }
         })
         .done(res => {
+            failLogin()
+        })
+        .fail(err => {
+            console.log(err);
+        })
+        .always(() => {
+            console.log('ini always');
+        })
+    })
+
+    $('#login-btn-google').click(function (event) {
+        event.preventDefault()
+        let name = $('#name-register').val()
+        let username = $('#username-register').val()
+        let email = $('#email-register').val()
+        let password = $('#password-register').val()
+        console.log(email,password, '===masuk');
+    
+        $.ajax({
+            method : 'POST',
+            url : `${baseUrl}/auth/signinGoogle`,
+            data :{
+                name: name,
+                username: username,
+                email : email,
+                password: password
+            }
+        })
+        .done(res => {
             succesLogin()
         })
         .fail(err => {
@@ -218,7 +252,7 @@ $(document).ready(function() {
         })
         .done(res => {
             console.log(res);
-            $('#main-page').show()
+            succesLogin()
         })
         .fail(err => {
             console.log(err);

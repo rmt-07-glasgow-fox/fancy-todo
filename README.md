@@ -55,13 +55,6 @@ _Response ( 200 )_
 }
 ```
 
-_Response (401)_
-```
-{
-    "msg": "Invalid Email/Password"
-}
-```
-
 ---
 ### POST /auth/loginGoogle
 ---

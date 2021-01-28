@@ -44,35 +44,17 @@
                     </div>
                 </div>
                 <button type="submit" class="login-btn uk-button uk-button-primary" id="login-btn">Login</button>
-            
+                <br>
+                <p>Don't have an account? <a onclick="registerPage()" >register now</a> </p> 
+                <p>or you can login with your google account</p>
+                <button type="submit" class="login-btn button-success" id="register-btn">Google Login</button>
             </form>            
         </div>
     </section>
 
 
     <!-- REGISTER - PAGE -->
-    <section id="register-page">
-        <nav class="uk-navbar-container navbar-custom" uk-navbar>
-            <div class="uk-navbar-left">
-        
-                <ul class="uk-navbar-nav">
-                    <li><a onclick="succesLogin()" >To-Do App</a></li>
-                </ul>
-        
-            </div>
-            <div class="uk-navbar-right">
-        
-                <ul class="uk-navbar-nav">
-                    <li>
-                        <a onclick="logOut()" >Logout</a>
-                    </li>
-                    <li>
-                        <a onclick="pageAddTodo()" >Add New Todo</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-        <div class="center">
+        <div class="center" id="register-page">
             <h1 style="margin-bottom: 3rem;margin-top: 4rem;" >Register Account</h1>
             <form>
 
@@ -104,7 +86,7 @@
                     </div>
                 </div>
                 <button type="submit" class="login-btn uk-button uk-button-primary" id="register-btn">Register</button>
-            
+                <p>Already have an account? <a onclick="failLogin()" >login now</a> </p> 
             </form>            
         </div>
     </section>
@@ -274,6 +256,7 @@
                       <tr>
                         <th>Name</th>
                         <th>Type</th>
+                        <th>Status</th>
                         <th>Description</th>
                         <th>Date</th>
                         <th>Time</th>

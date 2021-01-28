@@ -27,13 +27,14 @@ function authenticate(req, res, next) {
 }
 
 function authorize(req, res, next) {
+    let userLogin = cekToken(req.headers.access_token)
     Todo.findOne({
         where:{
             id: req.params.id
         }
     })
     .then(data => {
-        if (!data || data.UserId != req.user.id) {
+        if (data.UserId === req.user.id) {
             next()
         } else {
             res.status(401).json({ msg: 'Not yours' })

@@ -4,17 +4,20 @@ const { generateToken } = require('../helper/jwt')
 
 class UserController{
     static addNew(req,res){
+        console.log('masuk sini');
         const {name, username, email, password, status} = req.body  
-        console.log(req.body.name);
+        console.log(name, username, email, password, status);
         User.create({name, username, email, password, status})
         .then(data => {
             res.status(201).json(data)
         })
         .catch(err => {
+            console.log(err, 'ini error nya');
             res.status(400).json(err)
         })
     } 
     static login(req,res){
+        console.log(req.body, '>>>>>>>>>>>');
         const {email,password} = req.body
         User.findOne({
             where:{
@@ -48,41 +51,46 @@ class UserController{
             res.status(401).json(err)
         })
     }
-    static loginGoogle(req,res){
-        const {id_token} = req.body
-        const client = new Oauth2Client(process.env.Google_API)
-        let payload = null
-        client.verifyidToken({
-            idToken: id_token,
-            audience: process.env.Google_API
-        })
-        .then(ticket => {
-            payload = ticket.getPayload()
-            return User.findOne({where: {email: payload.email}})
-        })
-        .then(user => {
+    static async loginGoogle(req, res) {
+        try {
+            const { id_token } = req.body
+            const client = new OAuth2Client("390534079214-0jg8d3fsq59lrd1h0oo49jiunq75a9aa.apps.googleusercontent.com")
+            const ticket = await client.verifyIdToken({
+                idToken: id_token,
+                audience: "390534079214-0jg8d3fsq59lrd1h0oo49jiunq75a9aa.apps.googleusercontent.com"
+            });
+            const payload = ticket.getPayload()
+            const email = payload.email
+            let password = "123456romi"
+            let user = await User.findOne({ where: { email } })
             if (!user) {
-                return User.create({
-                    email: payload.email,
-                    password: Math.ceil(Math.random()*100) + 'InigoogleXtodoRomi',
-                    name: payload.name,
-                    username: payload.username
-                })
-            } else {
-                return user
+                let newUser = { email, password }
+                let newUser = {name:'Google User', username: 'Google User', email, password}
+                let createUser = await User.create(newUser)
+                const payload = {
+                    id: createUser.id,
+                    name: createUser.name,
+                    username: createUser.username,
+                    email: createUser.email
+                }
+                const access_token = generateToken(payload)
+                return res.status(201).json({ access_token })
             }
-        })
-        .then(user => {
-            let googleSign = {
-                id: user.id,
-                email: user.email
+            if (user) {
+                const payload = {
+                    id: user.id,
+                    name: user.name,
+                    username: user.username,
+                    email: user.email
+                }
+                const access_token = generateToken(payload)
+                return res.status(200).json({ access_token })
             }
-            let access_token = generateToken(googleSign)
-            res.status(200).json({access_token})
-        })
-        .catch(err => {
-            res.status(401).json(err)
-        })
+
+        } catch (err) {
+            console.log(err)
+            return (err)
+        }
     }
 }
 
