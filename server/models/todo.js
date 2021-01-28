@@ -22,9 +22,6 @@ module.exports = (sequelize, DataTypes) => {
       validate : {
         notNull : {
           msg : `The title can't be null`
-        },
-        notEmpty : {
-          msg : `The title must be filled`
         }
       } 
     },
@@ -72,20 +69,18 @@ module.exports = (sequelize, DataTypes) => {
     },
     UserId: DataTypes.INTEGER
   }, {
-    hooks : {
-      beforeCreate : (inst, opt) =>{
-        inst.status = false
-      },
-      beforeUpdate : (inst, opt) => {
-        if (inst.status === 'false') {
-          inst.status = false
-        } else {
-          inst.status = true
-        }
-      }
-    },
     sequelize,
     modelName: 'Todo',
   });
+  Todo.beforeCreate((instance, opt) => {
+    if (instance.title.trim() == '') {
+      instance.title = 'Untitled'
+    }
+    if (instance.description.trim() == '') {
+      instance.description = 'Untitled'
+    }
+    instance.status = false
+  })
+
   return Todo;
 };
