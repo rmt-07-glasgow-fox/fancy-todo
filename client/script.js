@@ -1,16 +1,16 @@
-let baseUrl = "http://localhost:3000"
+let baseUrl = "https://todo-orb.herokuapp.com"
 
 
 function checkAuth(){
 
       if(localStorage.access_token){
+            getTodos()
             $("#loggedin").show()
             $(".login-page").hide()
             $(".card-todo").show()
             $("#logout-btn").show()
             $("#nologin").hide()
             $(".register-page").hide()
-            
 
       } else {
             $("#nologin").show()
@@ -32,7 +32,6 @@ function contentInit() {
 
 $(document).ready(function(){
       contentInit()
-      getTodos()
       checkAuth()
       
       $("#home").click(function(){
@@ -82,7 +81,7 @@ $(document).ready(function(){
       
             $.ajax({
                   method: 'POST',
-                  url: `${baseUrl}/register`,
+                  url: `https://todo-orb.herokuapp.com/register`,
                   data: { email, password }
             })
             .done(response => {
@@ -91,7 +90,8 @@ $(document).ready(function(){
                   alert("berhasil terdaftar")
             })
             .fail(err => {
-                  alert(err.responseJSON.message)
+                  // alert(err.responseJSON.message)
+                  console.log(err);
             })
             .always(() => {
                   console.log('always');
@@ -116,7 +116,6 @@ $(document).ready(function(){
                   console.log(response);
                   localStorage.setItem("access_token", response.access_token)
                   checkAuth()
-                  getTodos()
 
             }).fail(err => {
 

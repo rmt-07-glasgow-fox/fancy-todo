@@ -11,6 +11,7 @@ class AuthConroller {
 
             User.create(newUser)
                   .then(data => {
+                        console.log(data);
                         res.status(201).json(data)
                   }).catch(err => {
                         next(err)

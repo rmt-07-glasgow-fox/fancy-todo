@@ -104,7 +104,6 @@ class TodoController {
                   })
                   .catch(err => {
                         if (err.name == "SequelizeValidationError") next({name: "SequelizeValidationError"})
-                        // if (err.name == "SourceNotFound") next({name: "SourceNotFound"})
                         next(err)
                   })
       }
