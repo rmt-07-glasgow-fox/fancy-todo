@@ -310,29 +310,30 @@ Response:
 }
 ```
 
+- status: 400
+- body:
+  ​
+```json
+{
+  "message": [
+    "The title can't be null",
+    "The description can't be null",
+    "The description must be filled",
+    "The status can't be null",
+    "the status must be boolean",
+    "Date must be greater than today",
+    "The date can't be null",
+    "The date must be filled",
+  ]
+}
+```
+
 - status: 401
 - body:
 
 ```json
 {
   "message": "Please Login First"
-}
-```
-
-- status: 400
-- body:
-  ​
-
-```json
-{
-  "message": [
-    "The title must be filled",
-    "The description must be filled",
-    "The date must be filled",
-    "The title can't be null",
-    "The description can't be null",
-    "The date can't be null"
-  ]
 }
 ```
 
@@ -444,6 +445,24 @@ Response:
     "UserId": 1,
     "createdAt": "2021-01-05T05:34:36.928Z",
     "updatedAt": "2021-01-05T06:02:09.525Z"
+}
+```
+
+- status: 400
+- body:
+
+```json
+{
+  "message": [
+    "The title can't be null",
+    "The description can't be null",
+    "The description must be filled",
+    "The status can't be null",
+    "the status must be boolean",
+    "Date must be greater than today",
+    "The date can't be null",
+    "The date must be filled",
+  ]
 }
 ```
 
