@@ -1,7 +1,9 @@
 const {Todo} = require('../models')
 class TodosController{
     static showTodos (req, res, next) {
-        Todo.findAll()
+        Todo.findAll({where: {
+            UserId: req.user.id
+        }})
         .then(result => {
             return res.status(200).json(result);
         })
@@ -27,7 +29,9 @@ class TodosController{
     }
     static showTodosById(req, res, next) {
         let id = +req.params.id
-        Todo.findByPk(id)
+        Todo.findByPk(id, {where: {
+            UserId: req.user.id
+        }})
         .then(data => {
             if(data) {
                 res.status(200).json(data)
@@ -44,7 +48,6 @@ class TodosController{
         const bodyObj = {
             title : req.body.title,
             description : req.body.description,
-            status : req.body.status,
             due_date : req.body.due_date,
             UserId: req.user.id
         }

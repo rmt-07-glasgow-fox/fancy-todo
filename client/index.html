@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <meta name="google-signin-client_id" content="572646782885-tajbagrfitssvpnmkk23g3l012751psd.apps.googleusercontent.com">
+    <link rel="stylesheet" href="./assets/style.css">
     <title>Fancy - Todos</title>
 </head>
 <body>
@@ -19,11 +20,8 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
-            <li class="nav-item active">
-              <a class="nav-link" href="#" id="logout-nave">Log Out </a>
-            </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" id="edit-user">Edit User</a>
+              <a class="nav-link" href="#" id="logout-nave">Log Out </a>
             </li>
           </ul>
         </div>
@@ -70,15 +68,19 @@
         <button type="submit" class="btn btn-primary" id="login-btn">Login</button>
         <button type="submit" class="btn btn-primary" id="showRegister">I Don't Have a Account</button>
       </form>
-      <div class="g-signin2" data-onsuccess="onSignIn"></div>
+      <div class="g-signin2" data-onsuccess="onSignIn" style="margin-top: 10px;"></div>
     </div>
 
     <!-- todos-page -->
+    <!-- 3rd Party Api -->
+    <div class="continer" id="covid" style="margin-top: 10px; display: flex; justify-content: center;">
+
+    </div>
     <!-- add-todos-form -->
-    <div class="container" id="addTodos-page">
+    <div class="container" id="addTodos-page" style="margin-top: 10px;">
       <button class="btn btn-primary" id="showForm">Add Todos</button>
 
-      <div id="form-todos">
+      <div id="form-todos" style="margin-top: 10px;">
         <form>
           <div class="form-row">
             <div class="form-group col-md-6">
@@ -94,15 +96,37 @@
             <label for="description">Description</label>
             <textarea class="form-control" id="description" rows="3"></textarea>
           </div>
-          <button type="submit" class="btn btn-primary">Sign in</button>
+          <button id="save-todo" type="submit" class="btn btn-primary">Save</button>
+          <button id="cancel" type="submit" class="btn btn-danger">Cancel</button>
         </form>
       </div>
     </div>
 
-    <div id="show-todos">
+    <div class="container" id="editTodos-page" style="margin-top: 10px;">
+      <div id="form-todos">
+        <form>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <input type="text" class="form-control" id="editTitle" placeholder="Title">
+            </div>
+            <div class="form-group col-md-6">
+              <input type="date" class="form-control"
+              pattern="\d{4}-\d{2}-\d{2}" id="editDue_date">
+            </div>
+          </div>
 
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="editDescription" rows="3"></textarea>
+          </div>
+          <button id="saveEdit" type="submit" class="btn btn-primary">Save</button>
+          <button id="cancelEdit" type="submit" class="btn btn-danger">Cancel</button>
+        </form>
+      </div>
     </div>
 
+    <div class="container" id="show-todos" style="margin-top: 10px;">
+    </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>

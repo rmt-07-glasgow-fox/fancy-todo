@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const { options } = require('../routes/todos');
 module.exports = (sequelize, DataTypes) => {
   class Todo extends Model {
     /**
@@ -34,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     status: {
-      type: DataTypes.STRING,
+      type: DataTypes.BOOLEAN,
       validate: {
         notEmpty: {
           msg: "Must be filled"
@@ -56,6 +57,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Todo',
+    hooks: {
+      beforeCreate: (todo, options) => {
+        todo.status = false
+      }
+    }
   });
   return Todo;
 };

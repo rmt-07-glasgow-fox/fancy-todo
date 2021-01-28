@@ -1,5 +1,4 @@
 const axios = require("axios").default
-
 class CovidController{
     static getLiveReport (req, res) {
     let covidStat = "https://covid-api.mmediagroup.fr/v1/cases?country=Indonesia"
@@ -18,4 +17,4 @@ class CovidController{
   }
 }
 
-module.exports = {CovidController}
+module.exports = CovidController

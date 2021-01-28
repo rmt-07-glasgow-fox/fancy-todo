@@ -47,7 +47,7 @@ class UsersController{
     }
 
     static loginGoogle(req, res , next){
-        const {id_token} = req.body
+        const {id_token, name} = req.body
         const client = new OAuth2Client(process.env.GOOGLE_API)
         let payload = null
         //console.log(id_token)
@@ -57,6 +57,7 @@ class UsersController{
         })
         .then(ticket =>{
             payload = ticket.getPayload()
+            console.log(payload);
             return User.findOne({where: {email: payload.email}})
         })
         .then(user =>{
@@ -64,7 +65,7 @@ class UsersController{
                 return User.create({
                     email: payload.email,
                     password: Math.floor(Math.random()*1000) + 'iniDariGoogle',
-                    fullName: payload.name
+                    name: payload.name
                 })
             }else {
                 return user
@@ -75,8 +76,8 @@ class UsersController{
                 id: user.id,
                 email: user.email
             }
-            let acces_token = getToken(googleSign)
-            res.status(200).json({acces_token})
+            let access_token = generateToken(googleSign)
+            res.status(200).json({access_token})
         })
         .catch(err =>{
             next(err)
