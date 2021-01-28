@@ -153,6 +153,7 @@ $("#add").click(function(event){
   })
   .done(response => {
     showPage("#content")
+    checkAuth()
   })
   .fail(xhr => {
     const {message} = xhr.responseJSON
@@ -183,6 +184,7 @@ function updateForm(id) {
     })
     .done(response => {
       showPage("#content")
+      checkAuth()
     })
     .fail(xhr => {
       const {message} = xhr.responseJSON
@@ -205,6 +207,7 @@ function changeStatus(id) {
   })
   .done(response => {
     showPage("#content")
+    checkAuth()
   })
   .fail(xhr => {
     const {message} = xhr.responseJSON
@@ -222,6 +225,7 @@ function deleteList(id) {
   })
   .done(response => {
     showPage("#content")
+    checkAuth()
   })
   .fail(xhr => {
     const {message} = xhr.responseJSON
