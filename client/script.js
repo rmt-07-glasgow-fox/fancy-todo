@@ -1,10 +1,9 @@
-const baseUrl = "https://fancytoeat.herokuapp.com"
+const baseUrl = "http://localhost:3000"
 
 //per satu page satu function
 //munculin error dan success nya pake sweetalert di fail (dalam Swal.fire kalau mau pake )
 
 $(document).ready(() => {
-    console.log("Greeting")
     if (!localStorage.access_token) {
         home()
     } else {
@@ -89,7 +88,6 @@ $("#signin-btn").click((event) => {
         data: {email, password}
     })
     .done(response => {
-        console.log(response)
         Swal.fire({
             title: 'Logged In!',
             icon: 'success',
@@ -140,7 +138,6 @@ $("#add-plan").click(() => {
 $("#diet-type-btn").click((event) => {
     event.preventDefault()
     const diet = $("#type-diet").val()
-    console.log(diet)
     $.ajax({
         method: 'GET',
         url: `${baseUrl}/food`,
@@ -179,7 +176,6 @@ function getTodos() {
         headers: {access_token: localStorage.access_token},
     })
     .done(response => {
-        console.log(response)
         $('#plan-list').empty()
         response.forEach(el => {
             $('#plan-list').append(`
@@ -244,8 +240,6 @@ function editToDo(id) {
         headers: {access_token: localStorage.access_token},
     })
     .done(response => {
-        console.log(response.UserId)
-        console.log(+localStorage.UserId)
         if (response.UserId !== +localStorage.UserId) {
             throw new Error ("access denied")
         } else {
@@ -368,17 +362,17 @@ function onSignIn(googleUser) {
     $.ajax({
         method: 'POST',
         url: `${baseUrl}/loginGoogle`,
-        data:{
+        data: {
             id_token
         }
     })
     .done(response =>{
-        console.log(response)
-        localStorage.setItem('access_token', response.acces_token)
+        localStorage.setItem('access_token', response.access_token)
         homepage()
     })
     .fail((xhr,status) =>{
-        console.log(status)
+        console.log(xhr, '<<<< ini xhr')
+        console.log(status, '<<< ini status')
     })
 }
 
