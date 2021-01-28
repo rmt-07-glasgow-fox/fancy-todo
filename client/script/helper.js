@@ -114,7 +114,7 @@ let fetchTodo = () => {
                         </blockquote>
                     </div> 
                     <div class="card-footer">
-                        <button class="btn btn-warning" onclick="event.preventDefault();document.getElementById('update-form-${todo.id}').style.display = 'block';document.getElementById('todo-${todo.id}').style.display = 'none';document.getElementById('opt-${todo.id}').style.display = 'none';">
+                        <button class="btn btn-primary" onclick="event.preventDefault();document.getElementById('update-form-${todo.id}').style.display = 'block';document.getElementById('todo-${todo.id}').style.display = 'none';document.getElementById('opt-${todo.id}').style.display = 'none';">
                             Edit Todo
                         </button>
                         <button class="btn btn-danger" onclick="deleteTodo(${todo.id});event.preventDefault()">
@@ -147,7 +147,7 @@ let fetchTodo = () => {
                     
                     
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-warning">
+                        <button type="submit" class="btn btn-primary">
                             Update Todo
                         </button>
                         <button class="btn btn-danger" onclick="event.preventDefault();document.getElementById('update-form-${todo.id}').style.display = 'none';document.getElementById('todo-${todo.id}').style.display = 'block';document.getElementById('opt-${todo.id}').style.display = 'block';">
