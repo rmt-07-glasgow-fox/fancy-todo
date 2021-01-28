@@ -22,11 +22,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATEONLY,
       validate: {
         checkDate(date) {
-          let due_date = date
           let nowDate = new Date()
-
-          if (due_date < nowDate) {
-            throw new Error('Please Pick A Valid Date') 
+          if (new Date(date).getTime() <= nowDate.getTime()) {
+            console.log("The Date must be Bigger or Equal to today date");
+            throw new Error("The Date must be Bigger or Equal to today date");
           }
         }
       }

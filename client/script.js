@@ -333,6 +333,7 @@ function onSignIn(googleUser) {
         data: { id_token },
     })
     .done(response => {
+        console.log('masukthen')
         localStorage.setItem('access_token', response.access_token);
         dashBoard();
     })

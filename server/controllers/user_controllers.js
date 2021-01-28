@@ -16,7 +16,7 @@ class UserController {
                 id: user.id,
                 email: user.email
             }
-            res.status(200).json(obj)
+            res.status(201).json(obj)
         })
         .catch(err => {
             // console.log(err)
@@ -53,12 +53,13 @@ class UserController {
     }
 
     static googleLogin(req, res, next){
+        console.log('masuk googleligin di server')
         const { id_token } = req.body
         let email
-        const client = new OAuth2Client('client id google');
+        const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
         client.verifyIdToken({
           idToken: id_token,
-          audience: 'client id google'
+          audience: process.env.GOOGLE_CLIENT_ID
         })
           .then(data => {
             const payload = data.getPayload()

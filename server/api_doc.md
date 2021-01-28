@@ -227,7 +227,7 @@
 ### POST/REGISTER
 
 * **SUCCESS RESPONSE**
-    * **code** 200
+    * **code** 201
     * **content**
     ```json
     [
@@ -257,6 +257,47 @@
     [
         {
             "access_token": "string",
+        }
+    ]
+    ```
+* **ERROR RESPONSE**
+    * **code** 500
+    * **content**
+    ```json
+    [
+        {
+            "message": "Internal Server Error"
+        }
+    ]
+    ```
+### GET/NEWS
+
+* **REQUEST HEADERS**
+    * **content**
+    ```json
+    [
+        {
+            "access_token": "string"
+        }
+    ]
+    ```
+* **SUCCESS RESPONSE**
+    * **code** 200
+    * **content**
+    ```json
+    [
+        {
+            "source": {
+                "id": "number",
+                "name": "Republika.co.id"
+            },
+            "author": "string",
+            "title": "string",
+            "description": "string",
+            "url": "string",
+            "urlToImage": "string",
+            "publishedAt": "date",
+            "content": "string"
         }
     ]
     ```
