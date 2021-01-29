@@ -1,6 +1,7 @@
 const { User } = require('../models')
 const { comparePass } = require('../helper/hash')
 const { generateToken } = require('../helper/jwt')
+const { OAuth2Client } = require('google-auth-library')
 
 class UserController{
     static addNew(req,res){
@@ -53,6 +54,8 @@ class UserController{
     }
     static async loginGoogle(req, res) {
         try {
+            console.log(req.body)
+            console.log('romi');
             const { id_token } = req.body
             const client = new OAuth2Client("390534079214-0jg8d3fsq59lrd1h0oo49jiunq75a9aa.apps.googleusercontent.com")
             const ticket = await client.verifyIdToken({
@@ -64,7 +67,6 @@ class UserController{
             let password = "123456romi"
             let user = await User.findOne({ where: { email } })
             if (!user) {
-                let newUser = { email, password }
                 let newUser = {name:'Google User', username: 'Google User', email, password}
                 let createUser = await User.create(newUser)
                 const payload = {

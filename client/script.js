@@ -207,35 +207,6 @@ $(document).ready(function() {
         })
     })
 
-    $('#login-btn-google').click(function (event) {
-        event.preventDefault()
-        let name = $('#name-register').val()
-        let username = $('#username-register').val()
-        let email = $('#email-register').val()
-        let password = $('#password-register').val()
-        console.log(email,password, '===masuk');
-    
-        $.ajax({
-            method : 'POST',
-            url : `${baseUrl}/auth/signinGoogle`,
-            data :{
-                name: name,
-                username: username,
-                email : email,
-                password: password
-            }
-        })
-        .done(res => {
-            succesLogin()
-        })
-        .fail(err => {
-            console.log(err);
-        })
-        .always(() => {
-            console.log('ini always');
-        })
-    })
-
     $('#add-todo-btn').click(function (event) {
         event.preventDefault()
         let name = $('#todo-name').val()
@@ -262,4 +233,46 @@ $(document).ready(function() {
         })
     })
 
+    // $('#login-btn-google').click(function (event, googleUser) {
+    //     console.log(googleUser);
+    //     let id_token = googleUser.getAuthResponse().id_token
+    //     console.log(id_token, '>>>>>>>>>');
+    //     $.ajax({
+    //         method : 'POST',
+    //         url : `${baseUrl}/auth/signinGoogle`,
+    //         data : {
+    //             id_token: id_token
+    //         }
+    //     })
+    //     .done(res => {
+    //         console.log(res);
+    //         localStorage.setItem('access_token', response.access_token)
+    //         // succesLogin()
+    //     })
+    //     .fail(err => {
+    //         console.log(err);
+    //     })
+    // })
+
 })
+
+function onSignIn(googleUser) {
+    console.log('romi masuk sini');
+    let id_token = googleUser.getAuthResponse().id_token
+    console.log(id_token, '>>>>>>>>>');
+    $.ajax({
+        method : 'POST',
+        url : `${baseUrl}/auth/signinGoogle`,
+        data : {
+            id_token: id_token
+        }
+    })
+    .done(res => {
+        console.log(res);
+        localStorage.setItem('access_token', res.access_token)
+        succesLogin()
+    })
+    .fail(err => {
+        console.log(err);
+    })
+}
