@@ -22,7 +22,7 @@ const errorHandlers = (err, req, res, next) => {
         case "invalidQuery":
             res.status(601).json({ message: "Please check again City name"})
         default:
-            // res.status(500).json({ message: "Internal Server Error"})
+            res.status(500).json({ message: "Internal Server Error"})
             break;
     }
 

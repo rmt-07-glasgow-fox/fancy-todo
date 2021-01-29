@@ -1,4 +1,4 @@
-const baseurl = 'http://localhost:3000'
+const baseurl = 'https://rivan-fancy.herokuapp.com'
 
 function checkAuth() {
     $('#create-form').hide()

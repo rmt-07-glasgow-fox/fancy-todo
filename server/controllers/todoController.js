@@ -45,7 +45,7 @@ class Controller {
             res.status(201).json(output)
         })
         .catch(err => {
-            res.status(500).json(err)
+            next(err)
         })
     }
 
