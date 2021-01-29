@@ -102,7 +102,26 @@
                                     <input type="date" class="form-control" name="" id="addDueDate">
                                 </p>
                                 <button class="btn-success btn" id="btn-addTodo">Add</button>
-                                <button class="btn-danger btn" id="btn-cancel">cancel</button>
+                                <button class="btn-danger btn" id="btn-cancel-add">cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                    <form>
+                        <div class="card" id="form-update">                        
+                            <div class="card-body">
+                                <p>
+                                    <input type="hidden" id="id">
+                                    <input type="text" class="form-control" id="updateTitle" placeholder="title" >
+                                </p>
+                                <p>
+                                    <textarea name="" class="form-control" id="updateDescription" cols="30" rows="3" placeholder="description"></textarea>
+                                </p>
+                                <p>
+                                    due :
+                                    <input type="date" class="form-control" name="" id="updateDueDate">
+                                </p>
+                                <button class="btn-success btn" id="btn-update">Update</button>
+                                <button class="btn-danger btn" id="btn-cancel-update">cancel</button>
                             </div>
                         </div>
                     </form>

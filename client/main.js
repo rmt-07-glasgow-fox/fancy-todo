@@ -21,12 +21,32 @@ $("#btn-register").click(()=>{
     register()
 })
 
+$("#btn-cancel-add").click(()=>{
+    // console.log('hereee');
+    $("#addTitleTodo").val('')
+    $("#addDescriptionTodo").val('')
+    $("#addDueDate").val('')
+
+    $("#form-add").hide();
+})
+
+$("#btn-cancel-update").click(()=>{
+
+    $("#id").val('')
+    $("#updateTitle").val('')
+    $("#updateDescription").val('')
+    $("#updateDueDate").val('')
+
+    $("#form-update").hide();
+
+})
+
 $("#btn-logout").click(()=>{
     localStorage.access_token = ''
     if(localStorage.signGoogle){
         var auth2 = gapi.auth2.getAuthInstance();
         auth2.signOut().then(function () {
-        console.log('User signed out.');
+        // console.log('User signed out.');
         });
         localStorage.signGoogle = ''
     }
@@ -36,6 +56,8 @@ $("#btn-logout").click(()=>{
 
 $("#btn-showAdd").click(()=>{
     $("#form-add").fadeToggle(300)
+    $("#form-update").hide();
+
 })
 
 $("#btn-addTodo").click(()=>{
@@ -44,7 +66,7 @@ $("#btn-addTodo").click(()=>{
     let description = $("#addDescriptionTodo").val()
     let due_date = $("#addDueDate").val()
     let status = false
-    console.log(title,description,due_date);
+
     $.ajax({
         method : 'POST',
         url : baseUrl+'/todos/',
@@ -59,7 +81,7 @@ $("#btn-addTodo").click(()=>{
         }
     })
     .done(response=>{
-        console.log(response);
+
         checkAuthentication()
     })
     .fail(err=>{
@@ -68,6 +90,40 @@ $("#btn-addTodo").click(()=>{
     $("#addTitleTodo").val('')
     $("#addDescriptionTodo").val('')
     $("#addDueDate").val('')
+
+})
+
+$("#btn-update").click(()=>{
+    preventDefault()
+    let title = $("#updateTitle").val()
+    let description = $("#updateDescription").val()
+    let due_date = $("#updateDueDate").val()
+    let id = $("#id").val()
+
+    $.ajax({
+        method : 'PUT',
+        url : baseUrl+'/todos/'+id,
+        headers: {
+            access_token: localStorage.access_token
+        },
+        data : {
+            title,
+            description,
+            due_date
+        }
+    })
+    .done(response=>{
+
+        checkAuthentication()
+    })
+    .fail(err=>{
+        console.log(err);
+    })
+
+    $("#id").val('')
+    $("#updateTitle").val('')
+    $("#updateDescription").val('')
+    $("#updateDueDate").val('')
 
 })
 
@@ -102,6 +158,29 @@ function Weather(){
         });
     } else {}
 }
+function showUpdate(id){
+    $("#form-add").hide();
+    $.ajax({
+        method : 'GET',
+        url : baseUrl+'/todos/'+id,
+        headers: {
+            access_token: localStorage.access_token
+        },
+    })
+    .done(response=>{
+        // console.log(response);
+        $('#updateTitle').val(response.title)
+        $('#id').val(response.id)
+        $('#updateDescription').val(response.description)
+        let date = String(response.due_date)
+        date = date.slice(0,10)
+        $('#updateDueDate').val(date)
+    })
+    .fail(err=>{
+        console.log(err);
+    })
+    $("#form-update").show()
+}
 
 function getTodo(){
     $.ajax({
@@ -112,7 +191,7 @@ function getTodo(){
         },
     })
     .done(response=>{
-        console.log(response);
+
         $(".wrapper-todo").empty()
         let wrapperTodo = ''
         for (let i = 0; i < response.length; i++) {
@@ -131,7 +210,7 @@ function getTodo(){
                     status : ${status} <br>
                     due : ${strDate}
                     <hr>
-                    <a class="link-primary">edit</a> | 
+                    <a class="link-primary" onClick="showUpdate(${id})">edit</a> | 
                     <a class="link-danger" onClick="deleteTodo(${id})">delete</a>
                     
                 </div>
@@ -156,6 +235,7 @@ function getTodo(){
         }
         $(".wrapper-todo").append(`${wrapperTodo} </div>`)
         $("#form-add").hide()
+        $("#form-update").hide()
     })
     .fail(err=>{
         console.log(err);
@@ -171,7 +251,7 @@ function deleteTodo(id){
         }
     })
     .done(response=>{
-        console.log(response);
+
         checkAuthentication()
     })
     .fail(err=>{
@@ -195,7 +275,7 @@ function onSignIn(googleUser) {
 function login(){
     const email = $("#emailLogin").val()
     const password = $("#passwordLogin").val()
-    console.log(email,password);
+
     $.ajax({
         method : 'POST',
         url : `${baseUrl}/login`,
@@ -217,7 +297,7 @@ function login(){
 function register(){
     const email = $("#emailRegister").val()
     const password = $("#passwordRegister").val()
-    console.log(email,password);
+    // console.log(email,password);
     $.ajax({
         method : 'POST',
         url : `${baseUrl}/register`,
