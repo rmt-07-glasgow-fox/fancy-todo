@@ -13,7 +13,7 @@ const errorHandlers = (error, req, res, next) => {
       case "notAuthorize":
         res.status(401).json({msg: 'You do not have permission!'})
         break;
-      
+
       case "loginFirst":
         res.status(401).json({msg: 'Please login first!'})
         break;
@@ -22,7 +22,7 @@ const errorHandlers = (error, req, res, next) => {
         res.status(404).json({msg: 'Not found!'})
         break;
 
-      case "JsonWebTokenError": 
+      case "JsonWebTokenError":
         res.status(404).json({msg:error})
         break;
 
@@ -33,7 +33,7 @@ const errorHandlers = (error, req, res, next) => {
       case "cantRetrieve":
         res.status(500).json({msg: 'Cannot retrieve data!'})
         break;
-    
+
       default:
         res.status(500).json({msg: 'Something went wrong!'})
         break;

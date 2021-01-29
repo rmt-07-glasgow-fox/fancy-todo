@@ -38,11 +38,15 @@ const authorize = async (req, res, next) => {
   try {
     let todo = await Todo.findOne({where: {id: id}})
 
-    if (todo.UserId != req.currentUser.id) {
+    // if (todo.UserId !== req.currentUser.id) {
+    if (!todo) {
       // res.status(401).json({msg: 'You do not have permission'})
-      next({name: 'notAuthorize'})
-    } else if (!todo) {
+      // next({name: 'notAuthorize'})
       next({name: 'notFound'})
+    // } else if (!todo) {
+    } else if (todo.UserId !== req.currentUser.id) {
+      // next({name: 'notFound'})
+      next({name: 'notAuthorize'})
     } else {
       next()
     }
