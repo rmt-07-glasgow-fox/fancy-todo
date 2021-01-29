@@ -35,6 +35,13 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Todo',
+    hooks: {
+      beforeCreate (todo, options) {
+        if (!todo.status) {
+          todo.status = false
+        }
+      }
+    }
   });
   return Todo;
 };

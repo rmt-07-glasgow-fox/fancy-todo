@@ -5,7 +5,6 @@ class TodoController {
         let obj = {
             title: req.body.title,
             description: req.body.description,
-            status: req.body.status,
             due_date: req.body.due_date,
             UserId: req.user.id
         }
