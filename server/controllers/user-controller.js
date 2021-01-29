@@ -91,49 +91,7 @@ class UserController {
         })
 
     }
-    static loginGasoogleHandler(req, res, next){
-        let {id_token} = req.body
-        const client = new OAuth2Client(process.env.Google_API)
-        
-        let payload = null
-        //console.log(`masukkk====>`)
-        client.verifyIdToken({
-            idToken: id_token,
-            audience: process.env.Google_API
-        })
-        .then(ticket =>{
-            //console.log(ticket)
-            payload = ticket.getPayload()
-            return User.findOne({where: {email: payload.email}})
-        })
-        .then(user =>{
-            //console.log(user)
-            if(!user){
-                //console.log(`masukkk====>`)
-                return User.create({
-                    email: payload.email,
-                    fullName: payload.name,
-                    password: Math.floor(Math.random()*1000) + 'iniDariGoogle'
-                })
-            } else{
-                return user
-            }
-        })
-        .then(user =>{
-            let googleSign = {
-                id: user.id,
-                email: user.email
-            }
-            let accessToken = generateToken(googleSign)
-            return res.status(200).json({
-                access_token: accessToken
-            })
-        })
-        .catch(err =>{
-            console.log(err)
-            next(err)
-        })
-    }
+    
 }
 
 module.exports = UserController

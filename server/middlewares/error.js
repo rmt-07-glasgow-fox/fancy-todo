@@ -17,11 +17,11 @@ function error(err, req, res, next) {
             console.log('Please login first')
             res.status(401).json({message: "Please login first"})
         } else if(err.name === "Not Authorized") {
-            console.log('No Authorization')
+            console.log('Not Authorized')
             res.status(403).json({message: "No Authorization"})
         } else {
             console.log('internal Server Error')
-            res.status(500).json({message: "internal Server Error"})
+            res.status(500).json({message: "Internal Server Error"})
         }
     }
 }

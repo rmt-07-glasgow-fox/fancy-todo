@@ -29,7 +29,6 @@ function loggedOut() {
     $('#logout-button').hide()
     $('#main-web').hide()
     localStorage.clear()
-
 }
 
 $(document).ready(function () {
@@ -67,6 +66,8 @@ $('#cancel-submit').click(function (event) {
     loggedOut()
 })
 
+
+
 $('#add-task').click(function (event) {
     event.preventDefault()
     $('#add-form').show()
@@ -82,6 +83,11 @@ $('#add-button').click(function (event) {
     addTodo()
 })
 
+$('#editTodo').click(function (event) {
+    event.preventDefault()
+    $('#main-web').show()
+})
+
 
 //=========LOGIN========
 
@@ -91,7 +97,6 @@ function login() {
     let password = $('#login-password').val()
 
     if (email == '' || password == '') {
-        // Diisi sesuatu notifikasi
         swal("ERROR", "Email dan Password harus diisi")
     } else {
         $.ajax({
@@ -169,20 +174,27 @@ function readTodo() {
             // console.log(toDo)
             $('#todo').empty()
             $.each(data, (index, value) => {
+
+            let checkbox = `<input type="checkbox" class="form-check-input" id="status-${value.id}" onclick="editStatus(${value.id}, '${value.status}')" `
+            if (value.status === true) {
+                checkbox += `checked>`
+            } else if(value.status === false){
+                checkbox += `>`
+            }
                 // console.log(value)
                 $('#todo').append(`
             <div class="card" id="list-task" style="width: 40rem";>
-            <div class="card-body" id=toDoCard${value.id}>
-              <div id=todoCardBody${value.id}>
-              <input class="form-check-input" type="checkbox" onclick="editStatus(${value.id}, '${value.status}')">
-                <h5 class="card-title">${value.title}</h5>
-                <h6 class="card-subtitle mb-2 text-muted">${value.due_date.split('T')[0]}</h6>
-                <p class="card-text">${value.description}</p>
-                <a href="#" onclick='editForm(${value.id})' class="card-link btn btn-success" id="editTodo">Edit</a>
-                <a href="#" onclick='delTodo(${value.id})' class="card-link btn btn-danger" id="delTodo">Hapus</a>
-              </div>
+                <div class="card-body badan-kartu" id=toDoCard${value.id}>
+                    <div id=todoCardBody${value.id}>
+                        ${checkbox}
+                        <h5 class="card-title">${value.title}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">${value.due_date.split('T')[0]}</h6>
+                        <p class="card-text">${value.description}</p>
+                        <a href="#" onclick='editForm(${value.id})' class="card-link btn btn-success" id="editTodo">Edit</a>
+                        <a href="#" onclick='delTodo(event, ${value.id})' class="card-link btn btn-danger" id="delTodo">Hapus</a>
+                    </div>
+                </div>
             </div>
-          </div>
             `)
             })
         })
@@ -213,6 +225,7 @@ function addTodo() {
             $('#add-form').hide()
         })
         .fail(err => {
+            swal("ERROR", "Input tanggal harus melebihi tanggal sekarang")
             console.log(err, "ERROR")
         })
         .always(() => {
@@ -225,8 +238,8 @@ function addTodo() {
 
 //===========DELETE============
 
-function delTodo(id) {
-
+function delTodo(event, id) {
+    event.preventDefault()
     $.ajax({
         method: 'DELETE',
         url: `${baseURL}/todos/${id}`,
@@ -241,7 +254,6 @@ function delTodo(id) {
 
 function editForm(id) {
     toDoId = id
-    console.log(toDoId)
 
     $.ajax({
             method: 'GET',
@@ -251,17 +263,18 @@ function editForm(id) {
             }
         })
         .done(data => {
-            $('#list-task').hide()
-            $(`#add-todo-form`).hide()
-            $(`#form-edit`).append(`
+            $(`#todoCardBody${toDoId}`).hide()
+            $(`#toDoCard${toDoId}`).append(`
+            <div class="edited-form">
             <h3>Edit Form</h3>
-        <form role="form" id="form-edit${toDoId}">
+        <form role="form" id="form-edit-main${toDoId}">
             <input type="text" class="form-control" value="${data.title}" name="task" id="edit-name">
-            <input type="date" class="form-control" name="Date" id="edit-date">
+            <input type="text" class="form-control" value= "${data.due_date.split('T')[0]}" name="Date" id="edit-date">
             <input type="text" class="form-control" value="${data.description}" name="task" id="edit-description">
             <button onclick="submitEdit(event)" class="btn btn-primary" id="edit-button">Edit</button>
             <button onclick="editCancel(event)" class="btn btn-primary" id="edit-cancel-button">Cancel</button>
         </form>
+        </div>
         `)
         })
 
@@ -269,14 +282,19 @@ function editForm(id) {
 
 function editCancel(event) {
     event.preventDefault()
-    $(`#form-edit`).hide()
-    $('#list-task').show()
+    $(`#form-edit-main`).hide()
+    $('.badan-kartu').show()
     $(`#add-todo-form`).show()
+    readTodo()
 }
 
 function submitEdit(event) {
     event.preventDefault()
-    $(`#form-edit`).show()
+    editSubmit()
+}
+
+function editSubmit() {
+    $(`#form-edit-main`).show()
 
     $.ajax({
             method: 'PUT',
@@ -287,16 +305,17 @@ function submitEdit(event) {
             data: {
                 title: $('#edit-name').val(),
                 description: $('#edit-description').val(),
-                data: $('#edit-date').val()
+                due_date: $('#edit-date').val()
             }
         })
         .done(data => {
+            $(`#form-edit-main`).hide()
+            $('.badan-kartu').show()
+            $(`#add-todo-form`).show()
             readTodo()
-            $(`#form-edit`).hide()
-            $(`#todoCardBody${toDoId}`).show()
-            $('#add-todo-form').show()
         })
         .fail(err => {
+            swal("ERROR", "Input tanggal harus melebihi tanggal sekarang")
             console.log(err, 'ERROR EDIT')
         })
         .always(() => {
@@ -308,11 +327,11 @@ function submitEdit(event) {
 
 function editStatus(id, status) {
 
-    let inputStatus = ''
-    if (status === "true") {
-        inputStatus = "true"
-    } else if (status === "false" || status === null) {
-        inputStatus = "false"
+    let inputStatus
+    if (status === 'true') {
+        inputStatus = false
+    } else {
+        inputStatus = true
     }
 
     $.ajax({
@@ -327,6 +346,7 @@ function editStatus(id, status) {
         })
         .done(data => {
             console.log('Berhasil di Edit')
+            readTodo()
         })
         .fail(err => {
             console.log(err, "ERROR EDIT")

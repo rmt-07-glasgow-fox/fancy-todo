@@ -3,7 +3,7 @@
     "username": "postgres",
     "password": "Bismilah11",
     "database": "fancy_to_do_development",
-    "host": "127.0.0.1",
+    "host": "localhost",
     "dialect": "postgres"
   },
   "test": {

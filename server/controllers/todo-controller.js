@@ -3,7 +3,7 @@ const { Todo } = require('../models')
 class TodoController {
     static postTodoHandler(req, res, next) {
         // console.log(req.user)
-
+        
         let obj = {
             title: req.body.title,
             description: req.body.description,
@@ -22,8 +22,12 @@ class TodoController {
     }
 
     static getTodoHandler(req, res, next) {
-        
-        Todo.findAll()
+        // console.log(new Date().toISOString())
+        Todo.findAll({
+            where: {
+                UserId: req.user.id
+            }, order: [['id', 'ASC']]
+        })
             .then(data => {
                 res.status(200).json(data)
             })
@@ -48,7 +52,12 @@ class TodoController {
         let id = req.params.id
         let { title, description, status, due_date } = req.body
 
-        Todo.update(req.body, {
+        Todo.update({
+            title,
+            description,
+            status,
+            due_date
+            }, {
             where: {
                 id
             }, returning: true
@@ -69,7 +78,9 @@ class TodoController {
         let id = req.params.id
         let { status } = req.body
 
-        Todo.update(req.body, {
+        Todo.update({
+            status
+        }, {
             where: {
                 id
             }, returning: true
@@ -87,7 +98,8 @@ class TodoController {
     }
 
     static deleteTodoHandler(req, res, next) {
-        let id = req.params.id
+        let id = +req.params.id
+        console.log(id)
 
         Todo.destroy({where: {
             id
@@ -100,7 +112,7 @@ class TodoController {
                 }
             })
             .catch(err =>{
-                next(err)
+                next({name: 'error di delete'})
             })
     }
 }

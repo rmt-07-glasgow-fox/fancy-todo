@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       validate: {
         isAfter: {
-          args: new Date().toString(),
+          args: new Date().toISOString(),
           msg: "Input must be after today's date"
         },
         isDate: {
@@ -53,6 +53,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Todo',
+    hooks: {
+      beforeCreate(instance, option) {
+        instance.status = false
+      }
+    }
   });
   return Todo;
 };

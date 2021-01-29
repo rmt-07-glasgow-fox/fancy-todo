@@ -13,7 +13,6 @@ Create fancy to do app, using express, jquery, ajax, axios
 Make sure you have Node.js and npm in your computer and then run `npm install`.
 In order to get access to all of the routes, you will need a `JWT(JSON Web Token) Token` which will be generated automatically after you sign in successfully.
 Run `nodemon app.js  to start the server.
-Run `live-server --host=localhost` to start the client
 ```
 
 ##Restful endpoints
