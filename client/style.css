@@ -1,0 +1,333 @@
+
+body {
+    background-color: #eee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh
+}
+
+.card {
+    width: 400px;
+    padding: 20px;
+    border: none;
+}
+
+#big-div {
+    display: flex;
+    width: 2000px;
+    height: 1000px;
+    flex-flow: row wrap;
+    justify-content: center;
+    margin-top: 5rem;
+}
+
+#action-button {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: flex-end;
+    margin-top: 10px;
+}
+
+#g-sign {
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+#todo-id {
+    margin-left: 1rem;
+}
+
+li {
+    padding: none;
+}
+
+h4 {
+    margin: 20px;
+}
+
+
+i {
+    font-style: italic
+}
+
+.container {
+    margin-top: 100px
+}
+
+.card-1 {
+    width: 550px;
+    padding: 20px;
+}
+
+.card-2 {
+    border: none;
+    padding: 20px;
+}
+
+.card-header:first-child {
+    border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0
+}
+
+#add-btn {
+    width: 100px;
+    margin-bottom: 10px;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    border-bottom-width: 1px;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-right: 0.625rem;
+    height: 3.5rem;
+    background-color: #fff
+}
+
+.widget-heading {
+    font-size: 1rem;
+}
+
+.widget-detail {
+    color: #858a8e;
+    font-size: 0.8rem;
+}
+
+.widget-date {
+    color: #858a8e;
+    font-size: 0.8rem;
+}
+
+.widget-subheading {
+    color: #858a8e;
+    font-size: 0.8rem;
+}
+
+.card-header.card-header-tab .card-header-title {
+    display: flex;
+    align-items: center;
+    white-space: nowrap
+}
+
+.card-header .header-icon {
+    font-size: 1.65rem;
+    margin-right: 0.625rem
+}
+
+.card-header.card-header-tab .card-header-title {
+    display: flex;
+    align-items: center;
+    white-space: nowrap
+}
+
+.btn-actions-pane-right {
+    margin-left: auto;
+    white-space: nowrap
+}
+
+.text-capitalize {
+    text-transform: capitalize !important
+}
+
+.scroll-area-sm {
+    height: 800px;
+    overflow-x: hidden
+}
+
+.list-group-item {
+    position: relative;
+    display: flex;
+    flex-flow: row wrap;
+    background-color: #fff;
+    padding: none;
+}
+
+.list-group {
+    display: flex;
+    flex-direction: column;
+    padding-left: 0;
+    margin-bottom: 0
+}
+
+.todo-indicator {
+    position: absolute;
+    width: 4px;
+    height: 60%;
+    border-radius: 0.3rem;
+    left: 0.625rem;
+    top: 20%;
+    opacity: .6;
+    transition: opacity .2s;
+}
+
+.widget-content {
+    padding: 1rem;
+    flex-direction: row;
+    align-items: center;
+    display: flex;
+    justify-content: space-around;
+    align-items: stretch;
+    margin-top: 0.5rem;
+}
+
+.widget-content-left {
+    margin-left: 1.5rem;
+}
+
+.widget-content .widget-content-wrapper {
+    display: flex;
+    flex: 1;
+    position: relative;
+    align-items: center
+}
+
+.widget-content .widget-content-right.widget-content-actions {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity .2s
+}
+
+.widget-content .widget-content-right {
+    margin-left: auto
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #3f6ad8;
+    border-color: #3f6ad8
+}
+
+.card-footer {
+    background-color: #fff
+}
+
+
+.account {
+    font-weight: 500;
+    font-size: 17px
+}
+
+.contact {
+    font-size: 13px
+}
+
+.form-control {
+    text-indent: 14px
+}
+
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #4a148c;
+    outline: 0;
+    box-shadow: none
+}
+
+.inputbox {
+    margin-bottom: 10px;
+    position: relative
+}
+
+.inputbox i {
+    position: absolute;
+    left: 8px;
+    top: 12px;
+    color: #dadada
+}
+
+.form-check-label {
+    font-size: 13px
+}
+
+.form-check-input {
+    width: 14px;
+    height: 15px;
+    margin-top: 5px
+}
+
+.forgot {
+    font-size: 14px;
+    text-decoration: none;
+    color: #4A148C
+}
+
+.mail {
+    color: #4a148c;
+    text-decoration: none
+}
+
+.form-check {
+    cursor: pointer
+}
+
+.carousel-indicators li {
+    width: 5px;
+    height: 6px;
+    border-radius: 100%;
+    opacity: 0.2;
+    background-color: #000000
+}
+
+.carousel-indicators {
+    margin-bottom: 0
+}
+
+.temp {
+    font-size: 5rem;
+    color: rgb(57, 57, 58)
+}
+
+
+.img-fluid {
+    float: right;
+    width: 65%;
+    display: flex;
+    align-items: center
+}
+
+.row2 .img-fluid {
+    margin: 10% 0;
+    opacity: 0.5;
+    width: 40%
+}
+
+.card-2 .row {
+    justify-content: center
+}
+
+.card-3 .row {
+    justify-content: center
+}
+
+.row1 {
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: black
+}
+
+.row3 {
+    font-size: 1rem;
+    font-weight: bold;
+    color: black
+}
+
+.row4 {
+    text-align: center;
+    font-size: 0.8rem;
+    color: black    ;
+    margin: 5% 0 2.5rem
+}
+
+.card-3 .row3 {
+    margin: 5% 0 2.5rem
+}
+
+.col {
+    overflow: visible
+}
+
+.row {
+    overflow: visible
+}
