@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="1068909796777-mkiu0iktteqtodhnmc1lt65i64g91ipn.apps.googleusercontent.com">
+    <title>Fancy To-Eat</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+</head>
+<body>
+  <!-- navbar-->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/client">Fancy To-Eat</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link" href="#" id="signup-btn-home">Sign Up</a>
+          <a class="nav-link" href="/" id="signout-navbar">Sign Out</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- home card -->
+  <div class="card text-center" id="home-card">
+    <div class="card-body">
+      <h5 class="card-title">Fancy To-Eat</h5>
+      <p class="card-text">Plan your daily meal and control your diet</p>
+      <a href="#" class="btn btn-primary" id="signin-btn-home">Sign in here</a>
+    </div>
+  </div>
+
+  <!-- login -->
+  <div class="row" id="signin">
+    <div class="col-md-4"></div>
+    <div class="col-md-4" style="margin-top: 10%;">
+      <p class="fs-2">Login</p>
+      <form>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="email-signin" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password-signin">
+        </div>
+        <button type="submit" class="btn btn-primary" id="signin-btn">Sign In</button>
+      </form>
+      <br>
+      <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+  
+  <!-- Sign Up-->
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4" id="signup" style="margin-top: 10%;">
+      <h5 class="card-title">Sign Up</h5>
+      <form>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="email-signup" aria-describedby="emailHelp">
+          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password-signup">
+        </div>
+        <button type="submit" class="btn btn-primary" id="signup-btn">Sign Up</button>
+      </form>
+      <br>
+      <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    </div>
+  </div>
+
+  <!-- food card -->
+  <div class="card-group" id="card-group" style="margin-top: 5%;">
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1547592180-85f173990554?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1500&q=80" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Planning healthy meals easily</h5>
+      </div>
+    </div>
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1493770348161-369560ae357d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">No more worry about your weight!</h5>
+      </div>
+    </div>
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1521986329282-0436c1f1e212?ixid=MXwxMjA3fDB8MHxzZWFyY2h8M3x8aGVhbHRoeSUyMGZvb2R8ZW58MHwwfDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">You can monitor your friend's plan as well!</h5>
+      </div>
+    </div>
+  </div>
+
+  <!-- homepage -->
+  <div class="container" id="homepage">
+    <div class="row" id="homepage">
+      <div class="col-md-6">
+        <p class="h4">Are you lost? Find the recipe that suits your diet here</p>
+        <!-- form type diet -->
+        <form>
+          <div class="form-row align-items-center">
+            <div class="col-auto my-1">
+              <label class="mr-sm-2" for="inlineFormCustomSelect">Diet Labels</label>
+              <select class="custom-select mr-sm-2" id="type-diet">
+                <option selected>Choose...</option>
+                <option value="balanced">Balanced (Protein/Fat/Carb values in 15/35/50 ratio)</option>
+                <option value="high-protein">High-Protein(More than 50% of total calories)</option>
+                <option value="low-carb">Low-Carb (Less than 20% of total calories from carbs)</option>
+                <option value="low-fat">Low-Fat (Less than 15% of total calories from fat)</option>
+              </select>
+            </div>
+            <div class="col-auto my-1">
+              <button type="submit" class="btn btn-primary" id="diet-type-btn">Search</button>
+            </div>
+          </div>
+        </form>
+        <!-- -->
+        <div id="food-table">
+
+        </div>
+
+        <!-- table food-->
+
+        <!-- -->
+      </div>
+      <div class="col-md-6" style="margin-top: 3%;">
+        
+        <!-- Edit plan -->
+        <div class="card border-primary mb-3" style="max-width: 18rem;" id="edit-plan-form">
+
+        </div>
+
+        <!-- -->
+
+
+        <!-- Add plan section-intro -->
+        <div class="card w-75" id="add-plan-section-intro">
+          <div class="card-body">
+            <h5 class="card-title">Add Plan</h5>
+            <p class="card-text">Add your meal plan here! You can use our suggestion on left table as well.</p>
+            <a href="#" class="btn btn-primary" id="add-plan">Add plan</a>
+          </div>
+        </div>
+        <!-- -->
+
+        <!-- Add plan section-fill -->
+        <div class="card w-75" id="add-plan-section-fill">
+          <div class="card-body">
+            <h5 class="card-title">Add Plan</h5>
+
+            <!-- Add plan form-->
+            <form class="row gy-2 gx-3 align-items-center" id="add-plan-form">
+              <div class="col-auto">
+                <label class="visually-hidden" for="autoSizingInput">Title</label>
+                <input type="text" class="form-control" id="title" placeholder="Title">
+              </div>
+              <div class="col-auto">
+                <label class="visually-hidden" for="autoSizingInput">Description</label>
+                <input type="text" class="form-control" id="description" placeholder="description">
+              </div>
+              <div class="form-group row">
+                <label for="example-date-input" class="col-2 col-form-label">due</label>
+                <div class="col-10">
+                  <input class="form-control" type="date" value="2021-01-01" id="due_date">
+                </div>
+              </div>
+              <div class="col-auto">
+                <button type="submit" class="btn btn-primary" id="add-plan-btn">Add plan</button>
+              </div>
+            </form>
+            <!-- -->
+          </div>
+        </div><br>
+        <!-- -->
+
+        <!-- List plans -->
+        <div id="plan-list">
+          <p class="fs-2">Your Meal Plan</p>
+          <div class="card border-primary mb-3" style="max-width: 18rem;" >
+            
+  
+          </div>
+        </div>
+
+        <!-- -->
+      </div>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <script src="sweetalert2.min.js"></script>
+<link rel="stylesheet" href="sweetalert2.min.css">
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="./script.js"></script>
+</body>
+</html>
