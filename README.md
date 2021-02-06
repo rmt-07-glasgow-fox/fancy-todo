@@ -1,2 +1,2 @@
 # fancy-todo
-Membuat website untuk mencatat hal - hal menarik untuk dilakukan 
+# url: https://todolist-samm021.web.app/
