@@ -4,14 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-signin-client_id"
-        content="507628413455-rvdvmcjvlmq87jgi4cicd6bqd2hjrofv.apps.googleusercontent.com">
+    <meta name="google-signin-client_id" content="507628413455-rvdvmcjvlmq87jgi4cicd6bqd2hjrofv.apps.googleusercontent.com">
     <link rel="icon" href="https://cdn4.iconfinder.com/data/icons/ikooni-outline-seo-web/128/seo-12-512.png">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/styles.8986bff4.css">
     <title>TodoCo</title>
-</head>
+<script src="/styles.8986bff4.js"></script></head>
 
 <body>
     <div class="container register-pages" id="main-page">
@@ -43,14 +41,13 @@
                                 <p>Not registered? <a id="register-link" href="/register">Create an account</a></p>
                                 <div class="divider">
                                     <div></div>
-                                    <hr />
+                                    <hr>
                                 </div>
                                 <div class="g-signin2" data-onsuccess="onSignIn"></div>
 
                             </div>
                             <div id="register-page">
-                                <button type="submit" class="btn btn-primary"
-                                    id="register-btn">Register</button><br><br>
+                                <button type="submit" class="btn btn-primary" id="register-btn">Register</button><br><br>
                                 <div id="register-errors">
                                 </div>
                                 <p> I have an account already! <a href="/login" id="login-link"> Login here </a></p>
@@ -73,8 +70,7 @@
                                 <a class="navbar-brand col-sm-3 col-md-2 mr-0 pl-0" href="#"><b>TodoCode</b></a>
                                 <ul class="navbar-nav px-3 pr-0">
                                     <li class="nav-item text-nowrap">
-                                        <a class="btn navbar-btn btn-danger navbar-right" id="logout-btn"
-                                            href="#">Logout</a>
+                                        <a class="btn navbar-btn btn-danger navbar-right" id="logout-btn" href="#">Logout</a>
                                     </li>
                                 </ul>
                             </div>
@@ -92,15 +88,13 @@
                             <div class="form-group row">
                                 <label for="addTodoTitle" class="col-sm-2 col-form-label">Title</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="addTodoTitle"
-                                        placeholder="What do you want to do?">
+                                    <input type="text" class="form-control" id="addTodoTitle" placeholder="What do you want to do?">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="addTodoDescription" class="col-sm-2 col-form-label">Description</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="addTodoDescription"
-                                        placeholder="Describe what do you want to do...">
+                                    <input type="text" class="form-control" id="addTodoDescription" placeholder="Describe what do you want to do...">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -124,15 +118,13 @@
                             <div class="form-group row">
                                 <label for="editTodoTitle" class="col-sm-2 col-form-label">Title</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="editTodoTitle"
-                                        placeholder="What do you want to do?">
+                                    <input type="text" class="form-control" id="editTodoTitle" placeholder="What do you want to do?">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="editTodoDescription" class="col-sm-2 col-form-label">Description</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="editTodoDescription"
-                                        placeholder="Describe what do you want to do...">
+                                    <input type="text" class="form-control" id="editTodoDescription" placeholder="Describe what do you want to do...">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -141,8 +133,7 @@
                                     <input type="date" class="form-control" id="editTodoDueDate">
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary"
-                                id="update-btn-confirm">Confirm</button><br><br>
+                            <button type="submit" class="btn btn-primary" id="update-btn-confirm">Confirm</button><br><br>
                             <div id="update-success">
                             </div>
                         </form>
@@ -180,18 +171,14 @@
     <!--<div class="row justify-content-between" id="todo-list">-->
     <!--</div>-->
     <!--</div>-->
-    </div>
+    
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script src="./script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://apis.google.com/js/platform.js" async="" defer=""></script>
+    <script src="/script.75da7f30.js"></script>
 </body>
 
 </html>

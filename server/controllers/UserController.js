@@ -5,7 +5,7 @@ const { OAuth2Client } = require('google-auth-library')
 
 
 class UserController {
-    static register(req, res, next) {
+    static register (req, res, next) {
         const { email, password } = req.body
 
         User.create({
@@ -24,7 +24,7 @@ class UserController {
             })
     }
 
-    static login(req, res, next) {
+    static login (req, res, next) {
         const { email, password } = req.body
 
         User.findOne({
@@ -59,11 +59,12 @@ class UserController {
 
             })
             .catch(err => {
+                console.log('ini error-nya:', err)
                 next(err)
             })
     }
 
-    static loginGoogle(req, res, next) {
+    static loginGoogle (req, res, next) {
         const { id_token } = req.body
         let email = null
         const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
