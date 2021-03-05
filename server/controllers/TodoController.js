@@ -1,7 +1,7 @@
 const { Todo, User } = require('../models')
 
 class TodoController {
-    static getTodos(req, res, next) {
+    static getTodos (req, res, next) {
         Todo.findAll({
             where: {
                 UserId: req.user.id
@@ -15,7 +15,7 @@ class TodoController {
             })
     }
 
-    static postTodos(req, res, next) {
+    static postTodos (req, res, next) {
         const { title, description, due_date } = req.body
         const UserId = req.user.id
         const status = false
@@ -35,7 +35,7 @@ class TodoController {
             })
     }
 
-    static getCurrentTodos(req, res, next) {
+    static getCurrentTodos (req, res, next) {
         const id = +req.params.id
         Todo.findByPk(id)
             .then(currentTodo => {
@@ -51,7 +51,7 @@ class TodoController {
             })
     }
 
-    static putUpdateTodos(req, res, next) {
+    static putUpdateTodos (req, res, next) {
         const { title, description, status, due_date } = req.body
         Todo.findByPk(+req.params.id)
             .then(currentTodo => {
@@ -70,7 +70,7 @@ class TodoController {
             })
     }
 
-    static patchUpdateTodos(req, res, next) {
+    static patchUpdateTodos (req, res, next) {
         const { status } = req.body
         Todo.findByPk(+req.params.id)
             .then(currentTodo => {
@@ -86,7 +86,7 @@ class TodoController {
             })
     }
 
-    static deleteTodos(req, res, next) {
+    static deleteTodos (req, res, next) {
         Todo.destroy({
             where: {
                 id: +req.params.id
@@ -104,6 +104,7 @@ class TodoController {
                 next(err)
             })
     }
+
 }
 
 module.exports = TodoController

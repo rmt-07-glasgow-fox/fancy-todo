@@ -27,6 +27,7 @@ const errorHandler = (err, req, res, next) => {
         res.status(401).json(errorMessage)
         break
       default:
+        console.log('ini errror-nya:', err)
         errorMessage.messages.push("Internal server error.")
         res.status(500).json(errorMessage)
         break

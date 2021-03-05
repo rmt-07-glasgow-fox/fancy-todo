@@ -174,6 +174,7 @@ function afterLogin() {
   $('#updateTodoForm').hide();
   $('#container-todo-list').show();
   $('#col-sidebar').show();
+  getNews();
   $('#col-todolist').show();
   getTodoList();
   $('#logout-btn').show();
@@ -208,6 +209,24 @@ function addTodoForm() {
   $('#logout-btn').show();
 }
 
+function getNews() {
+  $.ajax({
+    method: 'GET',
+    url: "".concat(baseUrl, "/news"),
+    headers: {
+      access_token: localStorage.access_token
+    }
+  }).done(function (response) {
+    $('#news-card').empty();
+    var news = response;
+    $('#news-card').append("\n                        <div class=\"card-body\">\n                            <h5 class=\"card-title\">".concat(news.name, "</h5>\n                            <p class=\"card-text\">").concat(news.description, "</p>\n                            <a href='").concat(news.url, "' target='_blank' class=\"card-text\">See more</a>\n                        </div>\n                        <div class='card-footer'>\n                            <p class=\"card-text\">fetched from <a href='https://newsapi.org/docs' target='_blank'>News API</a></p>\n                        </div>\n                "));
+  }).fail(function (err) {
+    console.log(err, '>>> this is error from ajax getNews');
+  }).always(function (_) {
+    console.log('always from getNews');
+  });
+}
+
 function getTodoList() {
   $.ajax({
     method: 'GET',
@@ -219,7 +238,8 @@ function getTodoList() {
     $("#todo-list").empty();
     var todoList = response;
     todoList.forEach(function (element) {
-      $('#todo-list').append("\n                                            <div class=\"card col-12 border-dark mt-3 mb-5\" style=\"width: 18rem;\">\n                                <div class=\"card-header\">".concat(element.title, "</div>\n                                    <div class=\"row\">\n                                        <div class=\"col-2 mt-5 mb-5\">\n                                          <button id=\"done-btn\" value='").concat(element.id, "' class=\"btn btn-primary\">\n                                          To do\n                                          </button>\n                                        </div>\n                                        <div class=\"col-10\">\n                                            <div class=\"card-body text-dark text-justify\">\n                                                <p class=\"card-text\">").concat(element.description, "</p>\n                                                <p class=\"card-text\">Due: ").concat(element.due_date, "</p>\n                                                <button class=\"btn btn-primary\" id='update-btn' value=\"").concat(element.id, "\">Update</button>\n                                                <button class=\"btn btn-danger\" id='delete-btn' value=\"").concat(element.id, "\">Delete</button>\n                                            </div>\n                                        </div>\n                                    </div>\n                            </div>\n\n"));
+      var statusText = element.status === true ? 'To do' : 'Done!';
+      $('#todo-list').append("\n                                            <div class=\"card col-12 border-dark mt-3 mb-5\" style=\"width: 18rem;\">\n                                <div class=\"card-header\">".concat(element.title, "</div>\n                                    <div class=\"row\">\n                                        <div class=\"col-2 mt-5 mb-5\">\n                                          <button id=\"done-btn\" value='").concat(element.id, "' class=\"btn btn-primary\">\n                                          ").concat(statusText, "\n                                          </button>\n                                        </div>\n                                        <div class=\"col-10\">\n                                            <div class=\"card-body text-dark text-justify\">\n                                                <p class=\"card-text\">").concat(element.description, "</p>\n                                                <p class=\"card-text\">Due: ").concat(element.due_date, "</p>\n                                                <button class=\"btn btn-primary\" id='update-btn' value=\"").concat(element.id, "\">Update</button>\n                                                <button class=\"btn btn-danger\" id='delete-btn' value=\"").concat(element.id, "\">Delete</button>\n                                            </div>\n                                        </div>\n                                    </div>\n                            </div>\n\n"));
     });
   }).fail(function (err) {
     console.log(err, ">>>> this is error from ajax todolist");
@@ -242,8 +262,7 @@ function changeStatus(todoId, status) {
     console.log(">>>>> response dari changeStatus: ", response);
   }).fail(function (err) {
     console.log(err, ">>>> this is error from ajax changeStatus");
-  }).always(function () {
-    console.log("ALWAYS!");
+  }).always(function () {//console.log("ALWAYS!")
   });
 }
 
@@ -268,8 +287,7 @@ function deleteTodo(todoId) {
     }, 500);
   }).fail(function (err) {
     console.log(err, ">>>> this is error from ajax deleteTodo");
-  }).always(function () {
-    console.log("ALWAYS!");
+  }).always(function () {//console.log("ALWAYS!")
   });
 }
 
@@ -301,7 +319,7 @@ function updateTodo(todoId) {
   }).fail(function (err) {
     console.log(err, ">>>> this is error from ajax updateTodo");
   }).always(function () {
-    console.log("ALWAYS!");
+    //console.log("ALWAYS!")
     $("#editTodoTitle").val('');
     $("#editTodoDescription").val('');
     $("#editTodoDueDate").val('');
@@ -309,15 +327,14 @@ function updateTodo(todoId) {
 }
 
 function showStatus(todoId) {
-  var el = $("[value='".concat(todoId, "']#done-btn"));
-  console.log('the selected element:!', el[0].innerText);
+  var el = $("[value='".concat(todoId, "']#done-btn")); //console.log('the selected element:!', el[0].innerText)
 
   if (el[0].innerText === 'To do') {
     el[0].innerText = 'Done!';
-    changeStatus(todoId, true); // put a method here to change todo status
+    changeStatus(todoId, true);
   } else {
     el[0].innerText = 'To do';
-    changeStatus(todoId, false); // put a method here to change todo status
+    changeStatus(todoId, false);
   }
 }
 
@@ -430,10 +447,10 @@ $(document).ready(function () {
     }).fail(function (err) {
       console.log(err, ">>>> this is error from ajax addTodo");
     }).always(function () {
-      console.log("ALWAYS!");
-      var title = $("#addTodoTitle").val();
-      var description = $("#addTodoDescription").val();
-      var due_date = $("#addTodoDueDate").val();
+      //console.log("ALWAYS!")
+      $("#addTodoTitle").val('');
+      $("#addTodoDescription").val('');
+      $("#addTodoDueDate").val('');
     });
   });
   $(document).on("click", "#update-btn", function (event) {
@@ -480,7 +497,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60742" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55934" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@700&display=swap');
+
 * {
     padding: 0;
     margin: 0;
@@ -15,7 +17,10 @@ body {
 .main-head{
     height: 150px;
     background: #FFF;
-   
+}
+
+.navbar-brand {
+    font-family: 'Fira Code', monospace;
 }
 
 .sidenav {
@@ -31,6 +36,14 @@ body {
 
 .side-bar {
     height: 100vh;
+}
+
+#col-todolist {
+    background-color: rgba(0, 32, 63, 0.75);
+}
+
+#col-sidebar {
+    background-color: rgba(175, 234, 220,0.75);
 }
 
 .main {
@@ -100,8 +113,4 @@ body {
 .btn-black{
     background-color: #000 !important;
     color: #fff;
-}
-
-#done-status {
-    display: none;
 }

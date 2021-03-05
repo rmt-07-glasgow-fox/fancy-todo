@@ -64,6 +64,7 @@ function afterLogin () {
     $('#updateTodoForm').hide()
     $('#container-todo-list').show()
     $('#col-sidebar').show()
+    getNews()
     $('#col-todolist').show()
     getTodoList()
     $('#logout-btn').show()
@@ -99,6 +100,36 @@ function addTodoForm () {
     $('#logout-btn').show()
 }
 
+function getNews () {
+    $.ajax({
+        method: 'GET',
+        url: `${baseUrl}/news`,
+        headers: {
+            access_token: localStorage.access_token
+        }
+    })
+        .done(response => {
+            $('#news-card').empty()
+            let news = response
+                $('#news-card').append(`
+                        <div class="card-body">
+                            <h5 class="card-title">${news.name}</h5>
+                            <p class="card-text">${news.description}</p>
+                            <a href='${news.url}' target='_blank' class="card-text">See more</a>
+                        </div>
+                        <div class='card-footer'>
+                            <p class="card-text">fetched from <a href='https://newsapi.org/docs' target='_blank'>News API</a></p>
+                        </div>
+                `)
+        })
+        .fail(err => {
+            console.log(err, '>>> this is error from ajax getNews')
+        })
+        .always(_ => {
+            console.log('always from getNews')
+        })
+}
+
 function getTodoList () {
     $.ajax({
         method: 'GET',
@@ -111,13 +142,14 @@ function getTodoList () {
             $("#todo-list").empty()
             let todoList = response
             todoList.forEach(element => {
+                const statusText = element.status === true ? 'To do' : 'Done!'
                 $('#todo-list').append(`
                                             <div class="card col-12 border-dark mt-3 mb-5" style="width: 18rem;">
                                 <div class="card-header">${element.title}</div>
                                     <div class="row">
                                         <div class="col-2 mt-5 mb-5">
                                           <button id="done-btn" value='${element.id}' class="btn btn-primary">
-                                          To do
+                                          ${statusText}
                                           </button>
                                         </div>
                                         <div class="col-10">
@@ -160,7 +192,7 @@ function changeStatus (todoId, status) {
             console.log(err, ">>>> this is error from ajax changeStatus")
         })
         .always(() => {
-            console.log("ALWAYS!")
+            //console.log("ALWAYS!")
         })
 }
 
@@ -191,7 +223,7 @@ function deleteTodo (todoId) {
             console.log(err, ">>>> this is error from ajax deleteTodo")
         })
         .always(() => {
-            console.log("ALWAYS!")
+            //console.log("ALWAYS!")
         })
 }
 
@@ -228,7 +260,7 @@ function updateTodo (todoId) {
             console.log(err, ">>>> this is error from ajax updateTodo")
         })
         .always(() => {
-            console.log("ALWAYS!")
+            //console.log("ALWAYS!")
             $("#editTodoTitle").val('')
             $("#editTodoDescription").val('')
             $("#editTodoDueDate").val('')
@@ -237,15 +269,13 @@ function updateTodo (todoId) {
 
 function showStatus (todoId) {
     const el = $(`[value='${todoId}']#done-btn`)
-    console.log('the selected element:!', el[0].innerText)
+    //console.log('the selected element:!', el[0].innerText)
     if (el[0].innerText === 'To do') {
         el[0].innerText = 'Done!'
         changeStatus(todoId, true)
-        // put a method here to change todo status
     } else {
         el[0].innerText = 'To do'
         changeStatus(todoId, false)
-        // put a method here to change todo status
     }
 }
 
@@ -389,10 +419,10 @@ $(document).ready(function () {
                 console.log(err, ">>>> this is error from ajax addTodo")
             })
             .always(() => {
-                console.log("ALWAYS!")
-                let title = $("#addTodoTitle").val()
-                let description = $("#addTodoDescription").val()
-                let due_date = $("#addTodoDueDate").val()
+                //console.log("ALWAYS!")
+                $("#addTodoTitle").val('')
+                $("#addTodoDescription").val('')
+                $("#addTodoDueDate").val('')
             })
     })
 
