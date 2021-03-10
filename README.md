@@ -2,6 +2,8 @@
 ----
 This website helps you create interesting things to do, with fancy interface.
 
+Please visit https://fancy-todo-todoco-client.web.app/ for a full demo of this app.
+
 Below are the list of the API calls.
 
 **Show Todos**
