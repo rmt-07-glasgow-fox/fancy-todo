@@ -1,0 +1,103 @@
+html{
+    height: 100vh;
+}
+nav{
+    opacity: 75%;
+}
+body{
+    z-index: -2;
+    background-image: url(bg.jpg) !important;
+    background-size: 1900px;
+    background-repeat: no-repeat;
+    background-position: 0 -1000px;
+}
+
+.login-form-container, .register-form-container{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);  
+    /* border: 5px solid #FFFF00; */
+    border-radius: 20px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.75);
+    width: 30%;
+}
+
+.login-form,.register-form{
+    margin: 20px;
+    line-height: 50px;
+}
+.register-link,.login-link{
+    font-size: small !important;
+}
+
+.register-link:hover,.login-link:hover{
+    cursor: pointer;
+}
+
+input{
+    display: inline-block !important;
+}
+
+.text-center{
+    text-align: center !important;
+}
+
+.content{
+    margin-top: 20px;
+    padding: 5px !important;
+}
+
+.bg-blur {
+    position: absolute;
+    height: auto;
+    background-color: rgba(0, 0, 0, 1);
+    filter: blur(2px);
+    -webkit-filter: blur(2px);
+}
+
+.bg-blur-off {
+    /* background-color: rgba(0, 0, 0, 0.25); */
+    position: absolute;
+    z-index: 2;
+    filter: none;
+    -webkit-filter: none;
+}
+
+.widget-weather .card{
+    color: white;
+    background-color: rgba(0, 0, 0, 0.4) !important;
+}
+
+.bg-img-transparent{
+    z-index: -1;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.35) !important;
+}
+
+.wrapper{
+    width: 100%;
+    padding: 8px;
+}
+.wrapper-todo .row{
+    height: fit-content;
+    /* background-color: white; */
+}
+
+.wrapper-todo .row .col-md-4{
+    margin: 4px;
+}
+
+.card-title{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.card-body{
+    font-size: 14px;
+}
+
+.link-danger:hover,.link-primary:hover{
+    cursor: pointer;
+}
